@@ -1,0 +1,2 @@
+# MyEconomy
+meta AI hakathon
