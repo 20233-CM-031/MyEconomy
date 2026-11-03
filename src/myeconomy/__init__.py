@@ -1,0 +1,1 @@
+"""MyEconomy application package."""
