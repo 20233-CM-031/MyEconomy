@@ -1,0 +1,200 @@
+[
+  {
+    "insurance_claim_id": "ICL00001",
+    "insurance_policy_id": "POL00003",
+    "customer_id": "CUS00005",
+    "claim_type": "VEHICLE_REPAIR",
+    "claim_amount_inr": "36129.00",
+    "claim_status": "SUBMISSION_READY",
+    "submission_mode": "NOT_SENT_TO_INSURER",
+    "evidence_status": "SYNTHETIC_DOCUMENTS_ONLY",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "insurance_claim_id": "ICL00002",
+    "insurance_policy_id": "POL00006",
+    "customer_id": "CUS00009",
+    "claim_type": "HOSPITALIZATION",
+    "claim_amount_inr": "93343.00",
+    "claim_status": "DRAFT_FIXTURE",
+    "submission_mode": "NOT_SENT_TO_INSURER",
+    "evidence_status": "SYNTHETIC_DOCUMENTS_ONLY",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "insurance_claim_id": "ICL00003",
+    "insurance_policy_id": "POL00009",
+    "customer_id": "CUS00017",
+    "claim_type": "VEHICLE_REPAIR",
+    "claim_amount_inr": "57495.00",
+    "claim_status": "UNDER_REVIEW_SIMULATION",
+    "submission_mode": "NOT_SENT_TO_INSURER",
+    "evidence_status": "SYNTHETIC_DOCUMENTS_ONLY",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "insurance_claim_id": "ICL00004",
+    "insurance_policy_id": "POL00010",
+    "customer_id": "CUS00018",
+    "claim_type": "ACCIDENT",
+    "claim_amount_inr": "99113.00",
+    "claim_status": "SUBMISSION_READY",
+    "submission_mode": "NOT_SENT_TO_INSURER",
+    "evidence_status": "SYNTHETIC_DOCUMENTS_ONLY",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "insurance_claim_id": "ICL00005",
+    "insurance_policy_id": "POL00011",
+    "customer_id": "CUS00020",
+    "claim_type": "VEHICLE_REPAIR",
+    "claim_amount_inr": "74285.00",
+    "claim_status": "DRAFT_FIXTURE",
+    "submission_mode": "NOT_SENT_TO_INSURER",
+    "evidence_status": "SYNTHETIC_DOCUMENTS_ONLY",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "insurance_claim_id": "ICL00006",
+    "insurance_policy_id": "POL00018",
+    "customer_id": "CUS00038",
+    "claim_type": "HOSPITALIZATION",
+    "claim_amount_inr": "22268.00",
+    "claim_status": "SUBMISSION_READY",
+    "submission_mode": "NOT_SENT_TO_INSURER",
+    "evidence_status": "SYNTHETIC_DOCUMENTS_ONLY",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "insurance_claim_id": "ICL00007",
+    "insurance_policy_id": "POL00021",
+    "customer_id": "CUS00042",
+    "claim_type": "REIMBURSEMENT",
+    "claim_amount_inr": "24274.00",
+    "claim_status": "UNDER_REVIEW_SIMULATION",
+    "submission_mode": "NOT_SENT_TO_INSURER",
+    "evidence_status": "SYNTHETIC_DOCUMENTS_ONLY",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "insurance_claim_id": "ICL00008",
+    "insurance_policy_id": "POL00024",
+    "customer_id": "CUS00054",
+    "claim_type": "ACCIDENT",
+    "claim_amount_inr": "32864.00",
+    "claim_status": "SUBMITTED_SIMULATION",
+    "submission_mode": "NOT_SENT_TO_INSURER",
+    "evidence_status": "SYNTHETIC_DOCUMENTS_ONLY",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "insurance_claim_id": "ICL00009",
+    "insurance_policy_id": "POL00026",
+    "customer_id": "CUS00059",
+    "claim_type": "VEHICLE_REPAIR",
+    "claim_amount_inr": "88032.00",
+    "claim_status": "SUBMITTED_SIMULATION",
+    "submission_mode": "NOT_SENT_TO_INSURER",
+    "evidence_status": "SYNTHETIC_DOCUMENTS_ONLY",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "insurance_claim_id": "ICL00010",
+    "insurance_policy_id": "POL00030",
+    "customer_id": "CUS00067",
+    "claim_type": "VEHICLE_REPAIR",
+    "claim_amount_inr": "31929.00",
+    "claim_status": "DOCUMENTS_PENDING",
+    "submission_mode": "NOT_SENT_TO_INSURER",
+    "evidence_status": "SYNTHETIC_DOCUMENTS_ONLY",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "insurance_claim_id": "ICL00011",
+    "insurance_policy_id": "POL00033",
+    "customer_id": "CUS00074",
+    "claim_type": "VEHICLE_REPAIR",
+    "claim_amount_inr": "120378.00",
+    "claim_status": "SUBMITTED_SIMULATION",
+    "submission_mode": "NOT_SENT_TO_INSURER",
+    "evidence_status": "SYNTHETIC_DOCUMENTS_ONLY",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "insurance_claim_id": "ICL00012",
+    "insurance_policy_id": "POL00034",
+    "customer_id": "CUS00077",
+    "claim_type": "HOSPITALIZATION",
+    "claim_amount_inr": "124150.00",
+    "claim_status": "DRAFT_FIXTURE",
+    "submission_mode": "NOT_SENT_TO_INSURER",
+    "evidence_status": "SYNTHETIC_DOCUMENTS_ONLY",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "insurance_claim_id": "ICL00013",
+    "insurance_policy_id": "POL00036",
+    "customer_id": "CUS00082",
+    "claim_type": "ACCIDENT",
+    "claim_amount_inr": "35794.00",
+    "claim_status": "DOCUMENTS_PENDING",
+    "submission_mode": "NOT_SENT_TO_INSURER",
+    "evidence_status": "SYNTHETIC_DOCUMENTS_ONLY",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "insurance_claim_id": "ICL00014",
+    "insurance_policy_id": "POL00037",
+    "customer_id": "CUS00083",
+    "claim_type": "ACCIDENT",
+    "claim_amount_inr": "114313.00",
+    "claim_status": "SUBMITTED_SIMULATION",
+    "submission_mode": "NOT_SENT_TO_INSURER",
+    "evidence_status": "SYNTHETIC_DOCUMENTS_ONLY",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "insurance_claim_id": "ICL00015",
+    "insurance_policy_id": "POL00040",
+    "customer_id": "CUS00086",
+    "claim_type": "REIMBURSEMENT",
+    "claim_amount_inr": "83369.00",
+    "claim_status": "SUBMISSION_READY",
+    "submission_mode": "NOT_SENT_TO_INSURER",
+    "evidence_status": "SYNTHETIC_DOCUMENTS_ONLY",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "insurance_claim_id": "ICL00016",
+    "insurance_policy_id": "POL00048",
+    "customer_id": "CUS00107",
+    "claim_type": "HOSPITALIZATION",
+    "claim_amount_inr": "9659.00",
+    "claim_status": "SUBMITTED_SIMULATION",
+    "submission_mode": "NOT_SENT_TO_INSURER",
+    "evidence_status": "SYNTHETIC_DOCUMENTS_ONLY",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "insurance_claim_id": "ICL00017",
+    "insurance_policy_id": "POL00050",
+    "customer_id": "CUS00114",
+    "claim_type": "HOSPITALIZATION",
+    "claim_amount_inr": "50945.00",
+    "claim_status": "DRAFT_FIXTURE",
+    "submission_mode": "NOT_SENT_TO_INSURER",
+    "evidence_status": "SYNTHETIC_DOCUMENTS_ONLY",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "insurance_claim_id": "ICL00018",
+    "insurance_policy_id": "POL00052",
+    "customer_id": "CUS00118",
+    "claim_type": "REIMBURSEMENT",
+    "claim_amount_inr": "111699.00",
+    "claim_status": "UNDER_REVIEW_SIMULATION",
+    "submission_mode": "NOT_SENT_TO_INSURER",
+    "evidence_status": "SYNTHETIC_DOCUMENTS_ONLY",
+    "data_class": "SYNTHETIC_FIXTURE"
+  }
+]

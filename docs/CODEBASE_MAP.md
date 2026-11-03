@@ -1,132 +1,178 @@
-# Codebase Map — Iteration 00
+# Codebase Map — Actual Source and Runtime Flow
 
-> Reconciled against the current local tree on 2026-11-03. This document describes the actual files and call paths, not future target modules.
+**Map version:** 2.0 · **Last reconciled:** 2026-11-03
+This document describes files and symbols that exist in the repository now. Future architecture belongs in `ARCHITECTURE.md` and `PROJECT_MEMORY.md` until implemented.
 
-## 1. Runtime call path
+## 1. Layer boundaries
 
-```text
-HTTP request
-  -> FastAPI app (`src/myeconomy/main.py`)
-  -> versioned router (`src/myeconomy/api/routes.py`)
-  -> Pydantic request validation (`src/myeconomy/api/schemas.py`)
-  -> application use case (`src/myeconomy/application/cashflow.py`)
-  -> pure domain calculator (`src/myeconomy/domain/cashflow.py`)
-  -> exact money helpers (`src/myeconomy/domain/money.py`)
-  -> summary mapped into response DTO
-  -> HTTP JSON response
-```
+`HTTP API -> application use cases -> domain rules` and `application -> infrastructure adapters / persistence`.
 
-The current service is stateless. Request data is not persisted. There are no repository/database/provider adapters in the present source tree.
+- `domain/` is framework-independent: no FastAPI, SQLAlchemy session, LLM SDK or provider API.
+- `application/` owns use-case orchestration, transaction boundaries and audit calls.
+- `infrastructure/` owns SQLAlchemy, security primitives, environment/database setup and email transport.
+- `api/` owns HTTP schema, auth dependencies, route mapping and response models.
+- `main.py` is the composition root.
 
-## 2. Root and operational files
-
-| Path | Purpose | Notes |
-|---|---|---|
-| `README.md` | Project intro, present scope, local run/test instructions | Keep current implementation boundary explicit. |
-| `AGENTS.md` | Contributor/AI operating rules | Read first for future changes. |
-| `pyproject.toml` | Python packaging, dependencies, test/lint configuration | Python `>=3.12,<3.14`; FastAPI, Uvicorn, Pydantic; dev tools pytest/httpx/ruff. |
-| `Makefile` | Short install/test/lint/format/run targets | Convenience only; commands remain reproducible manually. |
-| `Dockerfile` | Minimal Python 3.12 container build | Does not include DB or migrations because none exist yet. |
-| `.env.example` | Non-secret environment sample | Iteration 00 has no secret-backed integrations. |
-| `.gitignore` | Ignores venv, caches, `.env`, sqlite files, OS metadata | Extend when build artifacts are added. |
-| `.github/workflows/ci.yml` | GitHub Actions CI on main, iteration branches and PRs | Installs package, runs Ruff and pytest. |
-
-## 3. Python package map
+## 2. Application entry and composition
 
 ### `src/myeconomy/main.py`
+- `create_app()` constructs FastAPI, installs stable `ApplicationError` handling, registers cashflow and identity/trust routers, and exposes liveness/readiness routes.
+- `GET /health/live` confirms process liveness only.
+- `GET /health/ready` executes a DB probe and checks `alembic_version`; readiness is 503 when schema is missing/unavailable.
+- `app = create_app()` is the ASGI import target.
 
-Composition root. `create_app()` creates FastAPI metadata, mounts the API router, and defines:
-- `GET /health/live`: process liveness, returns `{"status":"alive"}`.
-- `GET /health/ready`: currently static readiness, returns `{"status":"ready"}` because there are no external dependencies yet.
-
-`app = create_app()` exports the ASGI application used by Uvicorn and tests. When a database/queue is added, readiness must perform bounded dependency checks; liveness should remain a process-health signal.
-
-### `src/myeconomy/api/routes.py`
-
-HTTP adapter. Creates router with prefix `/api/v1` and exposes:
-- `POST /cashflow/analyze` with `CashflowAnalysisRequest` and `CashflowAnalysisResponse`.
-
-It maps validated Pydantic entry DTOs into domain `CashflowEntry` values, calls `run_cashflow_analysis`, and maps the returned immutable summary into response DTOs. Keep route code thin; no financial formulas or persistence logic should be added here.
-
-### `src/myeconomy/api/schemas.py`
-
-Boundary validation and transport contracts:
-- `CashflowEntryInput`: date, positive Decimal amount, category, essential flag; rejects unknown fields and trims category whitespace.
-- `CashflowAnalysisRequest`: 3-letter currency code, inclusive period, income/expense arrays capped at 5,000 each; rejects unknown fields, reversed periods, entries outside the period, unsupported currencies and amounts with excess currency precision.
-- `CategoryTotalResponse` and `CashflowAnalysisResponse`: response representation.
-
-`calculation_note` explicitly says net cashflow is based only on submitted entries and is not a verified bank balance or complete savings measure. Currency validation delegates to `domain.money.currency_exponent`. `quantize_amount` is also used at the request boundary to reject precision loss.
-
-### `src/myeconomy/application/cashflow.py`
-
-Application use case. `run_cashflow_analysis(...)` currently delegates to the pure domain `analyze_cashflow`. This layer is intentionally thin now; future orchestration belongs here (authorization, repositories, unit-of-work, domain services), while invariants remain in domain types/functions.
+## 3. Domain layer
 
 ### `src/myeconomy/domain/money.py`
-
-Exact monetary primitives:
-- `CURRENCY_EXPONENTS`: curated registry for AED, AUD, BHD, CAD, CHF, EUR, GBP, INR, JPY, KWD, OMR, QAR, SAR, SGD and USD.
-- `MoneyInputError`: controlled invalid-money exception.
-- `currency_exponent(currency)`: normalizes code to uppercase and rejects unsupported codes.
-- `quantize_amount(amount, currency)`: finite positive amount validation, currency minor-unit normalization with `Decimal`/`ROUND_HALF_UP`, and rejection if normalization would change the input.
-- `quantize_total(amount, currency)`: rounds calculated totals to currency precision.
-
-This is not a complete live ISO-4217 registry. Check an authoritative current source before adding currencies. Never use float for monetary arithmetic. FX conversion is not implemented.
+- `MoneyInputError`: invalid monetary representation.
+- `currency_exponent(currency)`: retrieves supported currency precision from the curated registry.
+- `quantize_amount(...)`, `quantize_total(...)`: quantize with `Decimal` and the currency exponent. No FX conversion.
 
 ### `src/myeconomy/domain/cashflow.py`
+- `CashflowEntry`, `CategoryTotal`, `CashflowSummary`: immutable domain records.
+- `_validate_entries(...)`: validates period bounds, positive finite amounts, supported currency precision and normalized category.
+- `analyze_cashflow(...)`: pure analysis function. Computes income, expense, net cashflow, essential/discretionary amounts, category totals and net-cashflow/income ratio.
 
-Pure calculation core:
-- `CashflowEntry`: immutable input record (`occurred_on`, `amount`, `category`, `essential`).
-- `CategoryTotal`: category and aggregate amount.
-- `CashflowSummary`: immutable output values.
-- `_validate_entries(...)`: enforces inclusive period boundaries, currency precision, positive finite money and nonblank normalized categories.
-- `analyze_cashflow(...)`: validates dates and entries; computes income, expenses, essential/discretionary expense totals, net cashflow, category totals and sorted categories.
+### `src/myeconomy/domain/consent.py`
+- `ConsentPurpose`, `DataCategory`, `RecipientType`: typed vocabulary for authorized purposes, data classes and recipient classes.
+- `_ALLOWED_CATEGORIES`: purpose-to-category allowlist; Commons/research exclude raw transactions, contact and support documents.
+- `_REQUIRED_RECIPIENT_TYPES`: deterministic required recipient kind per purpose.
+- `validate_consent_scope(...)`: rejects wrong recipient type, empty/duplicate categories, disallowed categories, invalid recipient identifiers and Commons target other than `commons`.
+- `ConsentTerms`, `_CONSENT_TERMS`: user-facing versioned summaries and revocation notes.
+- `get_consent_terms`, `list_consent_terms`, `allowed_categories_for_purpose`, `required_recipient_type`: policy lookups.
 
-Category ordering is descending total; ties use case-insensitive category ordering. The `savings_rate_percent` field currently computes `net_cashflow / income_total * 100`, quantized to two decimal places; it can be negative and is `None` when income is zero. This is a **net-cashflow-to-income ratio**, not a verified household savings rate. Future API/domain cleanup should consider renaming it to avoid implying actual savings; do so through an explicit compatibility/versioning decision.
+### `src/myeconomy/domain/errors.py`
+Stable application error classes and safe public codes/status: conflict (409), authentication (401), not found (404), authorization (403), invalid consent scope (422), consent required (403), invalid verification (400), rate limited (429), service unavailable (503).
 
-### Package initializers
+## 4. Application layer
 
-`src/myeconomy/__init__.py`, `api/__init__.py`, `application/__init__.py`, `domain/__init__.py` contain package docstrings only. The domain initializer states the desired dependency rule: no FastAPI or infrastructure dependency.
+### `src/myeconomy/application/cashflow.py`
+- `run_cashflow_analysis(...)`: adapts API request entries into domain records and returns the pure summary.
 
-## 4. Test map
+### `src/myeconomy/application/identity.py`
+- `normalize_email(...)`: trim + casefold email for account matching.
+- `register_user(...)`: validate name, Argon2-hash password, persist user, append registration audit event.
+- `authenticate_user(...)`: generic failure path, dummy-hash behavior from security adapter, optional password hash rehash, audit and commit.
+- `create_session(...)`: generate opaque token, persist only digest, 12-hour expiry, audit and commit.
+- `resolve_session(...)`: hash bearer token, reject missing/revoked/expired/inactive, update last-used timestamp.
+- `revoke_session(...)`: revoke one user's session and append audit event.
+- `issue_email_verification_challenge(...)`: issue one-time token, revoke previous pending token, 24-hour expiry, 60-second resend cooldown and audit.
+- `verify_email_address(...)`: validate digest, expiry, single-use and user state; mark email verified, revoke other active challenges and audit.
 
-| Path | Coverage |
-|---|---|
-| `tests/test_cashflow_domain.py` | Totals/category order, zero-income/deficit, out-of-period rejection, JPY zero-decimal precision, INR excess-precision rejection, KWD three-decimal precision. |
-| `tests/test_api.py` | Health endpoints, successful analysis endpoint, period validation response, unknown-field rejection, category whitespace normalization. |
+### `src/myeconomy/application/households.py`
+- `require_household_membership(...)`: resource-level membership guard; hides household existence from nonmembers.
+- `create_household(...)`: create household and owner membership atomically with audit.
+- `list_households(...)`: lists only memberships for current user.
+- `create_household_invitation(...)`: owner-only; normalized email, duplicate/active checks, 72-hour token, hashed token storage and audit.
+- `accept_household_invitation(...)`: single-use, unexpired, nonrevoked token; compares verified account email and creates member role.
+- `revoke_household_invitation(...)`: owner-only invitation revocation.
+- `list_household_members(...)`: member-only limited membership metadata; records audit event. API serializer intentionally omits email.
 
-Recorded baseline: `PYTHONPATH=src pytest -q` -> 11 passed. Re-run tests in the current environment before relying on that historical result.
+### `src/myeconomy/application/consents.py`
+- `effective_status(...)`: active/revoked/expired derived state.
+- `create_consent(...)`: checks current terms version, purpose/category/recipient policy, bounded expiry and household membership when applicable; persists grant and audit.
+- `list_consents(...)`: only the current user's grants.
+- `revoke_consent(...)`: owner-scoped revocation; idempotent.
+- `has_active_consent(...)`: exact match of subject, purpose, category, recipient and nonexpired active grant.
+- `require_active_consent(...)`: raises if scope missing. Every future protected data service must call this inside the same transaction as the protected read/write. It is not automatically applied to nonexistent future services yet.
 
-## 5. Documentation map
+### `src/myeconomy/application/audit.py`
+- `record_audit_event(...)`: central append-only event writer; call sites must never send raw passwords, tokens, documents or unrelated PII.
 
-| Path | Responsibility |
-|---|---|
-| `docs/PROJECT_MEMORY.md` | Durable product vision, complete feature context, architecture intent, trust boundaries, demo and source-of-truth rules. |
-| `docs/CODEBASE_MAP.md` | This file: actual code responsibilities and runtime path. |
-| `docs/FEATURE_CATALOG.md` | Per-feature status ledger (implemented/planned/not started). |
-| `docs/PROJECT_STATUS.md` | Dated factual status and next engineering slice. |
-| `docs/AI_COLLABORATION_PROTOCOL.md` | How future AI sessions inspect, change and document the repo. |
-| `docs/PRODUCT_VISION.md` | Product-facing mission, features, Commons, value model and demo framing. |
-| `docs/ARCHITECTURE.md` | Logical module boundaries, request flow, persistence/AI/security target patterns and implementation limit. |
-| `docs/ENGINEERING_STANDARDS.md` | Non-negotiable coding, money, AI, failure and Git rules. |
-| `docs/ITERATION_PLAN.md` | Iteration sequence and acceptance approach. |
-| `docs/VERIFICATION.md` | Previously recorded commands, tests, smoke test and environment limitations. |
-| `docs/decisions/ADR-0001-modular-monolith.md` | Decision record for starting with a modular monolith. |
+## 5. Infrastructure layer
 
-## 6. Current dependency direction
+### `src/myeconomy/infrastructure/database.py`
+- Loads `.env`, builds SQLAlchemy engine from `DATABASE_URL`, enables SQLite foreign keys, and provides request-scoped `get_db()` sessions.
+- SQLite is the local default; PostgreSQL uses `psycopg`.
 
-`api -> application -> domain`.
+### `src/myeconomy/infrastructure/models.py`
+SQLAlchemy `Base` tables:
+- `User`: normalized email, password hash, display name, email verification flag, active flag.
+- `AuthSession`: user FK, token digest, created/expiry/revocation/last-used timestamps.
+- `EmailVerificationChallenge`: user FK, token digest, created/expiry/consumed/revoked fields; partial unique active challenge per user.
+- `Household`: name, creator, creation timestamp.
+- `HouseholdMembership`: unique household/user pair and constrained role.
+- `HouseholdInvitation`: recipient email, token digest, inviter, expiry/accept/revoke state; partial unique active invitation per household/email.
+- `ConsentGrant`: subject, purpose, JSON categories, recipient type/id, terms version, status and lifecycle timestamps.
+- `AuditEvent`: pseudonymous actor/household IDs, action, subject, JSON details and timestamp; ORM hooks reject update/delete.
 
-`domain` must not import `api`, FastAPI, Pydantic, database clients, queues, LLM SDKs or external provider SDKs. Future infrastructure adapters implement application-defined ports and are wired at the composition root. Do not allow one domain module to reach directly into another module's persistence implementation.
+### `src/myeconomy/infrastructure/security.py`
+- `hash_password`, `verify_password`, `password_hash_needs_rehash`: Argon2 password primitives and dummy hash path.
+- `issue_session_token`: high-entropy opaque token.
+- `hash_session_token`: SHA-256 digest for high-entropy opaque tokens/challenges.
 
-## 7. Gaps / next refactor candidates
+### `src/myeconomy/infrastructure/email_delivery.py`
+- `EmailDeliveryFailure`: transport/configuration error.
+- `send_verification_email(...)`: development-only log backend (rejects in non-development/test) or SMTP sender using environment-configured credentials; logs no SMTP secrets. SMTP must be verified with a live provider before production.
 
-1. The current currency registry is curated and static; make its supported scope/version explicit and add authoritative update tests before expanding it.
-2. `savings_rate_percent` naming can mislead; consider a versioned rename to `net_cashflow_rate_percent`.
-3. `GET /health/ready` is static; add bounded dependency probes when external dependencies exist.
-4. Error response structure is currently FastAPI/Pydantic default; define stable public error codes before clients depend on it.
-5. There is no database, authentication, tenancy, consent, audit log, rate limit, idempotency, pagination or import provenance yet.
-6. Expand tests for malformed numeric input, extremely large totals, duplicate entries, category normalization edge cases, date boundaries and response schema stability.
+## 6. API layer and public endpoints
 
-## 8. How to inspect this code in a new session
+### `src/myeconomy/api/dependencies.py`
+- `AuthContext`: verified session/user pair.
+- `require_authentication(...)`: parses bearer token and resolves session.
+- `require_verified_authentication(...)`: rejects unverified accounts before household/consent operations.
 
-Run `find src tests -type f -maxdepth 5 -print`, read all current source and tests, then run `pytest`, `ruff check src tests` and `ruff format --check src tests`. Update this map whenever a module, public route, domain invariant or test responsibility changes.
+### `src/myeconomy/api/identity_schemas.py`
+Pydantic v2 schemas for register/login, email verification, user/session response, household and invitation payloads, member metadata, consent grant/check/terms. `extra='forbid'` is used on input payloads; passwords use `SecretStr`.
+
+### `src/myeconomy/api/identity_routes.py`
+- Registration/login/logout/me and email verify/resend.
+- Household create/list, invite/accept/revoke and member list.
+- Public versioned consent terms; authenticated consent grant/list/revoke/check.
+- Maps application services and models to response schemas; trust routes require verified identity except terms.
+
+### `src/myeconomy/api/routes.py`, `schemas.py`
+Cashflow request schemas and `/api/v1/cashflow/analyze` route.
+
+## 7. Database migrations
+
+- `alembic.ini`, `migrations/env.py`, `migrations/script.py.mako`: Alembic config and metadata environment.
+- `migrations/versions/8ec10b31a771_identity_consent_and_household_trust_.py`: initial identity/session/household/invitation/consent/audit schema and immutable audit triggers.
+- `migrations/versions/3b2e7f4a9c10_email_verification_challenges.py`: one-time verification challenge table and partial unique active-challenge index.
+
+Run `alembic upgrade head` as a controlled release step. Do not run migrations concurrently from each production app replica.
+
+## 8. Operational verification scripts
+
+### `scripts/verify_postgres_audit.py`
+- Runs only when `DATABASE_URL` targets PostgreSQL.
+- Inserts one synthetic CI probe event, verifies database-trigger UPDATE and DELETE rejection, then confirms the original event remains unchanged.
+- The CI PostgreSQL job runs it after `alembic upgrade head`; it is not a production endpoint or application runtime feature.
+
+## 9. Tests
+
+- `tests/conftest.py`: isolated in-memory SQLite DB, migration marker, audit triggers, dependency override and captured verification-email adapter.
+- `tests/test_cashflow_domain.py`: deterministic money/cashflow rules.
+- `tests/test_api.py`: cashflow API validation and health/readiness.
+- `tests/test_identity.py`: password/session hashes, generic login failures, protected routes, logout, expiry, verification, replay and resend cooldown.
+- `tests/test_email_delivery.py`: explicit development-only log mode, production refusal, SMTP config/STARTTLS/message contract and secret-safe logging.
+- `tests/test_households.py`: invitation binding, role checks, replay/expiry/revoke, cross-account isolation, membership privacy and no implied consent.
+- `tests/test_consents.py`: purpose/category restrictions, revocation, membership prerequisite, expiry, ownership, terms and audit immutability.
+
+## 10. Runtime path examples
+
+### Register and verify
+
+`POST /auth/register` -> `register_user` -> `create_session` -> `issue_email_verification_challenge` -> `send_verification_email` -> client receives session and verification message -> `POST /auth/verify-email` -> `verify_email_address` -> `User.email_verified = true`.
+
+### Household membership
+
+Verified owner -> `create_household` -> owner membership -> create invitation -> invitee registers/logs in and verifies email -> accept one-time invitation -> membership created. No financial records are read or shared by this flow.
+
+### Consent lifecycle
+
+Verified user -> read current terms -> submit exact version/purpose/categories/recipient/confirmation -> `create_consent` validates domain allowlists and expiry -> audit. Revocation flips status and audit; `has_active_consent` denies future checks. Future data readers must enforce in the same transaction.
+
+### Current cashflow
+
+HTTP request -> Pydantic validation -> `run_cashflow_analysis` -> pure `analyze_cashflow` domain -> JSON response. No personal record is stored.
+
+## 11. Known boundaries
+
+No bank connector, transaction persistence, budget goals/forecast, benefit/provider source, claim workflow, agent runtime, RAG/vector/graph engine, Commons matcher, payments, sponsor integration or Meta model gateway exists in code today. These belong to later iterations and must never be described as implemented yet.
+
+## 5. Synthetic demo data layer (2026-11-03)
+
+`demo_data/synthetic_v1/` is a data/fixture layer, not a runtime service. It contains the deterministic generator and overlay scripts; 42 related CSV/JSON/JSONL entity exports; PostgreSQL schema/seed; SQLite database; synthetic invoice/offer source documents; API scenario JSON; schema catalog, data dictionary, business rules, regulatory matrix and validation reports. See `docs/SYNTHETIC_DEMO_DATASET.md` and `docs/DEMO_PLAYBOOK.md` before changing it.
+
+The canonical reproduction path is: generate base records -> apply demo scenario overrides -> rebuild SQLite -> run independent validator. When data changes, regenerate all row exports and SQL/SQLite representations together. Never edit only one serialization. All rows remain `SYNTHETIC_FIXTURE`; no dataset fixture may be loaded into a real partner, payment or production customer environment.

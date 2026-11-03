@@ -1,0 +1,1162 @@
+[
+  {
+    "match_id": "MAT00001",
+    "customer_id": "CUS00006",
+    "opportunity_id": "OPP00012",
+    "match_score": 86,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00002",
+    "customer_id": "CUS00006",
+    "opportunity_id": "OPP00032",
+    "match_score": 87,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00003",
+    "customer_id": "CUS00006",
+    "opportunity_id": "OPP00052",
+    "match_score": 91,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00004",
+    "customer_id": "CUS00006",
+    "opportunity_id": "OPP00072",
+    "match_score": 87,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00005",
+    "customer_id": "CUS00007",
+    "opportunity_id": "OPP00007",
+    "match_score": 89,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00006",
+    "customer_id": "CUS00007",
+    "opportunity_id": "OPP00010",
+    "match_score": 93,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00007",
+    "customer_id": "CUS00007",
+    "opportunity_id": "OPP00027",
+    "match_score": 90,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00008",
+    "customer_id": "CUS00007",
+    "opportunity_id": "OPP00033",
+    "match_score": 97,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00009",
+    "customer_id": "CUS00007",
+    "opportunity_id": "OPP00047",
+    "match_score": 85,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00010",
+    "customer_id": "CUS00012",
+    "opportunity_id": "OPP00010",
+    "match_score": 95,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00011",
+    "customer_id": "CUS00012",
+    "opportunity_id": "OPP00070",
+    "match_score": 95,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00012",
+    "customer_id": "CUS00013",
+    "opportunity_id": "OPP00004",
+    "match_score": 97,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00013",
+    "customer_id": "CUS00013",
+    "opportunity_id": "OPP00064",
+    "match_score": 87,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00014",
+    "customer_id": "CUS00015",
+    "opportunity_id": "OPP00016",
+    "match_score": 97,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00015",
+    "customer_id": "CUS00015",
+    "opportunity_id": "OPP00033",
+    "match_score": 94,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00016",
+    "customer_id": "CUS00015",
+    "opportunity_id": "OPP00056",
+    "match_score": 91,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00017",
+    "customer_id": "CUS00015",
+    "opportunity_id": "OPP00073",
+    "match_score": 89,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00018",
+    "customer_id": "CUS00015",
+    "opportunity_id": "OPP00076",
+    "match_score": 94,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00019",
+    "customer_id": "CUS00017",
+    "opportunity_id": "OPP00016",
+    "match_score": 96,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00020",
+    "customer_id": "CUS00017",
+    "opportunity_id": "OPP00019",
+    "match_score": 87,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00021",
+    "customer_id": "CUS00017",
+    "opportunity_id": "OPP00056",
+    "match_score": 91,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00022",
+    "customer_id": "CUS00017",
+    "opportunity_id": "OPP00059",
+    "match_score": 85,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00023",
+    "customer_id": "CUS00017",
+    "opportunity_id": "OPP00076",
+    "match_score": 89,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00024",
+    "customer_id": "CUS00025",
+    "opportunity_id": "OPP00010",
+    "match_score": 91,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00025",
+    "customer_id": "CUS00025",
+    "opportunity_id": "OPP00030",
+    "match_score": 85,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00026",
+    "customer_id": "CUS00025",
+    "opportunity_id": "OPP00070",
+    "match_score": 85,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00027",
+    "customer_id": "CUS00029",
+    "opportunity_id": "OPP00033",
+    "match_score": 90,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00028",
+    "customer_id": "CUS00029",
+    "opportunity_id": "OPP00073",
+    "match_score": 90,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00029",
+    "customer_id": "CUS00035",
+    "opportunity_id": "OPP00010",
+    "match_score": 97,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00030",
+    "customer_id": "CUS00035",
+    "opportunity_id": "OPP00017",
+    "match_score": 89,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00031",
+    "customer_id": "CUS00035",
+    "opportunity_id": "OPP00057",
+    "match_score": 90,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00032",
+    "customer_id": "CUS00035",
+    "opportunity_id": "OPP00070",
+    "match_score": 93,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00033",
+    "customer_id": "CUS00035",
+    "opportunity_id": "OPP00077",
+    "match_score": 86,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00034",
+    "customer_id": "CUS00038",
+    "opportunity_id": "OPP00002",
+    "match_score": 95,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00035",
+    "customer_id": "CUS00038",
+    "opportunity_id": "OPP00025",
+    "match_score": 95,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00036",
+    "customer_id": "CUS00038",
+    "opportunity_id": "OPP00042",
+    "match_score": 87,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00037",
+    "customer_id": "CUS00038",
+    "opportunity_id": "OPP00045",
+    "match_score": 95,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00038",
+    "customer_id": "CUS00038",
+    "opportunity_id": "OPP00062",
+    "match_score": 88,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00039",
+    "customer_id": "CUS00040",
+    "opportunity_id": "OPP00007",
+    "match_score": 91,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00040",
+    "customer_id": "CUS00040",
+    "opportunity_id": "OPP00027",
+    "match_score": 95,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00041",
+    "customer_id": "CUS00040",
+    "opportunity_id": "OPP00033",
+    "match_score": 96,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00042",
+    "customer_id": "CUS00040",
+    "opportunity_id": "OPP00047",
+    "match_score": 92,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00043",
+    "customer_id": "CUS00040",
+    "opportunity_id": "OPP00067",
+    "match_score": 97,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00044",
+    "customer_id": "CUS00043",
+    "opportunity_id": "OPP00002",
+    "match_score": 95,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00045",
+    "customer_id": "CUS00043",
+    "opportunity_id": "OPP00006",
+    "match_score": 95,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00046",
+    "customer_id": "CUS00043",
+    "opportunity_id": "OPP00012",
+    "match_score": 90,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00047",
+    "customer_id": "CUS00043",
+    "opportunity_id": "OPP00026",
+    "match_score": 94,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00048",
+    "customer_id": "CUS00043",
+    "opportunity_id": "OPP00032",
+    "match_score": 88,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00049",
+    "customer_id": "CUS00046",
+    "opportunity_id": "OPP00019",
+    "match_score": 86,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00050",
+    "customer_id": "CUS00046",
+    "opportunity_id": "OPP00059",
+    "match_score": 91,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00051",
+    "customer_id": "CUS00046",
+    "opportunity_id": "OPP00063",
+    "match_score": 85,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00052",
+    "customer_id": "CUS00046",
+    "opportunity_id": "OPP00079",
+    "match_score": 95,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00053",
+    "customer_id": "CUS00049",
+    "opportunity_id": "OPP00025",
+    "match_score": 85,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00054",
+    "customer_id": "CUS00049",
+    "opportunity_id": "OPP00045",
+    "match_score": 88,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00055",
+    "customer_id": "CUS00049",
+    "opportunity_id": "OPP00057",
+    "match_score": 93,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00056",
+    "customer_id": "CUS00049",
+    "opportunity_id": "OPP00058",
+    "match_score": 89,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00057",
+    "customer_id": "CUS00049",
+    "opportunity_id": "OPP00065",
+    "match_score": 94,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00058",
+    "customer_id": "CUS00050",
+    "opportunity_id": "OPP00011",
+    "match_score": 87,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00059",
+    "customer_id": "CUS00050",
+    "opportunity_id": "OPP00012",
+    "match_score": 95,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00060",
+    "customer_id": "CUS00050",
+    "opportunity_id": "OPP00031",
+    "match_score": 95,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00061",
+    "customer_id": "CUS00050",
+    "opportunity_id": "OPP00032",
+    "match_score": 88,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00062",
+    "customer_id": "CUS00050",
+    "opportunity_id": "OPP00041",
+    "match_score": 85,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00063",
+    "customer_id": "CUS00053",
+    "opportunity_id": "OPP00007",
+    "match_score": 91,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00064",
+    "customer_id": "CUS00053",
+    "opportunity_id": "OPP00023",
+    "match_score": 88,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00065",
+    "customer_id": "CUS00053",
+    "opportunity_id": "OPP00027",
+    "match_score": 88,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00066",
+    "customer_id": "CUS00053",
+    "opportunity_id": "OPP00047",
+    "match_score": 85,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00067",
+    "customer_id": "CUS00053",
+    "opportunity_id": "OPP00063",
+    "match_score": 89,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00068",
+    "customer_id": "CUS00055",
+    "opportunity_id": "OPP00025",
+    "match_score": 87,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00069",
+    "customer_id": "CUS00055",
+    "opportunity_id": "OPP00045",
+    "match_score": 96,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00070",
+    "customer_id": "CUS00055",
+    "opportunity_id": "OPP00065",
+    "match_score": 88,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00071",
+    "customer_id": "CUS00057",
+    "opportunity_id": "OPP00007",
+    "match_score": 88,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00072",
+    "customer_id": "CUS00057",
+    "opportunity_id": "OPP00010",
+    "match_score": 93,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00073",
+    "customer_id": "CUS00057",
+    "opportunity_id": "OPP00027",
+    "match_score": 95,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00074",
+    "customer_id": "CUS00057",
+    "opportunity_id": "OPP00047",
+    "match_score": 93,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00075",
+    "customer_id": "CUS00057",
+    "opportunity_id": "OPP00050",
+    "match_score": 91,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00076",
+    "customer_id": "CUS00061",
+    "opportunity_id": "OPP00011",
+    "match_score": 92,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00077",
+    "customer_id": "CUS00061",
+    "opportunity_id": "OPP00031",
+    "match_score": 87,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00078",
+    "customer_id": "CUS00061",
+    "opportunity_id": "OPP00033",
+    "match_score": 94,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00079",
+    "customer_id": "CUS00061",
+    "opportunity_id": "OPP00063",
+    "match_score": 94,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00080",
+    "customer_id": "CUS00061",
+    "opportunity_id": "OPP00073",
+    "match_score": 97,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00081",
+    "customer_id": "CUS00066",
+    "opportunity_id": "OPP00010",
+    "match_score": 87,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00082",
+    "customer_id": "CUS00066",
+    "opportunity_id": "OPP00060",
+    "match_score": 89,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00083",
+    "customer_id": "CUS00066",
+    "opportunity_id": "OPP00070",
+    "match_score": 92,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00084",
+    "customer_id": "CUS00068",
+    "opportunity_id": "OPP00006",
+    "match_score": 88,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00085",
+    "customer_id": "CUS00068",
+    "opportunity_id": "OPP00026",
+    "match_score": 88,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00086",
+    "customer_id": "CUS00068",
+    "opportunity_id": "OPP00058",
+    "match_score": 89,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00087",
+    "customer_id": "CUS00068",
+    "opportunity_id": "OPP00066",
+    "match_score": 96,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00088",
+    "customer_id": "CUS00068",
+    "opportunity_id": "OPP00078",
+    "match_score": 96,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00089",
+    "customer_id": "CUS00092",
+    "opportunity_id": "OPP00008",
+    "match_score": 93,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00090",
+    "customer_id": "CUS00092",
+    "opportunity_id": "OPP00019",
+    "match_score": 91,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00091",
+    "customer_id": "CUS00092",
+    "opportunity_id": "OPP00028",
+    "match_score": 89,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00092",
+    "customer_id": "CUS00092",
+    "opportunity_id": "OPP00048",
+    "match_score": 97,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00093",
+    "customer_id": "CUS00092",
+    "opportunity_id": "OPP00059",
+    "match_score": 91,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00094",
+    "customer_id": "CUS00094",
+    "opportunity_id": "OPP00003",
+    "match_score": 91,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00095",
+    "customer_id": "CUS00094",
+    "opportunity_id": "OPP00043",
+    "match_score": 87,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00096",
+    "customer_id": "CUS00094",
+    "opportunity_id": "OPP00063",
+    "match_score": 97,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00097",
+    "customer_id": "CUS00108",
+    "opportunity_id": "OPP00008",
+    "match_score": 96,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00098",
+    "customer_id": "CUS00108",
+    "opportunity_id": "OPP00010",
+    "match_score": 97,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00099",
+    "customer_id": "CUS00108",
+    "opportunity_id": "OPP00025",
+    "match_score": 94,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00100",
+    "customer_id": "CUS00108",
+    "opportunity_id": "OPP00028",
+    "match_score": 92,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00101",
+    "customer_id": "CUS00108",
+    "opportunity_id": "OPP00045",
+    "match_score": 87,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00102",
+    "customer_id": "CUS00110",
+    "opportunity_id": "OPP00008",
+    "match_score": 94,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00103",
+    "customer_id": "CUS00110",
+    "opportunity_id": "OPP00016",
+    "match_score": 88,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00104",
+    "customer_id": "CUS00110",
+    "opportunity_id": "OPP00028",
+    "match_score": 89,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00105",
+    "customer_id": "CUS00110",
+    "opportunity_id": "OPP00048",
+    "match_score": 94,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00106",
+    "customer_id": "CUS00110",
+    "opportunity_id": "OPP00056",
+    "match_score": 86,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00107",
+    "customer_id": "CUS00111",
+    "opportunity_id": "OPP00033",
+    "match_score": 90,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00108",
+    "customer_id": "CUS00111",
+    "opportunity_id": "OPP00073",
+    "match_score": 87,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00109",
+    "customer_id": "CUS00114",
+    "opportunity_id": "OPP00007",
+    "match_score": 97,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00110",
+    "customer_id": "CUS00114",
+    "opportunity_id": "OPP00027",
+    "match_score": 89,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00111",
+    "customer_id": "CUS00114",
+    "opportunity_id": "OPP00035",
+    "match_score": 92,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00112",
+    "customer_id": "CUS00114",
+    "opportunity_id": "OPP00047",
+    "match_score": 85,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00113",
+    "customer_id": "CUS00114",
+    "opportunity_id": "OPP00067",
+    "match_score": 91,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00114",
+    "customer_id": "CUS00120",
+    "opportunity_id": "OPP00004",
+    "match_score": 96,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00115",
+    "customer_id": "CUS00120",
+    "opportunity_id": "OPP00041",
+    "match_score": 97,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "match_id": "MAT00116",
+    "customer_id": "CUS00120",
+    "opportunity_id": "OPP00064",
+    "match_score": 90,
+    "score_components_json": "{\"availability_check\":\"REVIEW_REQUIRED\",\"location_compatible\":true,\"skill_match\":true}",
+    "match_status": "SUGGESTED_NOT_APPLIED",
+    "requires_user_review": true,
+    "data_class": "SYNTHETIC_FIXTURE"
+  }
+]

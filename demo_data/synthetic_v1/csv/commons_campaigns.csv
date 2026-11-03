@@ -1,0 +1,7 @@
+﻿campaign_id,campaign_title,service_category,city,locality_cluster,minimum_participants,participant_count_fixture,campaign_status,linked_offer_id,funding_source,aggregate_only,individual_income_or_transactions_exposed,data_class
+CAM00001,Demo Collective Education Opportunity - Quorum Reached,EDUCATION,Jaipur,North Jaipur Cluster,5,5,QUORUM_REACHED_SIMULATION,OFF00004,SIMULATED_PROVIDER_SPONSOR,True,False,SYNTHETIC_FIXTURE
+CAM00002,Demo Collective Broadband Opportunity 02,BROADBAND,Jaipur,North Jaipur Cluster,5,2,GATHERING_DEMAND_SIMULATION,,NO_PROVIDER_OFFER_YET,True,False,SYNTHETIC_FIXTURE
+CAM00003,Demo Collective Healthcare Opportunity 03,HEALTHCARE,Jaipur,Central Jaipur Cluster,5,2,GATHERING_DEMAND_SIMULATION,OFF00030,SIMULATED_PROVIDER_SPONSOR_CANDIDATE_NOT_YET_QUALIFIED,True,False,SYNTHETIC_FIXTURE
+CAM00004,Demo Collective Groceries Opportunity 04,GROCERIES,Pune,West Pune Cluster,5,1,GATHERING_DEMAND_SIMULATION,,NO_PROVIDER_OFFER_YET,True,False,SYNTHETIC_FIXTURE
+CAM00005,Demo Collective Transport Opportunity 05,TRANSPORT,Pune,Central Pune Cluster,5,1,GATHERING_DEMAND_SIMULATION,,NO_PROVIDER_OFFER_YET,True,False,SYNTHETIC_FIXTURE
+CAM00006,Demo Collective Skill Training Opportunity 06,SKILL_TRAINING,Jaipur,North Jaipur Cluster,5,2,GATHERING_DEMAND_SIMULATION,,NO_PROVIDER_OFFER_YET,True,False,SYNTHETIC_FIXTURE

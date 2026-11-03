@@ -179,13 +179,36 @@ Technical differentiators to demonstrate: privacy-constrained personal agents, d
 
 The final product name is **not selected**. `MyEconomy` is the repository and working project name. The user asked for a lively, modern, memorable name and explicitly rejected Sanskrit-derived and Christian/religiously coded naming directions. Do not presume that Arabic-rooted naming is required or that a suggested name is approved. AWNORA was suggested as an option but is **not approved**; do not use it as the current brand. Any future shortlist needs pronunciation, meaning, unwanted associations, search-result collision, domain, app-store and trademark screening before adoption.
 
-## 14. What is implemented today
+## 14. What is implemented today (reconcile with PROJECT_STATUS.md)
 
-Only the Iteration 00 slice is implemented in the current source tree: Python/FastAPI service, health endpoints, request/response schemas and an in-memory, deterministic calculation over caller-supplied entries. It uses `Decimal`, a curated currency exponent registry, period checking, essential/discretionary aggregation, category aggregation and a net-cashflow/income ratio. Automated tests and a local HTTP smoke test were recorded as passing.
+The current local source tree contains the following tested foundation:
 
-There is no database, identity system, consent ledger, bank connection, transaction importer, agent runtime, RAG, graph store, Commons network, merchant integration, benefits API, claims integration, payment or deployed customer workflow. The target architecture and feature catalogue must never be confused with implemented code.
+### Iteration 00
+- Python 3.12/3.13 package, FastAPI composition root, Pydantic schemas, health/readiness endpoints.
+- Pure `Decimal` money and cashflow calculation over caller-supplied request data; curated currency precision registry.
+- Cashflow income/expense/net/essential/discretionary/category calculation and API validation.
 
-## 15. Source-of-truth hierarchy
+### Iteration 01
+- SQLAlchemy 2 persistence models and Alembic migrations for users, hashed bearer sessions, email verification challenges, households, memberships, invitations, consent grants and audit events.
+- Argon2 password hashing; 12-hour opaque sessions with hash-only storage and logout revocation.
+- Single-use email verification challenge with hash-only storage, 24-hour expiry, prior challenge revocation and 60-second resend cooldown. Development log mail is allowed only under `APP_ENV=development|test`; SMTP adapter exists but has not been tested with a live provider.
+- Household and consent endpoints require verified email ownership. Household invitations are owner-issued, 72-hour, single-use, email-bound and manually delivered (`manual_share_required`).
+- Membership is separate from consent. Member list omits member email. Consent binds subject, purpose, data categories, recipient, terms version and expiry; revocation is immediately reflected in checks.
+- Commons/research purposes do not permit raw transaction, contact or support evidence categories.
+- Audit rows have ORM and SQLite/PostgreSQL database-trigger immutability controls.
+- `require_active_consent` is available for future data readers, but no private financial data reader is implemented yet.
+
+At the latest local verification, 41 tests passed, Python compilation passed, `git diff --check` passed, SQLite migrations passed upgrade/downgrade/upgrade, PostgreSQL offline migration SQL generated successfully, and a live local Uvicorn HTTP smoke passed for the complete registration/email-verification/household-invitation/consent-grant/revocation/logout journey using two synthetic accounts and the development-only mail adapter. Ruff is configured but not verified in the current runtime. SMTP and live PostgreSQL remain unverified; a PostgreSQL 16 GitHub Actions migration/trigger job has been added but awaits its first run. See `docs/PROJECT_STATUS.md` for exact boundaries.
+
+Not implemented yet: personal transaction persistence/import, bank integrations, budget goals/forecast, Power Discovery workflow, Guardian, benefits/opportunity/resource/enterprise workflows, Commons aggregator/anti-inference, offer optimizer, VIVC outcome ledger, sponsor revenue/payout, RAG/knowledge graph runtime, durable agent missions/checkpoints, Meta model gateway, real partner integrations or production deployment. The target architecture and feature catalogue must never be confused with implemented code.
+
+## 15. Hackathon judging and model policy context
+
+The project owner supplied a working rubric of real-world impact (30%), Meta AI tooling (25%), technical depth/execution (20%) and demo (25%), plus bonus targets for viral reach, open-weight model build, community vote, agentic use-case and creative build. Treat the weights and bonus specifics as participant-provided until confirmed in the current official entrant rules.
+
+The official Meta Global AI Developer Hackathon page currently lists submissions due November 4, 2026 at 9:00 PM ET, judging November 4–8 and a November 9 closing ceremony; verify the portal again before final submission. Meta's current geographic policy identifies India as restricted for Muse Image. Contributor Services must not receive sensitive, confidential or personal information; use Standard Services for permitted personal-information processing or process locally with suitable open weights, and use synthetic data in the demo. Muse Glimmer is a candidate open-weight local agent model; no Meta model has been integrated in the current code yet. Full model/bonus notes and source links are in `docs/HACKATHON_SCORECARD.md`.
+
+## 16. Source-of-truth hierarchy
 
 When sources disagree, use this order:
 
@@ -196,3 +219,11 @@ When sources disagree, use this order:
 5. Prior chat history for unresolved ideas only; update this repository when the user confirms a decision.
 
 Never claim persistent model memory just because this file exists. At the beginning of each future engineering session, read the repository's current memory documents and inspect the current branch/HEAD.
+
+## Synthetic Demo Dataset v1 (2026-11-03)
+
+A deterministic synthetic fixture corpus now lives at `demo_data/synthetic_v1/`. It models 120 fictional adult customers, 55 households, 42 entity tables and 17,425 rows across financial records, transactions, obligations, loans, bills, subscriptions, consents, benefits, capabilities, opportunities, offers, resource listings, Commons signals/campaigns, Guardian cases, risk/crisis records, micro-enterprises, orders, agent missions/checkpoints, settlements and audit events. It includes CSV, JSON, JSONL, PostgreSQL DDL/seed, SQLite and synthetic HTML/PDF/PNG source documents. `README.md`, `docs/DEMO_PLAYBOOK.md` and `docs/SYNTHETIC_DEMO_DATASET.md` describe exact usage and boundaries.
+
+`CAM00001` is a 5/5 Commons quorum fixture with five fictional participants whose purpose-specific demand consent is valid at signal time. It uses a matching simulated Jaipur education offer; no provider quote, fulfilment, sponsorship or payout is real. Other campaign rows without a matching offer remain in gathering state. The dataset is a test fixture and never a real customer base or measured impact. VIVC rows carry `SYNTHETIC_FIXTURE_ONLY`.
+
+The regulatory mapping records India-oriented engineering controls for DPDP staged commencement, RBI Account Aggregator and conditional Digital Lending requirements. It is not legal advice or a compliance claim. Re-check official commencement and applicable regulatory roles before production.

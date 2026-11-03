@@ -6,6 +6,7 @@
 - No LLM tool with direct unrestricted database or payment access.
 - No unverified external integration described as live.
 - No personal or financial record shared to Commons without explicit purpose-specific consent.
+- No household or consent operation is available to an unverified email account; inbox control is not legal identity proof.
 - No consequential action without enforceable authorization and the required approval.
 - No feature is done until negative and failure paths are tested.
 
@@ -13,7 +14,7 @@
 - `domain/`: business invariants and value objects; no FastAPI, database or provider SDK imports.
 - `application/`: use cases; coordinates domain logic and ports.
 - `api/`: HTTP schemas, validation and routing only.
-- `infrastructure/` (future): database, external providers, queue and observability adapters.
+- `infrastructure/`: database, security primitives, email transport and future external providers/queues/observability adapters.
 - Dependency direction points inward. Domain must remain independently testable.
 
 ## Contracts and failures

@@ -6,7 +6,7 @@ This file is the entry point for anyone (including AI coding assistants) working
 
 1. Read `README.md` and this file.
 2. Read `docs/PROJECT_MEMORY.md`, `docs/PROJECT_STATUS.md`, `docs/FEATURE_CATALOG.md`, and `docs/CODEBASE_MAP.md`.
-3. Read the relevant feature specification, iteration record, engineering standard, and ADRs.
+3. Read `docs/THREAT_MODEL.md` and `docs/HACKATHON_SCORECARD.md`, then the relevant feature specification, latest iteration record, engineering standard, and ADRs.
 4. Inspect the current Git branch, working tree, commit history, and the exact source files to be changed. Never assume a previous chat summary reflects the current repository state.
 5. Confirm whether a requested capability is implemented, partially implemented, designed only, simulated, or not yet designed.
 
@@ -58,3 +58,10 @@ Never claim a file was pushed, a partner was contacted, a payment occurred, or a
 ## Long-term project context
 
 Use `docs/PROJECT_MEMORY.md` as the high-level durable product and engineering memory. Use `docs/CODEBASE_MAP.md` for line-of-responsibility and runtime flow. Use `docs/FEATURE_CATALOG.md` as the implementation-status ledger. Use `docs/PROJECT_STATUS.md` for the current factual state. These documents must be kept synchronized with actual code.
+
+## Synthetic fixtures and demos
+
+- `demo_data/synthetic_v1/` is fictional demo/test data only. Do not call it a real customer base or measured impact.
+- Keep CSV, JSON, JSONL, PostgreSQL seed and SQLite exports synchronized. Re-run the generator/override, SQLite builder and independent validator after fixture changes.
+- Preserve `.invalid` emails, invalid phone placeholders, broad locality clusters and no real identity/financial credentials.
+- Every UI/API/demo view derived from fixtures must display a synthetic/demo label; no simulated payment, partner quote, benefits award, claim, application or value event may be presented as live.

@@ -1,0 +1,454 @@
+﻿table_name,column_name,logical_type,nullable,description,synthetic_note
+customers,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+customers,display_name,STRING,NO,Display name,All values in this dataset are generated fixtures.
+customers,email,STRING,NO,Email,All values in this dataset are generated fixtures.
+customers,phone,STRING,NO,Phone,All values in this dataset are generated fixtures.
+customers,age_years,INTEGER,NO,Age years,All values in this dataset are generated fixtures.
+customers,age_band,STRING,NO,Age band,All values in this dataset are generated fixtures.
+customers,city,STRING,NO,City,All values in this dataset are generated fixtures.
+customers,locality_cluster,STRING,NO,Locality cluster,All values in this dataset are generated fixtures.
+customers,persona,STRING,NO,Persona,All values in this dataset are generated fixtures.
+customers,employment_status,STRING,NO,Employment status,All values in this dataset are generated fixtures.
+customers,primary_language,STRING,NO,Primary language,All values in this dataset are generated fixtures.
+customers,monthly_income_inr_estimate,STRING,NO,Monthly income inr estimate,All values in this dataset are generated fixtures.
+customers,income_volatility,STRING,NO,Income volatility,All values in this dataset are generated fixtures.
+customers,dependants_count,INTEGER,NO,Dependants count,All values in this dataset are generated fixtures.
+customers,primary_goal,STRING,NO,Primary goal,All values in this dataset are generated fixtures.
+customers,economic_context,STRING,NO,Economic context,All values in this dataset are generated fixtures.
+customers,kyc_status_fixture,STRING,NO,Kyc status fixture,All values in this dataset are generated fixtures.
+customers,identity_document_status,STRING,NO,Identity document status,All values in this dataset are generated fixtures.
+customers,account_status,STRING,NO,Account status,All values in this dataset are generated fixtures.
+households,household_id,STRING,NO,Household id,All values in this dataset are generated fixtures.
+households,display_label,STRING,NO,Display label,All values in this dataset are generated fixtures.
+households,city,STRING,NO,City,All values in this dataset are generated fixtures.
+households,locality_cluster,STRING,NO,Locality cluster,All values in this dataset are generated fixtures.
+households,household_type,STRING,NO,Household type,All values in this dataset are generated fixtures.
+households,member_count,INTEGER,NO,Member count,All values in this dataset are generated fixtures.
+households,owner_customer_id,STRING,NO,Owner customer id,All values in this dataset are generated fixtures.
+households,shared_financial_profile_enabled,BOOLEAN,NO,Shared financial profile enabled,All values in this dataset are generated fixtures.
+household_memberships,membership_id,STRING,NO,Membership id,All values in this dataset are generated fixtures.
+household_memberships,household_id,STRING,NO,Household id,All values in this dataset are generated fixtures.
+household_memberships,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+household_memberships,role,STRING,NO,Role,All values in this dataset are generated fixtures.
+household_memberships,status,STRING,NO,Status,All values in this dataset are generated fixtures.
+household_memberships,joined_at,DATE_OR_TIMESTAMP,NO,Joined at,All values in this dataset are generated fixtures.
+household_memberships,financial_data_access,STRING,NO,Financial data access,All values in this dataset are generated fixtures.
+consents,consent_id,STRING,NO,Consent id,All values in this dataset are generated fixtures.
+consents,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+consents,purpose,STRING,NO,Purpose,All values in this dataset are generated fixtures.
+consents,data_categories_json,JSON,NO,Data categories json,All values in this dataset are generated fixtures.
+consents,recipient,STRING,NO,Recipient,All values in this dataset are generated fixtures.
+consents,status,STRING,NO,Status,All values in this dataset are generated fixtures.
+consents,granted_at,DATE_OR_TIMESTAMP,YES,Granted at,All values in this dataset are generated fixtures.
+consents,expires_at,DATE_OR_TIMESTAMP,YES,Expires at,All values in this dataset are generated fixtures.
+consents,revoked_at,DATE_OR_TIMESTAMP,YES,Revoked at,All values in this dataset are generated fixtures.
+consents,notice_version,STRING,NO,Notice version,All values in this dataset are generated fixtures.
+consents,consent_receipt,STRING,NO,Consent receipt,All values in this dataset are generated fixtures.
+consents,withdrawal_channel,STRING,NO,Withdrawal channel,All values in this dataset are generated fixtures.
+providers,provider_id,STRING,NO,Provider id,All values in this dataset are generated fixtures.
+providers,provider_name,STRING,NO,Provider name,All values in this dataset are generated fixtures.
+providers,provider_type,STRING,NO,Provider type,All values in this dataset are generated fixtures.
+providers,service_city,STRING,NO,Service city,All values in this dataset are generated fixtures.
+providers,service_zone,STRING,NO,Service zone,All values in this dataset are generated fixtures.
+providers,verification_status,STRING,NO,Verification status,All values in this dataset are generated fixtures.
+providers,partner_status,STRING,NO,Partner status,All values in this dataset are generated fixtures.
+providers,settlement_currency,STRING,NO,Settlement currency,All values in this dataset are generated fixtures.
+accounts,account_id,STRING,NO,Account id,All values in this dataset are generated fixtures.
+accounts,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+accounts,institution_code,STRING,NO,Institution code,All values in this dataset are generated fixtures.
+accounts,account_type,STRING,NO,Account type,All values in this dataset are generated fixtures.
+accounts,currency,STRING,NO,Currency,All values in this dataset are generated fixtures.
+accounts,masked_reference,STRING,NO,Masked reference,All values in this dataset are generated fixtures.
+accounts,account_status,STRING,NO,Account status,All values in this dataset are generated fixtures.
+accounts,opening_balance_inr,DECIMAL_STRING,NO,Opening balance inr,All values in this dataset are generated fixtures.
+accounts,balance_semantics,STRING,NO,Balance semantics,All values in this dataset are generated fixtures.
+recurring_obligations,obligation_id,STRING,NO,Obligation id,All values in this dataset are generated fixtures.
+recurring_obligations,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+recurring_obligations,obligation_type,STRING,NO,Obligation type,All values in this dataset are generated fixtures.
+recurring_obligations,category,STRING,NO,Category,All values in this dataset are generated fixtures.
+recurring_obligations,payee_label,STRING,NO,Payee label,All values in this dataset are generated fixtures.
+recurring_obligations,expected_amount_inr,DECIMAL_STRING,NO,Expected amount inr,All values in this dataset are generated fixtures.
+recurring_obligations,frequency,STRING,NO,Frequency,All values in this dataset are generated fixtures.
+recurring_obligations,due_day,STRING,NO,Due day,All values in this dataset are generated fixtures.
+recurring_obligations,autopay_enabled,BOOLEAN,NO,Autopay enabled,All values in this dataset are generated fixtures.
+recurring_obligations,essential,BOOLEAN,NO,Essential,All values in this dataset are generated fixtures.
+recurring_obligations,status,STRING,NO,Status,All values in this dataset are generated fixtures.
+recurring_obligations,first_due_date,DATE_OR_TIMESTAMP,NO,First due date,All values in this dataset are generated fixtures.
+loans,loan_id,STRING,NO,Loan id,All values in this dataset are generated fixtures.
+loans,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+loans,loan_type,STRING,NO,Loan type,All values in this dataset are generated fixtures.
+loans,lender_label,STRING,NO,Lender label,All values in this dataset are generated fixtures.
+loans,principal_inr,DECIMAL_STRING,NO,Principal inr,All values in this dataset are generated fixtures.
+loans,annual_interest_rate_percent,DECIMAL_STRING,NO,Annual interest rate percent,All values in this dataset are generated fixtures.
+loans,tenure_months,INTEGER,NO,Tenure months,All values in this dataset are generated fixtures.
+loans,emi_inr,DECIMAL_STRING,NO,Emi inr,All values in this dataset are generated fixtures.
+loans,start_date,DATE_OR_TIMESTAMP,NO,Start date,All values in this dataset are generated fixtures.
+loans,loan_status,STRING,NO,Loan status,All values in this dataset are generated fixtures.
+loans,remaining_principal_fixture_inr,DECIMAL_STRING,NO,Remaining principal fixture inr,All values in this dataset are generated fixtures.
+loans,secured_status,STRING,NO,Secured status,All values in this dataset are generated fixtures.
+loan_installments,installment_id,STRING,NO,Installment id,All values in this dataset are generated fixtures.
+loan_installments,loan_id,STRING,NO,Loan id,All values in this dataset are generated fixtures.
+loan_installments,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+loan_installments,installment_number,INTEGER,NO,Installment number,All values in this dataset are generated fixtures.
+loan_installments,due_date,DATE_OR_TIMESTAMP,NO,Due date,All values in this dataset are generated fixtures.
+loan_installments,principal_component_inr,DECIMAL_STRING,NO,Principal component inr,All values in this dataset are generated fixtures.
+loan_installments,interest_component_inr,DECIMAL_STRING,NO,Interest component inr,All values in this dataset are generated fixtures.
+loan_installments,total_due_inr,DECIMAL_STRING,NO,Total due inr,All values in this dataset are generated fixtures.
+loan_installments,status,STRING,NO,Status,All values in this dataset are generated fixtures.
+loan_installments,paid_date,DATE_OR_TIMESTAMP,YES,Paid date,All values in this dataset are generated fixtures.
+loan_installments,late_fee_inr,DECIMAL_STRING,NO,Late fee inr,All values in this dataset are generated fixtures.
+bills,bill_id,STRING,NO,Bill id,All values in this dataset are generated fixtures.
+bills,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+bills,provider_id,STRING,NO,Provider id,All values in this dataset are generated fixtures.
+bills,bill_type,STRING,NO,Bill type,All values in this dataset are generated fixtures.
+bills,invoice_number,STRING,NO,Invoice number,All values in this dataset are generated fixtures.
+bills,issue_date,DATE_OR_TIMESTAMP,NO,Issue date,All values in this dataset are generated fixtures.
+bills,due_date,DATE_OR_TIMESTAMP,NO,Due date,All values in this dataset are generated fixtures.
+bills,currency,STRING,NO,Currency,All values in this dataset are generated fixtures.
+bills,subtotal_inr,DECIMAL_STRING,NO,Subtotal inr,All values in this dataset are generated fixtures.
+bills,tax_inr,DECIMAL_STRING,NO,Tax inr,All values in this dataset are generated fixtures.
+bills,total_due_inr,DECIMAL_STRING,NO,Total due inr,All values in this dataset are generated fixtures.
+bills,amount_paid_inr,DECIMAL_STRING,NO,Amount paid inr,All values in this dataset are generated fixtures.
+bills,status,STRING,NO,Status,All values in this dataset are generated fixtures.
+bills,anomaly_label,STRING,NO,Anomaly label,All values in this dataset are generated fixtures.
+bills,prior_period_total_inr,DECIMAL_STRING,YES,Prior period total inr,All values in this dataset are generated fixtures.
+bills,source_document_path,STRING,NO,Source document path,All values in this dataset are generated fixtures.
+bills,document_authenticity,STRING,NO,Document authenticity,All values in this dataset are generated fixtures.
+bill_line_items,bill_line_id,STRING,NO,Bill line id,All values in this dataset are generated fixtures.
+bill_line_items,bill_id,STRING,NO,Bill id,All values in this dataset are generated fixtures.
+bill_line_items,description_code,STRING,NO,Description code,All values in this dataset are generated fixtures.
+bill_line_items,description,STRING,NO,Description,All values in this dataset are generated fixtures.
+bill_line_items,quantity,INTEGER,NO,Quantity,All values in this dataset are generated fixtures.
+bill_line_items,unit_price_inr,DECIMAL_STRING,NO,Unit price inr,All values in this dataset are generated fixtures.
+bill_line_items,line_total_inr,DECIMAL_STRING,NO,Line total inr,All values in this dataset are generated fixtures.
+bill_line_items,taxable,BOOLEAN,NO,Taxable,All values in this dataset are generated fixtures.
+subscriptions,subscription_id,STRING,NO,Subscription id,All values in this dataset are generated fixtures.
+subscriptions,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+subscriptions,service_name,STRING,NO,Service name,All values in this dataset are generated fixtures.
+subscriptions,billing_cycle,STRING,NO,Billing cycle,All values in this dataset are generated fixtures.
+subscriptions,current_price_inr,DECIMAL_STRING,NO,Current price inr,All values in this dataset are generated fixtures.
+subscriptions,start_date,DATE_OR_TIMESTAMP,NO,Start date,All values in this dataset are generated fixtures.
+subscriptions,next_renewal_date,DATE_OR_TIMESTAMP,NO,Next renewal date,All values in this dataset are generated fixtures.
+subscriptions,status,STRING,NO,Status,All values in this dataset are generated fixtures.
+subscriptions,auto_renew,BOOLEAN,NO,Auto renew,All values in this dataset are generated fixtures.
+subscriptions,price_change_flag,BOOLEAN,NO,Price change flag,All values in this dataset are generated fixtures.
+subscriptions,price_before_change_inr,DECIMAL_STRING,NO,Price before change inr,All values in this dataset are generated fixtures.
+subscriptions,cancellation_channel,STRING,NO,Cancellation channel,All values in this dataset are generated fixtures.
+transactions,transaction_id,STRING,NO,Transaction id,All values in this dataset are generated fixtures.
+transactions,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+transactions,account_id,STRING,NO,Account id,All values in this dataset are generated fixtures.
+transactions,transaction_date,DATE_OR_TIMESTAMP,NO,Transaction date,All values in this dataset are generated fixtures.
+transactions,posted_at,DATE_OR_TIMESTAMP,NO,Posted at,All values in this dataset are generated fixtures.
+transactions,direction,STRING,NO,Direction,All values in this dataset are generated fixtures.
+transactions,transaction_type,STRING,NO,Transaction type,All values in this dataset are generated fixtures.
+transactions,cashflow_treatment,STRING,NO,Cashflow treatment,All values in this dataset are generated fixtures.
+transactions,category,STRING,NO,Category,All values in this dataset are generated fixtures.
+transactions,amount_inr,DECIMAL_STRING,NO,Amount inr,All values in this dataset are generated fixtures.
+transactions,currency,STRING,NO,Currency,All values in this dataset are generated fixtures.
+transactions,counterparty_label,STRING,NO,Counterparty label,All values in this dataset are generated fixtures.
+transactions,provider_id,STRING,YES,Provider id,All values in this dataset are generated fixtures.
+transactions,obligation_id,STRING,YES,Obligation id,All values in this dataset are generated fixtures.
+transactions,bill_id,STRING,YES,Bill id,All values in this dataset are generated fixtures.
+transactions,loan_installment_id,STRING,YES,Loan installment id,All values in this dataset are generated fixtures.
+transactions,subscription_id,STRING,YES,Subscription id,All values in this dataset are generated fixtures.
+transactions,transfer_group_id,STRING,YES,Transfer group id,All values in this dataset are generated fixtures.
+transactions,payment_rail,STRING,NO,Payment rail,All values in this dataset are generated fixtures.
+transactions,status,STRING,NO,Status,All values in this dataset are generated fixtures.
+transactions,reference,STRING,NO,Reference,All values in this dataset are generated fixtures.
+benefit_programs,benefit_program_id,STRING,NO,Benefit program id,All values in this dataset are generated fixtures.
+benefit_programs,program_name,STRING,NO,Program name,All values in this dataset are generated fixtures.
+benefit_programs,benefit_category,STRING,NO,Benefit category,All values in this dataset are generated fixtures.
+benefit_programs,max_support_inr,DECIMAL_STRING,NO,Max support inr,All values in this dataset are generated fixtures.
+benefit_programs,eligibility_rule_json,JSON,NO,Eligibility rule json,All values in this dataset are generated fixtures.
+benefit_programs,source_type,STRING,NO,Source type,All values in this dataset are generated fixtures.
+benefit_programs,external_source_url,STRING,YES,External source url,All values in this dataset are generated fixtures.
+benefit_programs,application_channel,STRING,NO,Application channel,All values in this dataset are generated fixtures.
+benefit_programs,program_status,STRING,NO,Program status,All values in this dataset are generated fixtures.
+benefit_programs,last_rule_reviewed,STRING,NO,Last rule reviewed,All values in this dataset are generated fixtures.
+benefit_programs,disclaimer,STRING,NO,Disclaimer,All values in this dataset are generated fixtures.
+benefit_assessments,assessment_id,STRING,NO,Assessment id,All values in this dataset are generated fixtures.
+benefit_assessments,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+benefit_assessments,benefit_program_id,STRING,NO,Benefit program id,All values in this dataset are generated fixtures.
+benefit_assessments,assessment_date,DATE_OR_TIMESTAMP,NO,Assessment date,All values in this dataset are generated fixtures.
+benefit_assessments,assessment_status,STRING,NO,Assessment status,All values in this dataset are generated fixtures.
+benefit_assessments,rule_checks_json,JSON,NO,Rule checks json,All values in this dataset are generated fixtures.
+benefit_assessments,matched_rule_count,INTEGER,NO,Matched rule count,All values in this dataset are generated fixtures.
+benefit_assessments,total_rule_count,INTEGER,NO,Total rule count,All values in this dataset are generated fixtures.
+benefit_assessments,estimated_support_cap_inr,DECIMAL_STRING,NO,Estimated support cap inr,All values in this dataset are generated fixtures.
+benefit_assessments,official_confirmation,STRING,NO,Official confirmation,All values in this dataset are generated fixtures.
+benefit_applications,application_id,STRING,NO,Application id,All values in this dataset are generated fixtures.
+benefit_applications,assessment_id,STRING,NO,Assessment id,All values in this dataset are generated fixtures.
+benefit_applications,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+benefit_applications,benefit_program_id,STRING,NO,Benefit program id,All values in this dataset are generated fixtures.
+benefit_applications,application_status,STRING,NO,Application status,All values in this dataset are generated fixtures.
+benefit_applications,submission_mode,STRING,NO,Submission mode,All values in this dataset are generated fixtures.
+benefit_applications,required_documents_json,JSON,NO,Required documents json,All values in this dataset are generated fixtures.
+benefit_applications,submitted_at,STRING,YES,Submitted at,All values in this dataset are generated fixtures.
+benefit_applications,decision_status,STRING,NO,Decision status,All values in this dataset are generated fixtures.
+skills,skill_id,STRING,NO,Skill id,All values in this dataset are generated fixtures.
+skills,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+skills,skill_code,STRING,NO,Skill code,All values in this dataset are generated fixtures.
+skills,skill_label,STRING,NO,Skill label,All values in this dataset are generated fixtures.
+skills,proficiency_level,STRING,NO,Proficiency level,All values in this dataset are generated fixtures.
+skills,evidence_status,STRING,NO,Evidence status,All values in this dataset are generated fixtures.
+skills,available_hours_weekly,INTEGER,NO,Available hours weekly,All values in this dataset are generated fixtures.
+skills,monetization_consent,BOOLEAN,NO,Monetization consent,All values in this dataset are generated fixtures.
+opportunities,opportunity_id,STRING,NO,Opportunity id,All values in this dataset are generated fixtures.
+opportunities,title,STRING,NO,Title,All values in this dataset are generated fixtures.
+opportunities,required_skill_code,STRING,NO,Required skill code,All values in this dataset are generated fixtures.
+opportunities,opportunity_type,STRING,NO,Opportunity type,All values in this dataset are generated fixtures.
+opportunities,city,STRING,NO,City,All values in this dataset are generated fixtures.
+opportunities,remote_allowed,BOOLEAN,NO,Remote allowed,All values in this dataset are generated fixtures.
+opportunities,estimated_pay_inr,DECIMAL_STRING,NO,Estimated pay inr,All values in this dataset are generated fixtures.
+opportunities,time_commitment_hours,STRING,NO,Time commitment hours,All values in this dataset are generated fixtures.
+opportunities,status,STRING,NO,Status,All values in this dataset are generated fixtures.
+opportunities,application_deadline,DATE_OR_TIMESTAMP,NO,Application deadline,All values in this dataset are generated fixtures.
+opportunities,provider_id,STRING,NO,Provider id,All values in this dataset are generated fixtures.
+opportunities,source_type,STRING,NO,Source type,All values in this dataset are generated fixtures.
+opportunity_matches,match_id,STRING,NO,Match id,All values in this dataset are generated fixtures.
+opportunity_matches,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+opportunity_matches,opportunity_id,STRING,NO,Opportunity id,All values in this dataset are generated fixtures.
+opportunity_matches,match_score,INTEGER,NO,Match score,All values in this dataset are generated fixtures.
+opportunity_matches,score_components_json,JSON,NO,Score components json,All values in this dataset are generated fixtures.
+opportunity_matches,match_status,STRING,NO,Match status,All values in this dataset are generated fixtures.
+opportunity_matches,requires_user_review,BOOLEAN,NO,Requires user review,All values in this dataset are generated fixtures.
+offers,offer_id,STRING,NO,Offer id,All values in this dataset are generated fixtures.
+offers,provider_id,STRING,NO,Provider id,All values in this dataset are generated fixtures.
+offers,offer_title,STRING,NO,Offer title,All values in this dataset are generated fixtures.
+offers,service_category,STRING,NO,Service category,All values in this dataset are generated fixtures.
+offers,city,STRING,NO,City,All values in this dataset are generated fixtures.
+offers,reference_price_inr,DECIMAL_STRING,NO,Reference price inr,All values in this dataset are generated fixtures.
+offers,offer_price_inr,DECIMAL_STRING,NO,Offer price inr,All values in this dataset are generated fixtures.
+offers,discount_value_inr,DECIMAL_STRING,NO,Discount value inr,All values in this dataset are generated fixtures.
+offers,sponsor_credit_inr,DECIMAL_STRING,NO,Sponsor credit inr,All values in this dataset are generated fixtures.
+offers,required_incremental_spend_inr,DECIMAL_STRING,NO,Required incremental spend inr,All values in this dataset are generated fixtures.
+offers,fees_inr,DECIMAL_STRING,NO,Fees inr,All values in this dataset are generated fixtures.
+offers,recurring_commitment_cost_inr,DECIMAL_STRING,NO,Recurring commitment cost inr,All values in this dataset are generated fixtures.
+offers,estimated_net_benefit_inr,DECIMAL_STRING,NO,Estimated net benefit inr,All values in this dataset are generated fixtures.
+offers,min_group_size,INTEGER,NO,Min group size,All values in this dataset are generated fixtures.
+offers,valid_until,DATE_OR_TIMESTAMP,NO,Valid until,All values in this dataset are generated fixtures.
+offers,decision_fixture,STRING,NO,Decision fixture,All values in this dataset are generated fixtures.
+offers,decision_rule,STRING,NO,Decision rule,All values in this dataset are generated fixtures.
+offers,terms_status,STRING,NO,Terms status,All values in this dataset are generated fixtures.
+resource_listings,resource_id,STRING,NO,Resource id,All values in this dataset are generated fixtures.
+resource_listings,owner_customer_id,STRING,NO,Owner customer id,All values in this dataset are generated fixtures.
+resource_listings,resource_type,STRING,NO,Resource type,All values in this dataset are generated fixtures.
+resource_listings,description,STRING,NO,Description,All values in this dataset are generated fixtures.
+resource_listings,city,STRING,NO,City,All values in this dataset are generated fixtures.
+resource_listings,locality_cluster,STRING,NO,Locality cluster,All values in this dataset are generated fixtures.
+resource_listings,capacity_quantity,INTEGER,NO,Capacity quantity,All values in this dataset are generated fixtures.
+resource_listings,capacity_unit,STRING,NO,Capacity unit,All values in this dataset are generated fixtures.
+resource_listings,availability_window,STRING,NO,Availability window,All values in this dataset are generated fixtures.
+resource_listings,verification_status,STRING,NO,Verification status,All values in this dataset are generated fixtures.
+resource_listings,listing_status,STRING,NO,Listing status,All values in this dataset are generated fixtures.
+demand_signals,demand_signal_id,STRING,NO,Demand signal id,All values in this dataset are generated fixtures.
+demand_signals,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+demand_signals,consent_purpose,STRING,NO,Consent purpose,All values in this dataset are generated fixtures.
+demand_signals,service_category,STRING,NO,Service category,All values in this dataset are generated fixtures.
+demand_signals,city,STRING,NO,City,All values in this dataset are generated fixtures.
+demand_signals,locality_cluster,STRING,NO,Locality cluster,All values in this dataset are generated fixtures.
+demand_signals,quantity_band,STRING,NO,Quantity band,All values in this dataset are generated fixtures.
+demand_signals,price_band_inr,DECIMAL_STRING,NO,Price band inr,All values in this dataset are generated fixtures.
+demand_signals,aggregatable,BOOLEAN,NO,Aggregatable,All values in this dataset are generated fixtures.
+demand_signals,raw_transaction_data_included,BOOLEAN,NO,Raw transaction data included,All values in this dataset are generated fixtures.
+demand_signals,signal_date,DATE_OR_TIMESTAMP,NO,Signal date,All values in this dataset are generated fixtures.
+demand_signals,status,STRING,NO,Status,All values in this dataset are generated fixtures.
+commons_campaigns,campaign_id,STRING,NO,Campaign id,All values in this dataset are generated fixtures.
+commons_campaigns,campaign_title,STRING,NO,Campaign title,All values in this dataset are generated fixtures.
+commons_campaigns,service_category,STRING,NO,Service category,All values in this dataset are generated fixtures.
+commons_campaigns,city,STRING,NO,City,All values in this dataset are generated fixtures.
+commons_campaigns,locality_cluster,STRING,NO,Locality cluster,All values in this dataset are generated fixtures.
+commons_campaigns,minimum_participants,INTEGER,NO,Minimum participants,All values in this dataset are generated fixtures.
+commons_campaigns,participant_count_fixture,INTEGER,NO,Participant count fixture,All values in this dataset are generated fixtures.
+commons_campaigns,campaign_status,STRING,NO,Campaign status,All values in this dataset are generated fixtures.
+commons_campaigns,linked_offer_id,STRING,NO,Linked offer id,All values in this dataset are generated fixtures.
+commons_campaigns,funding_source,STRING,NO,Funding source,All values in this dataset are generated fixtures.
+commons_campaigns,aggregate_only,BOOLEAN,NO,Aggregate only,All values in this dataset are generated fixtures.
+commons_campaigns,individual_income_or_transactions_exposed,BOOLEAN,NO,Individual income or transactions exposed,All values in this dataset are generated fixtures.
+commons_participants,campaign_participant_id,STRING,NO,Campaign participant id,All values in this dataset are generated fixtures.
+commons_participants,campaign_id,STRING,NO,Campaign id,All values in this dataset are generated fixtures.
+commons_participants,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+commons_participants,demand_signal_id,STRING,NO,Demand signal id,All values in this dataset are generated fixtures.
+commons_participants,consent_purpose,STRING,NO,Consent purpose,All values in this dataset are generated fixtures.
+commons_participants,participation_status,STRING,NO,Participation status,All values in this dataset are generated fixtures.
+commons_participants,individual_data_disclosed_to_provider,BOOLEAN,NO,Individual data disclosed to provider,All values in this dataset are generated fixtures.
+guardian_cases,guardian_case_id,STRING,NO,Guardian case id,All values in this dataset are generated fixtures.
+guardian_cases,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+guardian_cases,bill_id,STRING,NO,Bill id,All values in this dataset are generated fixtures.
+guardian_cases,case_type,STRING,NO,Case type,All values in this dataset are generated fixtures.
+guardian_cases,severity,STRING,NO,Severity,All values in this dataset are generated fixtures.
+guardian_cases,case_status,STRING,NO,Case status,All values in this dataset are generated fixtures.
+guardian_cases,finding_summary,STRING,NO,Finding summary,All values in this dataset are generated fixtures.
+guardian_cases,model_confidence_fixture,DECIMAL_STRING,NO,Model confidence fixture,All values in this dataset are generated fixtures.
+guardian_cases,evidence_required,BOOLEAN,NO,Evidence required,All values in this dataset are generated fixtures.
+guardian_cases,external_complaint_submitted,BOOLEAN,NO,External complaint submitted,All values in this dataset are generated fixtures.
+guardian_cases,outcome_status,STRING,NO,Outcome status,All values in this dataset are generated fixtures.
+evidence_documents,evidence_document_id,STRING,NO,Evidence document id,All values in this dataset are generated fixtures.
+evidence_documents,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+evidence_documents,guardian_case_id,STRING,NO,Guardian case id,All values in this dataset are generated fixtures.
+evidence_documents,bill_id,STRING,NO,Bill id,All values in this dataset are generated fixtures.
+evidence_documents,document_type,STRING,NO,Document type,All values in this dataset are generated fixtures.
+evidence_documents,source_path,STRING,NO,Source path,All values in this dataset are generated fixtures.
+evidence_documents,sha256,STRING,NO,Sha256,All values in this dataset are generated fixtures.
+evidence_documents,provenance,STRING,NO,Provenance,All values in this dataset are generated fixtures.
+evidence_documents,ingestion_status,STRING,NO,Ingestion status,All values in this dataset are generated fixtures.
+agent_missions,mission_id,STRING,NO,Mission id,All values in this dataset are generated fixtures.
+agent_missions,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+agent_missions,mission_type,STRING,NO,Mission type,All values in this dataset are generated fixtures.
+agent_missions,mission_status,STRING,NO,Mission status,All values in this dataset are generated fixtures.
+agent_missions,created_at,DATE_OR_TIMESTAMP,NO,Created at,All values in this dataset are generated fixtures.
+agent_missions,last_checkpoint_number,INTEGER,NO,Last checkpoint number,All values in this dataset are generated fixtures.
+agent_missions,total_steps,INTEGER,NO,Total steps,All values in this dataset are generated fixtures.
+agent_missions,idempotency_scope,STRING,NO,Idempotency scope,All values in this dataset are generated fixtures.
+agent_missions,resume_policy,STRING,NO,Resume policy,All values in this dataset are generated fixtures.
+agent_missions,approval_required,BOOLEAN,NO,Approval required,All values in this dataset are generated fixtures.
+agent_missions,simulated_external_actions,BOOLEAN,NO,Simulated external actions,All values in this dataset are generated fixtures.
+agent_mission_steps,mission_step_id,STRING,NO,Mission step id,All values in this dataset are generated fixtures.
+agent_mission_steps,mission_id,STRING,NO,Mission id,All values in this dataset are generated fixtures.
+agent_mission_steps,step_number,INTEGER,NO,Step number,All values in this dataset are generated fixtures.
+agent_mission_steps,step_key,STRING,NO,Step key,All values in this dataset are generated fixtures.
+agent_mission_steps,step_status,STRING,NO,Step status,All values in this dataset are generated fixtures.
+agent_mission_steps,idempotency_key,STRING,NO,Idempotency key,All values in this dataset are generated fixtures.
+agent_mission_steps,input_ref,STRING,NO,Input ref,All values in this dataset are generated fixtures.
+agent_mission_steps,output_ref,STRING,YES,Output ref,All values in this dataset are generated fixtures.
+agent_mission_steps,checkpoint_hash,STRING,YES,Checkpoint hash,All values in this dataset are generated fixtures.
+agent_mission_steps,external_side_effect_state,STRING,NO,External side effect state,All values in this dataset are generated fixtures.
+agent_mission_steps,retry_count,INTEGER,NO,Retry count,All values in this dataset are generated fixtures.
+value_events,value_event_id,STRING,NO,Value event id,All values in this dataset are generated fixtures.
+value_events,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+value_events,value_type,STRING,NO,Value type,All values in this dataset are generated fixtures.
+value_events,gross_value_inr,DECIMAL_STRING,NO,Gross value inr,All values in this dataset are generated fixtures.
+value_events,additional_cost_inr,DECIMAL_STRING,NO,Additional cost inr,All values in this dataset are generated fixtures.
+value_events,net_value_inr,DECIMAL_STRING,NO,Net value inr,All values in this dataset are generated fixtures.
+value_events,outcome_status,STRING,NO,Outcome status,All values in this dataset are generated fixtures.
+value_events,verification_level,STRING,NO,Verification level,All values in this dataset are generated fixtures.
+value_events,evidence_ref,STRING,YES,Evidence ref,All values in this dataset are generated fixtures.
+value_events,external_provider_confirmation,BOOLEAN,NO,External provider confirmation,All values in this dataset are generated fixtures.
+value_events,deduplication_key,STRING,NO,Deduplication key,All values in this dataset are generated fixtures.
+budget_plans,budget_plan_id,STRING,NO,Budget plan id,All values in this dataset are generated fixtures.
+budget_plans,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+budget_plans,period_start,STRING,NO,Period start,All values in this dataset are generated fixtures.
+budget_plans,period_end,STRING,NO,Period end,All values in this dataset are generated fixtures.
+budget_plans,currency,STRING,NO,Currency,All values in this dataset are generated fixtures.
+budget_plans,income_reference_inr,DECIMAL_STRING,NO,Income reference inr,All values in this dataset are generated fixtures.
+budget_plans,planned_total_inr,DECIMAL_STRING,NO,Planned total inr,All values in this dataset are generated fixtures.
+budget_plans,plan_status,STRING,NO,Plan status,All values in this dataset are generated fixtures.
+budget_plans,method,STRING,NO,Method,All values in this dataset are generated fixtures.
+budget_envelopes,budget_envelope_id,STRING,NO,Budget envelope id,All values in this dataset are generated fixtures.
+budget_envelopes,budget_plan_id,STRING,NO,Budget plan id,All values in this dataset are generated fixtures.
+budget_envelopes,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+budget_envelopes,envelope_type,STRING,NO,Envelope type,All values in this dataset are generated fixtures.
+budget_envelopes,planned_amount_inr,DECIMAL_STRING,NO,Planned amount inr,All values in this dataset are generated fixtures.
+budget_envelopes,actual_spend_inr,DECIMAL_STRING,NO,Actual spend inr,All values in this dataset are generated fixtures.
+budget_envelopes,remaining_amount_inr,DECIMAL_STRING,NO,Remaining amount inr,All values in this dataset are generated fixtures.
+budget_envelopes,overspent,STRING,NO,Overspent,All values in this dataset are generated fixtures.
+budget_envelopes,allocation_ratio_percent,STRING,NO,Allocation ratio percent,All values in this dataset are generated fixtures.
+financial_goals,financial_goal_id,STRING,NO,Financial goal id,All values in this dataset are generated fixtures.
+financial_goals,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+financial_goals,goal_type,STRING,NO,Goal type,All values in this dataset are generated fixtures.
+financial_goals,target_amount_inr,DECIMAL_STRING,NO,Target amount inr,All values in this dataset are generated fixtures.
+financial_goals,current_progress_inr,DECIMAL_STRING,NO,Current progress inr,All values in this dataset are generated fixtures.
+financial_goals,target_date,STRING,NO,Target date,All values in this dataset are generated fixtures.
+financial_goals,priority,STRING,NO,Priority,All values in this dataset are generated fixtures.
+financial_goals,goal_status,STRING,NO,Goal status,All values in this dataset are generated fixtures.
+tax_obligations,tax_obligation_id,STRING,NO,Tax obligation id,All values in this dataset are generated fixtures.
+tax_obligations,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+tax_obligations,tax_period_label,STRING,NO,Tax period label,All values in this dataset are generated fixtures.
+tax_obligations,tax_type,STRING,NO,Tax type,All values in this dataset are generated fixtures.
+tax_obligations,estimated_amount_inr,DECIMAL_STRING,NO,Estimated amount inr,All values in this dataset are generated fixtures.
+tax_obligations,due_date,DATE_OR_TIMESTAMP,NO,Due date,All values in this dataset are generated fixtures.
+tax_obligations,estimate_source,STRING,NO,Estimate source,All values in this dataset are generated fixtures.
+tax_obligations,tax_rule_engine,STRING,NO,Tax rule engine,All values in this dataset are generated fixtures.
+tax_obligations,status,STRING,NO,Status,All values in this dataset are generated fixtures.
+tax_obligations,disclaimer,STRING,NO,Disclaimer,All values in this dataset are generated fixtures.
+insurance_policies,insurance_policy_id,STRING,NO,Insurance policy id,All values in this dataset are generated fixtures.
+insurance_policies,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+insurance_policies,policy_type,STRING,NO,Policy type,All values in this dataset are generated fixtures.
+insurance_policies,insurer_label,STRING,NO,Insurer label,All values in this dataset are generated fixtures.
+insurance_policies,coverage_amount_inr,DECIMAL_STRING,NO,Coverage amount inr,All values in this dataset are generated fixtures.
+insurance_policies,premium_amount_inr,DECIMAL_STRING,NO,Premium amount inr,All values in this dataset are generated fixtures.
+insurance_policies,premium_frequency,STRING,NO,Premium frequency,All values in this dataset are generated fixtures.
+insurance_policies,renewal_date,STRING,NO,Renewal date,All values in this dataset are generated fixtures.
+insurance_policies,policy_status,STRING,NO,Policy status,All values in this dataset are generated fixtures.
+insurance_policies,policy_document_status,STRING,NO,Policy document status,All values in this dataset are generated fixtures.
+insurance_claims,insurance_claim_id,STRING,NO,Insurance claim id,All values in this dataset are generated fixtures.
+insurance_claims,insurance_policy_id,STRING,NO,Insurance policy id,All values in this dataset are generated fixtures.
+insurance_claims,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+insurance_claims,claim_type,STRING,NO,Claim type,All values in this dataset are generated fixtures.
+insurance_claims,claim_amount_inr,DECIMAL_STRING,NO,Claim amount inr,All values in this dataset are generated fixtures.
+insurance_claims,claim_status,STRING,NO,Claim status,All values in this dataset are generated fixtures.
+insurance_claims,submission_mode,STRING,NO,Submission mode,All values in this dataset are generated fixtures.
+insurance_claims,evidence_status,STRING,NO,Evidence status,All values in this dataset are generated fixtures.
+crisis_cases,crisis_case_id,STRING,NO,Crisis case id,All values in this dataset are generated fixtures.
+crisis_cases,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+crisis_cases,trigger_type,STRING,NO,Trigger type,All values in this dataset are generated fixtures.
+crisis_cases,estimated_shortfall_inr,DECIMAL_STRING,NO,Estimated shortfall inr,All values in this dataset are generated fixtures.
+crisis_cases,urgency,STRING,NO,Urgency,All values in this dataset are generated fixtures.
+crisis_cases,recommended_sequence_json,JSON,NO,Recommended sequence json,All values in this dataset are generated fixtures.
+crisis_cases,loan_first_strategy,STRING,NO,Loan first strategy,All values in this dataset are generated fixtures.
+crisis_cases,case_status,STRING,NO,Case status,All values in this dataset are generated fixtures.
+crisis_cases,external_aid_requested,STRING,NO,External aid requested,All values in this dataset are generated fixtures.
+risk_signals,risk_signal_id,STRING,NO,Risk signal id,All values in this dataset are generated fixtures.
+risk_signals,customer_id,STRING,NO,Customer id,All values in this dataset are generated fixtures.
+risk_signals,source_type,STRING,NO,Source type,All values in this dataset are generated fixtures.
+risk_signals,signal_type,STRING,NO,Signal type,All values in this dataset are generated fixtures.
+risk_signals,synthetic_message_or_evidence,STRING,NO,Synthetic message or evidence,All values in this dataset are generated fixtures.
+risk_signals,risk_level,STRING,NO,Risk level,All values in this dataset are generated fixtures.
+risk_signals,model_signal_confidence_fixture,STRING,NO,Model signal confidence fixture,All values in this dataset are generated fixtures.
+risk_signals,deterministic_indicators_json,JSON,NO,Deterministic indicators json,All values in this dataset are generated fixtures.
+risk_signals,recommended_action,STRING,NO,Recommended action,All values in this dataset are generated fixtures.
+risk_signals,fraud_verdict,STRING,NO,Fraud verdict,All values in this dataset are generated fixtures.
+risk_signals,automated_payment_blocked,STRING,NO,Automated payment blocked,All values in this dataset are generated fixtures.
+micro_enterprises,enterprise_id,STRING,NO,Enterprise id,All values in this dataset are generated fixtures.
+micro_enterprises,owner_customer_id,STRING,NO,Owner customer id,All values in this dataset are generated fixtures.
+micro_enterprises,business_name,STRING,NO,Business name,All values in this dataset are generated fixtures.
+micro_enterprises,business_type,STRING,NO,Business type,All values in this dataset are generated fixtures.
+micro_enterprises,city,STRING,NO,City,All values in this dataset are generated fixtures.
+micro_enterprises,locality_cluster,STRING,NO,Locality cluster,All values in this dataset are generated fixtures.
+micro_enterprises,monthly_revenue_estimate_inr,DECIMAL_STRING,NO,Monthly revenue estimate inr,All values in this dataset are generated fixtures.
+micro_enterprises,fixed_cost_estimate_inr,DECIMAL_STRING,NO,Fixed cost estimate inr,All values in this dataset are generated fixtures.
+micro_enterprises,variable_cost_estimate_inr,DECIMAL_STRING,NO,Variable cost estimate inr,All values in this dataset are generated fixtures.
+micro_enterprises,estimated_contribution_margin_inr,DECIMAL_STRING,NO,Estimated contribution margin inr,All values in this dataset are generated fixtures.
+micro_enterprises,capacity_per_week,STRING,NO,Capacity per week,All values in this dataset are generated fixtures.
+micro_enterprises,enterprise_stage,STRING,NO,Enterprise stage,All values in this dataset are generated fixtures.
+micro_enterprises,external_business_registration,STRING,NO,External business registration,All values in this dataset are generated fixtures.
+enterprise_products,enterprise_product_id,STRING,NO,Enterprise product id,All values in this dataset are generated fixtures.
+enterprise_products,enterprise_id,STRING,NO,Enterprise id,All values in this dataset are generated fixtures.
+enterprise_products,product_or_service_name,STRING,NO,Product or service name,All values in this dataset are generated fixtures.
+enterprise_products,unit_price_inr,DECIMAL_STRING,NO,Unit price inr,All values in this dataset are generated fixtures.
+enterprise_products,estimated_unit_cost_inr,DECIMAL_STRING,NO,Estimated unit cost inr,All values in this dataset are generated fixtures.
+enterprise_products,estimated_unit_margin_inr,DECIMAL_STRING,NO,Estimated unit margin inr,All values in this dataset are generated fixtures.
+enterprise_products,catalog_status,STRING,NO,Catalog status,All values in this dataset are generated fixtures.
+enterprise_orders,enterprise_order_id,STRING,NO,Enterprise order id,All values in this dataset are generated fixtures.
+enterprise_orders,enterprise_id,STRING,NO,Enterprise id,All values in this dataset are generated fixtures.
+enterprise_orders,enterprise_product_id,STRING,NO,Enterprise product id,All values in this dataset are generated fixtures.
+enterprise_orders,customer_order_label,STRING,NO,Customer order label,All values in this dataset are generated fixtures.
+enterprise_orders,order_date,STRING,NO,Order date,All values in this dataset are generated fixtures.
+enterprise_orders,quantity,INTEGER,NO,Quantity,All values in this dataset are generated fixtures.
+enterprise_orders,order_total_inr,DECIMAL_STRING,NO,Order total inr,All values in this dataset are generated fixtures.
+enterprise_orders,order_status,STRING,NO,Order status,All values in this dataset are generated fixtures.
+enterprise_orders,payment_status,STRING,NO,Payment status,All values in this dataset are generated fixtures.
+partner_settlements,settlement_id,STRING,NO,Settlement id,All values in this dataset are generated fixtures.
+partner_settlements,provider_id,STRING,NO,Provider id,All values in this dataset are generated fixtures.
+partner_settlements,offer_id,STRING,NO,Offer id,All values in this dataset are generated fixtures.
+partner_settlements,gross_commission_inr,DECIMAL_STRING,NO,Gross commission inr,All values in this dataset are generated fixtures.
+partner_settlements,refunds_inr,DECIMAL_STRING,NO,Refunds inr,All values in this dataset are generated fixtures.
+partner_settlements,taxes_inr,DECIMAL_STRING,NO,Taxes inr,All values in this dataset are generated fixtures.
+partner_settlements,processing_costs_inr,DECIMAL_STRING,NO,Processing costs inr,All values in this dataset are generated fixtures.
+partner_settlements,eligible_net_revenue_inr,DECIMAL_STRING,NO,Eligible net revenue inr,All values in this dataset are generated fixtures.
+partner_settlements,user_share_percent,DECIMAL_STRING,NO,User share percent,All values in this dataset are generated fixtures.
+partner_settlements,user_share_inr,DECIMAL_STRING,NO,User share inr,All values in this dataset are generated fixtures.
+partner_settlements,platform_share_inr,DECIMAL_STRING,NO,Platform share inr,All values in this dataset are generated fixtures.
+partner_settlements,settlement_status,STRING,NO,Settlement status,All values in this dataset are generated fixtures.
+partner_settlements,contract_approved,BOOLEAN,NO,Contract approved,All values in this dataset are generated fixtures.
+partner_settlements,payout_executed,BOOLEAN,NO,Payout executed,All values in this dataset are generated fixtures.
+audit_events,audit_event_id,STRING,NO,Audit event id,All values in this dataset are generated fixtures.
+audit_events,actor_customer_id,STRING,NO,Actor customer id,All values in this dataset are generated fixtures.
+audit_events,event_type,STRING,NO,Event type,All values in this dataset are generated fixtures.
+audit_events,resource_type,STRING,NO,Resource type,All values in this dataset are generated fixtures.
+audit_events,resource_id,STRING,NO,Resource id,All values in this dataset are generated fixtures.
+audit_events,purpose,STRING,NO,Purpose,All values in this dataset are generated fixtures.
+audit_events,decision,STRING,NO,Decision,All values in this dataset are generated fixtures.
+audit_events,occurred_at,DATE_OR_TIMESTAMP,NO,Occurred at,All values in this dataset are generated fixtures.
+audit_events,correlation_id,STRING,NO,Correlation id,All values in this dataset are generated fixtures.
+audit_events,ip_address,STRING,NO,Ip address,All values in this dataset are generated fixtures.

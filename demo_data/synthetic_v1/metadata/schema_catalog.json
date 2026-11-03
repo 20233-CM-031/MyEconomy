@@ -1,0 +1,770 @@
+{
+  "dataset_name": "MyEconomy Synthetic Economic Demo Dataset",
+  "version": "1.0.0",
+  "as_of_date": "2026-11-03",
+  "generation_seed": 20261103,
+  "synthetic_only": true,
+  "tables": {
+    "customers": {
+      "row_count": 120,
+      "columns": [
+        "customer_id",
+        "display_name",
+        "email",
+        "phone",
+        "age_years",
+        "age_band",
+        "city",
+        "locality_cluster",
+        "persona",
+        "employment_status",
+        "primary_language",
+        "monthly_income_inr_estimate",
+        "income_volatility",
+        "dependants_count",
+        "primary_goal",
+        "economic_context",
+        "kyc_status_fixture",
+        "identity_document_status",
+        "account_status",
+        "synthetic",
+        "data_class"
+      ]
+    },
+    "households": {
+      "row_count": 55,
+      "columns": [
+        "household_id",
+        "display_label",
+        "city",
+        "locality_cluster",
+        "household_type",
+        "member_count",
+        "owner_customer_id",
+        "shared_financial_profile_enabled",
+        "data_class"
+      ]
+    },
+    "household_memberships": {
+      "row_count": 120,
+      "columns": [
+        "membership_id",
+        "household_id",
+        "customer_id",
+        "role",
+        "status",
+        "joined_at",
+        "financial_data_access",
+        "data_class"
+      ]
+    },
+    "consents": {
+      "row_count": 840,
+      "columns": [
+        "consent_id",
+        "customer_id",
+        "purpose",
+        "data_categories_json",
+        "recipient",
+        "status",
+        "granted_at",
+        "expires_at",
+        "revoked_at",
+        "notice_version",
+        "consent_receipt",
+        "withdrawal_channel",
+        "data_class"
+      ]
+    },
+    "providers": {
+      "row_count": 35,
+      "columns": [
+        "provider_id",
+        "provider_name",
+        "provider_type",
+        "service_city",
+        "service_zone",
+        "verification_status",
+        "partner_status",
+        "settlement_currency",
+        "data_class"
+      ]
+    },
+    "accounts": {
+      "row_count": 225,
+      "columns": [
+        "account_id",
+        "customer_id",
+        "institution_code",
+        "account_type",
+        "currency",
+        "masked_reference",
+        "account_status",
+        "opening_balance_inr",
+        "balance_semantics",
+        "data_class"
+      ]
+    },
+    "recurring_obligations": {
+      "row_count": 531,
+      "columns": [
+        "obligation_id",
+        "customer_id",
+        "obligation_type",
+        "category",
+        "payee_label",
+        "expected_amount_inr",
+        "frequency",
+        "due_day",
+        "autopay_enabled",
+        "essential",
+        "status",
+        "first_due_date",
+        "data_class"
+      ]
+    },
+    "loans": {
+      "row_count": 39,
+      "columns": [
+        "loan_id",
+        "customer_id",
+        "loan_type",
+        "lender_label",
+        "principal_inr",
+        "annual_interest_rate_percent",
+        "tenure_months",
+        "emi_inr",
+        "start_date",
+        "loan_status",
+        "remaining_principal_fixture_inr",
+        "secured_status",
+        "data_class"
+      ]
+    },
+    "loan_installments": {
+      "row_count": 334,
+      "columns": [
+        "installment_id",
+        "loan_id",
+        "customer_id",
+        "installment_number",
+        "due_date",
+        "principal_component_inr",
+        "interest_component_inr",
+        "total_due_inr",
+        "status",
+        "paid_date",
+        "late_fee_inr",
+        "data_class"
+      ]
+    },
+    "bills": {
+      "row_count": 240,
+      "columns": [
+        "bill_id",
+        "customer_id",
+        "provider_id",
+        "bill_type",
+        "invoice_number",
+        "issue_date",
+        "due_date",
+        "currency",
+        "subtotal_inr",
+        "tax_inr",
+        "total_due_inr",
+        "amount_paid_inr",
+        "status",
+        "anomaly_label",
+        "prior_period_total_inr",
+        "source_document_path",
+        "document_authenticity",
+        "data_class"
+      ]
+    },
+    "bill_line_items": {
+      "row_count": 523,
+      "columns": [
+        "bill_line_id",
+        "bill_id",
+        "description_code",
+        "description",
+        "quantity",
+        "unit_price_inr",
+        "line_total_inr",
+        "taxable",
+        "synthetic",
+        "data_class"
+      ]
+    },
+    "subscriptions": {
+      "row_count": 75,
+      "columns": [
+        "subscription_id",
+        "customer_id",
+        "service_name",
+        "billing_cycle",
+        "current_price_inr",
+        "start_date",
+        "next_renewal_date",
+        "status",
+        "auto_renew",
+        "price_change_flag",
+        "price_before_change_inr",
+        "cancellation_channel",
+        "data_class"
+      ]
+    },
+    "transactions": {
+      "row_count": 11538,
+      "columns": [
+        "transaction_id",
+        "customer_id",
+        "account_id",
+        "transaction_date",
+        "posted_at",
+        "direction",
+        "transaction_type",
+        "cashflow_treatment",
+        "category",
+        "amount_inr",
+        "currency",
+        "counterparty_label",
+        "provider_id",
+        "obligation_id",
+        "bill_id",
+        "loan_installment_id",
+        "subscription_id",
+        "transfer_group_id",
+        "payment_rail",
+        "status",
+        "reference",
+        "data_class"
+      ]
+    },
+    "benefit_programs": {
+      "row_count": 12,
+      "columns": [
+        "benefit_program_id",
+        "program_name",
+        "benefit_category",
+        "max_support_inr",
+        "eligibility_rule_json",
+        "source_type",
+        "external_source_url",
+        "application_channel",
+        "program_status",
+        "last_rule_reviewed",
+        "disclaimer",
+        "data_class"
+      ]
+    },
+    "benefit_assessments": {
+      "row_count": 360,
+      "columns": [
+        "assessment_id",
+        "customer_id",
+        "benefit_program_id",
+        "assessment_date",
+        "assessment_status",
+        "rule_checks_json",
+        "matched_rule_count",
+        "total_rule_count",
+        "estimated_support_cap_inr",
+        "official_confirmation",
+        "data_class"
+      ]
+    },
+    "benefit_applications": {
+      "row_count": 64,
+      "columns": [
+        "application_id",
+        "assessment_id",
+        "customer_id",
+        "benefit_program_id",
+        "application_status",
+        "submission_mode",
+        "required_documents_json",
+        "submitted_at",
+        "decision_status",
+        "data_class"
+      ]
+    },
+    "skills": {
+      "row_count": 242,
+      "columns": [
+        "skill_id",
+        "customer_id",
+        "skill_code",
+        "skill_label",
+        "proficiency_level",
+        "evidence_status",
+        "available_hours_weekly",
+        "monetization_consent",
+        "data_class"
+      ]
+    },
+    "opportunities": {
+      "row_count": 80,
+      "columns": [
+        "opportunity_id",
+        "title",
+        "required_skill_code",
+        "opportunity_type",
+        "city",
+        "remote_allowed",
+        "estimated_pay_inr",
+        "time_commitment_hours",
+        "status",
+        "application_deadline",
+        "provider_id",
+        "source_type",
+        "data_class"
+      ]
+    },
+    "opportunity_matches": {
+      "row_count": 116,
+      "columns": [
+        "match_id",
+        "customer_id",
+        "opportunity_id",
+        "match_score",
+        "score_components_json",
+        "match_status",
+        "requires_user_review",
+        "data_class"
+      ]
+    },
+    "offers": {
+      "row_count": 90,
+      "columns": [
+        "offer_id",
+        "provider_id",
+        "offer_title",
+        "service_category",
+        "city",
+        "reference_price_inr",
+        "offer_price_inr",
+        "discount_value_inr",
+        "sponsor_credit_inr",
+        "required_incremental_spend_inr",
+        "fees_inr",
+        "recurring_commitment_cost_inr",
+        "estimated_net_benefit_inr",
+        "min_group_size",
+        "valid_until",
+        "decision_fixture",
+        "decision_rule",
+        "terms_status",
+        "data_class"
+      ]
+    },
+    "resource_listings": {
+      "row_count": 15,
+      "columns": [
+        "resource_id",
+        "owner_customer_id",
+        "resource_type",
+        "description",
+        "city",
+        "locality_cluster",
+        "capacity_quantity",
+        "capacity_unit",
+        "availability_window",
+        "verification_status",
+        "listing_status",
+        "data_class"
+      ]
+    },
+    "demand_signals": {
+      "row_count": 44,
+      "columns": [
+        "demand_signal_id",
+        "customer_id",
+        "consent_purpose",
+        "service_category",
+        "city",
+        "locality_cluster",
+        "quantity_band",
+        "price_band_inr",
+        "aggregatable",
+        "raw_transaction_data_included",
+        "signal_date",
+        "status",
+        "data_class"
+      ]
+    },
+    "commons_campaigns": {
+      "row_count": 6,
+      "columns": [
+        "campaign_id",
+        "campaign_title",
+        "service_category",
+        "city",
+        "locality_cluster",
+        "minimum_participants",
+        "participant_count_fixture",
+        "campaign_status",
+        "linked_offer_id",
+        "funding_source",
+        "aggregate_only",
+        "individual_income_or_transactions_exposed",
+        "data_class"
+      ]
+    },
+    "commons_participants": {
+      "row_count": 13,
+      "columns": [
+        "campaign_participant_id",
+        "campaign_id",
+        "customer_id",
+        "demand_signal_id",
+        "consent_purpose",
+        "participation_status",
+        "individual_data_disclosed_to_provider",
+        "data_class"
+      ]
+    },
+    "guardian_cases": {
+      "row_count": 67,
+      "columns": [
+        "guardian_case_id",
+        "customer_id",
+        "bill_id",
+        "case_type",
+        "severity",
+        "case_status",
+        "finding_summary",
+        "model_confidence_fixture",
+        "evidence_required",
+        "external_complaint_submitted",
+        "outcome_status",
+        "data_class"
+      ]
+    },
+    "evidence_documents": {
+      "row_count": 67,
+      "columns": [
+        "evidence_document_id",
+        "customer_id",
+        "guardian_case_id",
+        "bill_id",
+        "document_type",
+        "source_path",
+        "sha256",
+        "provenance",
+        "ingestion_status",
+        "data_class"
+      ]
+    },
+    "agent_missions": {
+      "row_count": 8,
+      "columns": [
+        "mission_id",
+        "customer_id",
+        "mission_type",
+        "mission_status",
+        "created_at",
+        "last_checkpoint_number",
+        "total_steps",
+        "idempotency_scope",
+        "resume_policy",
+        "approval_required",
+        "simulated_external_actions",
+        "data_class"
+      ]
+    },
+    "agent_mission_steps": {
+      "row_count": 59,
+      "columns": [
+        "mission_step_id",
+        "mission_id",
+        "step_number",
+        "step_key",
+        "step_status",
+        "idempotency_key",
+        "input_ref",
+        "output_ref",
+        "checkpoint_hash",
+        "external_side_effect_state",
+        "retry_count",
+        "data_class"
+      ]
+    },
+    "value_events": {
+      "row_count": 45,
+      "columns": [
+        "value_event_id",
+        "customer_id",
+        "value_type",
+        "gross_value_inr",
+        "additional_cost_inr",
+        "net_value_inr",
+        "outcome_status",
+        "verification_level",
+        "evidence_ref",
+        "external_provider_confirmation",
+        "deduplication_key",
+        "data_class"
+      ]
+    },
+    "budget_plans": {
+      "row_count": 120,
+      "columns": [
+        "budget_plan_id",
+        "customer_id",
+        "period_start",
+        "period_end",
+        "currency",
+        "income_reference_inr",
+        "planned_total_inr",
+        "plan_status",
+        "method",
+        "data_class"
+      ]
+    },
+    "budget_envelopes": {
+      "row_count": 360,
+      "columns": [
+        "budget_envelope_id",
+        "budget_plan_id",
+        "customer_id",
+        "envelope_type",
+        "planned_amount_inr",
+        "actual_spend_inr",
+        "remaining_amount_inr",
+        "overspent",
+        "allocation_ratio_percent",
+        "data_class"
+      ]
+    },
+    "financial_goals": {
+      "row_count": 152,
+      "columns": [
+        "financial_goal_id",
+        "customer_id",
+        "goal_type",
+        "target_amount_inr",
+        "current_progress_inr",
+        "target_date",
+        "priority",
+        "goal_status",
+        "data_class"
+      ]
+    },
+    "tax_obligations": {
+      "row_count": 36,
+      "columns": [
+        "tax_obligation_id",
+        "customer_id",
+        "tax_period_label",
+        "tax_type",
+        "estimated_amount_inr",
+        "due_date",
+        "estimate_source",
+        "tax_rule_engine",
+        "status",
+        "disclaimer",
+        "data_class"
+      ]
+    },
+    "insurance_policies": {
+      "row_count": 52,
+      "columns": [
+        "insurance_policy_id",
+        "customer_id",
+        "policy_type",
+        "insurer_label",
+        "coverage_amount_inr",
+        "premium_amount_inr",
+        "premium_frequency",
+        "renewal_date",
+        "policy_status",
+        "policy_document_status",
+        "data_class"
+      ]
+    },
+    "insurance_claims": {
+      "row_count": 18,
+      "columns": [
+        "insurance_claim_id",
+        "insurance_policy_id",
+        "customer_id",
+        "claim_type",
+        "claim_amount_inr",
+        "claim_status",
+        "submission_mode",
+        "evidence_status",
+        "data_class"
+      ]
+    },
+    "crisis_cases": {
+      "row_count": 28,
+      "columns": [
+        "crisis_case_id",
+        "customer_id",
+        "trigger_type",
+        "estimated_shortfall_inr",
+        "urgency",
+        "recommended_sequence_json",
+        "loan_first_strategy",
+        "case_status",
+        "external_aid_requested",
+        "data_class"
+      ]
+    },
+    "risk_signals": {
+      "row_count": 42,
+      "columns": [
+        "risk_signal_id",
+        "customer_id",
+        "source_type",
+        "signal_type",
+        "synthetic_message_or_evidence",
+        "risk_level",
+        "model_signal_confidence_fixture",
+        "deterministic_indicators_json",
+        "recommended_action",
+        "fraud_verdict",
+        "automated_payment_blocked",
+        "data_class"
+      ]
+    },
+    "micro_enterprises": {
+      "row_count": 35,
+      "columns": [
+        "enterprise_id",
+        "owner_customer_id",
+        "business_name",
+        "business_type",
+        "city",
+        "locality_cluster",
+        "monthly_revenue_estimate_inr",
+        "fixed_cost_estimate_inr",
+        "variable_cost_estimate_inr",
+        "estimated_contribution_margin_inr",
+        "capacity_per_week",
+        "enterprise_stage",
+        "external_business_registration",
+        "data_class"
+      ]
+    },
+    "enterprise_products": {
+      "row_count": 105,
+      "columns": [
+        "enterprise_product_id",
+        "enterprise_id",
+        "product_or_service_name",
+        "unit_price_inr",
+        "estimated_unit_cost_inr",
+        "estimated_unit_margin_inr",
+        "catalog_status",
+        "data_class"
+      ]
+    },
+    "enterprise_orders": {
+      "row_count": 130,
+      "columns": [
+        "enterprise_order_id",
+        "enterprise_id",
+        "enterprise_product_id",
+        "customer_order_label",
+        "order_date",
+        "quantity",
+        "order_total_inr",
+        "order_status",
+        "payment_status",
+        "data_class"
+      ]
+    },
+    "partner_settlements": {
+      "row_count": 24,
+      "columns": [
+        "settlement_id",
+        "provider_id",
+        "offer_id",
+        "gross_commission_inr",
+        "refunds_inr",
+        "taxes_inr",
+        "processing_costs_inr",
+        "eligible_net_revenue_inr",
+        "user_share_percent",
+        "user_share_inr",
+        "platform_share_inr",
+        "settlement_status",
+        "contract_approved",
+        "payout_executed",
+        "data_class"
+      ]
+    },
+    "audit_events": {
+      "row_count": 360,
+      "columns": [
+        "audit_event_id",
+        "actor_customer_id",
+        "event_type",
+        "resource_type",
+        "resource_id",
+        "purpose",
+        "decision",
+        "occurred_at",
+        "correlation_id",
+        "ip_address",
+        "data_class"
+      ]
+    }
+  },
+  "relationships": {
+    "household_memberships.household_id": "households.household_id",
+    "household_memberships.customer_id": "customers.customer_id",
+    "accounts.customer_id": "customers.customer_id",
+    "consents.customer_id": "customers.customer_id",
+    "recurring_obligations.customer_id": "customers.customer_id",
+    "loans.customer_id": "customers.customer_id",
+    "loan_installments.loan_id": "loans.loan_id",
+    "loan_installments.customer_id": "customers.customer_id",
+    "bills.customer_id": "customers.customer_id",
+    "bills.provider_id": "providers.provider_id",
+    "bill_line_items.bill_id": "bills.bill_id",
+    "subscriptions.customer_id": "customers.customer_id",
+    "transactions.customer_id": "customers.customer_id",
+    "transactions.account_id": "accounts.account_id",
+    "benefit_assessments.customer_id": "customers.customer_id",
+    "benefit_assessments.benefit_program_id": "benefit_programs.benefit_program_id",
+    "benefit_applications.assessment_id": "benefit_assessments.assessment_id",
+    "benefit_applications.customer_id": "customers.customer_id",
+    "skills.customer_id": "customers.customer_id",
+    "opportunity_matches.customer_id": "customers.customer_id",
+    "opportunity_matches.opportunity_id": "opportunities.opportunity_id",
+    "offers.provider_id": "providers.provider_id",
+    "resource_listings.owner_customer_id": "customers.customer_id",
+    "demand_signals.customer_id": "customers.customer_id",
+    "commons_participants.campaign_id": "commons_campaigns.campaign_id",
+    "commons_participants.customer_id": "customers.customer_id",
+    "commons_participants.demand_signal_id": "demand_signals.demand_signal_id",
+    "guardian_cases.customer_id": "customers.customer_id",
+    "guardian_cases.bill_id": "bills.bill_id",
+    "evidence_documents.customer_id": "customers.customer_id",
+    "evidence_documents.guardian_case_id": "guardian_cases.guardian_case_id",
+    "evidence_documents.bill_id": "bills.bill_id",
+    "agent_missions.customer_id": "customers.customer_id",
+    "agent_mission_steps.mission_id": "agent_missions.mission_id",
+    "value_events.customer_id": "customers.customer_id",
+    "budget_plans.customer_id": "customers.customer_id",
+    "budget_envelopes.budget_plan_id": "budget_plans.budget_plan_id",
+    "budget_envelopes.customer_id": "customers.customer_id",
+    "financial_goals.customer_id": "customers.customer_id",
+    "tax_obligations.customer_id": "customers.customer_id",
+    "insurance_policies.customer_id": "customers.customer_id",
+    "insurance_claims.insurance_policy_id": "insurance_policies.insurance_policy_id",
+    "insurance_claims.customer_id": "customers.customer_id",
+    "crisis_cases.customer_id": "customers.customer_id",
+    "risk_signals.customer_id": "customers.customer_id",
+    "micro_enterprises.owner_customer_id": "customers.customer_id",
+    "enterprise_products.enterprise_id": "micro_enterprises.enterprise_id",
+    "enterprise_orders.enterprise_id": "micro_enterprises.enterprise_id",
+    "enterprise_orders.enterprise_product_id": "enterprise_products.enterprise_product_id",
+    "partner_settlements.provider_id": "providers.provider_id",
+    "partner_settlements.offer_id": "offers.offer_id",
+    "audit_events.actor_customer_id": "customers.customer_id"
+  }
+}

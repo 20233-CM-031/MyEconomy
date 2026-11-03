@@ -1,0 +1,2591 @@
+{
+  "dataset": "MyEconomy Synthetic Economic Demo Dataset",
+  "version": "1.0.0",
+  "generated_date": "2026-11-03",
+  "seed": 20261103,
+  "synthetic_only": true,
+  "entity_table_count": 42,
+  "total_rows": 17425,
+  "validation_passed": true,
+  "validation_check_count": 111,
+  "multimodal_document_count": 12,
+  "sqlite_integrity_check": "ok",
+  "sqlite_foreign_key_violations": 0,
+  "file_count_excluding_manifest": 506,
+  "table_counts": {
+    "customers": 120,
+    "households": 55,
+    "household_memberships": 120,
+    "consents": 840,
+    "providers": 35,
+    "accounts": 225,
+    "recurring_obligations": 531,
+    "loans": 39,
+    "loan_installments": 334,
+    "bills": 240,
+    "bill_line_items": 523,
+    "subscriptions": 75,
+    "transactions": 11538,
+    "benefit_programs": 12,
+    "benefit_assessments": 360,
+    "benefit_applications": 64,
+    "skills": 242,
+    "opportunities": 80,
+    "opportunity_matches": 116,
+    "offers": 90,
+    "resource_listings": 15,
+    "demand_signals": 44,
+    "commons_campaigns": 6,
+    "commons_participants": 13,
+    "guardian_cases": 67,
+    "evidence_documents": 67,
+    "agent_missions": 8,
+    "agent_mission_steps": 59,
+    "value_events": 45,
+    "budget_plans": 120,
+    "budget_envelopes": 360,
+    "financial_goals": 152,
+    "tax_obligations": 36,
+    "insurance_policies": 52,
+    "insurance_claims": 18,
+    "crisis_cases": 28,
+    "risk_signals": 42,
+    "micro_enterprises": 35,
+    "enterprise_products": 105,
+    "enterprise_orders": 130,
+    "partner_settlements": 24,
+    "audit_events": 360
+  },
+  "files": [
+    {
+      "path": "DEMO_PLAYBOOK.md",
+      "bytes": 6075,
+      "sha256": "77f4062e716e56fd54d1c08e5e1a3667a1db6e3dd0867cb67d7b8062c9e0d51a"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6212,
+      "sha256": "fb2ffd8dc7c39ac6a8fdc122aae48682d3c87a138b4bb2f2b206707b406f8749"
+    },
+    {
+      "path": "REGULATORY_AND_DATA_RULES.md",
+      "bytes": 6038,
+      "sha256": "4fdbd4ecb4625b8ee2fc3e26afa246cc64a6e2b6749c11bd60dc23048b10cefb"
+    },
+    {
+      "path": "api_scenarios/01_day_one_personal_power.json",
+      "bytes": 413,
+      "sha256": "bd3211ec5d30c41e8f6fb3759094a377b647489f7b619b9fc892194a6b6ea022"
+    },
+    {
+      "path": "api_scenarios/02_guardian_bill_review.json",
+      "bytes": 308,
+      "sha256": "f60bd7a1537cccac82f26f97dc248b63df1b79d4196aafceaec06822e1256896"
+    },
+    {
+      "path": "api_scenarios/03_collective_commons.json",
+      "bytes": 1285,
+      "sha256": "85bb2835632385932ed2ceda6ae4ab0ec90dac69f3f0b2bfe17eef0543df938c"
+    },
+    {
+      "path": "api_scenarios/04_agent_checkpoint_resume.json",
+      "bytes": 3816,
+      "sha256": "966e89510c6b14c783b45110dfa9d96373d4025fbc57ed18fb458d5a3b8eecfa"
+    },
+    {
+      "path": "api_scenarios/05_offer_net_value_rejection.json",
+      "bytes": 4293,
+      "sha256": "4d28b8f2be2c61897642dbd2ef3e703e044f407d3f223cccaad6a39b13fefe5c"
+    },
+    {
+      "path": "apply_demo_scenario_overrides.py",
+      "bytes": 9784,
+      "sha256": "d965388bc8ed71c78f06d61989bc113ee7a003f43fadb739842e8f6d643cae00"
+    },
+    {
+      "path": "build_sqlite.py",
+      "bytes": 3649,
+      "sha256": "174b41f0dd2351d1757a56676c72fef969306b730f418879bcc00cf0e04a4757"
+    },
+    {
+      "path": "create_multimodal_samples.py",
+      "bytes": 4311,
+      "sha256": "00e9a185e8ea6c961597f9ab560e4ad172b749e7ff504ba726430117cbf4bf76"
+    },
+    {
+      "path": "csv/accounts.csv",
+      "bytes": 29036,
+      "sha256": "9300a906bf0d75b339d35be4b9edb3225cf649ab033baa1f6f57bef750d367dd"
+    },
+    {
+      "path": "csv/agent_mission_steps.csv",
+      "bytes": 12362,
+      "sha256": "8d041867f1023ba7585070fcc82d4d69c3a436aa7e79e48c649fa796fdc72e37"
+    },
+    {
+      "path": "csv/agent_missions.csv",
+      "bytes": 1766,
+      "sha256": "38ad1f3e4c0e692a4c076c6d952152a6aa003a1b38bc7987b1572f879d8ca921"
+    },
+    {
+      "path": "csv/audit_events.csv",
+      "bytes": 72050,
+      "sha256": "b6cf4cd59b0df1ca0720f6d29f248fe0f023347047297d906618f3e91e1ff53a"
+    },
+    {
+      "path": "csv/benefit_applications.csv",
+      "bytes": 13252,
+      "sha256": "ca72e63c1b83ad58caf1a88d6ffae707fe064c15f2d75e803ab16bfcbcb40cf5"
+    },
+    {
+      "path": "csv/benefit_assessments.csv",
+      "bytes": 61136,
+      "sha256": "d4b9b7725f21bee99d4ef36bba9d049b61ef693c7a1255b19563616b23872a23"
+    },
+    {
+      "path": "csv/benefit_programs.csv",
+      "bytes": 3710,
+      "sha256": "2504f9f522c6847db36711f1c209d95e31f961b58c5558ac9c5c4026843e9e74"
+    },
+    {
+      "path": "csv/bill_line_items.csv",
+      "bytes": 44183,
+      "sha256": "6d70a2022e0ec77baec2f1b43c74c11b9eea6ae49bd506f024e628aa1471c4db"
+    },
+    {
+      "path": "csv/bills.csv",
+      "bytes": 56785,
+      "sha256": "8e6128cc2044b1036be1cb94296d57193c54ace8d827995c6064089290be565b"
+    },
+    {
+      "path": "csv/budget_envelopes.csv",
+      "bytes": 32695,
+      "sha256": "caa6d9a927784d3a4adaf586d9df9512d780728e65efda251938144a70da5152"
+    },
+    {
+      "path": "csv/budget_plans.csv",
+      "bytes": 18523,
+      "sha256": "0e69706bd4b6613ec5d350b37c41b6005abaa653429ff7fb5f3d3cb54cc7650b"
+    },
+    {
+      "path": "csv/commons_campaigns.csv",
+      "bytes": 1336,
+      "sha256": "01c368127791208d39563836c307da10821c1b6f71451bdbe39c59c813ffc771"
+    },
+    {
+      "path": "csv/commons_participants.csv",
+      "bytes": 1586,
+      "sha256": "5514e17365189b36061c693aaf5336d2d7717d617c0b501f66bc2152affcb127"
+    },
+    {
+      "path": "csv/consents.csv",
+      "bytes": 199417,
+      "sha256": "a12bb4cbc8c26446d943a8af891dfd60a31e9112f2ec92bf97e9911b166a615d"
+    },
+    {
+      "path": "csv/crisis_cases.csv",
+      "bytes": 8032,
+      "sha256": "087497500d253bcf18cf81a595bec323b7f50852431c3e05723d3a219103de01"
+    },
+    {
+      "path": "csv/customers.csv",
+      "bytes": 31445,
+      "sha256": "e90c36faeda92aac317ea6006593cd6411835cb347d1a6b9700f1ab296db9733"
+    },
+    {
+      "path": "csv/demand_signals.csv",
+      "bytes": 6805,
+      "sha256": "98fab98fc5c8e1045080d78e9a469a2bc93d601d7836eb6491b5a0781b739559"
+    },
+    {
+      "path": "csv/enterprise_orders.csv",
+      "bytes": 17316,
+      "sha256": "9386904d986b973033b802155f6d2ea02b428442e117afd5f3c8ce8d36687da9"
+    },
+    {
+      "path": "csv/enterprise_products.csv",
+      "bytes": 11085,
+      "sha256": "c645ce22148ba3939982d46ad752f6ed47d63503cf35cd3d9c59f1c9d64aa83a"
+    },
+    {
+      "path": "csv/evidence_documents.csv",
+      "bytes": 14807,
+      "sha256": "b7d3220dea9b4462bdef5d1b169b114f6504cdef0e891d8653af074b28da49cf"
+    },
+    {
+      "path": "csv/financial_goals.csv",
+      "bytes": 15957,
+      "sha256": "6b65ccf50fe0f6d8c3edd0f07402fbe5cb7ebb20397a93348d7e042ba643a0aa"
+    },
+    {
+      "path": "csv/guardian_cases.csv",
+      "bytes": 12980,
+      "sha256": "f904ac2a375e21c1596e014e7a59b544299f3594372b301b16e98e23f1a27653"
+    },
+    {
+      "path": "csv/household_memberships.csv",
+      "bytes": 13723,
+      "sha256": "007cc111293f1ba109e3afb2c436ab06e5a0623b97afeeb40bd4caf92522454f"
+    },
+    {
+      "path": "csv/households.csv",
+      "bytes": 5975,
+      "sha256": "0593cffe48867a8ea075d8a73887a3077de67fa539c066262429cb82a4fae965"
+    },
+    {
+      "path": "csv/insurance_claims.csv",
+      "bytes": 2527,
+      "sha256": "f2444c968553a2bc47b5c8c2e71e143fd9667b357d389838df93efe4a06d5338"
+    },
+    {
+      "path": "csv/insurance_policies.csv",
+      "bytes": 7530,
+      "sha256": "0a92794f413c39c700b7076c7c136ee97c49f4ff389ad8073a3258ac5fb334da"
+    },
+    {
+      "path": "csv/loan_installments.csv",
+      "bytes": 35404,
+      "sha256": "b119fe0d7f7a67bda75c6692603c4f1c78e8525e56eecac56b7abc2ff7d6d345"
+    },
+    {
+      "path": "csv/loans.csv",
+      "bytes": 5685,
+      "sha256": "ff1f934db39e5f14712732744305bd94a29ebaea60fda1fe9fa34f2d8d0766e2"
+    },
+    {
+      "path": "csv/micro_enterprises.csv",
+      "bytes": 7038,
+      "sha256": "679f166c6137956e58492209082457459a18ce7f1d719efcd003af9b2eb2b4a6"
+    },
+    {
+      "path": "csv/offers.csv",
+      "bytes": 24229,
+      "sha256": "16937842fe7e094eedb2ff1868f3a3a0f6a492df45a659e76fc68ca69177cb6a"
+    },
+    {
+      "path": "csv/opportunities.csv",
+      "bytes": 14413,
+      "sha256": "630955192f599ffa0952fb889c3bb58d51b7635e7c3808f77517e4e6bb3dc980"
+    },
+    {
+      "path": "csv/opportunity_matches.csv",
+      "bytes": 20187,
+      "sha256": "b0f7510e8718eb804c7db320b1b50c35f60c64899ee9df74d5f7e431d2e9d4a3"
+    },
+    {
+      "path": "csv/partner_settlements.csv",
+      "bytes": 3588,
+      "sha256": "c2ee2c34453a528990ca1881e4f49a5c2dcc316a091515e6dbba812c10b01f45"
+    },
+    {
+      "path": "csv/providers.csv",
+      "bytes": 5006,
+      "sha256": "3c12b878663c292f85c7e8a22ae091e9f62dd9b926aefd6bfe44fbd1d11046de"
+    },
+    {
+      "path": "csv/recurring_obligations.csv",
+      "bytes": 62410,
+      "sha256": "707b2eed22696d4a4609089944144836a039884fc4b74ea20416bf3d1b6b9c55"
+    },
+    {
+      "path": "csv/resource_listings.csv",
+      "bytes": 2963,
+      "sha256": "94e22bdb2fffc5e064ec7dcff53a8860ff3ecb1d91bbe869e53a9543ca1b2a99"
+    },
+    {
+      "path": "csv/risk_signals.csv",
+      "bytes": 15883,
+      "sha256": "b3e5c1b260268e11d812e5a8eab30486649bd20e4b5e852b21b1d0475f553361"
+    },
+    {
+      "path": "csv/skills.csv",
+      "bytes": 24596,
+      "sha256": "c89487c93e736102c118af8022301ecc0be6d1a9a6895a771ecedb523181c73e"
+    },
+    {
+      "path": "csv/subscriptions.csv",
+      "bytes": 10640,
+      "sha256": "489ea7559a692ccaf0c8c725f08778171bb8ff09caffff3fc6197376fb0fdaae"
+    },
+    {
+      "path": "csv/tax_obligations.csv",
+      "bytes": 7658,
+      "sha256": "0f1977fff2ac744abc4dc85b1d22c43d53105b04f6b20a37ada81cf411d4adf5"
+    },
+    {
+      "path": "csv/transactions.csv",
+      "bytes": 2373577,
+      "sha256": "bf5505201c83936db85f723d91c5c51637c71927caf32016c99fec9f9bec9be1"
+    },
+    {
+      "path": "csv/value_events.csv",
+      "bytes": 8074,
+      "sha256": "4c12b82703e151c4976a426a0de6341a679868d4899ebcb9c2334c697461c41c"
+    },
+    {
+      "path": "generate_synthetic_dataset.py",
+      "bytes": 97264,
+      "sha256": "c6aede116a42b46c08fc15ed18c04a97cf0301379fc6ac1bcd33ecb96050bb31"
+    },
+    {
+      "path": "json/accounts.json",
+      "bytes": 85141,
+      "sha256": "c3785f5354fd289096a71c54a5e473ac1d3c12db7e09726c03666744b3aaa9df"
+    },
+    {
+      "path": "json/agent_mission_steps.json",
+      "bytes": 29071,
+      "sha256": "920a9742b89fc4dba1edeed2b0dd8a154c4cd1bc250b05531cb497f31451c0c4"
+    },
+    {
+      "path": "json/agent_missions.json",
+      "bytes": 4011,
+      "sha256": "433b6710dbf056146fbaf9d7c101cf2b809a8ea6f74ffb30d8cb4a9c186696ca"
+    },
+    {
+      "path": "json/audit_events.json",
+      "bytes": 162992,
+      "sha256": "c9830a7de4b4974201a3dbb26b35006858d9d2533e0c642fd7cdcaa64538a440"
+    },
+    {
+      "path": "json/benefit_applications.json",
+      "bytes": 29987,
+      "sha256": "547edadcb0a6b0abab5b89041d730aec4fe2d48b279713f92d8d884159816230"
+    },
+    {
+      "path": "json/benefit_assessments.json",
+      "bytes": 169663,
+      "sha256": "c77b1a0093c801f4c6ab4fbc346bb300217cadacc51367a8f5357d5c1fa1c782"
+    },
+    {
+      "path": "json/benefit_programs.json",
+      "bytes": 7329,
+      "sha256": "0f666595d5ad1b314e08fcdde93a37ed188bbd644e006d8fa64b9bd2a482ca25"
+    },
+    {
+      "path": "json/bill_line_items.json",
+      "bytes": 159646,
+      "sha256": "8e3ac2146483c8cb29e4d30ac42aac82043de06fdf35898322f9afed8a491a32"
+    },
+    {
+      "path": "json/bills.json",
+      "bytes": 157828,
+      "sha256": "5c1f66eb3551e96d97df83267cb3696dfaaa5358638f64f9058079db3d5035aa"
+    },
+    {
+      "path": "json/budget_envelopes.json",
+      "bytes": 129010,
+      "sha256": "e726ee89adf2e7078182bcbce2f7f0457b72f944a3c33abb4389620e5d9fd445"
+    },
+    {
+      "path": "json/budget_plans.json",
+      "bytes": 46712,
+      "sha256": "855a25b7234f0f3077e955fc67aa35d9f7eea39d0539cb3bc4afe7620fed7961"
+    },
+    {
+      "path": "json/commons_campaigns.json",
+      "bytes": 3303,
+      "sha256": "5b62587326f04a133c677aa818716c88d580b3060aed59890b866a05816e1d7b"
+    },
+    {
+      "path": "json/commons_participants.json",
+      "bytes": 4541,
+      "sha256": "6def5792d3b86a50782b88adc6ce54bbc140903784c4c60ff1b871974748b0be"
+    },
+    {
+      "path": "json/consents.json",
+      "bytes": 449572,
+      "sha256": "8502a6a23607f9a59a4374fe1324cf1db638280658bd1634139a276b8cbb753e"
+    },
+    {
+      "path": "json/crisis_cases.json",
+      "bytes": 15286,
+      "sha256": "ed3cc1a9c14325e27bc8634faaf35c7a8863b7444ca8bc12871e9f4b1a47a46d"
+    },
+    {
+      "path": "json/customers.json",
+      "bytes": 91749,
+      "sha256": "e61168cbec7f1d20e5ea70eeed76385caffddbc2b61209682c7b3cb53cbd8dc5"
+    },
+    {
+      "path": "json/demand_signals.json",
+      "bytes": 20874,
+      "sha256": "6cbff93bcc068adb6ac47a6bf346a2aaaf09b01b8546e7c10a80ba01ee066a9e"
+    },
+    {
+      "path": "json/enterprise_orders.json",
+      "bytes": 50572,
+      "sha256": "4056242d095438b850ec447336c9cf388a2ba3187f9f3fafcda26020f40795ed"
+    },
+    {
+      "path": "json/enterprise_products.json",
+      "bytes": 35922,
+      "sha256": "95559c62d0f3a1f89720322c0dd576b1f5e055cd247ad2b612b7ba03d7f35ed5"
+    },
+    {
+      "path": "json/evidence_documents.json",
+      "bytes": 30554,
+      "sha256": "bfe0f9e554fb4b9210938b842536e159f64ade7dd0ab9ce0fcf006e907d5e953"
+    },
+    {
+      "path": "json/financial_goals.json",
+      "bytes": 49272,
+      "sha256": "e368253f4e0b2d31613c9b4780a1c7365c67435c9ec0bd8d5a4cd47374b7ea3f"
+    },
+    {
+      "path": "json/guardian_cases.json",
+      "bytes": 33231,
+      "sha256": "cf51c6c050742f44fc5a447a7c20a36bb291ab1894e3ba7181ee7394dd8c29cf"
+    },
+    {
+      "path": "json/household_memberships.json",
+      "bytes": 35347,
+      "sha256": "f781a9ad1d23f7e0d56ce6bd979426b5969a1c94fd0e2a1e9ad847e8f78b5adf"
+    },
+    {
+      "path": "json/households.json",
+      "bytes": 18594,
+      "sha256": "9b63cfb5f740f79abf7d5ab849bb4925d256a4dfad467bc9e5d3b6cd038909bb"
+    },
+    {
+      "path": "json/insurance_claims.json",
+      "bytes": 6566,
+      "sha256": "11c85eb7ce74defd7200539c2d3982981bf282ecc7466f5934eb4291f81861b2"
+    },
+    {
+      "path": "json/insurance_policies.json",
+      "bytes": 22588,
+      "sha256": "b41d17ecefe86270bd4fe36af536af0cd5be309443763fed1554f710955d88c4"
+    },
+    {
+      "path": "json/loan_installments.json",
+      "bytes": 132097,
+      "sha256": "0b9740d3e8008a495711eedfbb1c45586234a46798c427008ff51ec19dd659f2"
+    },
+    {
+      "path": "json/loans.json",
+      "bytes": 18130,
+      "sha256": "3b387597bdc4f4ee6d107fa71b97f8dd9211c11dd05d49131e61eebfcc6ae848"
+    },
+    {
+      "path": "json/micro_enterprises.json",
+      "bytes": 21393,
+      "sha256": "d518e72c265a96e0934b835687dcc38ef0256410ab4bddf15431187d60dde613"
+    },
+    {
+      "path": "json/offers.json",
+      "bytes": 69100,
+      "sha256": "5a0b7382337e36a4fd44e65e0a9d039fe6371cfe56254347212c9106f8d8a612"
+    },
+    {
+      "path": "json/opportunities.json",
+      "bytes": 39350,
+      "sha256": "6463ab1ba3e6bbe9860d8b0bbf9743c5eb9d75a5951777a2ce55500a5d066e14"
+    },
+    {
+      "path": "json/opportunity_matches.json",
+      "bytes": 42806,
+      "sha256": "c2e09efb5e13cfe7e8d98a60cc6b1bb69d9d1c52f26d5fe803a114d7a580cb22"
+    },
+    {
+      "path": "json/partner_settlements.json",
+      "bytes": 12778,
+      "sha256": "84fd92f266821e05226e4a085c62894faca983412b20120908a7cf392b68149c"
+    },
+    {
+      "path": "json/providers.json",
+      "bytes": 12887,
+      "sha256": "f6bd64aec392bc44ddfc02931295b90c70b714fddd631b2917eae61cd52b7954"
+    },
+    {
+      "path": "json/recurring_obligations.json",
+      "bytes": 216769,
+      "sha256": "8c3f0d870a423953cb35438d11e2628ae9462e67396a30d2b211941d5384f737"
+    },
+    {
+      "path": "json/resource_listings.json",
+      "bytes": 7300,
+      "sha256": "e59827c04dffb48964ce6e9eb0c37a0b6585b34f68b9b24ec56471d1820c8737"
+    },
+    {
+      "path": "json/risk_signals.json",
+      "bytes": 30231,
+      "sha256": "2e8f3bd4790f486078a204900f9f540f76658de5116822b6f40f66acd4c1bc58"
+    },
+    {
+      "path": "json/skills.json",
+      "bytes": 79153,
+      "sha256": "a456272316eae8e87a69d06cdad4dc00c91cb1026efe58375ef21c9f49f68c47"
+    },
+    {
+      "path": "json/subscriptions.json",
+      "bytes": 34969,
+      "sha256": "2bcf9df499136650032557276d44a8a1b757fd7db81845ce79fca735b6f80b39"
+    },
+    {
+      "path": "json/tax_obligations.json",
+      "bytes": 16941,
+      "sha256": "7476e8ee495877359119e44f530742348b0f31d1b34236fedc6343be6b26219c"
+    },
+    {
+      "path": "json/transactions.json",
+      "bytes": 8315357,
+      "sha256": "b778fcbc64f018a900c4dcbab318abbf95af0abf8686f021291990a82b888146"
+    },
+    {
+      "path": "json/value_events.json",
+      "bytes": 22277,
+      "sha256": "ddd89130a319b7bf4fe61b698f29a69c5edb9beaa9faa2a882721f48e8612790"
+    },
+    {
+      "path": "jsonl/accounts.jsonl",
+      "bytes": 74564,
+      "sha256": "55009eaab97b5db5f7d3070f85d068f2052a5f2637d86bdeddb42575dd486cb9"
+    },
+    {
+      "path": "jsonl/agent_mission_steps.jsonl",
+      "bytes": 25824,
+      "sha256": "9b1ddef086a6908265eaa592d94801d4e79fd2735dcf465d2b1e877951fbb48e"
+    },
+    {
+      "path": "jsonl/agent_missions.jsonl",
+      "bytes": 3569,
+      "sha256": "610f249a81e28e1f1b75f231a1326266611792490366e42036bbae14b7127aa2"
+    },
+    {
+      "path": "jsonl/audit_events.jsonl",
+      "bytes": 144630,
+      "sha256": "1646e94dd0c0127cdd25055898d257b6aa71bea13f133ebc65064d47065a644e"
+    },
+    {
+      "path": "jsonl/benefit_applications.jsonl",
+      "bytes": 26977,
+      "sha256": "3d2d59061761d8d1f50366097ada8bc894bef91b848709ee8707052b9f0a8860"
+    },
+    {
+      "path": "jsonl/benefit_assessments.jsonl",
+      "bytes": 151301,
+      "sha256": "0bc13d7b79c0faefc575c40f6de0bdb64aaf555d07c2baed8b826eaa81f9f4cc"
+    },
+    {
+      "path": "jsonl/benefit_programs.jsonl",
+      "bytes": 6667,
+      "sha256": "423276168c56dc1e69b4c50dfd2da54fb07d2df522a47b2bb268acd749172016"
+    },
+    {
+      "path": "jsonl/bill_line_items.jsonl",
+      "bytes": 135063,
+      "sha256": "d24d362db5944fee263e8e531505e93ef760ed8ff03200b15b4f466b2ccd665c"
+    },
+    {
+      "path": "jsonl/bills.jsonl",
+      "bytes": 138866,
+      "sha256": "e327ceed95e76f6b21dc621e67f0b479766a40006b00934abdbd66929b326df8"
+    },
+    {
+      "path": "jsonl/budget_envelopes.jsonl",
+      "bytes": 112088,
+      "sha256": "85f014c2684b16c309bb8b9a3b9ed39e44a32a147dcf95c42c6b54d01c49f27b"
+    },
+    {
+      "path": "jsonl/budget_plans.jsonl",
+      "bytes": 41070,
+      "sha256": "cce67159726c5bdefe23cb83a0e1d36507ece62d16c562b40a64a48c595da44b"
+    },
+    {
+      "path": "jsonl/commons_campaigns.jsonl",
+      "bytes": 2947,
+      "sha256": "51b07559761a9faf0282ac03991aad9427dfd8851a7cf7a52fb79f1e649d8f3a"
+    },
+    {
+      "path": "jsonl/commons_participants.jsonl",
+      "bytes": 4032,
+      "sha256": "33e7db2f2ab8f23608cb72e438ebba43a555c0b0a980b2d6e548f2470bcafa3f"
+    },
+    {
+      "path": "jsonl/consents.jsonl",
+      "bytes": 400010,
+      "sha256": "2fb85935bd6370f2a883057d8b8a5a94fa5c6585213ea1f33040e0d9f3c77592"
+    },
+    {
+      "path": "jsonl/crisis_cases.jsonl",
+      "bytes": 13968,
+      "sha256": "54f3b5ebaf6f8c5986aea2299de9981634e5c6019bea50918c784c5577dd344d"
+    },
+    {
+      "path": "jsonl/customers.jsonl",
+      "bytes": 80827,
+      "sha256": "a8e8e5707e6493ff79625b45733fe6ecc1be26c2e327e641986b2393c856ee1a"
+    },
+    {
+      "path": "jsonl/demand_signals.jsonl",
+      "bytes": 18276,
+      "sha256": "35154a676d5aeebf792f330a3bfb3e5fb0c15f2a524e5657fc9d4fd31a56248a"
+    },
+    {
+      "path": "jsonl/enterprise_orders.jsonl",
+      "bytes": 44460,
+      "sha256": "fd1aec29f9d35f6ced0d0b4e86f13a6c6c7ecc9d5b405618c7174fb9b5a85316"
+    },
+    {
+      "path": "jsonl/enterprise_products.jsonl",
+      "bytes": 31825,
+      "sha256": "bdd5e9b4592592141fd0ef8f53be58965a63604e06b9ab7bbce7f6cdb69783db"
+    },
+    {
+      "path": "jsonl/evidence_documents.jsonl",
+      "bytes": 27403,
+      "sha256": "3df36cee7217335e095aab08f50b8d75a1b85e5caa2a31167c9568107d519131"
+    },
+    {
+      "path": "jsonl/financial_goals.jsonl",
+      "bytes": 42734,
+      "sha256": "e141c545ab1a5b8b0991644d96fa3ef7e55b14637cc27a013f3b4cce03061cf6"
+    },
+    {
+      "path": "jsonl/guardian_cases.jsonl",
+      "bytes": 29544,
+      "sha256": "f30597ca1835cee42063e9d111c8126f8d8f9497f8743c57f21eebdd032eb9a9"
+    },
+    {
+      "path": "jsonl/household_memberships.jsonl",
+      "bytes": 30665,
+      "sha256": "67c431b451d028f15a5f9feaa7809a9dd9ef189ccd82ce614b2d5237fc7b676c"
+    },
+    {
+      "path": "jsonl/households.jsonl",
+      "bytes": 16227,
+      "sha256": "ef8b83557081d7498910a7c02364a5a93ca5973f44202ab5acf65330ed99cb27"
+    },
+    {
+      "path": "jsonl/insurance_claims.jsonl",
+      "bytes": 5790,
+      "sha256": "577f8b20f1540eb7e37d79665d45a604a4ad5e37db5b817d9147610262f4db4c"
+    },
+    {
+      "path": "jsonl/insurance_policies.jsonl",
+      "bytes": 19934,
+      "sha256": "883085fc9cf494542ba2d7c1c6c4774926d6c25dda097360df056fe19232d85a"
+    },
+    {
+      "path": "jsonl/loan_installments.jsonl",
+      "bytes": 113725,
+      "sha256": "325aaa9ee197ded214b26dd4e48ac42fe4f6fc268037185ac3a5c56593c328e5"
+    },
+    {
+      "path": "jsonl/loans.jsonl",
+      "bytes": 15827,
+      "sha256": "6ec4c9e2a6d63e223626d49c23d4f7401c14a4ed32364c220567b45d9c250f9b"
+    },
+    {
+      "path": "jsonl/micro_enterprises.jsonl",
+      "bytes": 19186,
+      "sha256": "522260aa0682d843c7e3b99d14b18523ea02e957a0c264451a5e84e56bdea788"
+    },
+    {
+      "path": "jsonl/offers.jsonl",
+      "bytes": 61628,
+      "sha256": "c8db3b2334fea9a5a85026a560eae18ac72e68bd9dc344a24497c83b141026c5"
+    },
+    {
+      "path": "jsonl/opportunities.jsonl",
+      "bytes": 34628,
+      "sha256": "de9cb1e98ed0432adbcb5945ca98878590e36a838a74afd6aad34cd9623d98b2"
+    },
+    {
+      "path": "jsonl/opportunity_matches.jsonl",
+      "bytes": 38280,
+      "sha256": "98f8f9910d43f8311a6b84f59232b0b3dd624fa0056b2494ca35246abab0c496"
+    },
+    {
+      "path": "jsonl/partner_settlements.jsonl",
+      "bytes": 11168,
+      "sha256": "185fa05cfa0bd93f7d55b878d5bdd0e5b5d5c4c33d419f08aa44bf3711dd9200"
+    },
+    {
+      "path": "jsonl/providers.jsonl",
+      "bytes": 11380,
+      "sha256": "045a66a0c99cdc053d43f7cbe59294c2d74409bdad6b29c80432fb36acd8704d"
+    },
+    {
+      "path": "jsonl/recurring_obligations.jsonl",
+      "bytes": 185438,
+      "sha256": "ca7aa2c7e8df9e4c2936d5950d1567b6d82c25c55904ad813216f26a6706f981"
+    },
+    {
+      "path": "jsonl/resource_listings.jsonl",
+      "bytes": 6473,
+      "sha256": "242aee053b20bf2d8fe500a798ae7e958816d5c57d850396cb5bf0756108a453"
+    },
+    {
+      "path": "jsonl/risk_signals.jsonl",
+      "bytes": 27919,
+      "sha256": "3c52defad56a0215e945f1c20398564c64db121a2a4e18d99d5201e52889b40b"
+    },
+    {
+      "path": "jsonl/skills.jsonl",
+      "bytes": 68745,
+      "sha256": "d40a0ca21257d602649d73fec8eb15f9511527420778bb792e18e0e8112f6e1e"
+    },
+    {
+      "path": "jsonl/subscriptions.jsonl",
+      "bytes": 30542,
+      "sha256": "37430cb9dfcf7e7265cf3b9a0966bbfcb3b0700c2a4a26df7fc0903cb7fa25b5"
+    },
+    {
+      "path": "jsonl/tax_obligations.jsonl",
+      "bytes": 15103,
+      "sha256": "4d5ab7d8cf9a236751a0a83bab2cbabd2ad9e217e9a7bc51070da21edd4dbe41"
+    },
+    {
+      "path": "jsonl/transactions.jsonl",
+      "bytes": 7219245,
+      "sha256": "01b92c3fc45e5f5d3f4ea5ee79d6e8ce248434379072c738042fa6d734699664"
+    },
+    {
+      "path": "jsonl/value_events.jsonl",
+      "bytes": 19800,
+      "sha256": "7253365bea44b13538bd1038ccabc1a31a3e291cc6a17ce03e0c0025987732b6"
+    },
+    {
+      "path": "metadata/business_rules.json",
+      "bytes": 2630,
+      "sha256": "3888980a59406a493fb0b8219dc68b62e30441da10785780bebeeaea29a4bd04"
+    },
+    {
+      "path": "metadata/data_dictionary.csv",
+      "bytes": 49458,
+      "sha256": "e40c8d8fe4ca2134635b7d628828f91b468c1af970487432d50337c8aa107056"
+    },
+    {
+      "path": "metadata/dataset_profile.json",
+      "bytes": 1880,
+      "sha256": "39277c085eb4292aaebd6d301941551b33e49b8e30abbf7e9bfad76d259d150c"
+    },
+    {
+      "path": "metadata/independent_validation_report.json",
+      "bytes": 7947,
+      "sha256": "374ca68e8029ddd4aafb4b5554be149e4be691a0f863920cd0c386232714fbba"
+    },
+    {
+      "path": "metadata/multimodal_document_manifest.json",
+      "bytes": 6317,
+      "sha256": "44f05f86c76d67eae71d75ea64979d6e41380ad3926f3bc83e0c8dcd3404cafc"
+    },
+    {
+      "path": "metadata/regulatory_controls_matrix.csv",
+      "bytes": 2864,
+      "sha256": "e6144c2afdb52fc5bd685ee4b8c24e9b885c0341dd0b9ce3bba2797797698acf"
+    },
+    {
+      "path": "metadata/schema_catalog.json",
+      "bytes": 19744,
+      "sha256": "6f9ab5dd921e986a8fba37d8fbcccca65de61b68a19d126637d9ac034299fb57"
+    },
+    {
+      "path": "metadata/sqlite_validation.json",
+      "bytes": 1244,
+      "sha256": "f61c40ba60475d6366da93ec48e137548767bd985b2d4afaf16b5fc556d9c4b5"
+    },
+    {
+      "path": "metadata/validation_output.txt",
+      "bytes": 7948,
+      "sha256": "318ec7c588eacd9134d3116797a30a147806c5e9af24fd4e4eca6d40de288021"
+    },
+    {
+      "path": "metadata/validation_report.json",
+      "bytes": 7947,
+      "sha256": "374ca68e8029ddd4aafb4b5554be149e4be691a0f863920cd0c386232714fbba"
+    },
+    {
+      "path": "source_documents/invoices/BIL00001.html",
+      "bytes": 1145,
+      "sha256": "aaa3e0d8d7812bab8b1fbb23e6c413770b19fdc175978704ebf8aeb417476200"
+    },
+    {
+      "path": "source_documents/invoices/BIL00002.html",
+      "bytes": 1137,
+      "sha256": "9592314df1938b4e1ddce9ef197e3516a69cbf98fad7f4c09c45d8f83263de3b"
+    },
+    {
+      "path": "source_documents/invoices/BIL00003.html",
+      "bytes": 1131,
+      "sha256": "fb035cd11c810c4940c56b7ae51ce4ce839b582b5973a1b227903977c1c74016"
+    },
+    {
+      "path": "source_documents/invoices/BIL00004.html",
+      "bytes": 1223,
+      "sha256": "1c0d19c9101b82baa474efe8f5f738e8f465402cfe83c76497a343e25444164a"
+    },
+    {
+      "path": "source_documents/invoices/BIL00005.html",
+      "bytes": 1229,
+      "sha256": "3d99990964e0a2dfe6696bcbdf11fbda60c5eda98b893763941be084b2d9f517"
+    },
+    {
+      "path": "source_documents/invoices/BIL00006.html",
+      "bytes": 1218,
+      "sha256": "9640760c0aefe77476978e3adc03c7f2f8a57281daf387cadf8bbb9c88c9ff49"
+    },
+    {
+      "path": "source_documents/invoices/BIL00007.html",
+      "bytes": 1135,
+      "sha256": "3a5f765fbc7df82c719af0db20313186d5f211d1d82e18cedf2fcf449c9188eb"
+    },
+    {
+      "path": "source_documents/invoices/BIL00008.html",
+      "bytes": 1136,
+      "sha256": "5f01255e2425fe114ea5bd3c6b9a02df0fdfb5d9507cb7cb185548d19f4190be"
+    },
+    {
+      "path": "source_documents/invoices/BIL00009.html",
+      "bytes": 1220,
+      "sha256": "722210408b2676185d5a355d152b30e87564e6c26a3d3be81f314c4282ce4a7f"
+    },
+    {
+      "path": "source_documents/invoices/BIL00010.html",
+      "bytes": 1219,
+      "sha256": "a360c2287d592845333ecc4fe9730171c9fcdaaf09148d28e31a12b470e49ee9"
+    },
+    {
+      "path": "source_documents/invoices/BIL00011.html",
+      "bytes": 1145,
+      "sha256": "5a26d5ec1426e396c3abc06a90afa97a078e81c5560ea5b4c7bf6bee726013cf"
+    },
+    {
+      "path": "source_documents/invoices/BIL00012.html",
+      "bytes": 1158,
+      "sha256": "dacd1d77f11502ccb3942d42cbea2020064b858c65da7d7dfc09905aa16bcdd5"
+    },
+    {
+      "path": "source_documents/invoices/BIL00013.html",
+      "bytes": 1135,
+      "sha256": "c68cb822374f2baf02457c7af52b1d9e993af7a2188804e37f91d50a9afa506b"
+    },
+    {
+      "path": "source_documents/invoices/BIL00014.html",
+      "bytes": 1135,
+      "sha256": "b2297e63d3a0c252c1eb35c4dbd770ab0eb4f6e68db9fe579a6b7074889a1489"
+    },
+    {
+      "path": "source_documents/invoices/BIL00015.html",
+      "bytes": 1138,
+      "sha256": "54c7b5d410b4da545b90b2fc8121084076947e7ff95d9df7c9a8f79a61099b47"
+    },
+    {
+      "path": "source_documents/invoices/BIL00016.html",
+      "bytes": 1131,
+      "sha256": "3e4cb53edc42aa27a8e44d28a69a78aabf9b42785a14e31fb0872c7fb77b4b0d"
+    },
+    {
+      "path": "source_documents/invoices/BIL00017.html",
+      "bytes": 1132,
+      "sha256": "3d56a9c6f51ec5df9655162617ac74ccd9c24ecc4eae13a234e206fddcdcdcdf"
+    },
+    {
+      "path": "source_documents/invoices/BIL00018.html",
+      "bytes": 1131,
+      "sha256": "43e0c03c1bf629668c605eb74299a59e834fadd6dd17245933d34da08289fd17"
+    },
+    {
+      "path": "source_documents/invoices/BIL00019.html",
+      "bytes": 1145,
+      "sha256": "53387e109a8456b98857c13f63104df429e3922c7b06bcae5c564e403c423c99"
+    },
+    {
+      "path": "source_documents/invoices/BIL00020.html",
+      "bytes": 1131,
+      "sha256": "0a02564ce2245e19e18842b0de5bcecd4884a456949fb2ec76dce5913bb41f9c"
+    },
+    {
+      "path": "source_documents/invoices/BIL00021.html",
+      "bytes": 1168,
+      "sha256": "7f72c5556a2aa0ba0c6c1f0f69dc95c4f2526cf2b6e9a9ac3d7002ab25de41d2"
+    },
+    {
+      "path": "source_documents/invoices/BIL00022.html",
+      "bytes": 1128,
+      "sha256": "ff9ed9d10869568f16ea8513ca9e976cd81d31fc85100d6f68331f45c66454b6"
+    },
+    {
+      "path": "source_documents/invoices/BIL00023.html",
+      "bytes": 1132,
+      "sha256": "e5c8fdb1bebdc96ad8d5a4d3ba84b7dc5e5dbd5e0d95577b787b7d40b6d41292"
+    },
+    {
+      "path": "source_documents/invoices/BIL00024.html",
+      "bytes": 1226,
+      "sha256": "48a5f87fcdbd03cc9b4a622c1a0ee19ee946c15aea80a90d0747756dccd08082"
+    },
+    {
+      "path": "source_documents/invoices/BIL00025.html",
+      "bytes": 1218,
+      "sha256": "7d4fa952733de04880a74f49b8be6602c7232a7582477558737f2663b7fda07d"
+    },
+    {
+      "path": "source_documents/invoices/BIL00026.html",
+      "bytes": 1132,
+      "sha256": "91f354e37c34161bf2f3901d4e2e2d2b1509b55c84b2c3ff39061d407e8b485f"
+    },
+    {
+      "path": "source_documents/invoices/BIL00027.html",
+      "bytes": 1158,
+      "sha256": "c6ebbe471ca628550a6052d50d1f2d0c148d93f2619f603a901739ba6b80455b"
+    },
+    {
+      "path": "source_documents/invoices/BIL00028.html",
+      "bytes": 1132,
+      "sha256": "2a614f43ef66855ed1fde147fc6f92641f1e57a5b7ed7d6c0f5d2b023ae7322c"
+    },
+    {
+      "path": "source_documents/invoices/BIL00029.html",
+      "bytes": 1145,
+      "sha256": "5d78d7da10b2fe16027768b5ae4a468aaa0685307622f29729565ae14b182322"
+    },
+    {
+      "path": "source_documents/invoices/BIL00030.html",
+      "bytes": 1132,
+      "sha256": "c718eed252c638e863823cfdbb57b7b65e2cac87755b9b73bde6a3cbb714962d"
+    },
+    {
+      "path": "source_documents/invoices/BIL00031.html",
+      "bytes": 1131,
+      "sha256": "e1b49d97a0d293bf600429acdbc1db57e96563d1ec790b00b2bdc598c68ca77b"
+    },
+    {
+      "path": "source_documents/invoices/BIL00032.html",
+      "bytes": 1146,
+      "sha256": "7986b2191a55c32114addd9550fe3be9546b12349a2f0553a7442f28042a9d3f"
+    },
+    {
+      "path": "source_documents/invoices/BIL00033.html",
+      "bytes": 1132,
+      "sha256": "eead7756c1759889b958add67874724583b499af4a5c8559c2d00bd5163434ae"
+    },
+    {
+      "path": "source_documents/invoices/BIL00034.html",
+      "bytes": 1145,
+      "sha256": "b7c03004190206280598baf2c438c23d6831cb2859477e5ea29f99970dd4001e"
+    },
+    {
+      "path": "source_documents/invoices/BIL00035.html",
+      "bytes": 1145,
+      "sha256": "912cf7f45220fb430e671046bb01c5629ac92e65a3cfe1008d560e7116570eda"
+    },
+    {
+      "path": "source_documents/invoices/BIL00036.html",
+      "bytes": 1131,
+      "sha256": "5777365d154b7f672e4043c3972004c13df5eec75fc621e175e00ff67fa543f2"
+    },
+    {
+      "path": "source_documents/invoices/BIL00037.html",
+      "bytes": 1154,
+      "sha256": "0d10d99cfe1e74482368fb357ee260bf67496eb743a276d1c734d46a588598e4"
+    },
+    {
+      "path": "source_documents/invoices/BIL00038.html",
+      "bytes": 1145,
+      "sha256": "bca2bf879d49713df4da4ef81b1191fd0bc0497a665bac05df079dc8c3e3c7d5"
+    },
+    {
+      "path": "source_documents/invoices/BIL00039.html",
+      "bytes": 1131,
+      "sha256": "9dbbd6503970957b3129fef64a87ad6f5708fe2570090e1b1b7126c283c4f603"
+    },
+    {
+      "path": "source_documents/invoices/BIL00040.html",
+      "bytes": 1132,
+      "sha256": "7360e65eecf7b63c2f879a6e42e81508b75bf768ce302015f0cc4c537e1225ab"
+    },
+    {
+      "path": "source_documents/invoices/BIL00041.html",
+      "bytes": 1131,
+      "sha256": "2ed04a9a4637e9fa27d36f0926512d6055c92af944fa40874c8cacd0dc0ca167"
+    },
+    {
+      "path": "source_documents/invoices/BIL00042.html",
+      "bytes": 1131,
+      "sha256": "ae089cc2db72b525b1c68b75154be16975ae07b5576104499ef783bc84f62f83"
+    },
+    {
+      "path": "source_documents/invoices/BIL00043.html",
+      "bytes": 1129,
+      "sha256": "02855aeb0fc9268a16f943d64671f74588d390d97e0a361c7110e00f24d413e6"
+    },
+    {
+      "path": "source_documents/invoices/BIL00044.html",
+      "bytes": 1229,
+      "sha256": "13561f70145e3d2c7eae8ddc10d932fea3032c6b977578ef862f3450af427ef0"
+    },
+    {
+      "path": "source_documents/invoices/BIL00045.html",
+      "bytes": 1145,
+      "sha256": "bf1dd1e6c59900993ebed4a486c6a277076d9a3a8bfeb0324b0f2ffb52fb1e36"
+    },
+    {
+      "path": "source_documents/invoices/BIL00046.html",
+      "bytes": 1145,
+      "sha256": "b52584fbff3922ba4827bc403ed87f616e2ad5e55179c94878149b9875d05008"
+    },
+    {
+      "path": "source_documents/invoices/BIL00047.html",
+      "bytes": 1221,
+      "sha256": "3931c23d6196ce9d363d80b84a3c2022092148379e221e8b7e53eb34ced9ae4f"
+    },
+    {
+      "path": "source_documents/invoices/BIL00048.html",
+      "bytes": 1135,
+      "sha256": "014fc95795fbd4f1674647d5411445d9101d59dca6f8cc37fe83e751c30cf90c"
+    },
+    {
+      "path": "source_documents/invoices/BIL00049.html",
+      "bytes": 1146,
+      "sha256": "e3e9672b9ed86d80824a915722682eff5fd1256c98ba35e94464789679f0a126"
+    },
+    {
+      "path": "source_documents/invoices/BIL00050.html",
+      "bytes": 1146,
+      "sha256": "d810a4f48af1b1e2e1d2f91ec7d063a6bf232c3d063c4774a7679965322eea97"
+    },
+    {
+      "path": "source_documents/invoices/BIL00051.html",
+      "bytes": 1168,
+      "sha256": "ca408bd21b4d35af90e1906c6611cb726f8e65fa99a349b6ceab5ebc6e403167"
+    },
+    {
+      "path": "source_documents/invoices/BIL00052.html",
+      "bytes": 1154,
+      "sha256": "7f1fe24eaba156443f262a5b8cdc3c440caab99aa141cd348efd1deb6d92db02"
+    },
+    {
+      "path": "source_documents/invoices/BIL00053.html",
+      "bytes": 1137,
+      "sha256": "f1b36923f99c01d70a83df063a2722e79a38b853dc42ee97a8dbc4473dc9c638"
+    },
+    {
+      "path": "source_documents/invoices/BIL00054.html",
+      "bytes": 1132,
+      "sha256": "05c14d35bb2bd8963352ac035eb9e76d80eeed54223e7084659ae1adbbc89c17"
+    },
+    {
+      "path": "source_documents/invoices/BIL00055.html",
+      "bytes": 1138,
+      "sha256": "83cdd0b04a90c39cf1e3e5e566cd507cf76117c001226f021e7be6d970221d52"
+    },
+    {
+      "path": "source_documents/invoices/BIL00056.html",
+      "bytes": 1132,
+      "sha256": "16fe0d9990c8ddb4ee198e9a2db7d8dd6418b9167d7e1e313ae7e6a6110587cd"
+    },
+    {
+      "path": "source_documents/invoices/BIL00057.html",
+      "bytes": 1223,
+      "sha256": "73024560339f072407c8c781c6579bf3bd396a19aab97fbc16e1056b0773a7a5"
+    },
+    {
+      "path": "source_documents/invoices/BIL00058.html",
+      "bytes": 1138,
+      "sha256": "61878f242bace0a585cbad7ba9f0265e9927edeb8d90239ec2e6612333ab1ae0"
+    },
+    {
+      "path": "source_documents/invoices/BIL00059.html",
+      "bytes": 1131,
+      "sha256": "39f9ea664ab1fc086b3f3787af26b4bf623e095ff88b23013fadb7b9161f647d"
+    },
+    {
+      "path": "source_documents/invoices/BIL00060.html",
+      "bytes": 1229,
+      "sha256": "de41afd434294de0f77f4d1bb21a3205b35c62fe971645b880739baa795a7370"
+    },
+    {
+      "path": "source_documents/invoices/BIL00061.html",
+      "bytes": 1132,
+      "sha256": "2a17d6d58402a7cd62f425b1be545b485782fe2ed80d0d4dcef6ab4a1db4f5b5"
+    },
+    {
+      "path": "source_documents/invoices/BIL00062.html",
+      "bytes": 1137,
+      "sha256": "fbbf5df495b8475421fab2570cfd8e88c13ba473b65bedd494c4bdd5d2994155"
+    },
+    {
+      "path": "source_documents/invoices/BIL00063.html",
+      "bytes": 1137,
+      "sha256": "8f35588e09635013afc819721213184939a1761acac877c5031d22ff66a50e2e"
+    },
+    {
+      "path": "source_documents/invoices/BIL00064.html",
+      "bytes": 1136,
+      "sha256": "c6700b816552c79e1e2c8fd1e7cbcd6a92cc239a3f733df85f06c5ff22c2401f"
+    },
+    {
+      "path": "source_documents/invoices/BIL00065.html",
+      "bytes": 1158,
+      "sha256": "3a81f7d0b93e96eb5c3a3d1ffc7e389275b732452b32e352d280881c4e9c8a18"
+    },
+    {
+      "path": "source_documents/invoices/BIL00066.html",
+      "bytes": 1131,
+      "sha256": "159330a3c03664b5de8119c60df6b7f17187454bbf63611b8a05ca046caafa45"
+    },
+    {
+      "path": "source_documents/invoices/BIL00067.html",
+      "bytes": 1158,
+      "sha256": "2ed49e31f9903bc52d2b78be213712017eef0ded8df585d968645ecd0762873a"
+    },
+    {
+      "path": "source_documents/invoices/BIL00068.html",
+      "bytes": 1131,
+      "sha256": "918ee46f62cfb215370fad0cef53e93e644ddda9a400ba29d8c529ad133a2bb7"
+    },
+    {
+      "path": "source_documents/invoices/BIL00069.html",
+      "bytes": 1138,
+      "sha256": "b07b1edf388e4377b66fb53cd49d8d15cba12a8106ff1918443122d3e93746c0"
+    },
+    {
+      "path": "source_documents/invoices/BIL00070.html",
+      "bytes": 1237,
+      "sha256": "1a6ff1d333f80844e0a663fe76fdb57e9831a8d18deb3751fc6bd10436ac6c09"
+    },
+    {
+      "path": "source_documents/invoices/BIL00071.html",
+      "bytes": 1131,
+      "sha256": "f5a4d506e4043cf26c04a9ba4f2b8b0e89b7bdcbc2994231f5de34d5701dd932"
+    },
+    {
+      "path": "source_documents/invoices/BIL00072.html",
+      "bytes": 1136,
+      "sha256": "d3f3f5c6d07e2b929ae00512e33f1167d963f0a30b29bf318dcb0f3fbc697c74"
+    },
+    {
+      "path": "source_documents/invoices/BIL00073.html",
+      "bytes": 1131,
+      "sha256": "abf2c975158f064534a9a0a313cfdceb7bc8a01595a5870e40ca1c4d7c55b250"
+    },
+    {
+      "path": "source_documents/invoices/BIL00074.html",
+      "bytes": 1138,
+      "sha256": "c38ef8aea47659b233e5c7f16edeaad9715535cea65682bd88b562d37870aba3"
+    },
+    {
+      "path": "source_documents/invoices/BIL00075.html",
+      "bytes": 1131,
+      "sha256": "c022a3265763487408fce2c2f86ed9eaa8b5f7c35ddfc1ec3ee95b0ef9b0f65c"
+    },
+    {
+      "path": "source_documents/invoices/BIL00076.html",
+      "bytes": 1214,
+      "sha256": "ea56168425bc98ee0a6ff3b4cb2bc1fe613b6955b4f9d3a00f328b2b6abc78b1"
+    },
+    {
+      "path": "source_documents/invoices/BIL00077.html",
+      "bytes": 1155,
+      "sha256": "d4b74ea006c4d8a1af49f133287e044eb8f2d6041d38ba563a63a9b83361169e"
+    },
+    {
+      "path": "source_documents/invoices/BIL00078.html",
+      "bytes": 1135,
+      "sha256": "aaa796c3cb9697bb80ffa8b09d2c137eda7ad31b53bd6cdc283d31e5ca3fcfe9"
+    },
+    {
+      "path": "source_documents/invoices/BIL00079.html",
+      "bytes": 1137,
+      "sha256": "8036cf2d1294f7178835794ea324bc23f03bf14a5e7244709ef8f7f0983b4930"
+    },
+    {
+      "path": "source_documents/invoices/BIL00080.html",
+      "bytes": 1217,
+      "sha256": "7dbc9617334284482823debf7dea1295def09f6b21b74bc401e0ede9e1e21d63"
+    },
+    {
+      "path": "source_documents/invoices/BIL00081.html",
+      "bytes": 1137,
+      "sha256": "f40d88f3d41d6652139be66b6bf157d92de3c3af16e86bf557568b9bf0f4f980"
+    },
+    {
+      "path": "source_documents/invoices/BIL00082.html",
+      "bytes": 1145,
+      "sha256": "93f30917e2f41893640f3beb52d43c27ea9d489b9cd8aa5fffb8dfe4c4e807e5"
+    },
+    {
+      "path": "source_documents/invoices/BIL00083.html",
+      "bytes": 1158,
+      "sha256": "6e00e195599a6ad320d0120c07edc0ab5afa19b22e5df2c5b00145de112b9a53"
+    },
+    {
+      "path": "source_documents/invoices/BIL00084.html",
+      "bytes": 1137,
+      "sha256": "550a22eea073903d069057623725ee92ee4efa6597a6be652ca25da37dfc47a0"
+    },
+    {
+      "path": "source_documents/invoices/BIL00085.html",
+      "bytes": 1225,
+      "sha256": "2d6127b2d860b32c666ba8e3ffcc2a0748a9f3f6b5e564856559527c9cfed436"
+    },
+    {
+      "path": "source_documents/invoices/BIL00086.html",
+      "bytes": 1131,
+      "sha256": "350b5a1d0efd2a9eabcf2821ad255539a29f0cecc36c307a13a5419264f46dc8"
+    },
+    {
+      "path": "source_documents/invoices/BIL00087.html",
+      "bytes": 1138,
+      "sha256": "e31e1b9cfe47f0c497016fc21fd2ba228a0316d48b8b2f17a710e5e92b4fd488"
+    },
+    {
+      "path": "source_documents/invoices/BIL00088.html",
+      "bytes": 1239,
+      "sha256": "e800c6ca0df4f253f1a860fc7035a9d86f4c0d910667fc50ec2dd46f4d6ac80e"
+    },
+    {
+      "path": "source_documents/invoices/BIL00089.html",
+      "bytes": 1131,
+      "sha256": "78cfdc80788e97ff827422629ffa5e368d96f3682de5b16e25f09ae674b26448"
+    },
+    {
+      "path": "source_documents/invoices/BIL00090.html",
+      "bytes": 1131,
+      "sha256": "cf186482a03dc3484737995cd4337d359e376fc9466ce222ffd04cd4cb074ca9"
+    },
+    {
+      "path": "source_documents/invoices/BIL00091.html",
+      "bytes": 1132,
+      "sha256": "4a5befd3ccf38cb2b76889e933ebb8a629b1aed5b2c0ee9f89a1180549d2f76d"
+    },
+    {
+      "path": "source_documents/invoices/BIL00092.html",
+      "bytes": 1135,
+      "sha256": "e3b8d15db928a66d74a40776a13f1072e412e87300b7c09c9d29ab074b31be65"
+    },
+    {
+      "path": "source_documents/invoices/BIL00093.html",
+      "bytes": 1131,
+      "sha256": "b7f36136d59e25a1cc0032046649df6b40b0c5a5baebc1dba5681fb7c3da1b52"
+    },
+    {
+      "path": "source_documents/invoices/BIL00094.html",
+      "bytes": 1145,
+      "sha256": "e29ce0af7ad00f9d89955b28903a23506ffa4b698d2ed78464d6781c8e2e2624"
+    },
+    {
+      "path": "source_documents/invoices/BIL00095.html",
+      "bytes": 1135,
+      "sha256": "f26df99ce63e573884b22e99433b50c82ccb57e5ae15160ad1c02c7384afb218"
+    },
+    {
+      "path": "source_documents/invoices/BIL00096.html",
+      "bytes": 1131,
+      "sha256": "a51162fcc57607df7ee7e431b10da2ea5d7427708dc7c50f5719b92f35fa2faa"
+    },
+    {
+      "path": "source_documents/invoices/BIL00097.html",
+      "bytes": 1137,
+      "sha256": "c0f0e1d0a2f5cf20ba39c29caed30a978b19b1f9dadeb3b17b4d688bc6c4cb67"
+    },
+    {
+      "path": "source_documents/invoices/BIL00098.html",
+      "bytes": 1227,
+      "sha256": "b6ac508832e30daae6a73b876be6ad06126d43a7b986b5837f519b07be8418df"
+    },
+    {
+      "path": "source_documents/invoices/BIL00099.html",
+      "bytes": 1132,
+      "sha256": "ee37fdff5d822b927bc42c8d98e91b1efc1a1770cd5555d1acd4384407aada49"
+    },
+    {
+      "path": "source_documents/invoices/BIL00100.html",
+      "bytes": 1227,
+      "sha256": "4703d1f11a643fe581f767527654777e03a5b8d1a39f67ba9beb3f29fca857c3"
+    },
+    {
+      "path": "source_documents/invoices/BIL00101.html",
+      "bytes": 1146,
+      "sha256": "f1b1df25bddac723029e878e5bc723248d68e77697c203bf53774245590be863"
+    },
+    {
+      "path": "source_documents/invoices/BIL00102.html",
+      "bytes": 1132,
+      "sha256": "a831c8e078dbcc892a336a1f8fe79d87d6209088dbd00ec19dfe7a6906b6b48a"
+    },
+    {
+      "path": "source_documents/invoices/BIL00103.html",
+      "bytes": 1136,
+      "sha256": "5c3f2d4f1514aec7b7919133f2fae490514658d8cf323ae919fb68ede6f7e847"
+    },
+    {
+      "path": "source_documents/invoices/BIL00104.html",
+      "bytes": 1223,
+      "sha256": "406501fff9f6ab9917192d3bf652cbeb92f1a246a8a733edb091d512eb697ccc"
+    },
+    {
+      "path": "source_documents/invoices/BIL00105.html",
+      "bytes": 1223,
+      "sha256": "15236658da90cef26b32771d93cb52403f30705449d55ef00b29c5ba36edc60a"
+    },
+    {
+      "path": "source_documents/invoices/BIL00106.html",
+      "bytes": 1214,
+      "sha256": "585c4585bb578ffbc458e069c847705e0dfb3988806b01fdc7a5b4a52f3a54b5"
+    },
+    {
+      "path": "source_documents/invoices/BIL00107.html",
+      "bytes": 1138,
+      "sha256": "2419bb9ae86d7aebb536d15f91bf37ec1fff61cc2193e1e42d2410618377d864"
+    },
+    {
+      "path": "source_documents/invoices/BIL00108.html",
+      "bytes": 1129,
+      "sha256": "f04a913bdd9e193ba40377bd61947d402c99f57119c7cdd022cbea545d530bee"
+    },
+    {
+      "path": "source_documents/invoices/BIL00109.html",
+      "bytes": 1214,
+      "sha256": "28bafa56194037301034c36597614a360e3093050cf388e9440e5e28a1d154ba"
+    },
+    {
+      "path": "source_documents/invoices/BIL00110.html",
+      "bytes": 1214,
+      "sha256": "069f1cbffd7c8730e6abc5c1d9b1a017deec97b31c7182bc536186d5a8cbea63"
+    },
+    {
+      "path": "source_documents/invoices/BIL00111.html",
+      "bytes": 1132,
+      "sha256": "ebde88cc3d26e12f2df0f3f2f2ad0f2cded0359b9bfecc72e4373bdacebb8603"
+    },
+    {
+      "path": "source_documents/invoices/BIL00112.html",
+      "bytes": 1154,
+      "sha256": "bb02d91bdbe0a66039bef8ba43858c3e8cbb85e5dda651d99d9f16d97f6f36b1"
+    },
+    {
+      "path": "source_documents/invoices/BIL00113.html",
+      "bytes": 1138,
+      "sha256": "b5f8c0ca9dd19ab258edc6d5e5e440fdd2d43cd2d3af21747d218e4713604979"
+    },
+    {
+      "path": "source_documents/invoices/BIL00114.html",
+      "bytes": 1132,
+      "sha256": "ab466cc73c4b01fa13ab97a9356e1cb22692598b7857d7839523279337cc276d"
+    },
+    {
+      "path": "source_documents/invoices/BIL00115.html",
+      "bytes": 1135,
+      "sha256": "e527a406c0c473fac15808816eea6a8adede2374584a40dff3a0f70242585cd4"
+    },
+    {
+      "path": "source_documents/invoices/BIL00116.html",
+      "bytes": 1131,
+      "sha256": "bf0bc1e6fe7e6db596727e881173a94d35179cf8359244b058530500d66ea18c"
+    },
+    {
+      "path": "source_documents/invoices/BIL00117.html",
+      "bytes": 1131,
+      "sha256": "d67ea636269fa38026c29a2659067a20269197d19a42d01654ed55098634eaa4"
+    },
+    {
+      "path": "source_documents/invoices/BIL00118.html",
+      "bytes": 1138,
+      "sha256": "dc5ba6872f771b32cc28b543056c00670ad153f1fcc32b6bb1597506767a2c0b"
+    },
+    {
+      "path": "source_documents/invoices/BIL00119.html",
+      "bytes": 1135,
+      "sha256": "6d36752615e39eb0ad30a529efce66043a2be3e2d891c22ae7da399e4933ebe0"
+    },
+    {
+      "path": "source_documents/invoices/BIL00120.html",
+      "bytes": 1131,
+      "sha256": "f10f12a430e0edfec8fef3594034213457e02f4eab48b944a7d06eefa8f9b25d"
+    },
+    {
+      "path": "source_documents/invoices/BIL00121.html",
+      "bytes": 1168,
+      "sha256": "b7e9a62c9b1f58cd0859c67a39bc4710c0de0625d160fac7bf5d009c08deddec"
+    },
+    {
+      "path": "source_documents/invoices/BIL00122.html",
+      "bytes": 1131,
+      "sha256": "a4c1518ab44660a2cf7b2400778c232e5eb5ece15fbeb67c478620b09254320f"
+    },
+    {
+      "path": "source_documents/invoices/BIL00123.html",
+      "bytes": 1132,
+      "sha256": "e6e032c22ff0607e88d90e0a73a77ac9d675fa3f7fed324bf63bfe7cce7e00f0"
+    },
+    {
+      "path": "source_documents/invoices/BIL00124.html",
+      "bytes": 1223,
+      "sha256": "300d795cdc5dd7d1e9d2f4e9c022ff23799b29b227430cc3d4ec0b46336bc502"
+    },
+    {
+      "path": "source_documents/invoices/BIL00125.html",
+      "bytes": 1215,
+      "sha256": "930526e489c0f4b7cd634c8bfd8e470085a5a50fdf31f640a50699bd01c4acec"
+    },
+    {
+      "path": "source_documents/invoices/BIL00126.html",
+      "bytes": 1132,
+      "sha256": "bd8a011e52159d0fc269616f95cae3e296dc618b8433aec3f87d72ed3af0b690"
+    },
+    {
+      "path": "source_documents/invoices/BIL00127.html",
+      "bytes": 1154,
+      "sha256": "ab0548032324086f9c1defc2756950c2ee0c45db408cfb48da3ed050293d772b"
+    },
+    {
+      "path": "source_documents/invoices/BIL00128.html",
+      "bytes": 1137,
+      "sha256": "4a3a4b38afdc17a4bfd8609fc6dea60516c1cba2ae227c40e7eba6ca8f4d43cb"
+    },
+    {
+      "path": "source_documents/invoices/BIL00129.html",
+      "bytes": 1145,
+      "sha256": "735f86709963ef17b8654a11c7571f7c97a039dbb94748203a2c7e8517154b56"
+    },
+    {
+      "path": "source_documents/invoices/BIL00130.html",
+      "bytes": 1131,
+      "sha256": "4bd0888edac83bb703f3ef006184d2bb88e26fa41e260b4e5ed920220d5c79b5"
+    },
+    {
+      "path": "source_documents/invoices/BIL00131.html",
+      "bytes": 1138,
+      "sha256": "a1898efa98646f27acb57cff9e93791b6e3028c17cfc2329764b2bf70502bac7"
+    },
+    {
+      "path": "source_documents/invoices/BIL00132.html",
+      "bytes": 1131,
+      "sha256": "422fe3fc8781483c627dd6688d126bc5832651c0dbfd2667803fd03d578f2492"
+    },
+    {
+      "path": "source_documents/invoices/BIL00133.html",
+      "bytes": 1135,
+      "sha256": "16b53e3e789e69950625c43837b901f74bcbe3f88d5b523df814b58a6a992779"
+    },
+    {
+      "path": "source_documents/invoices/BIL00134.html",
+      "bytes": 1135,
+      "sha256": "089c03b312637d42dd20e265ff532101763cb1cf11976825c7ce0b2af2d99020"
+    },
+    {
+      "path": "source_documents/invoices/BIL00135.html",
+      "bytes": 1131,
+      "sha256": "53254d660c29e8eb550478f748dc9ee0b6f598b95642e8e011888caa3bee89b7"
+    },
+    {
+      "path": "source_documents/invoices/BIL00136.html",
+      "bytes": 1138,
+      "sha256": "7842af11baeb126facb32088f15f80e0fc46faa12a549908cf9e4dd23d089765"
+    },
+    {
+      "path": "source_documents/invoices/BIL00137.html",
+      "bytes": 1154,
+      "sha256": "161a12ad37e5472fa6ac5fd80435cdf68dad0b185539d674f26c0d402d7cc392"
+    },
+    {
+      "path": "source_documents/invoices/BIL00138.html",
+      "bytes": 1131,
+      "sha256": "99b5d1c1a4dd65bd89f321d7b16a9bb443444115a540adb4e7039c589f138cf4"
+    },
+    {
+      "path": "source_documents/invoices/BIL00139.html",
+      "bytes": 1135,
+      "sha256": "1fd1300529bdad297a1c56b1b09176c31210ec2ebfdf4bb604620a082c9a4994"
+    },
+    {
+      "path": "source_documents/invoices/BIL00140.html",
+      "bytes": 1131,
+      "sha256": "8edc3b43c0abca684dc105facc0073068979ccc599067e1450a2b50f621ff557"
+    },
+    {
+      "path": "source_documents/invoices/BIL00141.html",
+      "bytes": 1132,
+      "sha256": "c3fbd3c48347ac42cf34e65c8155be4de63fcb7907f0a85fa76ebb7eea184cac"
+    },
+    {
+      "path": "source_documents/invoices/BIL00142.html",
+      "bytes": 1132,
+      "sha256": "83f5941e09dd656d8f35decd82c170c3579552fe2fb556d3ea7275923f4aab8c"
+    },
+    {
+      "path": "source_documents/invoices/BIL00143.html",
+      "bytes": 1132,
+      "sha256": "43ad242e6b5dfefa7e69b65687b65868d85df883a85760c8eb70e656cb931350"
+    },
+    {
+      "path": "source_documents/invoices/BIL00144.html",
+      "bytes": 1231,
+      "sha256": "f05f5614727f0a787082ba6bb5d2fbca5397941db1d7328811c0aafdd8d9472a"
+    },
+    {
+      "path": "source_documents/invoices/BIL00145.html",
+      "bytes": 1131,
+      "sha256": "e51831d95d6ff315dffe5c472ee799df1531ac0d46ed1327536e4c506bcf7d78"
+    },
+    {
+      "path": "source_documents/invoices/BIL00146.html",
+      "bytes": 1131,
+      "sha256": "02b64724e98b7a70e4c78ae00be960c66317b3450c67e421fedd767f6f5b0cb9"
+    },
+    {
+      "path": "source_documents/invoices/BIL00147.html",
+      "bytes": 1215,
+      "sha256": "7d4a9824254b5f473685bc5395e81df80c898ff357bc4be491e9c7ecd47db10c"
+    },
+    {
+      "path": "source_documents/invoices/BIL00148.html",
+      "bytes": 1131,
+      "sha256": "d2fa165435b81fc22a977b6c1db718f2d848f463d3d2bd8d88fb8c4c80934e12"
+    },
+    {
+      "path": "source_documents/invoices/BIL00149.html",
+      "bytes": 1131,
+      "sha256": "2c263e7856f008d75fc649c6b718890ea098e9c5c4a65b75085e5b401c7d20c7"
+    },
+    {
+      "path": "source_documents/invoices/BIL00150.html",
+      "bytes": 1130,
+      "sha256": "cb765c511cc3401f23107110bbdac4b1be6303ca29900abad4c66c5bf3dd8a60"
+    },
+    {
+      "path": "source_documents/invoices/BIL00151.html",
+      "bytes": 1154,
+      "sha256": "f6f1d1f1b335690b5d56a958e5ced91a302a4c1da90561c3e5692ca5370e7f95"
+    },
+    {
+      "path": "source_documents/invoices/BIL00152.html",
+      "bytes": 1158,
+      "sha256": "0c08f81574516e932333b0e8254d5b23be34c91ac5ca6e919286446541197734"
+    },
+    {
+      "path": "source_documents/invoices/BIL00153.html",
+      "bytes": 1135,
+      "sha256": "3b27db66e68541f3168fac716223228c94cd93092c77da1bd5114ad122ea8095"
+    },
+    {
+      "path": "source_documents/invoices/BIL00154.html",
+      "bytes": 1145,
+      "sha256": "8fce1a15f295a9421d882e5ca93b6ea1907a79f5db6225719a313dd40f660689"
+    },
+    {
+      "path": "source_documents/invoices/BIL00155.html",
+      "bytes": 1131,
+      "sha256": "371622de15915ccf454aee6f1dc7953098792b6197eca0d750d0a4e703d18ed8"
+    },
+    {
+      "path": "source_documents/invoices/BIL00156.html",
+      "bytes": 1131,
+      "sha256": "5ac843df188e8934571af34bb716ade69dbfa275c6469597d7dfe955444873ed"
+    },
+    {
+      "path": "source_documents/invoices/BIL00157.html",
+      "bytes": 1225,
+      "sha256": "0a4d02f99a3390a698f29eafdf67978d7437b3bbff1d076349cdaf447f69f465"
+    },
+    {
+      "path": "source_documents/invoices/BIL00158.html",
+      "bytes": 1138,
+      "sha256": "f24a1c41320d6b9c5e8d36483097d0c855cf7856fe52132a2123b248d12366d0"
+    },
+    {
+      "path": "source_documents/invoices/BIL00159.html",
+      "bytes": 1131,
+      "sha256": "08a22c8887a3f2eec0ffe4708c759446694b79a74e1ea66280dff0f213e211c5"
+    },
+    {
+      "path": "source_documents/invoices/BIL00160.html",
+      "bytes": 1218,
+      "sha256": "e60b480e838fa431f3c420b1a04ea34617460f1b0e78548d9640b0a0c3e1dfb2"
+    },
+    {
+      "path": "source_documents/invoices/BIL00161.html",
+      "bytes": 1131,
+      "sha256": "11685dc85b1554307e222fe9117dc3a805f459483e28ba2f0e0028392307be64"
+    },
+    {
+      "path": "source_documents/invoices/BIL00162.html",
+      "bytes": 1137,
+      "sha256": "2d1d25c65aeeee957c1bcd14dcfe7e2a1501f65db6add4972a1a7e62e4e46e62"
+    },
+    {
+      "path": "source_documents/invoices/BIL00163.html",
+      "bytes": 1131,
+      "sha256": "4e4344a404526a7f0b21c349143e1b790d2a1aad5ed558b38767a533ec96a8c4"
+    },
+    {
+      "path": "source_documents/invoices/BIL00164.html",
+      "bytes": 1137,
+      "sha256": "8d389168aae7cc89406e95d63020a86f464738b722e35d1f8d738feeba7d5250"
+    },
+    {
+      "path": "source_documents/invoices/BIL00165.html",
+      "bytes": 1160,
+      "sha256": "6b56bab6e03faea69803b925d04ccb19ce9b0048df7a644bd949c8f2f552f175"
+    },
+    {
+      "path": "source_documents/invoices/BIL00166.html",
+      "bytes": 1143,
+      "sha256": "df245ff4f658d3587841697253f1f855e39d60c760466b71a8c9213fccb4da78"
+    },
+    {
+      "path": "source_documents/invoices/BIL00167.html",
+      "bytes": 1169,
+      "sha256": "c0bfea070e14fb8d724e9608a781bc3754182463e959e71db02d61a8c081647c"
+    },
+    {
+      "path": "source_documents/invoices/BIL00168.html",
+      "bytes": 1146,
+      "sha256": "5cfab7e38c77922078ea61db6e630b7b5bdc6d89a85e5010621c645da90a5617"
+    },
+    {
+      "path": "source_documents/invoices/BIL00169.html",
+      "bytes": 1135,
+      "sha256": "9e237e0efc7b73875862308ab424e34084e561b8d9ccf59fd3b628c278c1d552"
+    },
+    {
+      "path": "source_documents/invoices/BIL00170.html",
+      "bytes": 1225,
+      "sha256": "a22cde5cbbf54e4c3ba25c1dd2006e7c33b9fe4d6f9ed0e3eedf6b1a05495e74"
+    },
+    {
+      "path": "source_documents/invoices/BIL00171.html",
+      "bytes": 1135,
+      "sha256": "c2b37a7c329884fc9ab19edaf8e649ec9e775d2648cbaacf8d574dbf2d1ef61e"
+    },
+    {
+      "path": "source_documents/invoices/BIL00172.html",
+      "bytes": 1131,
+      "sha256": "065cfcb915b2e028e2ace185f0662694da8ee2b1ddcccded6017c7f2c8389b16"
+    },
+    {
+      "path": "source_documents/invoices/BIL00173.html",
+      "bytes": 1131,
+      "sha256": "ee023a1d8024ab11a156608a1efaeb0f5c42229332ad8d4133c0b185483b041c"
+    },
+    {
+      "path": "source_documents/invoices/BIL00174.html",
+      "bytes": 1145,
+      "sha256": "49fc1582aea5fe92b697b89d899dddee7f4a6b7d4e223d68377e284c75ce449f"
+    },
+    {
+      "path": "source_documents/invoices/BIL00175.html",
+      "bytes": 1145,
+      "sha256": "59013354e90b345ae1238b929d9e6b6466ac1e212e6a4f110b5faf4c86786bf5"
+    },
+    {
+      "path": "source_documents/invoices/BIL00176.html",
+      "bytes": 1218,
+      "sha256": "def36e9e6cca79fe8b3cb5b49ad283bdfa590bc5432e05de0dd67f74e8ae8498"
+    },
+    {
+      "path": "source_documents/invoices/BIL00177.html",
+      "bytes": 1169,
+      "sha256": "412e9e0858298d55d415143042b4f36e36a55935ed31e6ea22f812b5d471c5c1"
+    },
+    {
+      "path": "source_documents/invoices/BIL00178.html",
+      "bytes": 1132,
+      "sha256": "4102b1c916bbbe19121ab26f773bbda481c350d562a1a57b7377725244cae992"
+    },
+    {
+      "path": "source_documents/invoices/BIL00179.html",
+      "bytes": 1132,
+      "sha256": "7dd03d294b55d4d87da4a7a6fb41f54915c0251a4de42250b0a044aa4ddb294c"
+    },
+    {
+      "path": "source_documents/invoices/BIL00180.html",
+      "bytes": 1220,
+      "sha256": "7c052a540982c95c9ddeb6eb069edf4bfb6eca4551a56b89bf8af15d1128de56"
+    },
+    {
+      "path": "source_documents/invoices/BIL00181.html",
+      "bytes": 1128,
+      "sha256": "bce3e29b89a64689adaf132d1d732d1be2d410c10209d09e529d343f40972632"
+    },
+    {
+      "path": "source_documents/invoices/BIL00182.html",
+      "bytes": 1132,
+      "sha256": "3de164c126a9020b1ffcbfe0ee047f967943fbd2915b04d5bf9e47e82a949ce8"
+    },
+    {
+      "path": "source_documents/invoices/BIL00183.html",
+      "bytes": 1168,
+      "sha256": "07aefd0dbf6da348a5780b0b7c7d35f82c135cdf0e168f4939243b2032f0212c"
+    },
+    {
+      "path": "source_documents/invoices/BIL00184.html",
+      "bytes": 1132,
+      "sha256": "0f98a1c23d6ccc13ee09c62c163f145166a0d2a9ae324e36f6a658bb979f2aa2"
+    },
+    {
+      "path": "source_documents/invoices/BIL00185.html",
+      "bytes": 1231,
+      "sha256": "81e2902e06ea44aaacff8226a0e3a1b3670e8006658eff1eb02bd18109ecf618"
+    },
+    {
+      "path": "source_documents/invoices/BIL00186.html",
+      "bytes": 1131,
+      "sha256": "32c8a3391c5777909074bb876d34da34544812a5fa67d8a591ddf716652d1a65"
+    },
+    {
+      "path": "source_documents/invoices/BIL00187.html",
+      "bytes": 1138,
+      "sha256": "4cde9b909067976ece529f6db2be0acdb2e1cd44e532ddee1f2e9205570ff0b8"
+    },
+    {
+      "path": "source_documents/invoices/BIL00188.html",
+      "bytes": 1237,
+      "sha256": "97645be10adbea38e20b4124ab5f0e3b40245316a347f307c248a5a63190faff"
+    },
+    {
+      "path": "source_documents/invoices/BIL00189.html",
+      "bytes": 1135,
+      "sha256": "b61b8d8bfe1341bc7db4de6708571acd8686f281e1242425f4be4d6de7fae935"
+    },
+    {
+      "path": "source_documents/invoices/BIL00190.html",
+      "bytes": 1135,
+      "sha256": "c1da6e67cacf781576d0b18a6228992f5f3d16959fa0744234103236aeec2629"
+    },
+    {
+      "path": "source_documents/invoices/BIL00191.html",
+      "bytes": 1131,
+      "sha256": "59b61df88aa11a9c4a1ee47614bada2a0715092280c4dcdf1ebc752479a8837c"
+    },
+    {
+      "path": "source_documents/invoices/BIL00192.html",
+      "bytes": 1131,
+      "sha256": "c3471fd47c803fb16005fc955a0f66f8fb8d0beea4018cad2407955b9e264d36"
+    },
+    {
+      "path": "source_documents/invoices/BIL00193.html",
+      "bytes": 1131,
+      "sha256": "8f3d7d029bf624224ae5f0897b3f17de210460db24dc48ba0aad4e6f8fefad19"
+    },
+    {
+      "path": "source_documents/invoices/BIL00194.html",
+      "bytes": 1137,
+      "sha256": "43509ff56f098066f598d1a81ca196ac66333d9d380c6cb63db6080bf911ed0b"
+    },
+    {
+      "path": "source_documents/invoices/BIL00195.html",
+      "bytes": 1131,
+      "sha256": "8451ab4ad6182a18ac7938013d13d07e02e36e0a9954af258110713dbe61afed"
+    },
+    {
+      "path": "source_documents/invoices/BIL00196.html",
+      "bytes": 1131,
+      "sha256": "0e9ba26cb900829e77f3fb39c1b4225167bd36e07b52992a6ce333dc80a837e8"
+    },
+    {
+      "path": "source_documents/invoices/BIL00197.html",
+      "bytes": 1132,
+      "sha256": "a223e8522014a6cadf5e24b26d4a54edc1f65bfaade01a228b2389362a69c7d3"
+    },
+    {
+      "path": "source_documents/invoices/BIL00198.html",
+      "bytes": 1227,
+      "sha256": "bbba531d94ef585a81d8eee9d53c40e7a7637f46d6338dd4cd6da022f9dec39e"
+    },
+    {
+      "path": "source_documents/invoices/BIL00199.html",
+      "bytes": 1137,
+      "sha256": "10f23e3defe09ca0e5c0c91d8c7b91472982fcaa849ef0b304abf990fdcb57e3"
+    },
+    {
+      "path": "source_documents/invoices/BIL00200.html",
+      "bytes": 1229,
+      "sha256": "304625f35a29ce1bee4154387221c9c319ca34de30ec6445ec9ebd7e37091675"
+    },
+    {
+      "path": "source_documents/invoices/BIL00201.html",
+      "bytes": 1131,
+      "sha256": "2ef3ac173bd35ce6ee2fa1554de34dfd1045d9b9079ba73622171b3dd5dfe46a"
+    },
+    {
+      "path": "source_documents/invoices/BIL00202.html",
+      "bytes": 1131,
+      "sha256": "0366ecb9755770fad07f7e75d7161dc7f83fd9950a73c12243cbb252c8ae7c30"
+    },
+    {
+      "path": "source_documents/invoices/BIL00203.html",
+      "bytes": 1131,
+      "sha256": "48fbb4d8746ef9bd949ce56802863183cc95f1c1de3c779d4da7a102f660e688"
+    },
+    {
+      "path": "source_documents/invoices/BIL00204.html",
+      "bytes": 1227,
+      "sha256": "c1c68b0aaa24d33f3a9444f11deb233c98c774aea88fcda0536a65a3bdaf3f8e"
+    },
+    {
+      "path": "source_documents/invoices/BIL00205.html",
+      "bytes": 1229,
+      "sha256": "d22c88cb733a9da2815650c5da3c39f11454fa8266d27b07e01daaab60e61a12"
+    },
+    {
+      "path": "source_documents/invoices/BIL00206.html",
+      "bytes": 1215,
+      "sha256": "1f56c7a0adbc515c05f812fb82ada51967a223956fd46c8cea45df4d4d0764cf"
+    },
+    {
+      "path": "source_documents/invoices/BIL00207.html",
+      "bytes": 1131,
+      "sha256": "7e1b3da4876ef839eff53f3cc98bf905f84d43e13e62a26b2fb9d6bccbe04fca"
+    },
+    {
+      "path": "source_documents/invoices/BIL00208.html",
+      "bytes": 1132,
+      "sha256": "5f1b89b6af0683c828b1dc0eba93d7138933e6cfa549ea52c88cf51fd40d1544"
+    },
+    {
+      "path": "source_documents/invoices/BIL00209.html",
+      "bytes": 1214,
+      "sha256": "8e7eefa2293d1f13ccfdb74e922e4133833f2ad2cfb5b36c68542168fe41cbc7"
+    },
+    {
+      "path": "source_documents/invoices/BIL00210.html",
+      "bytes": 1214,
+      "sha256": "9f68edc72a9f9acbdae62f868ce73f42a7428c96c719dbf2181d6aba411c8379"
+    },
+    {
+      "path": "source_documents/invoices/BIL00211.html",
+      "bytes": 1131,
+      "sha256": "7f64b91d0dcc23ce965a5f4b72ee3605bd26e310bc423a1cde93c389d37cd84e"
+    },
+    {
+      "path": "source_documents/invoices/BIL00212.html",
+      "bytes": 1157,
+      "sha256": "cb0f5844a384006b9891aa671b2af3335cd3dc0efc85e94a38a185268a09ba79"
+    },
+    {
+      "path": "source_documents/invoices/BIL00213.html",
+      "bytes": 1138,
+      "sha256": "95b855e5ef6d732f48c7b45d88a1a0eba892a5dd05a17128e3f94d17e341b6b2"
+    },
+    {
+      "path": "source_documents/invoices/BIL00214.html",
+      "bytes": 1131,
+      "sha256": "986fbeef7ab2ab072ee36ef74c9935f5637cbde916af60d7e9b70a59200cc693"
+    },
+    {
+      "path": "source_documents/invoices/BIL00215.html",
+      "bytes": 1145,
+      "sha256": "3cd13764b45905569463523ac2677086ac38836ab87c9d572ea249009bded283"
+    },
+    {
+      "path": "source_documents/invoices/BIL00216.html",
+      "bytes": 1143,
+      "sha256": "716fc4b647fdb02ac0bfa62b40ed0b481966587944846d65f25a49bca0495aaf"
+    },
+    {
+      "path": "source_documents/invoices/BIL00217.html",
+      "bytes": 1131,
+      "sha256": "91687ee472c7fa891dc161dfcbc766516e5566121b295ad86e0f548a83f03d8c"
+    },
+    {
+      "path": "source_documents/invoices/BIL00218.html",
+      "bytes": 1129,
+      "sha256": "3cbc669d6fded53965107b0cfbfe286eb427a4f41b877ace2c5756245554bdf3"
+    },
+    {
+      "path": "source_documents/invoices/BIL00219.html",
+      "bytes": 1137,
+      "sha256": "793898bd8e86f0c85553fed254c3cff5ab8c5b6032a20999d5d48669c2574020"
+    },
+    {
+      "path": "source_documents/invoices/BIL00220.html",
+      "bytes": 1138,
+      "sha256": "99185c1d29b4cb8a2e0f33f7fb9296a5b92228bebc00ea114d229eae6a94f6b6"
+    },
+    {
+      "path": "source_documents/invoices/BIL00221.html",
+      "bytes": 1168,
+      "sha256": "9c6847adf526a409e088b103427fd9ca9d0fe0198dfd373117d164a78b63b8b6"
+    },
+    {
+      "path": "source_documents/invoices/BIL00222.html",
+      "bytes": 1131,
+      "sha256": "fc64b5c0c1cc0d424d42500bf8cbee0c232f410d37e2a02121440116adf81d68"
+    },
+    {
+      "path": "source_documents/invoices/BIL00223.html",
+      "bytes": 1136,
+      "sha256": "b63251a547047782a5a43d0dcd678c466264fbdbcef4b81e01afbb5b257cf0df"
+    },
+    {
+      "path": "source_documents/invoices/BIL00224.html",
+      "bytes": 1225,
+      "sha256": "6fae931360fe68272e7ae4e4f9e5a6812a30729efdb0e808ee63ca6fe3a531a8"
+    },
+    {
+      "path": "source_documents/invoices/BIL00225.html",
+      "bytes": 1214,
+      "sha256": "4948de5254280c3438e3d0cea2d896a34141a126f0e51b5b2d46fc8df06de451"
+    },
+    {
+      "path": "source_documents/invoices/BIL00226.html",
+      "bytes": 1131,
+      "sha256": "6d04049faa2d2769e00bfb08f423c0426abf0619f7f29bb77da3248b5c7c9049"
+    },
+    {
+      "path": "source_documents/invoices/BIL00227.html",
+      "bytes": 1155,
+      "sha256": "e7165062183ec290d2661d8a365e9acdaa5068f19d29d02b0bcfc2ea1a56ed51"
+    },
+    {
+      "path": "source_documents/invoices/BIL00228.html",
+      "bytes": 1145,
+      "sha256": "ec4a683a0e60f227680cb9f92bf1aae67449abbcaf06bad3fc3a6da236541e1d"
+    },
+    {
+      "path": "source_documents/invoices/BIL00229.html",
+      "bytes": 1135,
+      "sha256": "a429bc79f19ffea1c8ba66147380a1611378e5fda45411d0731be6dfdf67dae6"
+    },
+    {
+      "path": "source_documents/invoices/BIL00230.html",
+      "bytes": 1135,
+      "sha256": "a257b7eae862f02733abd531972ece9362bd5c5842ee8e3659664d854f56c182"
+    },
+    {
+      "path": "source_documents/invoices/BIL00231.html",
+      "bytes": 1135,
+      "sha256": "b269879f355a82ea6a4b2b1ec05d40caf08a7eb064040b4dfc4eb9019dca4a62"
+    },
+    {
+      "path": "source_documents/invoices/BIL00232.html",
+      "bytes": 1131,
+      "sha256": "b8e4831e68175926830766673d311bcab5533d9df2a519a86b3b1f2ee566b63f"
+    },
+    {
+      "path": "source_documents/invoices/BIL00233.html",
+      "bytes": 1131,
+      "sha256": "f15acd72a3026e753218b3e0bfaa223cb75df902f077b2dffc66eefa36c64eed"
+    },
+    {
+      "path": "source_documents/invoices/BIL00234.html",
+      "bytes": 1135,
+      "sha256": "3b16307b45035d7b0c4d2c11b94d91ed5e6713621029b6ba56b30b413797df88"
+    },
+    {
+      "path": "source_documents/invoices/BIL00235.html",
+      "bytes": 1131,
+      "sha256": "276931de883ddbcad8f5190433f740e2e125ec81ecd7e63aff4337ac23cde16c"
+    },
+    {
+      "path": "source_documents/invoices/BIL00236.html",
+      "bytes": 1131,
+      "sha256": "f5ad37b69cb535914153f8ce48b6a36216fbc0c14a9fdfc535687780658dccf2"
+    },
+    {
+      "path": "source_documents/invoices/BIL00237.html",
+      "bytes": 1168,
+      "sha256": "b8eb669a1407e6c13cb55ccbd271815e861979367e79cfa28113eaf1325ca2c1"
+    },
+    {
+      "path": "source_documents/invoices/BIL00238.html",
+      "bytes": 1136,
+      "sha256": "cc2f2cf8b82db27314f445e41664b9335dd9fac0e2e7432536a982cf231f14d3"
+    },
+    {
+      "path": "source_documents/invoices/BIL00239.html",
+      "bytes": 1131,
+      "sha256": "1e7009622b22beac76968fcb6c9563b206141b0d8152268f8161184939a800e5"
+    },
+    {
+      "path": "source_documents/invoices/BIL00240.html",
+      "bytes": 1131,
+      "sha256": "4bc9e5d30d01efaaa2d8b9cb5df8b78ce96a2a1075dbd19a216a31ff96c09b65"
+    },
+    {
+      "path": "source_documents/invoices_pdf/BIL00001_synthetic_invoice.pdf",
+      "bytes": 2886,
+      "sha256": "4272ce9f31987a0557c92a1c3ed7c8c43b637cd7889d9444faa3982ad945d382"
+    },
+    {
+      "path": "source_documents/invoices_pdf/BIL00002_synthetic_invoice.pdf",
+      "bytes": 2885,
+      "sha256": "55f1e0f246cebae61ae606dd4199a11496053915634f045f6a972e072cc48506"
+    },
+    {
+      "path": "source_documents/invoices_pdf/BIL00003_synthetic_invoice.pdf",
+      "bytes": 2880,
+      "sha256": "9622ff7ec15a87328967dd50ee36f7053ca8e6ca82e7bfd41c7f30079455623e"
+    },
+    {
+      "path": "source_documents/invoices_pdf/BIL00004_synthetic_invoice.pdf",
+      "bytes": 2955,
+      "sha256": "cf2471dd42c31d86837826ecfa47f991b4894d66b47930cd67fdc459d12687cb"
+    },
+    {
+      "path": "source_documents/invoices_pdf/BIL00005_synthetic_invoice.pdf",
+      "bytes": 2959,
+      "sha256": "b93ba7eed84ebbf0284c657c5d5641fde9277f3cb33e7d7bc163ee22137921ef"
+    },
+    {
+      "path": "source_documents/invoices_pdf/BIL00006_synthetic_invoice.pdf",
+      "bytes": 2954,
+      "sha256": "c7c1e2cc2ebeee87fa092c9c0347e6d952c930dcf87b10ae4dd29b1523f640be"
+    },
+    {
+      "path": "source_documents/invoices_pdf/BIL00009_synthetic_invoice.pdf",
+      "bytes": 2952,
+      "sha256": "fb1f26ae29b38312230797e26699de2e252a3ebfd672846cba6c4aeb0da0dd0c"
+    },
+    {
+      "path": "source_documents/invoices_pdf/BIL00010_synthetic_invoice.pdf",
+      "bytes": 2951,
+      "sha256": "117caefaa3e1513ac8942b7f3aed454ebd7e25f8684ade5ead14d8b2a776bf92"
+    },
+    {
+      "path": "source_documents/invoices_pdf/BIL00012_synthetic_invoice.pdf",
+      "bytes": 2905,
+      "sha256": "3342fb124a2a4518619b7033db5c1371c838565a68965a1e946784bdf644600c"
+    },
+    {
+      "path": "source_documents/invoices_pdf/BIL00021_synthetic_invoice.pdf",
+      "bytes": 2912,
+      "sha256": "b19fcc712003331450b18e2037979576062b4d24017422fff6c6ab820fa908ff"
+    },
+    {
+      "path": "source_documents/invoices_pdf/BIL00024_synthetic_invoice.pdf",
+      "bytes": 2947,
+      "sha256": "67f202ac159b9cc741bb2e98092b9516df482fff7be6e66ed19c6d6328c5e222"
+    },
+    {
+      "path": "source_documents/invoices_pdf/BIL00027_synthetic_invoice.pdf",
+      "bytes": 2910,
+      "sha256": "6d02e027f3cd58dd40be81a1a25f0519ad6d6187071ca24bbad28df3a9c8f42e"
+    },
+    {
+      "path": "source_documents/invoices_png/BIL00001_synthetic_invoice-1.png",
+      "bytes": 92304,
+      "sha256": "bf80c20ec20402ea81111c9b6f4e13b1b06b82d03d818f3be05e59de039cf4e9"
+    },
+    {
+      "path": "source_documents/invoices_png/BIL00002_synthetic_invoice-1.png",
+      "bytes": 91273,
+      "sha256": "ca11832e87626007cc5b3bca584ede0935e8c9268445d19e3973855c5b34c3cd"
+    },
+    {
+      "path": "source_documents/invoices_png/BIL00003_synthetic_invoice-1.png",
+      "bytes": 90353,
+      "sha256": "24fc1f516b035e127a27c920d1da4e2b6620b67226d59cff7d91e98f4af9801f"
+    },
+    {
+      "path": "source_documents/invoices_png/BIL00004_synthetic_invoice-1.png",
+      "bytes": 97532,
+      "sha256": "b8a3ce5146c0374b967c9135ae53d3bba92000afb9925f08ad84ec7e1def58bc"
+    },
+    {
+      "path": "source_documents/invoices_png/BIL00005_synthetic_invoice-1.png",
+      "bytes": 97465,
+      "sha256": "b62f5106be9fa2fa900a84969efca8adbdf2b08e6f0b6b9f5393ef759ba9590d"
+    },
+    {
+      "path": "source_documents/invoices_png/BIL00006_synthetic_invoice-1.png",
+      "bytes": 98637,
+      "sha256": "53d31df30bf55fbb4a6e4b45df38c2e61ef1548817e60a338b982aae94e665d2"
+    },
+    {
+      "path": "source_documents/invoices_png/BIL00009_synthetic_invoice-1.png",
+      "bytes": 97257,
+      "sha256": "4f1ace35d7cb6634b7555cf49ef502b70a5c6459626028d692e45f37e5089c0d"
+    },
+    {
+      "path": "source_documents/invoices_png/BIL00010_synthetic_invoice-1.png",
+      "bytes": 99023,
+      "sha256": "9ad6f0bde676d188a2c90ab6c2e5fe2e03119aa8302bb78307023d113bf02586"
+    },
+    {
+      "path": "source_documents/invoices_png/BIL00012_synthetic_invoice-1.png",
+      "bytes": 94223,
+      "sha256": "902ad13dd140d767a619f00a8323bbab6396cd71caba18e900023cd24b2b5c36"
+    },
+    {
+      "path": "source_documents/invoices_png/BIL00021_synthetic_invoice-1.png",
+      "bytes": 93661,
+      "sha256": "94e799eb068a05e20f14b9767439361d1f760c08610154f1b27a01a8e85e97a4"
+    },
+    {
+      "path": "source_documents/invoices_png/BIL00024_synthetic_invoice-1.png",
+      "bytes": 98348,
+      "sha256": "d22662bb4d60a18c98eaeaedfb4144a42ca731df39c9ef200567156ff5a1114a"
+    },
+    {
+      "path": "source_documents/invoices_png/BIL00027_synthetic_invoice-1.png",
+      "bytes": 94782,
+      "sha256": "aef4b3fd4ef9409240b81d64133a66106b7be9e82f34ed621933d3e5b445a61b"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00001.html",
+      "bytes": 547,
+      "sha256": "a94a277adc211c51dcea7e119bcc6c9eddc83a9ff29bd3d646f82ce77aa598f5"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00002.html",
+      "bytes": 564,
+      "sha256": "f8d51c5005ed730167c6f04e17b926b5d6f84a5dd784882414ad7d85ed2392ea"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00003.html",
+      "bytes": 554,
+      "sha256": "5bb809b82e6ce3f046cf976eb9b845f34f3fbb7eca4a36e5cc315dfcaa439469"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00004.html",
+      "bytes": 549,
+      "sha256": "2be8db12be394be2dc41ba4f1d98655210f2fe96d11efc857fc638bf3a2a067c"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00005.html",
+      "bytes": 538,
+      "sha256": "7c1e77643c9eebac301e84e5eb497bd8b4a51fac9f94036d8790509d59a3c1ec"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00006.html",
+      "bytes": 541,
+      "sha256": "4aefbc37638103840a24bc87f373c5d41be77796db5dba38b08650dc3dca106d"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00007.html",
+      "bytes": 556,
+      "sha256": "f03abc8f65fdd795482e8b1cbbb3819ce1f6dfdaeb7d19f36e407d41853c6615"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00008.html",
+      "bytes": 545,
+      "sha256": "a71f53fbba84e8ac69a662921e6be6d5e011ede4d1c90e7df112a1069e6cce91"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00009.html",
+      "bytes": 550,
+      "sha256": "1ee0a2479aaa6cdc44bc441c39aac604d6c8b74e1b021368cab83e9d76af48ba"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00010.html",
+      "bytes": 534,
+      "sha256": "6b56adc01dc4d2eac993f8594cc0353a72b5316f9a72ad13ae97d315ed90225e"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00011.html",
+      "bytes": 541,
+      "sha256": "f8e5acab7309fe3e982f078fe37d31da9d8e144ee83842b8b95e84357f93c546"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00012.html",
+      "bytes": 542,
+      "sha256": "c364516f64a2d8a024530558ddfe31fccd5884365e07eaa33ce4308146a50492"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00013.html",
+      "bytes": 544,
+      "sha256": "27f25e3bd36d1fc97e30634fee2b2ce1f67eedb83c4b46cb39185b40a0f48008"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00014.html",
+      "bytes": 547,
+      "sha256": "90b1284fd779773ea2a0f348601e2846eca30a9252270cc21288f4477f3023e6"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00015.html",
+      "bytes": 543,
+      "sha256": "242aaea00d9629a456504932421387211736a9ce6203bb41e421d3e913119945"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00016.html",
+      "bytes": 568,
+      "sha256": "19caaf06ba7899c9dc8f39a0c9d3000be6c62be921b789bd35560c6beb86a961"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00017.html",
+      "bytes": 564,
+      "sha256": "081f4b02925d3d827fda83e09bfd699216a1ed4c33e799aaf31e1bcf1d81155c"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00018.html",
+      "bytes": 545,
+      "sha256": "0ae563be6cbd7751be003504d68fa2ea1ae8041f930ad6da8348b93150036c38"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00019.html",
+      "bytes": 546,
+      "sha256": "39da984f53aae54e34712c2345dfa0dde00ce2852d6bf11365a3a4b96664f6ad"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00020.html",
+      "bytes": 549,
+      "sha256": "9f226a95f36c986a21f7a5aad64fee4edcd0029920c56977f4209750db0d4469"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00021.html",
+      "bytes": 551,
+      "sha256": "c1a53ea378fd7ada9303b712e9795d847864a641b24a19258d388ac7e7225226"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00022.html",
+      "bytes": 570,
+      "sha256": "de5992f12ff4743bff64680f69f86fc6143f679002593b87399d974c9e95a182"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00023.html",
+      "bytes": 547,
+      "sha256": "f643ea51989ce346dae80eab125c97b88363d3597e3b0d08e337907e2d631945"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00024.html",
+      "bytes": 549,
+      "sha256": "3840e76f880e68277172a63d6129b174cbb1efff6f472c82e258b394fac42715"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00025.html",
+      "bytes": 562,
+      "sha256": "8ccf163e5e37f152c8c2c80eaeb8e856045ea4dd565a8cefb662d720be5870b6"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00026.html",
+      "bytes": 565,
+      "sha256": "64cebcdbd132da229f8840efd923db98cc03bfea30051c0fffab770ef20c0963"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00027.html",
+      "bytes": 560,
+      "sha256": "b4fce253c954af4da14076764127b9c93b4375d3b0c199e81b1596986dd61005"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00028.html",
+      "bytes": 548,
+      "sha256": "0da862cfe1a833173cfa3c2cd98e075c98fdfdd5aeac8eed602ce0ccb081916c"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00029.html",
+      "bytes": 549,
+      "sha256": "9b6c59e964a0fe99ff618454e5a293dd6214d578f8e167baa35312ecddfca7c0"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00030.html",
+      "bytes": 546,
+      "sha256": "c797d420aa3b36f77c26bbbae88dce862d6f9ba4a6e6eaa0ba4f48af5bc97bd4"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00031.html",
+      "bytes": 545,
+      "sha256": "e880dbf9a1a0973108c292bca9994ddd61cf052a3066578b5028e9fcc364be5b"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00032.html",
+      "bytes": 542,
+      "sha256": "c19c2885e66bf578f4c0cda3bf5d01cde67eadf3feafaa7aaae000ab2d2362f3"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00033.html",
+      "bytes": 549,
+      "sha256": "12d160f8d286fdcce1bc0a385cd803879b235de6d55725adc9c34f2c287074f2"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00034.html",
+      "bytes": 542,
+      "sha256": "0289cd1717518701635e5e97b9bdc2fc23e6fdbfe78daa95db7df22ee11573c7"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00035.html",
+      "bytes": 555,
+      "sha256": "5ea6e84025c4be1846b5e504b045b79944fb1725c56b9b0d10bb129fdddda632"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00036.html",
+      "bytes": 543,
+      "sha256": "ab644a3ab17171280d02befd2e6aecd0ff347e0961ec7d0f74fb2ba0b03a531f"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00037.html",
+      "bytes": 543,
+      "sha256": "6091d8d05f3ee67a00ea84ff006e6433f058e30624dd58c7a1774ee5ff4d858b"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00038.html",
+      "bytes": 543,
+      "sha256": "4b4bc77e7800b8ef7dfcb3689db9b3a6ff391d63a52869e0069736799241bbab"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00039.html",
+      "bytes": 569,
+      "sha256": "8c6b0e7762e1f853d528cb86b4a028bb774ead72a9e5e4bf0e4bd3a932b27d6f"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00040.html",
+      "bytes": 542,
+      "sha256": "dc78f0cf588d91beeaaf3ecf2250f0e88ac32322f2f357aabc779073841cdf83"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00041.html",
+      "bytes": 545,
+      "sha256": "54a13c4130008b7db9e67ca1ed4fd315349bef6bf0037324667702e6a6f94aff"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00042.html",
+      "bytes": 539,
+      "sha256": "15abae17c05cd3e535618ee5fa7b6be734103d40780293b97002776785b0f826"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00043.html",
+      "bytes": 548,
+      "sha256": "1e46bd735b6e9b1e5e998ba755c8eb9db856409a21324ba9fe6e92ae73be4fa0"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00044.html",
+      "bytes": 548,
+      "sha256": "dc0aef112a5243e07ed74229f120925726410cd0b7cfc8e68c3e3bc0fb2f1082"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00045.html",
+      "bytes": 561,
+      "sha256": "fae50cf7ba3a12c4c031e00eac6178f8bc518507d9fe2e9493ab94560655ddeb"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00046.html",
+      "bytes": 566,
+      "sha256": "c93bb4ffaa21424b4122ffe7dcc883aaa635158681f24fa0913fbe911a7d1dc5"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00047.html",
+      "bytes": 546,
+      "sha256": "c7d32ca80fe36db43b88c5cfc9a5f0226f420de47098f0ef95e9671921de661b"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00048.html",
+      "bytes": 565,
+      "sha256": "4b413993fa9336d188e3d8dff5662edf17efe387ff29c7a9c6e29e2ba4fde548"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00049.html",
+      "bytes": 566,
+      "sha256": "3d79c115b1d08013934b1d9485f56f1d13050381418fb084e5596671e18df612"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00050.html",
+      "bytes": 551,
+      "sha256": "71fa8636061dbf03aac68261aa16f4ce32692ae3a06a2dbd27d5d3d581194c5a"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00051.html",
+      "bytes": 567,
+      "sha256": "b826c9126abeea41eb3f9f0a45b1ffd8ccee5f284d9f46ae58d4af5f591e6b8b"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00052.html",
+      "bytes": 546,
+      "sha256": "0c833f3fb4c74c37d44a0a3a528c9d2fd88d9ac23f2840f50d8b920287c4d202"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00053.html",
+      "bytes": 546,
+      "sha256": "6cf41f4795dcf1b7c31dd93c5669ac39e5269d1c02394c1b1890eaf2ef3f3d3e"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00054.html",
+      "bytes": 548,
+      "sha256": "01fcbc346336fad13d2b7136899999d816e9736e0eb51fe5ff5f960422558207"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00055.html",
+      "bytes": 549,
+      "sha256": "4df9d1b6c56bb7358aaaf61dc76f6dce573050aba8790e59e89a12e5b5728f08"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00056.html",
+      "bytes": 539,
+      "sha256": "904a2a8eb9d8b6132fc6a7e96b2afb2a17c22885c9f1d92bf1fb9a73eb0346f3"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00057.html",
+      "bytes": 544,
+      "sha256": "5f40150a42868e1858f6160e6ca432696028484fff3a75af3bb1c54745ce86be"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00058.html",
+      "bytes": 562,
+      "sha256": "cc94e5c2a1f994f003578a47e397caf5287d61cdd24f4a8d3bfe20b5c715fea3"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00059.html",
+      "bytes": 544,
+      "sha256": "45f0fbb1ec97551f16597b7d3f4b43008b25c5779dbb8032ef98af0e73f36f5d"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00060.html",
+      "bytes": 545,
+      "sha256": "9e2f6445e4fadb39744e43d34a96f9518f141110ea1b192cbec3b896bad970b8"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00061.html",
+      "bytes": 543,
+      "sha256": "28c1519391b0387fe9979fa7f2384cf771a57dc1982a2bc4a7c5b9cc01af86c5"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00062.html",
+      "bytes": 540,
+      "sha256": "94d93ee61e5a9878c55e95c8aab8c32edd314cea07c6e138e5a7c5a3b308d3f2"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00063.html",
+      "bytes": 540,
+      "sha256": "d2ece49768a435ac54a6b4318738665298fd246d68264d4145d67be171642999"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00064.html",
+      "bytes": 560,
+      "sha256": "73888afcc389acb71368e041c4061643f784dc62d4baa33c6cffaabe68fc9218"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00065.html",
+      "bytes": 564,
+      "sha256": "12774b0743e60cf3a35a3e505fb74987f93acd8fd6edf5618aa192fe02cb42ba"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00066.html",
+      "bytes": 560,
+      "sha256": "5be050fd58e2d9eaf9ab2c1fe5cd18c5c5b11fe20ef99628b34cd0c4dba38b6e"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00067.html",
+      "bytes": 545,
+      "sha256": "947ac94dc53f0db6bb9039eeb0ea0704317b01487d780ee3aea73b461b209d30"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00068.html",
+      "bytes": 565,
+      "sha256": "de4efae131f2f2dbe921157afbc4551fe9bebf1009c7f108c3e5c48ac798b4d3"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00069.html",
+      "bytes": 543,
+      "sha256": "4b065be4de99e9227ecaa7f6aa33637f79aa19f17e6836317fd1c3fa51aec9e4"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00070.html",
+      "bytes": 546,
+      "sha256": "e7ed5e1e50465a9f5ac596ad749b20e4ec7891e0e404bbaa0a18ee3d816e2ec1"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00071.html",
+      "bytes": 543,
+      "sha256": "2d167f9862807b39178c43199f41a193740d00a1a1ce91d3d7b6f588dd0bcf37"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00072.html",
+      "bytes": 561,
+      "sha256": "424b585ca92f4cfd0ab45d9b0042a7b0ca1b3c015c7e6c150e817d5772ae8dec"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00073.html",
+      "bytes": 565,
+      "sha256": "6c8e1e8ed5948df6f8b0406ec08a5147d2a2aab979d47bc10e47725dca37ef9b"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00074.html",
+      "bytes": 548,
+      "sha256": "f189360d3ae44de30e4ea8201c1ac8884ad6f73b29867b8ad43a6b41a2223b3c"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00075.html",
+      "bytes": 566,
+      "sha256": "4a9175d8b25912d1467799b5a05ec052a80447e964e619b175cdb89942fe7c67"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00076.html",
+      "bytes": 540,
+      "sha256": "b64bfa849c2cb04051e974a6e425192be13e5b751e7b9aeea8717f38b4e20729"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00077.html",
+      "bytes": 541,
+      "sha256": "d2bf342e6e2053677b3847d1077d4f637e7d7b5a3b94babcb30ce7cfd2ff5310"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00078.html",
+      "bytes": 546,
+      "sha256": "39be236f003f80c7ed70bcafa72a7ee0c5451501a0345fb3b4e340e0a94d1b5e"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00079.html",
+      "bytes": 553,
+      "sha256": "8061b55403a1f269701d3cfe132b0224d3b54c07d102dc02c78f1b3c148cd54d"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00080.html",
+      "bytes": 549,
+      "sha256": "390cb2d3f744137756275c4b16df559062fe5e24baeb430500406c5605226888"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00081.html",
+      "bytes": 536,
+      "sha256": "5edef4e467bd6330e15fb6ad509fb97601d78e65333bb419436ed2de98a79ba8"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00082.html",
+      "bytes": 545,
+      "sha256": "83db56a35b0b280185ed9dbdb2a59487231c83d44e6c9122c7340f81bcb9dfa3"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00083.html",
+      "bytes": 561,
+      "sha256": "28a0329cc94dfec6ae000fa16941fc5f2454fc159a0f67935acad439b39ef34a"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00084.html",
+      "bytes": 549,
+      "sha256": "b638f625fd9cacd2da4cb40dcb044560874094faadc5f1b42919c112d7268b8d"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00085.html",
+      "bytes": 549,
+      "sha256": "d8bd31ef08d18fdfc67e059a20e89a120c90e9f8e21e0f9b8a093b60b52ade96"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00086.html",
+      "bytes": 545,
+      "sha256": "15fd29c45231d193cc5c251143794534e9159aef3cfc0cb7c7a4d9e8f1b7d968"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00087.html",
+      "bytes": 554,
+      "sha256": "d48b1ac4d24dfbe1ed68d5325b034fa15bde8da8818f4b5530eedbdfbc997956"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00088.html",
+      "bytes": 567,
+      "sha256": "d4813b9e029f92511cf165dfbd1c4bb417729ce44f0d5070c3980e2217bf745f"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00089.html",
+      "bytes": 546,
+      "sha256": "14fbe049dbc0e9296b793a4ffd08642dd79bb9074906c5c7cfb61c7f2e22cd19"
+    },
+    {
+      "path": "source_documents/offer_terms/OFF00090.html",
+      "bytes": 539,
+      "sha256": "b4f0948cec9703586a0316c43ac5ea451cbf27728bbcbc419269d3fd667e4b61"
+    },
+    {
+      "path": "sql/schema.sql",
+      "bytes": 20978,
+      "sha256": "d6a3ca166cf6b097fdc02ea0f7f30c9fa31a1b0b091aa41fe81c1a2429a3ae4d"
+    },
+    {
+      "path": "sql/seed.sql",
+      "bytes": 10504357,
+      "sha256": "9416b6adf18ccd7fc57babd2e4b24161a408cbb411489a577de43458c1cc3e8f"
+    },
+    {
+      "path": "sqlite/myeconomy_synthetic_demo.sqlite3",
+      "bytes": 4923392,
+      "sha256": "7b07b037f7837073abe5b48974a0e87885e8c6300121f44d94ea4cfd5e2c8d23"
+    },
+    {
+      "path": "validate_dataset.py",
+      "bytes": 10148,
+      "sha256": "92f5741fd150ff25ccae464f935dbaa3fc5ce6fabff0782fe828f6fd65a086a3"
+    }
+  ]
+}

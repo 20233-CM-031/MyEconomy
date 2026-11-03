@@ -1,0 +1,1052 @@
+[
+  {
+    "enterprise_product_id": "EPR00001",
+    "enterprise_id": "ENT00001",
+    "product_or_service_name": "Demo Tailoring SKU 001",
+    "unit_price_inr": "4391.00",
+    "estimated_unit_cost_inr": "2232.19",
+    "estimated_unit_margin_inr": "2158.81",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00002",
+    "enterprise_id": "ENT00001",
+    "product_or_service_name": "Demo Tailoring SKU 002",
+    "unit_price_inr": "1316.00",
+    "estimated_unit_cost_inr": "383.82",
+    "estimated_unit_margin_inr": "932.18",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00003",
+    "enterprise_id": "ENT00002",
+    "product_or_service_name": "Demo Digital Service SKU 003",
+    "unit_price_inr": "4272.00",
+    "estimated_unit_cost_inr": "2440.44",
+    "estimated_unit_margin_inr": "1831.56",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00004",
+    "enterprise_id": "ENT00002",
+    "product_or_service_name": "Demo Digital Service SKU 004",
+    "unit_price_inr": "3768.00",
+    "estimated_unit_cost_inr": "1420.43",
+    "estimated_unit_margin_inr": "2347.57",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00005",
+    "enterprise_id": "ENT00003",
+    "product_or_service_name": "Demo Design Service SKU 005",
+    "unit_price_inr": "7930.00",
+    "estimated_unit_cost_inr": "4938.78",
+    "estimated_unit_margin_inr": "2991.22",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00006",
+    "enterprise_id": "ENT00003",
+    "product_or_service_name": "Demo Design Service SKU 006",
+    "unit_price_inr": "5541.00",
+    "estimated_unit_cost_inr": "1424.86",
+    "estimated_unit_margin_inr": "4116.14",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00007",
+    "enterprise_id": "ENT00003",
+    "product_or_service_name": "Demo Design Service SKU 007",
+    "unit_price_inr": "8448.00",
+    "estimated_unit_cost_inr": "4392.56",
+    "estimated_unit_margin_inr": "4055.44",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00008",
+    "enterprise_id": "ENT00003",
+    "product_or_service_name": "Demo Design Service SKU 008",
+    "unit_price_inr": "7253.00",
+    "estimated_unit_cost_inr": "2084.16",
+    "estimated_unit_margin_inr": "5168.84",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00009",
+    "enterprise_id": "ENT00004",
+    "product_or_service_name": "Demo Tailoring SKU 009",
+    "unit_price_inr": "4903.00",
+    "estimated_unit_cost_inr": "2346.79",
+    "estimated_unit_margin_inr": "2556.21",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00010",
+    "enterprise_id": "ENT00004",
+    "product_or_service_name": "Demo Tailoring SKU 010",
+    "unit_price_inr": "3568.00",
+    "estimated_unit_cost_inr": "1227.80",
+    "estimated_unit_margin_inr": "2340.20",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00011",
+    "enterprise_id": "ENT00004",
+    "product_or_service_name": "Demo Tailoring SKU 011",
+    "unit_price_inr": "6793.00",
+    "estimated_unit_cost_inr": "1894.00",
+    "estimated_unit_margin_inr": "4899.00",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00012",
+    "enterprise_id": "ENT00004",
+    "product_or_service_name": "Demo Tailoring SKU 012",
+    "unit_price_inr": "2366.00",
+    "estimated_unit_cost_inr": "985.57",
+    "estimated_unit_margin_inr": "1380.43",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00013",
+    "enterprise_id": "ENT00005",
+    "product_or_service_name": "Demo Local Retail SKU 013",
+    "unit_price_inr": "328.00",
+    "estimated_unit_cost_inr": "143.34",
+    "estimated_unit_margin_inr": "184.66",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00014",
+    "enterprise_id": "ENT00005",
+    "product_or_service_name": "Demo Local Retail SKU 014",
+    "unit_price_inr": "6453.00",
+    "estimated_unit_cost_inr": "3392.14",
+    "estimated_unit_margin_inr": "3060.86",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00015",
+    "enterprise_id": "ENT00005",
+    "product_or_service_name": "Demo Local Retail SKU 015",
+    "unit_price_inr": "3286.00",
+    "estimated_unit_cost_inr": "1534.87",
+    "estimated_unit_margin_inr": "1751.13",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00016",
+    "enterprise_id": "ENT00005",
+    "product_or_service_name": "Demo Local Retail SKU 016",
+    "unit_price_inr": "4100.00",
+    "estimated_unit_cost_inr": "2064.04",
+    "estimated_unit_margin_inr": "2035.96",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00017",
+    "enterprise_id": "ENT00006",
+    "product_or_service_name": "Demo Digital Service SKU 017",
+    "unit_price_inr": "805.00",
+    "estimated_unit_cost_inr": "209.42",
+    "estimated_unit_margin_inr": "595.58",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00018",
+    "enterprise_id": "ENT00006",
+    "product_or_service_name": "Demo Digital Service SKU 018",
+    "unit_price_inr": "7320.00",
+    "estimated_unit_cost_inr": "1987.29",
+    "estimated_unit_margin_inr": "5332.71",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00019",
+    "enterprise_id": "ENT00006",
+    "product_or_service_name": "Demo Digital Service SKU 019",
+    "unit_price_inr": "5190.00",
+    "estimated_unit_cost_inr": "3465.94",
+    "estimated_unit_margin_inr": "1724.06",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00020",
+    "enterprise_id": "ENT00006",
+    "product_or_service_name": "Demo Digital Service SKU 020",
+    "unit_price_inr": "4580.00",
+    "estimated_unit_cost_inr": "2608.74",
+    "estimated_unit_margin_inr": "1971.26",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00021",
+    "enterprise_id": "ENT00007",
+    "product_or_service_name": "Demo Repair Service SKU 021",
+    "unit_price_inr": "3320.00",
+    "estimated_unit_cost_inr": "1012.40",
+    "estimated_unit_margin_inr": "2307.60",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00022",
+    "enterprise_id": "ENT00007",
+    "product_or_service_name": "Demo Repair Service SKU 022",
+    "unit_price_inr": "4793.00",
+    "estimated_unit_cost_inr": "1225.39",
+    "estimated_unit_margin_inr": "3567.61",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00023",
+    "enterprise_id": "ENT00008",
+    "product_or_service_name": "Demo Home Food SKU 023",
+    "unit_price_inr": "7981.00",
+    "estimated_unit_cost_inr": "4406.20",
+    "estimated_unit_margin_inr": "3574.80",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00024",
+    "enterprise_id": "ENT00008",
+    "product_or_service_name": "Demo Home Food SKU 024",
+    "unit_price_inr": "7760.00",
+    "estimated_unit_cost_inr": "2726.38",
+    "estimated_unit_margin_inr": "5033.62",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00025",
+    "enterprise_id": "ENT00008",
+    "product_or_service_name": "Demo Home Food SKU 025",
+    "unit_price_inr": "436.00",
+    "estimated_unit_cost_inr": "224.40",
+    "estimated_unit_margin_inr": "211.60",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00026",
+    "enterprise_id": "ENT00008",
+    "product_or_service_name": "Demo Home Food SKU 026",
+    "unit_price_inr": "1783.00",
+    "estimated_unit_cost_inr": "574.43",
+    "estimated_unit_margin_inr": "1208.57",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00027",
+    "enterprise_id": "ENT00009",
+    "product_or_service_name": "Demo Tailoring SKU 027",
+    "unit_price_inr": "1685.00",
+    "estimated_unit_cost_inr": "828.77",
+    "estimated_unit_margin_inr": "856.23",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00028",
+    "enterprise_id": "ENT00009",
+    "product_or_service_name": "Demo Tailoring SKU 028",
+    "unit_price_inr": "6126.00",
+    "estimated_unit_cost_inr": "1675.47",
+    "estimated_unit_margin_inr": "4450.53",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00029",
+    "enterprise_id": "ENT00009",
+    "product_or_service_name": "Demo Tailoring SKU 029",
+    "unit_price_inr": "1223.00",
+    "estimated_unit_cost_inr": "737.63",
+    "estimated_unit_margin_inr": "485.37",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00030",
+    "enterprise_id": "ENT00010",
+    "product_or_service_name": "Demo Repair Service SKU 030",
+    "unit_price_inr": "3280.00",
+    "estimated_unit_cost_inr": "1987.27",
+    "estimated_unit_margin_inr": "1292.73",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00031",
+    "enterprise_id": "ENT00010",
+    "product_or_service_name": "Demo Repair Service SKU 031",
+    "unit_price_inr": "1571.00",
+    "estimated_unit_cost_inr": "940.78",
+    "estimated_unit_margin_inr": "630.22",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00032",
+    "enterprise_id": "ENT00011",
+    "product_or_service_name": "Demo Digital Service SKU 032",
+    "unit_price_inr": "7577.00",
+    "estimated_unit_cost_inr": "3125.97",
+    "estimated_unit_margin_inr": "4451.03",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00033",
+    "enterprise_id": "ENT00011",
+    "product_or_service_name": "Demo Digital Service SKU 033",
+    "unit_price_inr": "8017.00",
+    "estimated_unit_cost_inr": "2636.68",
+    "estimated_unit_margin_inr": "5380.32",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00034",
+    "enterprise_id": "ENT00011",
+    "product_or_service_name": "Demo Digital Service SKU 034",
+    "unit_price_inr": "7424.00",
+    "estimated_unit_cost_inr": "3682.93",
+    "estimated_unit_margin_inr": "3741.07",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00035",
+    "enterprise_id": "ENT00012",
+    "product_or_service_name": "Demo Digital Service SKU 035",
+    "unit_price_inr": "8324.00",
+    "estimated_unit_cost_inr": "5125.40",
+    "estimated_unit_margin_inr": "3198.60",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00036",
+    "enterprise_id": "ENT00012",
+    "product_or_service_name": "Demo Digital Service SKU 036",
+    "unit_price_inr": "818.00",
+    "estimated_unit_cost_inr": "481.32",
+    "estimated_unit_margin_inr": "336.68",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00037",
+    "enterprise_id": "ENT00012",
+    "product_or_service_name": "Demo Digital Service SKU 037",
+    "unit_price_inr": "2729.00",
+    "estimated_unit_cost_inr": "1242.72",
+    "estimated_unit_margin_inr": "1486.28",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00038",
+    "enterprise_id": "ENT00013",
+    "product_or_service_name": "Demo Beauty Service SKU 038",
+    "unit_price_inr": "7225.00",
+    "estimated_unit_cost_inr": "3196.05",
+    "estimated_unit_margin_inr": "4028.95",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00039",
+    "enterprise_id": "ENT00013",
+    "product_or_service_name": "Demo Beauty Service SKU 039",
+    "unit_price_inr": "8498.00",
+    "estimated_unit_cost_inr": "5575.53",
+    "estimated_unit_margin_inr": "2922.47",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00040",
+    "enterprise_id": "ENT00014",
+    "product_or_service_name": "Demo Home Food SKU 040",
+    "unit_price_inr": "3895.00",
+    "estimated_unit_cost_inr": "2631.24",
+    "estimated_unit_margin_inr": "1263.76",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00041",
+    "enterprise_id": "ENT00014",
+    "product_or_service_name": "Demo Home Food SKU 041",
+    "unit_price_inr": "2537.00",
+    "estimated_unit_cost_inr": "833.33",
+    "estimated_unit_margin_inr": "1703.67",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00042",
+    "enterprise_id": "ENT00014",
+    "product_or_service_name": "Demo Home Food SKU 042",
+    "unit_price_inr": "6723.00",
+    "estimated_unit_cost_inr": "3862.99",
+    "estimated_unit_margin_inr": "2860.01",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00043",
+    "enterprise_id": "ENT00014",
+    "product_or_service_name": "Demo Home Food SKU 043",
+    "unit_price_inr": "719.00",
+    "estimated_unit_cost_inr": "366.33",
+    "estimated_unit_margin_inr": "352.67",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00044",
+    "enterprise_id": "ENT00015",
+    "product_or_service_name": "Demo Beauty Service SKU 044",
+    "unit_price_inr": "4457.00",
+    "estimated_unit_cost_inr": "2211.56",
+    "estimated_unit_margin_inr": "2245.44",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00045",
+    "enterprise_id": "ENT00015",
+    "product_or_service_name": "Demo Beauty Service SKU 045",
+    "unit_price_inr": "1559.00",
+    "estimated_unit_cost_inr": "703.23",
+    "estimated_unit_margin_inr": "855.77",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00046",
+    "enterprise_id": "ENT00015",
+    "product_or_service_name": "Demo Beauty Service SKU 046",
+    "unit_price_inr": "6827.00",
+    "estimated_unit_cost_inr": "3593.37",
+    "estimated_unit_margin_inr": "3233.63",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00047",
+    "enterprise_id": "ENT00015",
+    "product_or_service_name": "Demo Beauty Service SKU 047",
+    "unit_price_inr": "3810.00",
+    "estimated_unit_cost_inr": "2452.69",
+    "estimated_unit_margin_inr": "1357.31",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00048",
+    "enterprise_id": "ENT00016",
+    "product_or_service_name": "Demo Home Food SKU 048",
+    "unit_price_inr": "2323.00",
+    "estimated_unit_cost_inr": "1205.60",
+    "estimated_unit_margin_inr": "1117.40",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00049",
+    "enterprise_id": "ENT00016",
+    "product_or_service_name": "Demo Home Food SKU 049",
+    "unit_price_inr": "2382.00",
+    "estimated_unit_cost_inr": "1078.46",
+    "estimated_unit_margin_inr": "1303.54",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00050",
+    "enterprise_id": "ENT00016",
+    "product_or_service_name": "Demo Home Food SKU 050",
+    "unit_price_inr": "1527.00",
+    "estimated_unit_cost_inr": "437.31",
+    "estimated_unit_margin_inr": "1089.69",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00051",
+    "enterprise_id": "ENT00016",
+    "product_or_service_name": "Demo Home Food SKU 051",
+    "unit_price_inr": "2631.00",
+    "estimated_unit_cost_inr": "1533.29",
+    "estimated_unit_margin_inr": "1097.71",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00052",
+    "enterprise_id": "ENT00017",
+    "product_or_service_name": "Demo Beauty Service SKU 052",
+    "unit_price_inr": "3803.00",
+    "estimated_unit_cost_inr": "2545.22",
+    "estimated_unit_margin_inr": "1257.78",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00053",
+    "enterprise_id": "ENT00017",
+    "product_or_service_name": "Demo Beauty Service SKU 053",
+    "unit_price_inr": "7206.00",
+    "estimated_unit_cost_inr": "3808.95",
+    "estimated_unit_margin_inr": "3397.05",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00054",
+    "enterprise_id": "ENT00017",
+    "product_or_service_name": "Demo Beauty Service SKU 054",
+    "unit_price_inr": "5967.00",
+    "estimated_unit_cost_inr": "4067.81",
+    "estimated_unit_margin_inr": "1899.19",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00055",
+    "enterprise_id": "ENT00018",
+    "product_or_service_name": "Demo Tailoring SKU 055",
+    "unit_price_inr": "3683.00",
+    "estimated_unit_cost_inr": "2379.33",
+    "estimated_unit_margin_inr": "1303.67",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00056",
+    "enterprise_id": "ENT00018",
+    "product_or_service_name": "Demo Tailoring SKU 056",
+    "unit_price_inr": "2495.00",
+    "estimated_unit_cost_inr": "945.13",
+    "estimated_unit_margin_inr": "1549.87",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00057",
+    "enterprise_id": "ENT00018",
+    "product_or_service_name": "Demo Tailoring SKU 057",
+    "unit_price_inr": "2397.00",
+    "estimated_unit_cost_inr": "1630.74",
+    "estimated_unit_margin_inr": "766.26",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00058",
+    "enterprise_id": "ENT00019",
+    "product_or_service_name": "Demo Home Food SKU 058",
+    "unit_price_inr": "5554.00",
+    "estimated_unit_cost_inr": "2598.30",
+    "estimated_unit_margin_inr": "2955.70",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00059",
+    "enterprise_id": "ENT00019",
+    "product_or_service_name": "Demo Home Food SKU 059",
+    "unit_price_inr": "6798.00",
+    "estimated_unit_cost_inr": "3813.95",
+    "estimated_unit_margin_inr": "2984.05",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00060",
+    "enterprise_id": "ENT00019",
+    "product_or_service_name": "Demo Home Food SKU 060",
+    "unit_price_inr": "8021.00",
+    "estimated_unit_cost_inr": "4049.90",
+    "estimated_unit_margin_inr": "3971.10",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00061",
+    "enterprise_id": "ENT00019",
+    "product_or_service_name": "Demo Home Food SKU 061",
+    "unit_price_inr": "7847.00",
+    "estimated_unit_cost_inr": "4571.40",
+    "estimated_unit_margin_inr": "3275.60",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00062",
+    "enterprise_id": "ENT00020",
+    "product_or_service_name": "Demo Digital Service SKU 062",
+    "unit_price_inr": "192.00",
+    "estimated_unit_cost_inr": "59.07",
+    "estimated_unit_margin_inr": "132.93",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00063",
+    "enterprise_id": "ENT00020",
+    "product_or_service_name": "Demo Digital Service SKU 063",
+    "unit_price_inr": "3570.00",
+    "estimated_unit_cost_inr": "1384.93",
+    "estimated_unit_margin_inr": "2185.07",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00064",
+    "enterprise_id": "ENT00020",
+    "product_or_service_name": "Demo Digital Service SKU 064",
+    "unit_price_inr": "5697.00",
+    "estimated_unit_cost_inr": "2201.73",
+    "estimated_unit_margin_inr": "3495.27",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00065",
+    "enterprise_id": "ENT00020",
+    "product_or_service_name": "Demo Digital Service SKU 065",
+    "unit_price_inr": "4366.00",
+    "estimated_unit_cost_inr": "2529.62",
+    "estimated_unit_margin_inr": "1836.38",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00066",
+    "enterprise_id": "ENT00021",
+    "product_or_service_name": "Demo Design Service SKU 066",
+    "unit_price_inr": "7414.00",
+    "estimated_unit_cost_inr": "4649.79",
+    "estimated_unit_margin_inr": "2764.21",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00067",
+    "enterprise_id": "ENT00021",
+    "product_or_service_name": "Demo Design Service SKU 067",
+    "unit_price_inr": "6478.00",
+    "estimated_unit_cost_inr": "3347.15",
+    "estimated_unit_margin_inr": "3130.85",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00068",
+    "enterprise_id": "ENT00021",
+    "product_or_service_name": "Demo Design Service SKU 068",
+    "unit_price_inr": "7458.00",
+    "estimated_unit_cost_inr": "4421.16",
+    "estimated_unit_margin_inr": "3036.84",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00069",
+    "enterprise_id": "ENT00022",
+    "product_or_service_name": "Demo Tutoring SKU 069",
+    "unit_price_inr": "1895.00",
+    "estimated_unit_cost_inr": "1037.40",
+    "estimated_unit_margin_inr": "857.60",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00070",
+    "enterprise_id": "ENT00022",
+    "product_or_service_name": "Demo Tutoring SKU 070",
+    "unit_price_inr": "1165.00",
+    "estimated_unit_cost_inr": "523.71",
+    "estimated_unit_margin_inr": "641.29",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00071",
+    "enterprise_id": "ENT00022",
+    "product_or_service_name": "Demo Tutoring SKU 071",
+    "unit_price_inr": "5927.00",
+    "estimated_unit_cost_inr": "2618.66",
+    "estimated_unit_margin_inr": "3308.34",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00072",
+    "enterprise_id": "ENT00023",
+    "product_or_service_name": "Demo Home Food SKU 072",
+    "unit_price_inr": "2432.00",
+    "estimated_unit_cost_inr": "797.22",
+    "estimated_unit_margin_inr": "1634.78",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00073",
+    "enterprise_id": "ENT00023",
+    "product_or_service_name": "Demo Home Food SKU 073",
+    "unit_price_inr": "8140.00",
+    "estimated_unit_cost_inr": "2218.84",
+    "estimated_unit_margin_inr": "5921.16",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00074",
+    "enterprise_id": "ENT00023",
+    "product_or_service_name": "Demo Home Food SKU 074",
+    "unit_price_inr": "2416.00",
+    "estimated_unit_cost_inr": "1296.21",
+    "estimated_unit_margin_inr": "1119.79",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00075",
+    "enterprise_id": "ENT00024",
+    "product_or_service_name": "Demo Beauty Service SKU 075",
+    "unit_price_inr": "7571.00",
+    "estimated_unit_cost_inr": "4168.53",
+    "estimated_unit_margin_inr": "3402.47",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00076",
+    "enterprise_id": "ENT00024",
+    "product_or_service_name": "Demo Beauty Service SKU 076",
+    "unit_price_inr": "5772.00",
+    "estimated_unit_cost_inr": "3863.62",
+    "estimated_unit_margin_inr": "1908.38",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00077",
+    "enterprise_id": "ENT00025",
+    "product_or_service_name": "Demo Design Service SKU 077",
+    "unit_price_inr": "1883.00",
+    "estimated_unit_cost_inr": "697.96",
+    "estimated_unit_margin_inr": "1185.04",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00078",
+    "enterprise_id": "ENT00025",
+    "product_or_service_name": "Demo Design Service SKU 078",
+    "unit_price_inr": "4482.00",
+    "estimated_unit_cost_inr": "2623.24",
+    "estimated_unit_margin_inr": "1858.76",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00079",
+    "enterprise_id": "ENT00025",
+    "product_or_service_name": "Demo Design Service SKU 079",
+    "unit_price_inr": "3605.00",
+    "estimated_unit_cost_inr": "2305.33",
+    "estimated_unit_margin_inr": "1299.67",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00080",
+    "enterprise_id": "ENT00025",
+    "product_or_service_name": "Demo Design Service SKU 080",
+    "unit_price_inr": "7644.00",
+    "estimated_unit_cost_inr": "2805.42",
+    "estimated_unit_margin_inr": "4838.58",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00081",
+    "enterprise_id": "ENT00026",
+    "product_or_service_name": "Demo Beauty Service SKU 081",
+    "unit_price_inr": "1336.00",
+    "estimated_unit_cost_inr": "570.94",
+    "estimated_unit_margin_inr": "765.06",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00082",
+    "enterprise_id": "ENT00026",
+    "product_or_service_name": "Demo Beauty Service SKU 082",
+    "unit_price_inr": "1710.00",
+    "estimated_unit_cost_inr": "463.41",
+    "estimated_unit_margin_inr": "1246.59",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00083",
+    "enterprise_id": "ENT00027",
+    "product_or_service_name": "Demo Tailoring SKU 083",
+    "unit_price_inr": "7122.00",
+    "estimated_unit_cost_inr": "2402.60",
+    "estimated_unit_margin_inr": "4719.40",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00084",
+    "enterprise_id": "ENT00027",
+    "product_or_service_name": "Demo Tailoring SKU 084",
+    "unit_price_inr": "2652.00",
+    "estimated_unit_cost_inr": "1774.79",
+    "estimated_unit_margin_inr": "877.21",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00085",
+    "enterprise_id": "ENT00028",
+    "product_or_service_name": "Demo Home Food SKU 085",
+    "unit_price_inr": "2434.00",
+    "estimated_unit_cost_inr": "1436.10",
+    "estimated_unit_margin_inr": "997.90",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00086",
+    "enterprise_id": "ENT00028",
+    "product_or_service_name": "Demo Home Food SKU 086",
+    "unit_price_inr": "7766.00",
+    "estimated_unit_cost_inr": "3193.57",
+    "estimated_unit_margin_inr": "4572.43",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00087",
+    "enterprise_id": "ENT00028",
+    "product_or_service_name": "Demo Home Food SKU 087",
+    "unit_price_inr": "934.00",
+    "estimated_unit_cost_inr": "614.98",
+    "estimated_unit_margin_inr": "319.02",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00088",
+    "enterprise_id": "ENT00029",
+    "product_or_service_name": "Demo Home Food SKU 088",
+    "unit_price_inr": "636.00",
+    "estimated_unit_cost_inr": "294.81",
+    "estimated_unit_margin_inr": "341.19",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00089",
+    "enterprise_id": "ENT00029",
+    "product_or_service_name": "Demo Home Food SKU 089",
+    "unit_price_inr": "3000.00",
+    "estimated_unit_cost_inr": "874.22",
+    "estimated_unit_margin_inr": "2125.78",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00090",
+    "enterprise_id": "ENT00030",
+    "product_or_service_name": "Demo Tutoring SKU 090",
+    "unit_price_inr": "8317.00",
+    "estimated_unit_cost_inr": "2540.80",
+    "estimated_unit_margin_inr": "5776.20",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00091",
+    "enterprise_id": "ENT00030",
+    "product_or_service_name": "Demo Tutoring SKU 091",
+    "unit_price_inr": "3926.00",
+    "estimated_unit_cost_inr": "1193.50",
+    "estimated_unit_margin_inr": "2732.50",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00092",
+    "enterprise_id": "ENT00030",
+    "product_or_service_name": "Demo Tutoring SKU 092",
+    "unit_price_inr": "4516.00",
+    "estimated_unit_cost_inr": "2698.08",
+    "estimated_unit_margin_inr": "1817.92",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00093",
+    "enterprise_id": "ENT00030",
+    "product_or_service_name": "Demo Tutoring SKU 093",
+    "unit_price_inr": "402.00",
+    "estimated_unit_cost_inr": "227.24",
+    "estimated_unit_margin_inr": "174.76",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00094",
+    "enterprise_id": "ENT00031",
+    "product_or_service_name": "Demo Local Retail SKU 094",
+    "unit_price_inr": "5336.00",
+    "estimated_unit_cost_inr": "2818.51",
+    "estimated_unit_margin_inr": "2517.49",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00095",
+    "enterprise_id": "ENT00031",
+    "product_or_service_name": "Demo Local Retail SKU 095",
+    "unit_price_inr": "6188.00",
+    "estimated_unit_cost_inr": "3212.43",
+    "estimated_unit_margin_inr": "2975.57",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00096",
+    "enterprise_id": "ENT00032",
+    "product_or_service_name": "Demo Local Retail SKU 096",
+    "unit_price_inr": "1284.00",
+    "estimated_unit_cost_inr": "747.60",
+    "estimated_unit_margin_inr": "536.40",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00097",
+    "enterprise_id": "ENT00032",
+    "product_or_service_name": "Demo Local Retail SKU 097",
+    "unit_price_inr": "3173.00",
+    "estimated_unit_cost_inr": "1276.09",
+    "estimated_unit_margin_inr": "1896.91",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00098",
+    "enterprise_id": "ENT00033",
+    "product_or_service_name": "Demo Home Food SKU 098",
+    "unit_price_inr": "8082.00",
+    "estimated_unit_cost_inr": "5396.70",
+    "estimated_unit_margin_inr": "2685.30",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00099",
+    "enterprise_id": "ENT00033",
+    "product_or_service_name": "Demo Home Food SKU 099",
+    "unit_price_inr": "7989.00",
+    "estimated_unit_cost_inr": "3618.03",
+    "estimated_unit_margin_inr": "4370.97",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00100",
+    "enterprise_id": "ENT00034",
+    "product_or_service_name": "Demo Local Retail SKU 100",
+    "unit_price_inr": "7136.00",
+    "estimated_unit_cost_inr": "2021.85",
+    "estimated_unit_margin_inr": "5114.15",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00101",
+    "enterprise_id": "ENT00034",
+    "product_or_service_name": "Demo Local Retail SKU 101",
+    "unit_price_inr": "7449.00",
+    "estimated_unit_cost_inr": "2512.82",
+    "estimated_unit_margin_inr": "4936.18",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00102",
+    "enterprise_id": "ENT00034",
+    "product_or_service_name": "Demo Local Retail SKU 102",
+    "unit_price_inr": "5666.00",
+    "estimated_unit_cost_inr": "3386.22",
+    "estimated_unit_margin_inr": "2279.78",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00103",
+    "enterprise_id": "ENT00035",
+    "product_or_service_name": "Demo Digital Service SKU 103",
+    "unit_price_inr": "8276.00",
+    "estimated_unit_cost_inr": "2687.73",
+    "estimated_unit_margin_inr": "5588.27",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00104",
+    "enterprise_id": "ENT00035",
+    "product_or_service_name": "Demo Digital Service SKU 104",
+    "unit_price_inr": "6245.00",
+    "estimated_unit_cost_inr": "2975.17",
+    "estimated_unit_margin_inr": "3269.83",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  },
+  {
+    "enterprise_product_id": "EPR00105",
+    "enterprise_id": "ENT00035",
+    "product_or_service_name": "Demo Digital Service SKU 105",
+    "unit_price_inr": "642.00",
+    "estimated_unit_cost_inr": "322.10",
+    "estimated_unit_margin_inr": "319.90",
+    "catalog_status": "SIMULATED_LISTING",
+    "data_class": "SYNTHETIC_FIXTURE"
+  }
+]
