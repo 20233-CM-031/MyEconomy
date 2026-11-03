@@ -37,6 +37,13 @@ htmlcov/
 .env.*
 !.env.example
 
+# Local database files
+*.sqlite3
+*.db
+
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# Keep the versioned synthetic SQLite demo fixture; it is intentional test data.
+!demo_data/synthetic_v1/sqlite/myeconomy_synthetic_demo.sqlite3

@@ -1,16 +1,14 @@
-from fastapi.testclient import TestClient
-
-from myeconomy.main import app
-
-client = TestClient(app)
-
-
-def test_health_endpoints() -> None:
+def test_health_endpoints(test_environment) -> None:
+    client, _ = test_environment
     assert client.get("/health/live").json() == {"status": "alive"}
-    assert client.get("/health/ready").json() == {"status": "ready"}
+    assert client.get("/health/ready").json() == {
+        "status": "ready",
+        "dependency": "database_schema",
+    }
 
 
-def test_cashflow_analysis_endpoint() -> None:
+def test_cashflow_analysis_endpoint(test_environment) -> None:
+    client, _ = test_environment
     response = client.post(
         "/api/v1/cashflow/analyze",
         json={
@@ -45,7 +43,8 @@ def test_cashflow_analysis_endpoint() -> None:
     assert body["savings_rate_percent"] == "70.00"
 
 
-def test_api_rejects_out_of_period_entry() -> None:
+def test_api_rejects_out_of_period_entry(test_environment) -> None:
+    client, _ = test_environment
     response = client.post(
         "/api/v1/cashflow/analyze",
         json={
@@ -59,7 +58,8 @@ def test_api_rejects_out_of_period_entry() -> None:
     assert response.status_code == 422
 
 
-def test_api_rejects_unknown_fields() -> None:
+def test_api_rejects_unknown_fields(test_environment) -> None:
+    client, _ = test_environment
     response = client.post(
         "/api/v1/cashflow/analyze",
         json={
@@ -74,7 +74,8 @@ def test_api_rejects_unknown_fields() -> None:
     assert response.status_code == 422
 
 
-def test_api_normalizes_category_whitespace() -> None:
+def test_api_normalizes_category_whitespace(test_environment) -> None:
+    client, _ = test_environment
     response = client.post(
         "/api/v1/cashflow/analyze",
         json={
@@ -94,3 +95,15 @@ def test_api_normalizes_category_whitespace() -> None:
     )
     assert response.status_code == 200
     assert response.json()["expense_by_category"][0]["category"] == "groceries"
+
+
+def test_readiness_requires_an_applied_schema_revision(test_environment) -> None:
+    from sqlalchemy import text
+
+    client, session_factory = test_environment
+    with session_factory() as db:
+        db.execute(text("DROP TABLE alembic_version"))
+        db.commit()
+    response = client.get("/health/ready")
+    assert response.status_code == 503
+    assert response.json() == {"status": "not_ready", "dependency": "database_or_schema"}

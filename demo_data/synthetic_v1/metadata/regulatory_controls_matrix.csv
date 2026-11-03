@@ -1,0 +1,14 @@
+control_id,domain,engineering_control,fixture_evidence,source_or_basis,implementation_status,notes
+REG-001,Privacy,Data minimization and purpose limitation,consents.data_categories_json + recipient,DPDP Act/Rules design target,DEMO_RULE_ENCODED,Verify applicability and staged commencement before production
+REG-002,Privacy,Event-time consent validation,consents.granted_at/expires_at/revoked_at + demand_signals.signal_date,DPDP consent design; RBI AA consent principle,DEMO_RULE_ENCODED,Consent status alone is not sufficient for historical events
+REG-003,Privacy,Consent revocation blocks future processing,consents.revoked_at,DPDP consent withdrawal design target; RBI AA revocation,DEMO_RULE_ENCODED,Requires live application enforcement and audit
+REG-004,Commons,Only approved aggregate categories leave private boundary,demand_signals fields + raw_transaction_data_included=False,Privacy by design; AA purpose/scope constraint,DEMO_RULE_ENCODED,No raw income, transactions, direct identifiers or hardship descriptions
+REG-005,Financial data,No credential scraping or direct account passwords,accounts.synthetic masked references only,RBI NBFC-AA Directions,DEMO_RULE_ENCODED,Use authorised AA/FIU roles and valid consent artefacts
+REG-006,Financial data,Recipient/purpose/date-scope consent artefact,consents table, RBI NBFC-AA Directions 6.1-6.7,PARTIAL_FIXTURE,Production artifact must follow applicable AA/ReBIT contracts
+REG-007,Lending,No lending underwriting or fake loan offers,loans/loan_installments as existing-loan fixtures,RBI Digital Lending Guidelines,DEMO_RULE_ENCODED,Project is not a lender in current scope
+REG-008,KYC,No realistic government ID or credentials,customer identity_document_status only,RBI KYC Direction and partner KYC flows,DEMO_RULE_ENCODED,Fixture KYC state is not KYC verification
+REG-009,Consumer outcomes,No claims submitted without explicit approval,guardian_cases + draft-only demo playbook,Consumer protection operational safeguards,DEMO_RULE_ENCODED,No live grievance channel integration exists
+REG-010,Partner commerce,No partner quote/payout claimed as real,offers/partner_settlements synthetic labels,Contract/payment controls,DEMO_RULE_ENCODED,All provider contracts and settlements are fictional
+REG-011,Financial arithmetic,Use exact decimals and reconcile line items,bills/bill_line_items and transactions,Financial correctness engineering control,VALIDATED,Use Decimal/integer minor units; avoid binary float
+REG-012,Agent reliability,Idempotency/checkpoint/resume,agent_missions/agent_mission_steps,Distributed systems reliability control,DEMO_RULE_ENCODED,All external side effects remain simulated
+REG-013,Value reporting,Only evidenced realized outcomes count as VIVC,value_events.verification_level=SYNTHETIC_FIXTURE_ONLY,Product measurement policy,VALIDATED,No synthetic row may count as real impact

@@ -1,0 +1,34 @@
+{
+  "scenario_name": "Small-cohort Commons opportunity",
+  "synthetic": true,
+  "campaign": {
+    "campaign_id": "CAM00001",
+    "campaign_title": "Demo Collective Education Opportunity - Quorum Reached",
+    "service_category": "EDUCATION",
+    "city": "Jaipur",
+    "locality_cluster": "North Jaipur Cluster",
+    "minimum_participants": 5,
+    "participant_count_fixture": 5,
+    "campaign_status": "QUORUM_REACHED_SIMULATION",
+    "linked_offer_id": "OFF00004",
+    "funding_source": "SIMULATED_PROVIDER_SPONSOR",
+    "aggregate_only": true,
+    "individual_income_or_transactions_exposed": false,
+    "data_class": "SYNTHETIC_FIXTURE",
+    "participant_customer_ids": [
+      "CUS00003",
+      "CUS00004",
+      "CUS00012",
+      "CUS00013",
+      "CUS00065"
+    ],
+    "participant_demand_signal_ids": [
+      "DEMO-COM-01",
+      "DEMO-COM-02",
+      "DEMO-COM-03",
+      "DEMO-COM-04",
+      "DEMO-COM-05"
+    ]
+  },
+  "expected_safety": "Five synthetic participants have active purpose-specific Commons consent at signal time. Only service category, city/locality cluster, quantity band and price band are aggregatable. Individual identity, income and transactions are never shown to the provider. The linked offer and sponsor are simulated; no quote or fulfilment is real."
+}

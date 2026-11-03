@@ -10,8 +10,8 @@ At the start of every engineering session:
 
 1. Read current repository metadata, default branch, branches and latest commits.
 2. Inspect the root tree and current status/working diff where access permits.
-3. Read `AGENTS.md`, `README.md`, `docs/PROJECT_MEMORY.md`, `docs/PROJECT_STATUS.md`, `docs/FEATURE_CATALOG.md` and `docs/CODEBASE_MAP.md`.
-4. Read relevant feature specification, iteration record and ADRs.
+3. Read `AGENTS.md`, `README.md`, `docs/PROJECT_MEMORY.md`, `docs/PROJECT_STATUS.md`, `docs/FEATURE_CATALOG.md`, `docs/CODEBASE_MAP.md`, `docs/THREAT_MODEL.md` and `docs/HACKATHON_SCORECARD.md`.
+4. Read the relevant feature specification, latest iteration record and ADRs.
 5. Fetch actual code and tests for every module that may be changed.
 6. Compare repository state with the last known conversation state; call out drift instead of silently assuming.
 

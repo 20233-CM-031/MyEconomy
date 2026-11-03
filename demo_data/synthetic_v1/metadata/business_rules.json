@@ -1,0 +1,45 @@
+{
+  "dataset_safety": [
+    "Never treat this fixture as a real person, bank account, bill, offer, partner or benefit.",
+    "Only .invalid email and 00000 phone placeholders are present.",
+    "No Aadhaar, PAN, bank credentials, card PAN, UPI PIN or real account numbers are generated."
+  ],
+  "consent": [
+    "Household membership never implies financial-data access.",
+    "A personal or Commons data use requires a current explicit purpose-specific grant.",
+    "Revoked or expired grants must fail closed.",
+    "Commons demand signals may expose only service category, city/locality cluster, quantity band and price band; never raw transaction or income data."
+  ],
+  "cashflow": [
+    "All money amounts are INR decimal strings with two fractional digits unless rates or percentages.",
+    "Only cashflow_treatment INCOME, EXPENSE and REFUND count toward cashflow; TRANSFER and IGNORE do not.",
+    "Refunds must be represented separately from purchases and linked through evidence where available.",
+    "A credit-card purchase is an expense; a bank-to-card payment is a transfer and must not double count spending."
+  ],
+  "benefits": [
+    "All DEMO-* benefit programs are fictional and not government schemes.",
+    "POTENTIAL_MATCH is not confirmed eligibility or an award.",
+    "Applications marked SIMULATED are not submitted to an authority."
+  ],
+  "offers": [
+    "net_benefit = discount_value + sponsor_credit - required_incremental_spend - fees - recurring_commitment_cost.",
+    "Reject any offer with net benefit <= 0 or unresolved material conditions.",
+    "Do not optimize for commission at the expense of customer net value."
+  ],
+  "commons": [
+    "Only a customer with active COMMONS_DEMAND_AGGREGATION consent can contribute a signal.",
+    "Aggregate at or above min_group_size before asking providers for a group quote.",
+    "Provider-facing signals contain no raw financial transactions, exact income or individual identity.",
+    "A campaign is simulated until provider, price, terms and fulfilment are independently verified."
+  ],
+  "agent_workflows": [
+    "Persist step state and checkpoint hashes.",
+    "Use idempotency keys for side effects.",
+    "Resume only after verifying current external state; never replay a completed side effect blindly.",
+    "Consequential actions require an explicit human approval bound to the action, recipient, amount and expiry."
+  ],
+  "vivc": [
+    "VIVC counts only realized, externally evidenced value less incremental costs.",
+    "Synthetic outcomes must remain verification_level SYNTHETIC_FIXTURE_ONLY and cannot be reported as real value."
+  ]
+}

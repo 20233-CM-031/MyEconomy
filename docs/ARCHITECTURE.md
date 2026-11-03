@@ -1,72 +1,144 @@
-# Architecture Overview
+# System Architecture — Current Implementation and Target Design
 
-## 1. System shape
+This document separates the code that exists from the full product architecture.
 
-Start with a **modular monolith** and explicit domain boundaries. Deploying many microservices before there are independent scaling, team ownership or reliability needs creates operational cost without useful autonomy. Modules communicate through application interfaces and domain events; they must not reach directly into one another's persistence internals.
+## 1. Product/system boundaries
 
-## 2. Initial logical boundaries
+The product aims to deliver individual economic agency first, then collective opportunity intelligence through consent-controlled signals. The eventual system includes:
 
-| Module | Responsibility | Authority |
+- **Personal Mode:** private personal context, cashflow, protection, benefits, opportunity, knowledge-to-income, crisis and enterprise workflows. Must deliver a useful action with one user.
+- **Commons Mode:** purpose-limited aggregation of consented demand/capabilities/resources, with cohort thresholds and anti-inference protections.
+- **MAKOS:** future operational workspace and durable workflow surface.
+- **GENIEA:** future agent orchestration layer for planning, agent delegation, tool execution, recovery and mission coordination.
+- **KRN:** future knowledge/context and Collective Opportunity Graph layer, with private graph partitions and explicitly authorized shared edges.
+
+These are product-level architecture names, not currently existing application packages in this repo.
+
+## 2. Implementation architecture today
+
+A Python/FastAPI modular monolith, organized around `api -> application -> domain`, with application services calling infrastructure adapters/persistence.
+
+- **API:** FastAPI routers, Pydantic 2 schemas, auth dependencies and safe error mapping.
+- **Application:** transaction-owning use cases for identity, email verification, sessions, households, invitations, consent, audit and cashflow translation.
+- **Domain:** pure cashflow/money logic, typed consent vocabulary/policy and stable application errors.
+- **Infrastructure:** SQLAlchemy models/session, Alembic, Argon2/session primitives, email delivery adapter.
+- **Persistence:** SQLite for local/test; PostgreSQL supported through SQLAlchemy/psycopg and Alembic. Live PostgreSQL integration is still unverified.
+
+Do not split into microservices until independent scale, security isolation, deployment ownership or reliability needs demonstrate the value.
+
+## 3. Actual request flows
+
+### Authenticated request
+
+HTTP bearer token -> `require_authentication` -> SHA-256 token digest lookup -> session status/expiry/revocation -> active user -> `AuthContext`.
+
+Household and consent routes additionally call `require_verified_authentication`; account email must be verified first.
+
+### Email verification
+
+Register -> normalize email -> Argon2 hash -> persist user -> create 12h session -> create 256-bit email challenge, store SHA-256 digest and 24h expiry -> send via development log adapter or SMTP adapter -> client posts token -> verify digest/single-use/expiry -> set email verified -> revoke other pending challenges -> append audit event.
+
+Log delivery is allowed only when `APP_ENV=development` or `test`. SMTP is environment-configured; it has not been tested against a live provider yet.
+
+### Household invitation
+
+Verified owner -> create household and owner membership -> owner issues invite -> store digest + invited email + 72h expiry -> invitee authenticates and verifies their email -> accepts token -> email comparison + replay/expiry/revocation checks -> create membership. Membership is deliberately separate from consent. Invitation token is currently returned once with `manual_share_required`; delivery by email is not implemented.
+
+### Consent
+
+Verified user -> fetch current terms -> submit purpose/categories/recipient/version/explicit confirmation/expiry -> deterministic domain matrix -> persist grant + audit -> future data reader must call `require_active_consent` in the same transaction as protected access -> revocation blocks future use.
+
+The `/consents/check` route is informational only. No private financial data reader exists in the current implementation.
+
+### Cashflow
+
+Pydantic request -> `run_cashflow_analysis` -> pure domain validation and Decimal calculations -> API response. The input is not persisted.
+
+## 4. Data model currently implemented
+
+| Entity | Responsibility | Invariants |
 |---|---|---|
-| Identity & Access | accounts, sessions, authorization, household membership | source of identity and access decisions |
-| Personal Context | user goals, preferences, skills, capability profile | private user-owned context |
-| Financial Core | accounts, entries, obligations, budgets, deterministic calculations | authoritative numeric calculations |
-| Guardian | claims, cases, evidence and follow-up tasks | workflow; never invents legal outcomes |
-| Benefits | schemes, eligibility rules, evidence and application status | sourced rule evaluation; official award remains external |
-| Opportunity | skills, availability, jobs, projects and outcomes | matching and workflow |
-| Resource Exchange | supply, demand, capacity, inventory and logistics | verified listing/match state |
-| Commons | consented demand aggregation, offers, group commitments | privacy-gated collective matching |
-| Enterprise | small-business planning and operational workflows | user-approved business operations |
-| Agent Runtime | planning, scoped tools, human approval and execution traces | cannot bypass domain authorization |
-| Value Ledger | evidence-backed realized outcomes and partner revenue split | auditable outcome accounting |
+| `User` | Account and email verification | Normalized unique email, Argon2 hash, `email_verified` and active flag |
+| `AuthSession` | Opaque session lifecycle | 256-bit random token, hash-only storage, expiry/revocation |
+| `EmailVerificationChallenge` | Account email control challenge | Hash-only token, single-use, 24h expiry, one pending per user |
+| `Household` | Named household boundary | Owner references account; membership relation controls access |
+| `HouseholdMembership` | User role in household | One membership per user/household, constrained role |
+| `HouseholdInvitation` | One-time invite | Owner issuer, invited email, expiry/revoked/accepted state, token hash |
+| `ConsentGrant` | User authorization record | Subject, purpose, category list, recipient, terms version, expiry, status |
+| `AuditEvent` | Append-only audit record | Pseudonymous references, no FK dependency, ORM/database mutation rejection |
 
-## 3. Request and execution flow
+## 5. Trust and authorization design
 
-1. An authenticated user sends a command or request.
-2. API validates syntax and authentication.
-3. Application service authorizes the specific action and loads only required data.
-4. Domain logic enforces invariants and deterministic calculations.
-5. Persistence transaction writes state and audit evidence.
-6. An outbox event is committed with the business transaction.
-7. A durable worker processes external side effects idempotently.
-8. Agents may interpret evidence, plan and select allowed tools; they cannot directly mutate core state outside application services.
-9. Consequential actions require user approval and an authorization token scoped to the action, amount, target and expiry.
-10. Outcome verification writes a ledger event with provenance and evidence.
+- Authentication proves possession of an account session.
+- Email verification proves access to that email inbox, not legal identity.
+- Resource authorization proves membership/role for the exact household/resource.
+- Consent proves a user authorized the specified purpose, data categories and recipient, within the time window.
+- The data-access service must check all of these at the point of actual data access; a UI checkbox or preflight consent check is insufficient.
+- Models never decide authorization or retrieve arbitrary rows. A future model agent receives typed tools that call application services, which enforce access.
 
-## 4. Data and consistency
+## 6. Target data and intelligence planes
 
-- PostgreSQL is the initial system of record for transactional data.
-- Monetary values are stored as integer minor units plus ISO currency code, or NUMERIC with strict exponent validation. Never use binary floating point for money.
-- Every financial record has an owner/tenant scope, provenance, timestamps and lifecycle state.
-- Use database constraints and transactions for invariants that must survive concurrent requests.
-- Use optimistic concurrency or row locks for contested updates.
-- Use idempotency keys for user commands and external calls.
-- Use a transactional outbox for reliable event publication; do not publish before the database transaction commits.
-- Use a graph store only when graph query patterns justify it. The graph model is a domain concept first; an early version can live in PostgreSQL relational tables.
-- Vector search is for retrieval, not authoritative transaction state or numeric calculations.
-- Redis and distributed streaming infrastructure are added only when measured workload requires them.
+These planes are architecture targets and are not yet built:
 
-## 5. AI/agent architecture
+1. **Data Plane:** financial accounts, transactions, obligations, liabilities, budgets, resource listings, provenance, migrations, outbox and audit.
+2. **Knowledge/RAG Plane:** trusted source ingestion for official benefits, provider terms, public information and authorized documents. Each source requires provenance/version/date and extraction evidence.
+3. **Logic & Intelligence Plane:** deterministic finance calculations, rule evaluation, opportunity matching, constraints, offer net-value optimizer, eligibility explanation and VIVC accounting.
+4. **Agent & Automation Plane:** mission state machines, typed tool registry, checkpoint/resume, retries, idempotency, timeout budgets and approvals.
+5. **Graph Plane / KRN:** begin with relational relationships and carefully scoped edges; only adopt graph storage when measured traversals justify it.
+6. **Workspace / MAKOS:** user-visible task state, evidence, status, approvals and audit traces.
+7. **Orchestration / GENIEA:** cross-plane plans and specialized agent delegation, without bypassing deterministic application services.
 
-- Separate probabilistic interpretation/planning from deterministic execution.
-- Agents receive least-privilege tools and task-scoped context, not unrestricted database access.
-- Every tool has typed input/output schemas, authorization rules, timeout, retry policy and audit record.
-- Tool outputs carry provenance, timestamps and evidence references.
-- External content is untrusted input; it cannot override system policy or authorization.
-- Use explicit workflow state machines for long-running missions. Persist checkpoints, attempts, deadlines and resumable progress.
-- Require human approval for money movement, binding contracts, applications, disclosure of personal data or other consequential actions.
-- Distinguish suggestion, attempted action, accepted action and externally verified outcome.
+## 7. Model integration strategy
 
-## 6. Privacy and security
+A provider/model abstraction should be introduced only with a specific task requiring it.
 
-- Private by default; purpose-specific, revocable consent.
-- Store the minimum data required for a feature and define retention before collecting it.
-- Keep identity, personal finance, skills, evidence and collective aggregates logically separated.
-- Commons receives only the minimum approved aggregate signal; it must not expose raw personal records.
-- Encrypt transport and storage; secrets only in environment/secret manager.
-- Audit access, consent changes, agent tool calls and consequential actions.
-- Add threat modelling, dependency scanning, static analysis and security tests as integrations are introduced.
+- Local open-weight Muse Glimmer is a candidate for private, on-device document/context reasoning and agent workflows. Benchmark the actual runtime/hardware before claiming feasibility.
+- Muse Spark / Muse Wonder through Standard services are candidates for complex multimodal reasoning, external research and task planning when hosted inference materially helps.
+- Never send personal/confidential user information to Contributor Services. Use Standard Services where permitted for personal information and/or process sensitive context locally. Use synthetic data in hackathon demos.
+- Muse Image is not an option for this India-based project under the current Meta geographic policy.
+- SAM 3.1 is optional when image/video region segmentation adds measurable value; do not include it decoratively.
+- All outputs must be schema-validated and domain checked; LLM output never becomes authoritative money or access-control logic.
 
-## 7. Current implementation boundary
+## 8. Long-running agent reliability
 
-Iteration 00 provides an HTTP service, health endpoints and a pure deterministic cashflow calculation slice over caller-supplied data. It has no database, authentication, bank connections, agent runtime, Commons network or third-party actions. Those are deliberately excluded rather than represented by pretend integrations.
+Future missions must persist:
+- mission ID, owner, tenant/household scope and permission snapshot;
+- task plan/version, completed/pending/failed steps;
+- input/output references and evidence/provenance;
+- model/provider/version and tool contracts;
+- idempotency keys and external request IDs;
+- checkpoint, retry count, timeout/deadline and compensation state;
+- pending human approval and approval expiry;
+- terminal outcome and verified-value evidence.
+
+When a 50-step workflow fails at step 49, re-read the durable mission and external state, then resume from the last valid checkpoint. Never blindly replay a side effect. Request user input only for the unresolved decision.
+
+## 9. Financial and value logic
+
+- `Decimal` only for money; currency accompanies every amount.
+- No mixed currency totals without an explicit, sourced and dated FX conversion.
+- Offer net value = real benefit/funding minus incremental spend, fees, delivery, lock-ins, quality penalties and other costs.
+- Deterministic constraints decide whether an offer is admissible; model summaries cannot override them.
+- VIVC counts only evidence-backed realized outcomes, net of additional costs. Estimates, opportunities and attempts stay separate.
+- Proposed 50/50 sharing applies only to a contractually defined eligible net revenue pool and needs a proper transaction/reconciliation/payout ledger.
+
+## 10. Database / migrations / runtime
+
+- SQLAlchemy 2 ORM and Alembic migrations.
+- `DATABASE_URL` selects the DB; `.env.example` is local development only.
+- SQLite enables FK enforcement per connection.
+- Migrations are controlled release steps, not executed independently by every app replica.
+- `/health/ready` verifies DB connectivity and the Alembic version marker.
+- Current migrations install database triggers that reject audit UPDATE/DELETE for SQLite and PostgreSQL.
+
+## 11. Observability and operational requirements still needed
+
+- Structured JSON logs with correlation/request/mission IDs and PII redaction.
+- Metrics for latency/error/DB pool, model usage/cost, tool outcomes, queue age, retries and VIVC states.
+- OpenTelemetry traces across API, application and external providers.
+- Managed secrets/KMS, TLS, backup/restore tests, rate limiting, quotas, incident response and retention/deletion jobs.
+- Live PostgreSQL and SMTP CI integration tests.
+
+## 12. Architecture change rule
+
+Every new storage technology, service boundary, LLM/provider, graph engine or queue requires an ADR explaining: concrete use case, alternatives, workload evidence, operational cost, privacy/security implications, failure behavior, migration/rollback and how it improves the actual acceptance criteria.

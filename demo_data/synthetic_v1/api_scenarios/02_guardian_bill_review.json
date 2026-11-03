@@ -1,0 +1,9 @@
+{
+  "scenario_name": "Guardian invoice anomaly review",
+  "synthetic": true,
+  "customer_id": "CUS00002",
+  "bill_id": "BIL00004",
+  "guardian_case_id": "GUA00001",
+  "document": "source_documents/invoices/BIL00004.html",
+  "expected_action": "Prepare a draft only; never submit a complaint automatically."
+}

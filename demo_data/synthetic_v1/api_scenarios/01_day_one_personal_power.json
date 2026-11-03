@@ -1,0 +1,13 @@
+{
+  "scenario_name": "Day-one personal power discovery",
+  "synthetic": true,
+  "customer_id": "CUS00001",
+  "steps": [
+    "Upload sample bill or enter obligations",
+    "Extract only user-authorized details",
+    "Calculate deterministic totals",
+    "Show potential actions with evidence",
+    "Ask user to choose next action"
+  ],
+  "expected_safety": "No bank connection or Commons participation required."
+}

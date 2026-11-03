@@ -1,0 +1,134 @@
+[
+  {
+    "bill_id": "BIL00004",
+    "customer_id": "CUS00002",
+    "anomaly_label": "POSSIBLE_DUPLICATE_LINE_ITEM",
+    "pdf_path": "source_documents/invoices_pdf/BIL00004_synthetic_invoice.pdf",
+    "pdf_sha256": "cf2471dd42c31d86837826ecfa47f991b4894d66b47930cd67fdc459d12687cb",
+    "html_path": "source_documents/invoices/BIL00004.html",
+    "synthetic": true,
+    "png_path": "source_documents/invoices_png/BIL00004_synthetic_invoice-1.png",
+    "png_sha256": "b8a3ce5146c0374b967c9135ae53d3bba92000afb9925f08ad84ec7e1def58bc"
+  },
+  {
+    "bill_id": "BIL00005",
+    "customer_id": "CUS00003",
+    "anomaly_label": "POSSIBLE_DUPLICATE_LINE_ITEM",
+    "pdf_path": "source_documents/invoices_pdf/BIL00005_synthetic_invoice.pdf",
+    "pdf_sha256": "b93ba7eed84ebbf0284c657c5d5641fde9277f3cb33e7d7bc163ee22137921ef",
+    "html_path": "source_documents/invoices/BIL00005.html",
+    "synthetic": true,
+    "png_path": "source_documents/invoices_png/BIL00005_synthetic_invoice-1.png",
+    "png_sha256": "b62f5106be9fa2fa900a84969efca8adbdf2b08e6f0b6b9f5393ef759ba9590d"
+  },
+  {
+    "bill_id": "BIL00024",
+    "customer_id": "CUS00012",
+    "anomaly_label": "POSSIBLE_DUPLICATE_LINE_ITEM",
+    "pdf_path": "source_documents/invoices_pdf/BIL00024_synthetic_invoice.pdf",
+    "pdf_sha256": "67f202ac159b9cc741bb2e98092b9516df482fff7be6e66ed19c6d6328c5e222",
+    "html_path": "source_documents/invoices/BIL00024.html",
+    "synthetic": true,
+    "png_path": "source_documents/invoices_png/BIL00024_synthetic_invoice-1.png",
+    "png_sha256": "d22662bb4d60a18c98eaeaedfb4144a42ca731df39c9ef200567156ff5a1114a"
+  },
+  {
+    "bill_id": "BIL00006",
+    "customer_id": "CUS00003",
+    "anomaly_label": "UNEXPECTED_FEE",
+    "pdf_path": "source_documents/invoices_pdf/BIL00006_synthetic_invoice.pdf",
+    "pdf_sha256": "c7c1e2cc2ebeee87fa092c9c0347e6d952c930dcf87b10ae4dd29b1523f640be",
+    "html_path": "source_documents/invoices/BIL00006.html",
+    "synthetic": true,
+    "png_path": "source_documents/invoices_png/BIL00006_synthetic_invoice-1.png",
+    "png_sha256": "53d31df30bf55fbb4a6e4b45df38c2e61ef1548817e60a338b982aae94e665d2"
+  },
+  {
+    "bill_id": "BIL00009",
+    "customer_id": "CUS00005",
+    "anomaly_label": "UNEXPECTED_FEE",
+    "pdf_path": "source_documents/invoices_pdf/BIL00009_synthetic_invoice.pdf",
+    "pdf_sha256": "fb1f26ae29b38312230797e26699de2e252a3ebfd672846cba6c4aeb0da0dd0c",
+    "html_path": "source_documents/invoices/BIL00009.html",
+    "synthetic": true,
+    "png_path": "source_documents/invoices_png/BIL00009_synthetic_invoice-1.png",
+    "png_sha256": "4f1ace35d7cb6634b7555cf49ef502b70a5c6459626028d692e45f37e5089c0d"
+  },
+  {
+    "bill_id": "BIL00010",
+    "customer_id": "CUS00005",
+    "anomaly_label": "UNEXPECTED_FEE",
+    "pdf_path": "source_documents/invoices_pdf/BIL00010_synthetic_invoice.pdf",
+    "pdf_sha256": "117caefaa3e1513ac8942b7f3aed454ebd7e25f8684ade5ead14d8b2a776bf92",
+    "html_path": "source_documents/invoices/BIL00010.html",
+    "synthetic": true,
+    "png_path": "source_documents/invoices_png/BIL00010_synthetic_invoice-1.png",
+    "png_sha256": "9ad6f0bde676d188a2c90ab6c2e5fe2e03119aa8302bb78307023d113bf02586"
+  },
+  {
+    "bill_id": "BIL00012",
+    "customer_id": "CUS00006",
+    "anomaly_label": "PRICE_SPIKE_VS_PRIOR_PERIOD",
+    "pdf_path": "source_documents/invoices_pdf/BIL00012_synthetic_invoice.pdf",
+    "pdf_sha256": "3342fb124a2a4518619b7033db5c1371c838565a68965a1e946784bdf644600c",
+    "html_path": "source_documents/invoices/BIL00012.html",
+    "synthetic": true,
+    "png_path": "source_documents/invoices_png/BIL00012_synthetic_invoice-1.png",
+    "png_sha256": "902ad13dd140d767a619f00a8323bbab6396cd71caba18e900023cd24b2b5c36"
+  },
+  {
+    "bill_id": "BIL00021",
+    "customer_id": "CUS00011",
+    "anomaly_label": "PRICE_SPIKE_VS_PRIOR_PERIOD",
+    "pdf_path": "source_documents/invoices_pdf/BIL00021_synthetic_invoice.pdf",
+    "pdf_sha256": "b19fcc712003331450b18e2037979576062b4d24017422fff6c6ab820fa908ff",
+    "html_path": "source_documents/invoices/BIL00021.html",
+    "synthetic": true,
+    "png_path": "source_documents/invoices_png/BIL00021_synthetic_invoice-1.png",
+    "png_sha256": "94e799eb068a05e20f14b9767439361d1f760c08610154f1b27a01a8e85e97a4"
+  },
+  {
+    "bill_id": "BIL00027",
+    "customer_id": "CUS00014",
+    "anomaly_label": "PRICE_SPIKE_VS_PRIOR_PERIOD",
+    "pdf_path": "source_documents/invoices_pdf/BIL00027_synthetic_invoice.pdf",
+    "pdf_sha256": "6d02e027f3cd58dd40be81a1a25f0519ad6d6187071ca24bbad28df3a9c8f42e",
+    "html_path": "source_documents/invoices/BIL00027.html",
+    "synthetic": true,
+    "png_path": "source_documents/invoices_png/BIL00027_synthetic_invoice-1.png",
+    "png_sha256": "aef4b3fd4ef9409240b81d64133a66106b7be9e82f34ed621933d3e5b445a61b"
+  },
+  {
+    "bill_id": "BIL00001",
+    "customer_id": "CUS00001",
+    "anomaly_label": "NONE",
+    "pdf_path": "source_documents/invoices_pdf/BIL00001_synthetic_invoice.pdf",
+    "pdf_sha256": "4272ce9f31987a0557c92a1c3ed7c8c43b637cd7889d9444faa3982ad945d382",
+    "html_path": "source_documents/invoices/BIL00001.html",
+    "synthetic": true,
+    "png_path": "source_documents/invoices_png/BIL00001_synthetic_invoice-1.png",
+    "png_sha256": "bf80c20ec20402ea81111c9b6f4e13b1b06b82d03d818f3be05e59de039cf4e9"
+  },
+  {
+    "bill_id": "BIL00002",
+    "customer_id": "CUS00001",
+    "anomaly_label": "NONE",
+    "pdf_path": "source_documents/invoices_pdf/BIL00002_synthetic_invoice.pdf",
+    "pdf_sha256": "55f1e0f246cebae61ae606dd4199a11496053915634f045f6a972e072cc48506",
+    "html_path": "source_documents/invoices/BIL00002.html",
+    "synthetic": true,
+    "png_path": "source_documents/invoices_png/BIL00002_synthetic_invoice-1.png",
+    "png_sha256": "ca11832e87626007cc5b3bca584ede0935e8c9268445d19e3973855c5b34c3cd"
+  },
+  {
+    "bill_id": "BIL00003",
+    "customer_id": "CUS00002",
+    "anomaly_label": "NONE",
+    "pdf_path": "source_documents/invoices_pdf/BIL00003_synthetic_invoice.pdf",
+    "pdf_sha256": "9622ff7ec15a87328967dd50ee36f7053ca8e6ca82e7bfd41c7f30079455623e",
+    "html_path": "source_documents/invoices/BIL00003.html",
+    "synthetic": true,
+    "png_path": "source_documents/invoices_png/BIL00003_synthetic_invoice-1.png",
+    "png_sha256": "24fc1f516b035e127a27c920d1da4e2b6620b67226d59cff7d91e98f4af9801f"
+  }
+]
