@@ -251,13 +251,16 @@ def downgrade() -> None:
         op.execute("DROP TRIGGER IF EXISTS personal_case_events_no_update")
         op.execute("DROP TRIGGER IF EXISTS personal_case_events_no_delete")
     elif dialect == "postgresql":
+        op.execute(
+            "DROP TRIGGER IF EXISTS personal_case_events_insert_guard ON personal_case_events"
+        )
         op.execute("DROP TRIGGER IF EXISTS personal_case_events_immutable ON personal_case_events")
         op.execute("DROP TRIGGER IF EXISTS personal_cases_no_delete ON personal_cases")
         op.execute("DROP TRIGGER IF EXISTS personal_cases_update_guard ON personal_cases")
-        op.execute("DROP FUNCTION IF EXISTS reject_personal_case_delete()")
-        op.execute("DROP FUNCTION IF EXISTS guard_personal_case_update()")
-        op.execute("DROP FUNCTION IF EXISTS guard_personal_case_event_insert()")
-        op.execute("DROP FUNCTION IF EXISTS reject_personal_case_event_mutation()")
+        op.execute("DROP FUNCTION IF EXISTS reject_personal_case_delete() CASCADE")
+        op.execute("DROP FUNCTION IF EXISTS guard_personal_case_update() CASCADE")
+        op.execute("DROP FUNCTION IF EXISTS guard_personal_case_event_insert() CASCADE")
+        op.execute("DROP FUNCTION IF EXISTS reject_personal_case_event_mutation() CASCADE")
     op.drop_index("ix_personal_case_events_case_sequence", table_name="personal_case_events")
     op.drop_table("personal_case_events")
     op.drop_index("ix_personal_cases_owner_status", table_name="personal_cases")
