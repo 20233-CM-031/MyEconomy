@@ -1,6 +1,6 @@
 # Codebase Map — Actual Source and Runtime Flow
 
-**Map version:** 2.0 · **Last reconciled:** 2026-11-03
+**Map version:** 3.0 · **Last reconciled:** 2026-11-04
 This document describes files and symbols that exist in the repository now. Future architecture belongs in `ARCHITECTURE.md` and `PROJECT_MEMORY.md` until implemented.
 
 ## 1. Layer boundaries
@@ -16,7 +16,7 @@ This document describes files and symbols that exist in the repository now. Futu
 ## 2. Application entry and composition
 
 ### `src/myeconomy/main.py`
-- `create_app()` constructs FastAPI, installs stable `ApplicationError` handling, registers cashflow and identity/trust routers, and exposes liveness/readiness routes.
+- `create_app()` constructs FastAPI, installs stable `ApplicationError` handling, registers cashflow, identity/trust and persisted-financial-data routers, and exposes liveness/readiness routes.
 - `GET /health/live` confirms process liveness only.
 - `GET /health/ready` executes a DB probe and checks `alembic_version`; readiness is 503 when schema is missing/unavailable.
 - `app = create_app()` is the ASGI import target.
@@ -32,6 +32,15 @@ This document describes files and symbols that exist in the repository now. Futu
 - `CashflowEntry`, `CategoryTotal`, `CashflowSummary`: immutable domain records.
 - `_validate_entries(...)`: validates period bounds, positive finite amounts, supported currency precision and normalized category.
 - `analyze_cashflow(...)`: pure analysis function. Computes income, expense, net cashflow, essential/discretionary amounts, category totals and net-cashflow/income ratio.
+
+### `src/myeconomy/domain/financial.py`
+Framework-independent financial ingestion types and rules:
+- `ParsedTransaction`, `CsvRowError`, `CsvParseResult`: immutable normalized parse records/results.
+- `amount_to_minor_units(...)`, `minor_units_to_decimal(...)`: exact Decimal/minor-unit conversion; rejects precision loss, non-finite, non-positive transaction amounts and values above the conservative signed-BIGINT ceiling.
+- `parse_transaction_csv(...)`: strict UTF-8 (optional BOM), 2 MiB / 10,000 data-row / 32-column bounds, normalized header aliases, duplicate-header rejection, ISO date parsing, currency match, `CREDIT`/`DEBIT`, `INCOME`/`EXPENSE`/`REFUND`/`TRANSFER`/`IGNORE`, status mapping, timezone-aware `posted_at`, essential flag parsing and SHA-256 transaction fingerprint.
+- Fingerprints are advisory duplicate signals, not a reason to delete rows. Provider external references are the authoritative idempotent duplicate key.
+- Missing `cashflow_treatment` defaults to `IGNORE` rather than guessing that credits are income or debits are expenses. The `amount_inr` header is rejected for non-INR accounts.
+- `POSTED_FIXTURE` is normalized to `POSTED` for the existing synthetic corpus. No CSV content is persisted by the parser.
 
 ### `src/myeconomy/domain/consent.py`
 - `ConsentPurpose`, `DataCategory`, `RecipientType`: typed vocabulary for authorized purposes, data classes and recipient classes.
@@ -58,6 +67,14 @@ Stable application error classes and safe public codes/status: conflict (409), a
 - `revoke_session(...)`: revoke one user's session and append audit event.
 - `issue_email_verification_challenge(...)`: issue one-time token, revoke previous pending token, 24-hour expiry, 60-second resend cooldown and audit.
 - `verify_email_address(...)`: validate digest, expiry, single-use and user state; mark email verified, revoke other active challenges and audit.
+
+### `src/myeconomy/application/financial.py`
+- `create_financial_account(...)`, `list_financial_accounts(...)`, `get_owned_account(...)`: authenticated-user account metadata and ownership filtering.
+- `import_transactions_csv(...)`: verify owner/active account; scope `Idempotency-Key` to user; compare content SHA-256; create an import batch; parse and reject invalid batches atomically; check external-reference conflicts; skip exact repeated provider references; reconcile allowed monotonic provider status transitions (`PENDING -> POSTED|REVERSED|VOID`, `POSTED -> REVERSED|VOID`) with audit events and `updated_count`; preserve possible no-reference duplicates with a link; commit transaction rows, lifecycle updates, audit events and batch counters together.
+- `_allowed_status_transition(...)`: deterministic application state machine; terminal `REVERSED`/`VOID` records cannot be reactivated.
+- `get_import_batch(...)`, `list_transactions(...)`: owner-scoped provenance/ledger reads and bounded pagination.
+- `analyze_persisted_cashflow(...)`: posted-only, single-currency aggregate. Refunds offset expenses, transfers/ignore do not count, and it labels net-cashflow-to-income rather than savings.
+- `create_recurring_obligation(...)`, `list_recurring_obligations(...)`: owner-scoped obligation schedules, optional same-owner/same-currency account binding and audit event.
 
 ### `src/myeconomy/application/households.py`
 - `require_household_membership(...)`: resource-level membership guard; hides household existence from nonmembers.
@@ -95,6 +112,10 @@ SQLAlchemy `Base` tables:
 - `HouseholdInvitation`: recipient email, token digest, inviter, expiry/accept/revoke state; partial unique active invitation per household/email.
 - `ConsentGrant`: subject, purpose, JSON categories, recipient type/id, terms version, status and lifecycle timestamps.
 - `AuditEvent`: pseudonymous actor/household IDs, action, subject, JSON details and timestamp; ORM hooks reject update/delete.
+- `FinancialAccount`: user-owned account metadata, currency, integer-minor-unit opening balance and source identity.
+- `TransactionImportBatch`: per-user idempotency key, source SHA-256, batch outcome plus inserted/updated/duplicate counters and row validation errors; original CSV bytes are not stored.
+- `FinancialTransaction`: owner/account-scoped financial fact with integer minor units, direction/treatment/status, provider reference, fingerprint and possible-duplicate pointer. Financial facts are not arbitrarily edited; the provider lifecycle status can change only through audited monotonic transitions. Composite foreign keys enforce owner, account and currency; SQLite/PostgreSQL update guards enforce immutable financial facts and the lifecycle state machine.
+- `RecurringObligation`: owner-scoped expected payment schedule; this is not a posted transaction or automatic payment mandate.
 
 ### `src/myeconomy/infrastructure/security.py`
 - `hash_password`, `verify_password`, `password_hash_needs_rehash`: Argon2 password primitives and dummy hash path.
@@ -124,19 +145,31 @@ Pydantic v2 schemas for register/login, email verification, user/session respons
 ### `src/myeconomy/api/routes.py`, `schemas.py`
 Cashflow request schemas and `/api/v1/cashflow/analyze` route.
 
+### `src/myeconomy/api/financial_schemas.py`, `financial_routes.py`
+- Typed DTOs for accounts, transactions, CSV import outcomes, cashflow and recurring obligations.
+- `POST/GET /api/v1/financial/accounts`; `POST /accounts/{id}/imports/csv`; `GET /imports/{batch_id}`; `GET /accounts/{id}/transactions`; `GET /cashflow`; `POST/GET /obligations`.
+- All routes require verified authentication. Account, import, transaction, cashflow and obligation queries are scoped to the authenticated user.
+- CSV request accepts `text/csv`, `application/csv`, `application/octet-stream` or `text/plain`; the body is streamed with a 2 MiB bound. `Idempotency-Key` is mandatory.
+
 ## 7. Database migrations
 
 - `alembic.ini`, `migrations/env.py`, `migrations/script.py.mako`: Alembic config and metadata environment.
 - `migrations/versions/8ec10b31a771_identity_consent_and_household_trust_.py`: initial identity/session/household/invitation/consent/audit schema and immutable audit triggers.
 - `migrations/versions/3b2e7f4a9c10_email_verification_challenges.py`: one-time verification challenge table and partial unique active-challenge index.
+- `migrations/versions/f2e9c7a4d821_financial_data_plane.py`: accounts, import batches, financial transactions, recurring obligations, owner/currency composite foreign keys, idempotency/provider-reference uniqueness, domain check constraints and database guard against transaction-fact edits or invalid lifecycle transitions.
 
 Run `alembic upgrade head` as a controlled release step. Do not run migrations concurrently from each production app replica.
 
-## 8. Operational verification scripts
+## 8. Dataset and operational verification
+
+- `demo_data/synthetic_v1/validate_dataset.py`: independent primary-key, foreign-key, synthetic-label, transaction-direction, bill-line reconciliation, offer economics, consent-at-event-time, Commons quorum/privacy, VIVC-label, multimodal hash, export-parity and SQLite integrity checks. It runs in both Python-version CI jobs.
+
+### Operational verification scripts
 
 ### `scripts/verify_postgres_audit.py`
 - Runs only when `DATABASE_URL` targets PostgreSQL.
 - Inserts one synthetic CI probe event, verifies database-trigger UPDATE and DELETE rejection, then confirms the original event remains unchanged.
+- Creates a temporary synthetic account/transaction to verify pending-to-posted and posted-to-reversed transitions, immutable amount protection and rejection of reversed-to-posted reactivation; it deletes the probe user afterward.
 - The CI PostgreSQL job runs it after `alembic upgrade head`; it is not a production endpoint or application runtime feature.
 
 ## 9. Tests
@@ -148,6 +181,7 @@ Run `alembic upgrade head` as a controlled release step. Do not run migrations c
 - `tests/test_email_delivery.py`: explicit development-only log mode, production refusal, SMTP config/STARTTLS/message contract and secret-safe logging.
 - `tests/test_households.py`: invitation binding, role checks, replay/expiry/revoke, cross-account isolation, membership privacy and no implied consent.
 - `tests/test_consents.py`: purpose/category restrictions, revocation, membership prerequisite, expiry, ownership, terms and audit immutability.
+- `tests/test_financial_data.py`: account creation, CSV import, refund/transfer/pending treatment, batch idempotency, provider-reference duplicates/conflicts, atomic rejection, no-reference possible duplicates, cross-owner denial, body-size/media-type limits, obligation persistence/currency checks, composite FK violations, pending-to-posted reconciliation, terminal-state reactivation rejection, immutable financial facts, safe unclassified treatment and currency-specific header handling.
 
 ## 10. Runtime path examples
 
@@ -167,12 +201,31 @@ Verified user -> read current terms -> submit exact version/purpose/categories/r
 
 HTTP request -> Pydantic validation -> `run_cashflow_analysis` -> pure `analyze_cashflow` domain -> JSON response. No personal record is stored.
 
-## 11. Known boundaries
+## 11. Financial data runtime flows (Iteration 02)
 
-No bank connector, transaction persistence, budget goals/forecast, benefit/provider source, claim workflow, agent runtime, RAG/vector/graph engine, Commons matcher, payments, sponsor integration or Meta model gateway exists in code today. These belong to later iterations and must never be described as implemented yet.
+### CSV statement import
 
-## 5. Synthetic demo data layer (2026-11-03)
+`POST /api/v1/financial/accounts/{account_id}/imports/csv` -> verified bearer session -> `get_owned_account(owner_user_id, account_id)` -> streaming request-size guard -> `parse_transaction_csv(account_currency)` -> create `TransactionImportBatch` with owner/idempotency/hash -> validate every row and provider reference -> prepare all transaction inserts -> write audit event -> single DB commit -> import outcome response. A malformed row or changed provider reference rejects the entire batch and inserts zero transactions. Same owner/key/content replays the existing batch. Same provider reference and same financial fingerprint/lifecycle state is skipped. Allowed lifecycle progression is audited and counted; a conflicting financial fingerprint or forbidden state regression rejects the batch. Similar rows without a provider reference are retained and linked for review. Missing treatment defaults to `IGNORE`.
+
+### Persisted cashflow
+
+`GET /api/v1/financial/cashflow` -> verified user -> query `FinancialTransaction` where owner, currency, inclusive date range and `status='POSTED'` -> Python integer aggregation -> response. `INCOME` credits add income; `EXPENSE` debits add expenses; `REFUND` credits reduce expenses but never income; `TRANSFER` and `IGNORE` are excluded. No FX is attempted. Opening balances are not included in period cashflow.
+
+### Synthetic persona loading
+
+`python scripts/seed_synthetic_customer.py --user-email <existing-verified-local-user> --customer-id CUS00001` -> requires `APP_ENV=development|test|demo` -> validates `SYNTHETIC_FIXTURE` labels -> maps fixture account IDs to user-owned `FinancialAccount.source_external_id` -> imports that persona's transactions using deterministic import keys -> adds obligations using fixture source IDs. It never creates user/login identities and is disabled in production. Re-running should reuse accounts, replay import batches and reuse obligations.
+
+## 12. Known boundaries
+
+No live bank connector, encrypted document vault, budget goals/forecast, benefit/provider source, claim workflow, agent runtime, RAG/vector/graph engine, Commons matcher, payments, sponsor integration or Meta model gateway exists in code today. CSV import is a first user-supplied ingestion path only; no bank or Account Aggregator integration is implied. These belong to later iterations and must never be described as implemented yet.
+
+## 13. Synthetic demo data layer (2026-11-03)
 
 `demo_data/synthetic_v1/` is a data/fixture layer, not a runtime service. It contains the deterministic generator and overlay scripts; 42 related CSV/JSON/JSONL entity exports; PostgreSQL schema/seed; SQLite database; synthetic invoice/offer source documents; API scenario JSON; schema catalog, data dictionary, business rules, regulatory matrix and validation reports. See `docs/SYNTHETIC_DEMO_DATASET.md` and `docs/DEMO_PLAYBOOK.md` before changing it.
 
 The canonical reproduction path is: generate base records -> apply demo scenario overrides -> rebuild SQLite -> run independent validator. When data changes, regenerate all row exports and SQL/SQLite representations together. Never edit only one serialization. All rows remain `SYNTHETIC_FIXTURE`; no dataset fixture may be loaded into a real partner, payment or production customer environment.
+
+
+## 14. Financial data design boundaries
+
+The data plane stores money as signed integer minor units plus currency. Each transaction amount is positive and direction is explicit; currency is constrained to the linked account. No cross-currency total is valid without a separately sourced, dated FX rate and conversion record. Import batches store file hash and metadata, not uploaded source bytes. `external_reference` is unique per owner/account; possible duplicates without such a reference are surfaced, not dropped. A recurring obligation represents an expected future commitment, not a transaction, payment instruction or debit mandate.

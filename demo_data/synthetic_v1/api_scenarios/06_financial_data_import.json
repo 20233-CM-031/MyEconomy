@@ -1,0 +1,43 @@
+{
+  "scenario_name": "Persist one synthetic customer's financial records",
+  "synthetic": true,
+  "fixture_customer_id": "CUS00001",
+  "application_identity": "An existing local verified user is used; no fixture login identity is created",
+  "seed_command": "APP_ENV=demo python scripts/seed_synthetic_customer.py --user-email <existing-verified-local-user> --customer-id CUS00001",
+  "expected_entities": {
+    "financial_accounts": 2,
+    "financial_transactions": 91,
+    "recurring_obligations": 5
+  },
+  "api_walkthrough": [
+    "Register and verify a local demo user",
+    "Create or reuse that user's financial account metadata",
+    "Upload a UTF-8 CSV statement with a stable Idempotency-Key",
+    "Inspect the owner-scoped import batch and validation result",
+    "List the user's persisted transactions",
+    "Request a single-currency posted-only cashflow summary",
+    "Repeat the seed/import and confirm no duplicate transaction rows were created"
+  ],
+  "expected_safety": [
+    "Every loaded row is labeled SYNTHETIC_FIXTURE",
+    "The script refuses APP_ENV=production",
+    "No fake application user or login credentials are created",
+    "No bank, provider, payment or government endpoint is contacted",
+    "No raw uploaded CSV bytes are retained"
+  ],
+  "expected_import_rules": {
+    "income_credit_adds_income": true,
+    "expense_debit_adds_gross_expense": true,
+    "refund_credit_offsets_expense_not_income": true,
+    "pending_reversed_void_excluded": true,
+    "transfer_and_ignore_excluded": true,
+    "currency_mismatch_rejected": true,
+    "invalid_row_rejects_entire_batch": true,
+    "same_key_same_hash_replays_batch": true,
+    "same_key_different_hash_conflicts": true,
+    "provider_reference_same_fingerprint_skipped": true,
+    "provider_reference_different_fingerprint_rejects_batch": true,
+    "no_reference_similar_row_is_flagged_not_dropped": true
+  },
+  "real_world_status": "SYNTHETIC_LOCAL_TEST_SCENARIO_ONLY"
+}

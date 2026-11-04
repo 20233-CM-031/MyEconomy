@@ -83,3 +83,15 @@ Net benefit at or below zero is rejected; unresolved material terms also require
 ## Legal and regulatory note
 
 `REGULATORY_AND_DATA_RULES.md` documents an India-oriented engineering mapping as of 2026-11-03, including the staged commencement of the DPDP Act/Rules, RBI Account Aggregator consent constraints and conditional digital-lending controls. It is not legal advice or a compliance certification. Check official notifications and obtain legal review before live processing.
+
+
+## Load a single fixture persona into the application
+
+From the repository root, with migrations applied and an existing active email-verified local user:
+
+```powershell
+$env:APP_ENV = "demo"
+python scripts/seed_synthetic_customer.py --user-email "existing-verified-local-user@example.invalid" --customer-id CUS00001
+```
+
+The script refuses `APP_ENV=production`, never creates a login identity, and only loads rows explicitly marked `SYNTHETIC_FIXTURE`. It imports accounts, transaction rows and recurring obligations through the application's persistence/domain services. Stable source IDs and idempotency keys make reruns safe. It does not import the rest of the future-feature fixture tables into application runtime yet.

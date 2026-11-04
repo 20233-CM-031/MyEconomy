@@ -1,7 +1,7 @@
 # Hackathon Strategy Scorecard
 
 **Purpose:** Turn the judging rubric supplied by the project owner into engineering and demo acceptance criteria.
-**Last verified against public event/model sources:** 2026-11-03.
+**Last verified against public event/model sources:** 2026-11-03. Implementation status reconciled to repository on 2026-11-04.
 **Important:** The exact scoring weights and bonus award details below are the participant-provided rubric. Re-check the accepted-participant Official Rules and submission portal before relying on every bonus condition.
 
 ## 1. Judging rubric supplied by the project owner
@@ -69,6 +69,10 @@ Meta's Contributor Services policy says not to submit sensitive, confidential or
 
 These amounts and special award conditions are recorded from the project owner's supplied judging notes. The public hackathon overview independently confirms a $1M total prize pool, indie and startup tracks, the use of Muse Spark, Muse Image, SAM 3.1, Meta open weights and Muse Code. The specific bonus award rules must be verified from the official participant rules/submission portal.
 
+## 5A. Iteration 02 contribution to the rubric
+
+The financial data plane moves the demo from pure caller-provided calculations to a persisted, owner-scoped user record. It supports a real API sequence for a single verified local user: create account metadata, import a bounded synthetic statement, inspect the import hash/outcome, list transactions, and compute posted-only cashflow. The importer enforces minor-unit money, currency matching, conservative unclassified treatment, idempotency, provider-reference conflict detection, monotonic pending/posted/reversed lifecycle reconciliation, database-level status-transition guards, atomic rejection and audit metadata. This is concrete technical-depth evidence and a more realistic substrate for the Personal Power/Guardian story. It does **not** yet produce a verified real-world user outcome and it does not integrate a Meta model; those remain the next engineering objectives.
+
 ## 6. Demo blueprint — one to three synthetic users
 
 Use a single story, not eight disconnected feature demos.
@@ -98,7 +102,7 @@ For each outcome show: user baseline, evidence reference, outcome state (`estima
 |---|---|---|
 | Real-world impact | Product vision and user-first architecture documented; cashflow/trust foundations work, but no live customer outcomes yet | Implement first useful personal workflow and measure a genuine, consented result |
 | Meta AI tooling | **Not integrated yet** | Select model(s), make one essential task work end-to-end, test errors and compare against baseline |
-| Technical depth | Iteration 00/01 modular monolith, deterministic cashflow, DB migrations, identity, email verification, household, consent and audit with tests | Real PostgreSQL CI, rate limiting, production hardening, durable agent workflows, integration contracts |
+| Technical depth | Iterations 00–02: modular monolith, identity/consent, deterministic cashflow, minor-unit ledger, owner/currency composite constraints, import idempotency/provenance, monotonic audited provider-status transitions, database-enforced transaction financial-fact immutability and monotonic status-transition guards and synthetic fixture seeder | Run Iteration 02 PostgreSQL CI, concurrency tests, production hardening, durable agent workflows and integration contracts |
 | Demo | Live API and trust flow can be demonstrated with local email adapter and synthetic users | Build polished end-to-end UI, model traces, VIVC ledger and final-vision visual; label simulations |
 | Open-weight bonus | Muse Glimmer not integrated/runtime-tested | Local inference runtime, model tool loop, evaluation and resource measurements |
 | Viral/community bonus | Not implemented | Public-safe share artifact, gallery entry, X post and rule-compliant voting plan |

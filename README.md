@@ -8,7 +8,7 @@ The product vision is to make each person stronger from Day One through a privat
 
 ## Current implementation status
 
-This repository is being built as a carefully engineered modular monolith. Iteration 00 contains deterministic cashflow analysis. Iteration 01 adds persisted identity/session management, household invitations and membership boundaries, scoped consent grants, revocation, and append-only audit events.
+This repository is being built as a carefully engineered modular monolith. Iteration 00 contains deterministic cashflow analysis. Iteration 01 adds persisted identity/session management, household invitations and membership boundaries, scoped consent grants, revocation, and append-only audit events. Iteration 02 adds owner-scoped financial accounts, transaction statement import with provenance/idempotency, persisted transaction ledger, recurring obligations and cashflow analysis over posted records. Provider lifecycle changes (`PENDING` to `POSTED`/`REVERSED`/`VOID`, `POSTED` to `REVERSED`/`VOID`) are audited and database-enforced; unclassified CSV rows default to `IGNORE` rather than guessing from debit/credit direction.
 
 Implemented functionality is described in `docs/PROJECT_STATUS.md`. The complete future vision is not yet implemented. No bank connection, payments, sponsor/merchant integrations, live Commons marketplace, production agent, RAG engine or Meta model integration is claimed as working yet.
 
@@ -53,12 +53,18 @@ For PostgreSQL, set `DATABASE_URL` to a `postgresql+psycopg://...` URL before ru
 - `GET /health/live` — process liveness.
 - `GET /health/ready` — database connection and migration-table readiness.
 - `POST /api/v1/cashflow/analyze` — deterministic calculation over caller-supplied data; no persistence.
+- `POST /api/v1/financial/accounts`, `GET /api/v1/financial/accounts` — create/list only the authenticated user's financial account metadata.
+- `POST /api/v1/financial/accounts/{account_id}/imports/csv` — bounded, strict CSV import with an `Idempotency-Key`; source file bytes are not retained. Response distinguishes inserted, lifecycle-updated, duplicate and potential-duplicate rows.
+- `GET /api/v1/financial/imports/{batch_id}` — owner-scoped import provenance and validation result.
+- `GET /api/v1/financial/accounts/{account_id}/transactions` — owner-scoped, paginated ledger.
+- `GET /api/v1/financial/cashflow?period_start=YYYY-MM-DD&period_end=YYYY-MM-DD&currency=INR` — persisted cashflow for one currency.
+- `POST /api/v1/financial/obligations`, `GET /api/v1/financial/obligations` — recurring obligation schedule records.
 - `POST /api/v1/auth/register`, `POST /api/v1/auth/verify-email`, `POST /api/v1/auth/verification/resend`, `POST /api/v1/auth/login`, `POST /api/v1/auth/logout`, `GET /api/v1/auth/me` — account, email verification and opaque-session lifecycle.
 - `POST /api/v1/households`, `GET /api/v1/households` — create and list the current user's households after email verification.
 - `POST /api/v1/households/{id}/invitations`, `POST /api/v1/household-invitations/accept`, `POST /api/v1/household-invitations/{id}/revoke`, `GET /api/v1/households/{id}/members` — invitation-acceptance membership flow.
 - `GET /api/v1/consents/terms`, `POST /api/v1/consents`, `GET /api/v1/consents`, `POST /api/v1/consents/{id}/revoke`, `GET /api/v1/consents/check` — versioned purpose/category/recipient-bound consent.
 
-Household membership does not grant access to a member's personal or financial records. Each person must separately grant the necessary consent. The check endpoint is informational; future data services must call `require_active_consent` inside the same transaction as the data access. See `docs/THREAT_MODEL.md` for residual risks and `docs/HACKATHON_SCORECARD.md` for the judging strategy.
+Household membership does not grant access to a member's personal or financial records. Financial account and transaction endpoints are scoped to the authenticated account owner; Commons sharing is not yet implemented. Each person must separately grant the necessary consent. The check endpoint is informational; future data services must call `require_active_consent` inside the same transaction as the data access. See `docs/THREAT_MODEL.md` for residual risks and `docs/HACKATHON_SCORECARD.md` for the judging strategy.
 
 ## Security and current limitations
 
@@ -75,7 +81,7 @@ Household membership does not grant access to a member's personal or financial r
 
 Use `iteration/<number>-<scope>` branches, conventional commits, tests and documentation updates. Every completed iteration must update the project status, codebase map, feature catalog, project memory and iteration evidence. See `AGENTS.md`.
 
-Iteration 01 detailed implementation and file manifest: `docs/iterations/ITERATION-01.md` and `docs/iterations/ITERATION-01-FILE-MANIFEST.md`.
+Iteration 01 detailed implementation and file manifest: `docs/iterations/ITERATION-01.md` and `docs/iterations/ITERATION-01-FILE-MANIFEST.md`. Iteration 02 financial data contract and delivery manifest: `docs/FINANCIAL_DATA_CONTRACT.md`, `docs/iterations/ITERATION-02.md` and `docs/iterations/ITERATION-02-FILE-MANIFEST.md`.
 
 ## Synthetic end-to-end demo data
 
@@ -95,3 +101,10 @@ Start with:
 The complete synthetic relational fixture corpus is under `demo_data/synthetic_v1/`. It includes 42 entity tables and 17,425 rows, exports in CSV/JSON/JSONL/PostgreSQL SQL/SQLite, synthetic invoice HTML/PDF/PNG source documents, scenario payloads, data dictionary, business rules and an independent validator.
 
 Read `docs/SYNTHETIC_DEMO_DATASET.md`, `docs/DEMO_PLAYBOOK.md` and `demo_data/synthetic_v1/DEMO_PLAYBOOK.md` before using it. Every record is synthetic, all provider/benefit/order/payment outcomes are simulated, and synthetic value events must not be counted as real user impact.
+
+
+## Iteration 02 — Financial Data Plane v1
+
+Iteration 02 adds owner-scoped account metadata, bounded CSV statement imports, an integer-minor-unit transaction ledger, import idempotency/provenance, provider status reconciliation, posted-only cashflow reads and recurring obligations. It uses a conservative `IGNORE` treatment when transaction classification is missing. Provider-status changes are monotonic and audited; financial facts are guarded as immutable in SQLite and PostgreSQL. See `docs/FINANCIAL_DATA_CONTRACT.md` and `docs/iterations/ITERATION-02.md`.
+
+**Limitations:** no live bank/Account Aggregator integration, payment initiation, automated debit, FX conversion, budget/goal engine, Guardian action submission, agent runtime or Meta model gateway is implemented in this iteration. The synthetic data under `demo_data/synthetic_v1/` is for local test/demo use only.

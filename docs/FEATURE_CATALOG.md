@@ -26,8 +26,12 @@ Status: **Implemented and tested**, **Partial**, **Designed**, **Not started**, 
 | Research participation consent | Narrow categories, separate opt-in | Policy implemented and tested | No research pipeline exists |
 | Append-only audit | Identity/household/consent changes audited and tamper-resistant via DB trigger | Implemented and tested | `application/audit.py`, migration triggers; no external WORM sink |
 | Data retention/export/deletion | User export and erasure with retention policy | Designed | Needs lifecycle and legal review |
-| Financial data store | Accounts, transactions, obligations, liabilities, budgets | Not started | Iteration 02 schema + provenance |
-| CSV/manual/bank import | Idempotent import, dedup, reconciliation, supported bank provider | Not started | Start with CSV/manual data; bank aggregator only with credentials and permission |
+| Financial data store | User-owned accounts, persisted transactions and recurring obligations | **Partial (Iteration 02)** | `FinancialAccount`, `FinancialTransaction`, `RecurringObligation`; liabilities/budgets/goals remain future work |
+| CSV/manual/bank import | Strict CSV import, provenance, idempotency, reference dedup, duplicate-review signals and monotonic provider-status reconciliation | **Partial (CSV implemented)** | `/financial/accounts/{id}/imports/csv`; batch `updated_count`; SQLite/PostgreSQL database guards: immutable imported financial facts; only monotonic provider-status changes and filling a previously missing posting timestamp are allowed; no authorized bank aggregator or bank statement connector yet. Missing treatment defaults to `IGNORE`. |
+| Persisted cashflow read model | Posted-only period totals with refund/transfer/pending rules | **Implemented and tested (v1)** | `GET /api/v1/financial/cashflow`; no FX and no opening-balance reconciliation |
+| Import batch inspection | Owner-scoped provenance, status and validation errors | **Implemented and tested** | `GET /api/v1/financial/imports/{batch_id}` |
+| Synthetic persona loader | Load one fixture persona into an existing verified local user | **Implemented and smoke-tested** | `scripts/seed_synthetic_customer.py`; refuses production and never creates fake login accounts |
+| Recurring obligation schedule | Owner-owned expected payments with due dates/frequency/autopay label | **Implemented and tested** | `RecurringObligation`; no payment mandate or scheduler |
 | Budget/goals/forecast | Household allocations, cashflow forecast and scenario | Designed | Build after financial persistence |
 | Personal Power Discovery | Day-one actionable report without network/bank mandatory | Designed | Next product-value slice after financial data base |
 | Personal AI Representative / Guardian | Billing anomaly/refund evidence, claims drafts, follow-up | Designed | No actual provider/claim integration yet |
@@ -60,3 +64,15 @@ Status: **Implemented and tested**, **Partial**, **Designed**, **Not started**, 
 | Offer net-value rejection | **Simulated fixture** | Deterministic fixture values; must be recomputed by live domain logic before product claims |
 | Agent checkpoint/resume | **Simulated fixture** | Mission step/checkpoint and idempotency-key rows; not a production agent runtime |
 | Value ledger | **Simulated fixture** | All records `SYNTHETIC_FIXTURE_ONLY`; never count in real VIVC |
+
+
+## Iteration 02 evidence — Financial Data Plane v1 (2026-11-04)
+
+- 56 automated tests passed in the local source tree.
+- Provider lifecycle test covers `PENDING -> POSTED`, `POSTED -> REVERSED` and rejects `REVERSED -> POSTED` both at application and SQLite trigger layers.
+- CSV without treatment is safely classified as `IGNORE`; currency-specific `amount_inr` is rejected for non-INR accounts.
+- SQLite Alembic `upgrade head -> downgrade base -> upgrade head` passed.
+- Real local SQLite smoke seeded `CUS00001` into an existing verified local user: first run created 2 accounts, imported 91 transactions and 5 obligations; second run reused both accounts, replayed import batches and reused obligations without duplicate rows.
+- Dataset independent validator passed against the committed synthetic corpus.
+- Python compileall passed. Ruff is not installed in the isolated execution runtime; local Ruff result is unverified. The merged Iteration 01 GitHub Actions run passed Ruff/pytest on Python 3.12/3.13 and PostgreSQL 16 migrations, but Iteration 02 changes still require their own CI run.
+- The branch CI PostgreSQL job will now run the extended `verify_postgres_audit.py` script, which also tests the transaction immutability/status guard; until that new branch CI passes, live PostgreSQL immutability/status-guard execution remains unverified. Production SMTP, bank connectors, real financial institutions and production security controls remain unverified.

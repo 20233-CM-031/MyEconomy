@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
+from myeconomy.api.financial_routes import router as financial_router
 from myeconomy.api.identity_routes import router as identity_router
 from myeconomy.api.routes import router as cashflow_router
 from myeconomy.domain.errors import ApplicationError
@@ -14,16 +15,17 @@ from myeconomy.infrastructure.database import get_db
 def create_app() -> FastAPI:
     app = FastAPI(
         title="MyEconomy API",
-        version="0.2.0",
+        version="0.3.0",
         description=(
             "Personal economic agency and collective opportunity intelligence. "
-            "Identity, household boundaries and purpose-bound consent are now persisted."
+            "Identity, purpose-bound consent and owner-scoped financial data are persisted."
         ),
         docs_url="/docs",
         redoc_url="/redoc",
     )
     app.include_router(cashflow_router)
     app.include_router(identity_router)
+    app.include_router(financial_router)
 
     @app.exception_handler(ApplicationError)
     async def application_error_handler(_request: Request, exc: ApplicationError) -> JSONResponse:
