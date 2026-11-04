@@ -1,4 +1,4 @@
-import type { GuardianCase, PowerReport } from './types';
+import type { GuardianCase, PersonalCaseDetail, PowerReport } from './types';
 
 export const demoReport: PowerReport = {
   report_version: 'personal-power-v1',
@@ -84,4 +84,46 @@ export const demoMonthly = [
   { month: 'Aug', income: 68000, spend: 59200 },
   { month: 'Sep', income: 70000, spend: 58600 },
   { month: 'Oct', income: 72000, spend: 57200 },
+];
+
+export const demoPersonalCases: PersonalCaseDetail[] = [
+  {
+    id: 'SYN-CASE-LOCAL-001', source_engine: 'PERSONAL', source_finding_id: 'DUP-001',
+    title: 'A payment may have been recorded twice', currency: 'INR', amount_minor: '64900',
+    source_snapshot: {
+      finding_id: 'DUP-001', code: 'POSSIBLE_DUPLICATE_TRANSACTION', priority: 'MEDIUM',
+      title: 'A payment may have been recorded twice',
+      explanation: 'Two synthetic posted entries share a transaction fingerprint. This is a review signal, not proof of double charging.',
+      recommended_next_step: 'Compare the original statement and merchant receipt before raising a dispute.',
+      amount: '649.00', currency: 'INR', source_references: ['SYNTH-TX-0204', 'SYNTH-TX-0188'],
+      value_status: 'NOT_A_VALUE_OUTCOME',
+      report_period: { period_start: '2026-10-01', period_end: '2026-10-31', as_of: '2026-11-04' },
+      origin: 'SYNTHETIC_DEMO_FIXTURE',
+    },
+    status: 'IN_REVIEW', state_version: 2,
+    created_at: '2026-11-04T08:30:00.000Z', updated_at: '2026-11-04T09:10:00.000Z',
+    events: [
+      { id: 'SYN-CASE-LOCAL-001-E1', event_sequence: 1, event_type: 'CASE_OPENED', from_status: null, to_status: 'OPEN', note: 'Opened from a synthetic Power Report finding.', created_at: '2026-11-04T08:30:00.000Z' },
+      { id: 'SYN-CASE-LOCAL-001-E2', event_sequence: 2, event_type: 'STATUS_CHANGED', from_status: 'OPEN', to_status: 'IN_REVIEW', note: 'The source statement is being compared. No provider has been contacted.', created_at: '2026-11-04T09:10:00.000Z' },
+    ],
+  },
+  {
+    id: 'SYN-CASE-LOCAL-002', source_engine: 'PERSONAL', source_finding_id: 'CASH-002',
+    title: 'Upcoming essentials need a quick review', currency: 'INR', amount_minor: '1260000',
+    source_snapshot: {
+      finding_id: 'CASH-002', code: 'ESSENTIAL_COST_PRESSURE', priority: 'LOW',
+      title: 'Upcoming essentials need a quick review',
+      explanation: 'Five synthetic recurring obligations fall within the review horizon. Their total is separate from posted spending.',
+      recommended_next_step: 'Confirm due dates and amounts with the original provider before making a payment decision.',
+      amount: '12600.00', currency: 'INR', source_references: ['SYNTH-OBL-001', 'SYNTH-OBL-004'],
+      value_status: 'NOT_A_VALUE_OUTCOME',
+      report_period: { period_start: '2026-10-01', period_end: '2026-10-31', as_of: '2026-11-04' },
+      origin: 'SYNTHETIC_DEMO_FIXTURE',
+    },
+    status: 'OPEN', state_version: 1,
+    created_at: '2026-11-04T10:00:00.000Z', updated_at: '2026-11-04T10:00:00.000Z',
+    events: [
+      { id: 'SYN-CASE-LOCAL-002-E1', event_sequence: 1, event_type: 'CASE_OPENED', from_status: null, to_status: 'OPEN', note: 'Opened from a synthetic upcoming-obligation finding.', created_at: '2026-11-04T10:00:00.000Z' },
+    ],
+  },
 ];

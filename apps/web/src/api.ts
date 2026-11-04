@@ -1,4 +1,4 @@
-import type { AIExplanation, AIQuestion, FinancialAccount, GuardianCase, ImportBatch, PowerReport, Session } from './types';
+import type { AIExplanation, AIQuestion, FinancialAccount, GuardianCase, ImportBatch, PersonalCase, PersonalCaseDetail, PersonalCaseStatus, PowerReport, Session } from './types';
 
 const API_ROOT = '/api/v1';
 
@@ -56,6 +56,30 @@ export const api = {
     return request<PowerReport>(`/personal/power-report?${params.toString()}`, {}, token);
   },
   guardianCases: (token: string) => request<GuardianCase[]>('/guardian/cases?limit=50', {}, token),
+  personalCases: (token: string) => request<PersonalCase[]>('/cases?limit=50', {}, token),
+  personalCase: (token: string, caseId: string) => request<PersonalCaseDetail>(`/cases/${caseId}`, {}, token),
+  createCaseFromFinding: (
+    token: string, findingId: string, periodStart: string, periodEnd: string, asOf: string,
+  ) => request<PersonalCase>('/cases/from-finding', {
+    method: 'POST',
+    headers: { 'Idempotency-Key': `makos-case-open:${crypto.randomUUID()}` },
+    body: JSON.stringify({
+      finding_id: findingId,
+      period_start: periodStart,
+      period_end: periodEnd,
+      as_of: asOf,
+      currency: 'INR',
+      obligation_horizon_days: 30,
+    }),
+  }, token),
+  transitionCase: (
+    token: string, caseId: string, toStatus: PersonalCaseStatus, expectedVersion: number, note: string,
+  ) => request<PersonalCaseDetail>(`/cases/${caseId}/transition`, {
+    method: 'POST',
+    headers: { 'Idempotency-Key': `makos-case-transition:${crypto.randomUUID()}` },
+    body: JSON.stringify({ to_status: toStatus, expected_version: expectedVersion, note }),
+  }, token),
+
   accounts: (token: string) => request<FinancialAccount[]>('/financial/accounts', {}, token),
   createAccount: (token: string, accountName: string, accountType: string) =>
     request<FinancialAccount>('/financial/accounts', {

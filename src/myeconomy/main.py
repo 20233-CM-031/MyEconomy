@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
+from myeconomy.api.casebook_routes import router as casebook_router
 from myeconomy.api.financial_routes import router as financial_router
 from myeconomy.api.guardian_routes import router as guardian_router
 from myeconomy.api.identity_routes import router as identity_router
@@ -28,6 +29,7 @@ def create_app() -> FastAPI:
         redoc_url="/redoc",
     )
     app.include_router(cashflow_router)
+    app.include_router(casebook_router)
     app.include_router(identity_router)
     app.include_router(financial_router)
     app.include_router(guardian_router)

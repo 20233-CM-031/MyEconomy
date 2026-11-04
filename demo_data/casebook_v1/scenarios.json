@@ -1,0 +1,1154 @@
+[
+  {
+    "scenario_id": "CASEBOOK-001",
+    "case_id": "SYN-CASE-0001",
+    "scenario": "personal_duplicate_review",
+    "engine": "PERSONAL",
+    "target_status": "OPEN",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No double charge is confirmed.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-002",
+    "case_id": "SYN-CASE-0002",
+    "scenario": "personal_cashflow_review",
+    "engine": "PERSONAL",
+    "target_status": "IN_REVIEW",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No new loan is recommended automatically.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-003",
+    "case_id": "SYN-CASE-0003",
+    "scenario": "personal_data_gap",
+    "engine": "PERSONAL",
+    "target_status": "WAITING_FOR_USER",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "User confirmation is required before treatment changes.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-004",
+    "case_id": "SYN-CASE-0004",
+    "scenario": "guardian_invoice_arithmetic",
+    "engine": "GUARDIAN",
+    "target_status": "ACTION_READY",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Structured values are user-submitted; document remains unscanned.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-005",
+    "case_id": "SYN-CASE-0005",
+    "scenario": "guardian_low_confidence",
+    "engine": "GUARDIAN",
+    "target_status": "IN_REVIEW",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "The workflow must abstain until a human verifies the source.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-006",
+    "case_id": "SYN-CASE-0006",
+    "scenario": "opportunity_net_income",
+    "engine": "OPPORTUNITY",
+    "target_status": "OPEN",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Gross pay is not net income.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-007",
+    "case_id": "SYN-CASE-0007",
+    "scenario": "opportunity_unverified_client",
+    "engine": "OPPORTUNITY",
+    "target_status": "WAITING_FOR_USER",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No application or data sharing occurs without approval.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-008",
+    "case_id": "SYN-CASE-0008",
+    "scenario": "entitlement_stale_source",
+    "engine": "ENTITLEMENT",
+    "target_status": "IN_REVIEW",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No eligibility or award is asserted.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-009",
+    "case_id": "SYN-CASE-0009",
+    "scenario": "entitlement_missing_proof",
+    "engine": "ENTITLEMENT",
+    "target_status": "WAITING_FOR_USER",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Potential match is not a confirmed entitlement.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-010",
+    "case_id": "SYN-CASE-0010",
+    "scenario": "crisis_salary_delay",
+    "engine": "CRISIS",
+    "target_status": "ACTION_READY",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Reversible essentials-first replanning; no automatic debt push.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-011",
+    "case_id": "SYN-CASE-0011",
+    "scenario": "crisis_medical_shock",
+    "engine": "CRISIS",
+    "target_status": "WAITING_EXTERNAL",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No payment or claim is submitted.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-012",
+    "case_id": "SYN-CASE-0012",
+    "scenario": "enterprise_below_cost_quote",
+    "engine": "ENTERPRISE",
+    "target_status": "IN_REVIEW",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Quote is not sent and no order is created.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-013",
+    "case_id": "SYN-CASE-0013",
+    "scenario": "enterprise_profitable_quote",
+    "engine": "ENTERPRISE",
+    "target_status": "RESOLVED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Resolved is a workflow state, not a settled payment.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-014",
+    "case_id": "SYN-CASE-0014",
+    "scenario": "commons_low_quorum",
+    "engine": "PERSONAL",
+    "target_status": "OPEN",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No private household records are shared.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-015",
+    "case_id": "SYN-CASE-0015",
+    "scenario": "commons_differencing_guard",
+    "engine": "PERSONAL",
+    "target_status": "CLOSED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "The query is suppressed; minimum cohort is not a DP guarantee.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-016",
+    "case_id": "SYN-CASE-0016",
+    "scenario": "consent_revoked_mid_mission",
+    "engine": "PERSONAL",
+    "target_status": "CLOSED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Future protected reads/actions are blocked.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-017",
+    "case_id": "SYN-CASE-0017",
+    "scenario": "mission_worker_recovery",
+    "engine": "PERSONAL",
+    "target_status": "WAITING_EXTERNAL",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No blind replay when provider state is uncertain.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-018",
+    "case_id": "SYN-CASE-0018",
+    "scenario": "case_stale_version",
+    "engine": "PERSONAL",
+    "target_status": "IN_REVIEW",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "One write wins; the stale caller must reload.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-019",
+    "case_id": "SYN-CASE-0019",
+    "scenario": "personal_duplicate_review",
+    "engine": "PERSONAL",
+    "target_status": "OPEN",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No double charge is confirmed.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-020",
+    "case_id": "SYN-CASE-0020",
+    "scenario": "personal_cashflow_review",
+    "engine": "PERSONAL",
+    "target_status": "OPEN",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No new loan is recommended automatically.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-021",
+    "case_id": "SYN-CASE-0021",
+    "scenario": "personal_data_gap",
+    "engine": "PERSONAL",
+    "target_status": "CLOSED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "User confirmation is required before treatment changes.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-022",
+    "case_id": "SYN-CASE-0022",
+    "scenario": "guardian_invoice_arithmetic",
+    "engine": "GUARDIAN",
+    "target_status": "ACTION_READY",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Structured values are user-submitted; document remains unscanned.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-023",
+    "case_id": "SYN-CASE-0023",
+    "scenario": "guardian_low_confidence",
+    "engine": "GUARDIAN",
+    "target_status": "ACTION_READY",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "The workflow must abstain until a human verifies the source.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-024",
+    "case_id": "SYN-CASE-0024",
+    "scenario": "opportunity_net_income",
+    "engine": "OPPORTUNITY",
+    "target_status": "WAITING_EXTERNAL",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Gross pay is not net income.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-025",
+    "case_id": "SYN-CASE-0025",
+    "scenario": "opportunity_unverified_client",
+    "engine": "OPPORTUNITY",
+    "target_status": "OPEN",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No application or data sharing occurs without approval.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-026",
+    "case_id": "SYN-CASE-0026",
+    "scenario": "entitlement_stale_source",
+    "engine": "ENTITLEMENT",
+    "target_status": "ACTION_READY",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No eligibility or award is asserted.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-027",
+    "case_id": "SYN-CASE-0027",
+    "scenario": "entitlement_missing_proof",
+    "engine": "ENTITLEMENT",
+    "target_status": "OPEN",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Potential match is not a confirmed entitlement.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-028",
+    "case_id": "SYN-CASE-0028",
+    "scenario": "crisis_salary_delay",
+    "engine": "CRISIS",
+    "target_status": "WAITING_FOR_USER",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Reversible essentials-first replanning; no automatic debt push.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-029",
+    "case_id": "SYN-CASE-0029",
+    "scenario": "crisis_medical_shock",
+    "engine": "CRISIS",
+    "target_status": "WAITING_FOR_USER",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No payment or claim is submitted.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-030",
+    "case_id": "SYN-CASE-0030",
+    "scenario": "enterprise_below_cost_quote",
+    "engine": "ENTERPRISE",
+    "target_status": "ACTION_READY",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Quote is not sent and no order is created.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-031",
+    "case_id": "SYN-CASE-0031",
+    "scenario": "enterprise_profitable_quote",
+    "engine": "ENTERPRISE",
+    "target_status": "RESOLVED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Resolved is a workflow state, not a settled payment.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-032",
+    "case_id": "SYN-CASE-0032",
+    "scenario": "commons_low_quorum",
+    "engine": "PERSONAL",
+    "target_status": "CLOSED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No private household records are shared.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-033",
+    "case_id": "SYN-CASE-0033",
+    "scenario": "commons_differencing_guard",
+    "engine": "PERSONAL",
+    "target_status": "ACTION_READY",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "The query is suppressed; minimum cohort is not a DP guarantee.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-034",
+    "case_id": "SYN-CASE-0034",
+    "scenario": "consent_revoked_mid_mission",
+    "engine": "PERSONAL",
+    "target_status": "WAITING_FOR_USER",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Future protected reads/actions are blocked.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-035",
+    "case_id": "SYN-CASE-0035",
+    "scenario": "mission_worker_recovery",
+    "engine": "PERSONAL",
+    "target_status": "RESOLVED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No blind replay when provider state is uncertain.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-036",
+    "case_id": "SYN-CASE-0036",
+    "scenario": "case_stale_version",
+    "engine": "PERSONAL",
+    "target_status": "WAITING_EXTERNAL",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "One write wins; the stale caller must reload.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-037",
+    "case_id": "SYN-CASE-0037",
+    "scenario": "personal_duplicate_review",
+    "engine": "PERSONAL",
+    "target_status": "IN_REVIEW",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No double charge is confirmed.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-038",
+    "case_id": "SYN-CASE-0038",
+    "scenario": "personal_cashflow_review",
+    "engine": "PERSONAL",
+    "target_status": "RESOLVED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No new loan is recommended automatically.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-039",
+    "case_id": "SYN-CASE-0039",
+    "scenario": "personal_data_gap",
+    "engine": "PERSONAL",
+    "target_status": "CLOSED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "User confirmation is required before treatment changes.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-040",
+    "case_id": "SYN-CASE-0040",
+    "scenario": "guardian_invoice_arithmetic",
+    "engine": "GUARDIAN",
+    "target_status": "ACTION_READY",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Structured values are user-submitted; document remains unscanned.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-041",
+    "case_id": "SYN-CASE-0041",
+    "scenario": "guardian_low_confidence",
+    "engine": "GUARDIAN",
+    "target_status": "IN_REVIEW",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "The workflow must abstain until a human verifies the source.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-042",
+    "case_id": "SYN-CASE-0042",
+    "scenario": "opportunity_net_income",
+    "engine": "OPPORTUNITY",
+    "target_status": "WAITING_FOR_USER",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Gross pay is not net income.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-043",
+    "case_id": "SYN-CASE-0043",
+    "scenario": "opportunity_unverified_client",
+    "engine": "OPPORTUNITY",
+    "target_status": "RESOLVED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No application or data sharing occurs without approval.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-044",
+    "case_id": "SYN-CASE-0044",
+    "scenario": "entitlement_stale_source",
+    "engine": "ENTITLEMENT",
+    "target_status": "WAITING_FOR_USER",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No eligibility or award is asserted.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-045",
+    "case_id": "SYN-CASE-0045",
+    "scenario": "entitlement_missing_proof",
+    "engine": "ENTITLEMENT",
+    "target_status": "RESOLVED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Potential match is not a confirmed entitlement.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-046",
+    "case_id": "SYN-CASE-0046",
+    "scenario": "crisis_salary_delay",
+    "engine": "CRISIS",
+    "target_status": "OPEN",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Reversible essentials-first replanning; no automatic debt push.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-047",
+    "case_id": "SYN-CASE-0047",
+    "scenario": "crisis_medical_shock",
+    "engine": "CRISIS",
+    "target_status": "CLOSED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No payment or claim is submitted.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-048",
+    "case_id": "SYN-CASE-0048",
+    "scenario": "enterprise_below_cost_quote",
+    "engine": "ENTERPRISE",
+    "target_status": "OPEN",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Quote is not sent and no order is created.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-049",
+    "case_id": "SYN-CASE-0049",
+    "scenario": "enterprise_profitable_quote",
+    "engine": "ENTERPRISE",
+    "target_status": "IN_REVIEW",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Resolved is a workflow state, not a settled payment.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-050",
+    "case_id": "SYN-CASE-0050",
+    "scenario": "commons_low_quorum",
+    "engine": "PERSONAL",
+    "target_status": "CLOSED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No private household records are shared.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-051",
+    "case_id": "SYN-CASE-0051",
+    "scenario": "commons_differencing_guard",
+    "engine": "PERSONAL",
+    "target_status": "OPEN",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "The query is suppressed; minimum cohort is not a DP guarantee.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-052",
+    "case_id": "SYN-CASE-0052",
+    "scenario": "consent_revoked_mid_mission",
+    "engine": "PERSONAL",
+    "target_status": "ACTION_READY",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Future protected reads/actions are blocked.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-053",
+    "case_id": "SYN-CASE-0053",
+    "scenario": "mission_worker_recovery",
+    "engine": "PERSONAL",
+    "target_status": "RESOLVED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No blind replay when provider state is uncertain.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-054",
+    "case_id": "SYN-CASE-0054",
+    "scenario": "case_stale_version",
+    "engine": "PERSONAL",
+    "target_status": "CLOSED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "One write wins; the stale caller must reload.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-055",
+    "case_id": "SYN-CASE-0055",
+    "scenario": "personal_duplicate_review",
+    "engine": "PERSONAL",
+    "target_status": "CLOSED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No double charge is confirmed.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-056",
+    "case_id": "SYN-CASE-0056",
+    "scenario": "personal_cashflow_review",
+    "engine": "PERSONAL",
+    "target_status": "CLOSED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No new loan is recommended automatically.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-057",
+    "case_id": "SYN-CASE-0057",
+    "scenario": "personal_data_gap",
+    "engine": "PERSONAL",
+    "target_status": "OPEN",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "User confirmation is required before treatment changes.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-058",
+    "case_id": "SYN-CASE-0058",
+    "scenario": "guardian_invoice_arithmetic",
+    "engine": "GUARDIAN",
+    "target_status": "WAITING_FOR_USER",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Structured values are user-submitted; document remains unscanned.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-059",
+    "case_id": "SYN-CASE-0059",
+    "scenario": "guardian_low_confidence",
+    "engine": "GUARDIAN",
+    "target_status": "CLOSED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "The workflow must abstain until a human verifies the source.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-060",
+    "case_id": "SYN-CASE-0060",
+    "scenario": "opportunity_net_income",
+    "engine": "OPPORTUNITY",
+    "target_status": "WAITING_FOR_USER",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Gross pay is not net income.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-061",
+    "case_id": "SYN-CASE-0061",
+    "scenario": "opportunity_unverified_client",
+    "engine": "OPPORTUNITY",
+    "target_status": "IN_REVIEW",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No application or data sharing occurs without approval.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-062",
+    "case_id": "SYN-CASE-0062",
+    "scenario": "entitlement_stale_source",
+    "engine": "ENTITLEMENT",
+    "target_status": "ACTION_READY",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No eligibility or award is asserted.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-063",
+    "case_id": "SYN-CASE-0063",
+    "scenario": "entitlement_missing_proof",
+    "engine": "ENTITLEMENT",
+    "target_status": "RESOLVED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Potential match is not a confirmed entitlement.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-064",
+    "case_id": "SYN-CASE-0064",
+    "scenario": "crisis_salary_delay",
+    "engine": "CRISIS",
+    "target_status": "RESOLVED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Reversible essentials-first replanning; no automatic debt push.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-065",
+    "case_id": "SYN-CASE-0065",
+    "scenario": "crisis_medical_shock",
+    "engine": "CRISIS",
+    "target_status": "RESOLVED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No payment or claim is submitted.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-066",
+    "case_id": "SYN-CASE-0066",
+    "scenario": "enterprise_below_cost_quote",
+    "engine": "ENTERPRISE",
+    "target_status": "WAITING_EXTERNAL",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Quote is not sent and no order is created.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-067",
+    "case_id": "SYN-CASE-0067",
+    "scenario": "enterprise_profitable_quote",
+    "engine": "ENTERPRISE",
+    "target_status": "WAITING_FOR_USER",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Resolved is a workflow state, not a settled payment.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-068",
+    "case_id": "SYN-CASE-0068",
+    "scenario": "commons_low_quorum",
+    "engine": "PERSONAL",
+    "target_status": "CLOSED",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No private household records are shared.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-069",
+    "case_id": "SYN-CASE-0069",
+    "scenario": "commons_differencing_guard",
+    "engine": "PERSONAL",
+    "target_status": "WAITING_FOR_USER",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "The query is suppressed; minimum cohort is not a DP guarantee.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-070",
+    "case_id": "SYN-CASE-0070",
+    "scenario": "consent_revoked_mid_mission",
+    "engine": "PERSONAL",
+    "target_status": "ACTION_READY",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "Future protected reads/actions are blocked.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-071",
+    "case_id": "SYN-CASE-0071",
+    "scenario": "mission_worker_recovery",
+    "engine": "PERSONAL",
+    "target_status": "WAITING_FOR_USER",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "No blind replay when provider state is uncertain.",
+    "synthetic_only": true
+  },
+  {
+    "scenario_id": "CASEBOOK-072",
+    "case_id": "SYN-CASE-0072",
+    "scenario": "case_stale_version",
+    "engine": "PERSONAL",
+    "target_status": "WAITING_FOR_USER",
+    "expected_invariants": [
+      "owner_scope_is_enforced",
+      "state_version_matches_event_sequence",
+      "event_history_is_append_only",
+      "verified_value_remains_zero_without_settlement_evidence",
+      "no_external_action_occurs_without_an_approved_adapter"
+    ],
+    "safety_note": "One write wins; the stale caller must reload.",
+    "synthetic_only": true
+  }
+]

@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { api } from './api';
-import { demoCases, demoMonthly, demoObligations, demoReport } from './demo';
-import type { AIExplanation, AIQuestion, FinancialAccount, Finding, GuardianCase, PowerReport, Session, ViewKey } from './types';
+import { demoCases, demoMonthly, demoObligations, demoPersonalCases, demoReport } from './demo';
+import type { AIExplanation, AIQuestion, FinancialAccount, Finding, GuardianCase, PersonalCase, PersonalCaseDetail, PersonalCaseStatus, PowerReport, Session, ViewKey } from './types';
 
 const nav: Array<{ id: ViewKey; label: string; eyebrow?: string }> = [
   { id: 'overview', label: 'Your position' },
+  { id: 'casebook', label: 'My actions' },
   { id: 'protection', label: 'Protection' },
   { id: 'opportunity', label: 'Opportunity' },
   { id: 'entitlements', label: 'Entitlements' },
@@ -58,6 +59,8 @@ function App() {
   const [session, setSession] = useState<Session | null>(null);
   const [report, setReport] = useState<PowerReport>(demoReport);
   const [cases, setCases] = useState<GuardianCase[]>(demoCases);
+  const [personalCases, setPersonalCases] = useState<PersonalCase[]>(demoPersonalCases);
+  const [selectedPersonalCase, setSelectedPersonalCase] = useState<PersonalCaseDetail | null>(null);
   const [accounts, setAccounts] = useState<FinancialAccount[]>([]);
   const [periodStart, setPeriodStart] = useState('2026-10-01');
   const [periodEnd, setPeriodEnd] = useState('2026-10-31');
@@ -87,14 +90,17 @@ function App() {
     if (!session) return;
     setBusy(true); setError('');
     try {
-      const [nextReport, nextCases, consents, nextAccounts] = await Promise.all([
+      const [nextReport, nextCases, nextPersonalCases, consents, nextAccounts] = await Promise.all([
         api.report(session.access_token, periodStart, periodEnd, asOf),
         api.guardianCases(session.access_token).catch(() => [] as GuardianCase[]),
+        api.personalCases(session.access_token),
         api.getConsents(session.access_token).catch(() => []),
         api.accounts(session.access_token),
       ]);
       setReport(nextReport);
       setCases(nextCases);
+      setPersonalCases(nextPersonalCases);
+      setSelectedPersonalCase(null);
       setAccounts(nextAccounts);
       const activeAI = consents.find((grant) => grant.purpose === 'ai_assistance' && grant.recipient_id === 'meta-model-api' && grant.status === 'active');
       setAiConsent(Boolean(activeAI));
@@ -123,6 +129,8 @@ function App() {
     setMode('demo');
     setReport(demoReport);
     setCases(demoCases);
+    setPersonalCases(demoPersonalCases);
+    setSelectedPersonalCase(null);
     setAccounts([]);
     setAiResult(null);
     setAiConsent(false);
@@ -138,6 +146,8 @@ function App() {
       if (!result.user.email_verified) throw new Error('Verify this account before using Personal Mode.');
       setSession(result);
       setMode('live');
+      setPersonalCases([]);
+      setSelectedPersonalCase(null);
       setLoginOpen(false);
       setNotice('Connected. Loading your private economic report.');
     } catch (cause) {
@@ -177,14 +187,16 @@ function App() {
       committed = true;
       setNotice(`Statement import ${batch.status.toLowerCase()}: ${batch.inserted_count} new rows, ${batch.updated_count} updates, ${batch.duplicate_count} duplicates. Refreshing your report.`);
       try {
-        const [nextReport, nextCases, consents, nextAccounts] = await Promise.all([
+        const [nextReport, nextCases, nextPersonalCases, consents, nextAccounts] = await Promise.all([
           api.report(session.access_token, periodStart, periodEnd, asOf),
           api.guardianCases(session.access_token).catch(() => [] as GuardianCase[]),
+          api.personalCases(session.access_token),
           api.getConsents(session.access_token).catch(() => []),
           api.accounts(session.access_token),
         ]);
         setReport(nextReport);
         setCases(nextCases);
+        setPersonalCases(nextPersonalCases);
         setAccounts(nextAccounts);
         const activeAI = consents.find((grant) => grant.purpose === 'ai_assistance' && grant.recipient_id === 'meta-model-api' && grant.status === 'active');
         setAiConsent(Boolean(activeAI));
@@ -249,6 +261,136 @@ function App() {
     }
   };
 
+  const openCaseFromFinding = async (finding: Finding) => {
+    setError('');
+    if (mode === 'demo') {
+      const now = new Date().toISOString();
+      const id = `SYN-CASE-LOCAL-${crypto.randomUUID().slice(0, 8)}`;
+      const nextCase: PersonalCaseDetail = {
+        id,
+        source_engine: 'PERSONAL',
+        source_finding_id: finding.finding_id,
+        title: finding.title,
+        currency: finding.currency || report.currency,
+        amount_minor: finding.amount === null ? null : toPaise(finding.amount).toString(),
+        source_snapshot: {
+          finding_id: finding.finding_id,
+          code: finding.code,
+          priority: finding.priority,
+          title: finding.title,
+          explanation: finding.explanation,
+          recommended_next_step: finding.recommended_next_step,
+          amount: finding.amount,
+          currency: finding.currency,
+          source_references: [...finding.source_references],
+          value_status: finding.value_status,
+          report_period: { period_start: periodStart, period_end: periodEnd, as_of: asOf },
+          origin: 'SYNTHETIC_DEMO_FIXTURE',
+        },
+        status: 'OPEN',
+        state_version: 1,
+        created_at: now,
+        updated_at: now,
+        events: [{
+          id: `${id}-E1`, event_sequence: 1, event_type: 'CASE_OPENED', from_status: null,
+          to_status: 'OPEN', note: 'Opened from a synthetic Personal Power finding. No external action was taken.', created_at: now,
+        }],
+      };
+      setPersonalCases((current) => [nextCase, ...current]);
+      setSelectedPersonalCase(nextCase);
+      setView('casebook');
+      setNotice('Synthetic case opened in this browser session. No account record was created.');
+      return;
+    }
+    if (!session) {
+      setError('Connect a verified account before opening a persistent case.');
+      return;
+    }
+    setBusy(true);
+    try {
+      const created = await api.createCaseFromFinding(
+        session.access_token, finding.finding_id, periodStart, periodEnd, asOf,
+      );
+      const detail = await api.personalCase(session.access_token, created.id);
+      setPersonalCases((current) => [created, ...current.filter((item) => item.id !== created.id)]);
+      setSelectedPersonalCase(detail);
+      setView('casebook');
+      setNotice(created.replayed ? 'This finding already has a case. Its existing timeline is open.' : 'Case created from the current server-computed finding.');
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : 'The case could not be opened. Refresh the report and try again.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const openPersonalCase = async (caseId: string) => {
+    if (mode === 'demo') {
+      const item = personalCases.find((candidate) => candidate.id === caseId) as PersonalCaseDetail | undefined;
+      if (item) setSelectedPersonalCase(item);
+      return;
+    }
+    if (!session) return;
+    setBusy(true);
+    setError('');
+    try {
+      const detail = await api.personalCase(session.access_token, caseId);
+      setSelectedPersonalCase(detail);
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : 'The case could not be loaded.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const transitionSelectedCase = async (toStatus: PersonalCaseStatus) => {
+    if (!selectedPersonalCase) return;
+    const current = selectedPersonalCase;
+    const note = toStatus === 'WAITING_EXTERNAL'
+      ? 'User recorded a manually performed external step. AwnNORA did not send a message or contact a provider.'
+      : toStatus === 'RESOLVED'
+        ? 'User marked this workflow resolved. This is not independent settlement or savings evidence.'
+        : `User moved the case to ${toStatus.replaceAll('_', ' ').toLowerCase()} from MAKOS.`;
+    if (mode === 'demo') {
+      const now = new Date().toISOString();
+      const nextVersion = current.state_version + 1;
+      const updated: PersonalCaseDetail = {
+        ...current,
+        status: toStatus,
+        state_version: nextVersion,
+        updated_at: now,
+        events: [...current.events, {
+          id: `${current.id}-E${nextVersion}`,
+          event_sequence: nextVersion,
+          event_type: 'STATUS_CHANGED',
+          from_status: current.status,
+          to_status: toStatus,
+          note,
+          created_at: now,
+        }],
+      };
+      setSelectedPersonalCase(updated);
+      setPersonalCases((items) => items.map((item) => item.id === updated.id ? updated : item));
+      setNotice('Synthetic case state updated locally. Verified value remains unchanged.');
+      return;
+    }
+    if (!session) return;
+    setBusy(true);
+    setError('');
+    try {
+      const updated = await api.transitionCase(
+        session.access_token, current.id, toStatus, current.state_version, note,
+      );
+      setSelectedPersonalCase(updated);
+      setPersonalCases((items) => items.map((item) => item.id === updated.id ? updated : item));
+      setNotice('Case timeline saved. No external action was performed.');
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : 'The case could not be updated. Reload the case before retrying.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+
   const outstanding = useMemo(() => report.findings.filter((item) => item.priority === 'HIGH' || item.priority === 'MEDIUM'), [report]);
   const demoMode = mode === 'demo';
   const syntheticAccountCount = accounts.filter((account) => account.source_type === 'SYNTHETIC_FIXTURE').length;
@@ -272,6 +414,7 @@ function App() {
               <span className={`nav-glyph nav-glyph--${item.id}`} aria-hidden="true" />
               <span>{item.label}</span>
               {item.id === 'protection' && outstanding.length > 0 && <small className="nav-count">{outstanding.length}</small>}
+              {item.id === 'casebook' && personalCases.length > 0 && <small className="nav-count">{personalCases.length}</small>}
             </button>
           ))}
         </div>
@@ -320,7 +463,8 @@ function App() {
           {error && <div className="error-line"><span>!</span>{error}<button onClick={() => setError('')} aria-label="Dismiss error">×</button></div>}
           {showHelp && <div className="help-strip"><strong>One personal system. Six connected engines.</strong><span>MAKOS organizes your cases and decisions. GENIEA coordinates bounded work. KRN preserves evidence and context. Deterministic services protect calculations and permissions.</span><button onClick={() => setShowHelp(false)}>Close</button></div>}
 
-          {view === 'overview' && <OverviewPage report={report} accounts={accounts} mode={mode} busy={busy} outstanding={outstanding} onReview={() => setView('protection')} onIntelligence={() => setView('intelligence')} onRefresh={refreshLive} onCreateAccount={createFinancialAccount} onImportStatement={importFinancialStatement} periodStart={periodStart} periodEnd={periodEnd} setPeriodStart={setPeriodStart} setPeriodEnd={setPeriodEnd} asOf={asOf} />}
+          {view === 'overview' && <OverviewPage report={report} accounts={accounts} mode={mode} busy={busy} outstanding={outstanding} onReview={() => setView('protection')} onIntelligence={() => setView('intelligence')} onRefresh={refreshLive} onCreateAccount={createFinancialAccount} onOpenCase={openCaseFromFinding} onImportStatement={importFinancialStatement} periodStart={periodStart} periodEnd={periodEnd} setPeriodStart={setPeriodStart} setPeriodEnd={setPeriodEnd} asOf={asOf} />}
+          {view === 'casebook' && <CasebookPage cases={personalCases} selectedCase={selectedPersonalCase} mode={mode} busy={busy} onSelect={openPersonalCase} onTransition={transitionSelectedCase} />}
           {view === 'protection' && <ProtectionPage cases={cases} mode={mode} onAI={() => setView('intelligence')} />}
           {view === 'opportunity' && <OpportunityPage mode={mode} />}
           {view === 'entitlements' && <EntitlementsPage mode={mode} />}
@@ -331,18 +475,19 @@ function App() {
         <footer className="page-footer"><span>AWNNORA · INTELLIGENCE FOR THE INDIVIDUAL. POWER FOR EVERYONE.</span><span>FINANCIAL TRUTH IS DETERMINISTIC. DECISIONS STAY YOURS.</span></footer>
       </main>
 
-      {loginOpen && <LoginDialog busy={busy} onClose={() => { setLoginOpen(false); if (!session) setMode('demo'); }} onLogin={onLogin} onConnected={(result) => { setSession(result); setMode('live'); setLoginOpen(false); setNotice('Email verified. Your private workspace is connected.'); }} />}
+      {loginOpen && <LoginDialog busy={busy} onClose={() => { setLoginOpen(false); if (!session) setMode('demo'); }} onLogin={onLogin} onConnected={(result) => { setSession(result); setMode('live'); setPersonalCases([]); setSelectedPersonalCase(null); setLoginOpen(false); setNotice('Email verified. Your private workspace is connected.'); }} />}
     </div>
   );
 }
 
 function OverviewPage({
   report, accounts, mode, busy, outstanding, onReview, onIntelligence, onRefresh,
-  onCreateAccount, onImportStatement, periodStart, periodEnd, setPeriodStart, setPeriodEnd, asOf,
+  onCreateAccount, onOpenCase, onImportStatement, periodStart, periodEnd, setPeriodStart, setPeriodEnd, asOf,
 }: {
   report: PowerReport; accounts: FinancialAccount[]; mode: 'demo' | 'live'; busy: boolean; outstanding: Finding[];
   onReview: () => void; onIntelligence: () => void; onRefresh: () => void;
   onCreateAccount: (name: string, type: string) => Promise<FinancialAccount>;
+  onOpenCase: (finding: Finding) => void;
   onImportStatement: (accountId: string, file: File) => Promise<void>;
   periodStart: string; periodEnd: string; setPeriodStart: (value: string) => void;
   setPeriodEnd: (value: string) => void; asOf: string;
@@ -396,7 +541,7 @@ function OverviewPage({
           </div>
           <div className="finding-list">
             {report.findings.length === 0 && <div className="empty-state">No findings for this period. That is not a guarantee that every charge or opportunity has been checked.</div>}
-            {report.findings.slice(0, 4).map((finding) => <FindingRow key={finding.finding_id} finding={finding} onClick={onReview} />)}
+            {report.findings.slice(0, 4).map((finding) => <div className="finding-action-row" key={finding.finding_id}><FindingRow finding={finding} onClick={onReview} /><button className="finding-open-case" onClick={() => onOpenCase(finding)}>Open case</button></div>)}
           </div>
         </div>
 
@@ -430,6 +575,68 @@ function OverviewPage({
       </section>
     </>
   );
+}
+
+function CasebookPage({
+  cases, selectedCase, mode, busy, onSelect, onTransition,
+}: {
+  cases: PersonalCase[];
+  selectedCase: PersonalCaseDetail | null;
+  mode: 'demo' | 'live';
+  busy: boolean;
+  onSelect: (caseId: string) => void;
+  onTransition: (toStatus: PersonalCaseStatus) => void;
+}) {
+  const selected = selectedCase;
+  const nextStatuses: Record<PersonalCaseStatus, PersonalCaseStatus[]> = {
+    OPEN: ['IN_REVIEW', 'CLOSED'],
+    IN_REVIEW: ['ACTION_READY', 'WAITING_FOR_USER', 'CLOSED'],
+    ACTION_READY: ['IN_REVIEW', 'WAITING_FOR_USER', 'WAITING_EXTERNAL', 'CLOSED'],
+    WAITING_FOR_USER: ['IN_REVIEW', 'ACTION_READY', 'CLOSED'],
+    WAITING_EXTERNAL: ['IN_REVIEW', 'RESOLVED', 'CLOSED'],
+    RESOLVED: ['CLOSED'],
+    CLOSED: [],
+  };
+  const statusLabel: Record<PersonalCaseStatus, string> = {
+    OPEN: 'Open', IN_REVIEW: 'In review', ACTION_READY: 'Action ready',
+    WAITING_FOR_USER: 'Waiting for you', WAITING_EXTERNAL: 'Awaiting response',
+    RESOLVED: 'Marked resolved', CLOSED: 'Closed',
+  };
+  const snapshot = selected?.source_snapshot;
+  return <>
+    <section className="page-intro casebook-intro">
+      <div><ShellLabel>MAKOS · PERSONAL CASEBOOK</ShellLabel><h1>Your next steps,<br /><em>kept in one place.</em></h1><p>Turn a finding into a trackable piece of work. Every case keeps its source context, current state and change history.</p></div>
+      <div className="intro-callout"><span>USER-CONTROLLED WORKFLOW</span><strong>No hidden submissions.</strong><small>Case status records your progress. AwnNORA does not contact providers or move money.</small></div>
+    </section>
+    <div className="casebook-notice"><strong>Important distinction</strong><span>“Awaiting response” means you are tracking a step you performed yourself. “Marked resolved” is not proof of a refund, award, saving or settled payment. Verified value remains separate.</span></div>
+    <div className="casebook-layout">
+      <aside className="casebook-list">
+        <div className="casebook-list-head"><div><ShellLabel>YOUR CASES</ShellLabel><h2>Work in progress</h2></div><span>{cases.length}</span></div>
+        {cases.length === 0 && <div className="casebook-empty">No cases yet. Open one from a finding in Your position.</div>}
+        {cases.map((item) => <button key={item.id} className={`casebook-list-item ${selected?.id === item.id ? 'is-selected' : ''}`} onClick={() => onSelect(item.id)}>
+          <span className="casebook-item-top"><small>{item.source_engine} · {item.source_finding_id}</small><i className={`case-status case-status--${item.status.toLowerCase()}`}>{statusLabel[item.status]}</i></span>
+          <strong>{item.source_snapshot.title || item.title}</strong>
+          <span className="casebook-item-date">Updated {dateLabel(item.updated_at.slice(0, 10))}</span>
+        </button>)}
+      </aside>
+      <section className="casebook-detail" aria-live="polite">
+        {!selected ? <div className="casebook-empty casebook-empty--detail"><ShellLabel>CASE DETAIL</ShellLabel><h2>Select a case</h2><p>Choose a case to inspect the finding that created it, its current state and its complete event timeline.</p></div> : <>
+          <div className="case-detail-top"><div><ShellLabel>{`CASE ${selected.id.slice(0, 12).toUpperCase()}`}</ShellLabel><h2>{snapshot?.title || selected.title}</h2><p>{snapshot?.explanation || 'Source explanation is not available.'}</p></div><i className={`case-status case-status--${selected.status.toLowerCase()}`}>{statusLabel[selected.status]}</i></div>
+          <div className="case-facts">
+            <div><small>SOURCE FINDING</small><strong>{selected.source_finding_id}</strong></div>
+            <div><small>REVIEW PERIOD</small><strong>{snapshot?.report_period.period_start} to {snapshot?.report_period.period_end}</strong></div>
+            <div><small>REFERENCE AMOUNT</small><strong>{selected.amount_minor === null ? 'Not specified' : inr(BigInt(selected.amount_minor))}</strong></div>
+            <div><small>CASE VERSION</small><strong>{selected.state_version}</strong></div>
+          </div>
+          <div className="case-next-step"><ShellLabel>SOURCE-RECOMMENDED NEXT STEP</ShellLabel><p>{snapshot?.recommended_next_step || 'Review the underlying source records before acting.'}</p><small>Finding snapshot is frozen at case creation. Refresh the report to inspect newer source data.</small></div>
+          <div className="case-transition-area"><div><ShellLabel>UPDATE YOUR WORKFLOW</ShellLabel><p>Choose the next state that reflects what you have actually done.</p></div><div className="case-transition-actions">{nextStatuses[selected.status].map((status) => <button key={status} disabled={busy} className={status === 'CLOSED' ? 'case-transition-secondary' : 'case-transition-primary'} onClick={() => onTransition(status)}>{status === 'WAITING_EXTERNAL' ? 'I sent it manually' : status === 'RESOLVED' ? 'Mark resolved' : statusLabel[status]}</button>)}</div></div>
+          <div className="case-timeline-head"><div><ShellLabel>IMMUTABLE HISTORY</ShellLabel><h3>What changed</h3></div><span>{selected.events.length} events</span></div>
+          <ol className="case-timeline">{selected.events.map((item) => <li key={item.id}><span className="timeline-marker" /><div><div className="timeline-event-top"><strong>{item.event_type === 'CASE_OPENED' ? 'Case opened' : `${statusLabel[item.to_status]}`}</strong><time>{new Date(item.created_at).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })}</time></div>{item.note && <p>{item.note}</p>}<small>Event {item.event_sequence} · {item.from_status ? `${statusLabel[item.from_status]} → ` : ''}{statusLabel[item.to_status]}</small></div></li>)}</ol>
+          <div className="casebook-safety-foot">{mode === 'demo' ? 'SYNTHETIC DEMONSTRATION · Local browser state only. No API records are created.' : 'PRIVATE ACCOUNT · Changes are saved to your authenticated account. External actions are not performed.'}</div>
+        </>}
+      </section>
+    </div>
+  </>;
 }
 
 function Metric({ label, value, sub, tone = 'normal' }: { label: string; value: string; sub: string; tone?: 'normal' | 'positive' | 'negative' }) {
@@ -692,3 +899,5 @@ function LoginDialog({ busy, onClose, onLogin, onConnected }: {
 }
 
 export default App;
+
+// AWNNORA_ITERATION_06_CASEBOOK: integrated Personal Casebook view, case actions and API-backed transitions.

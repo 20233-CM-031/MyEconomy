@@ -566,3 +566,152 @@ class GuardianCase(Base):
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=utc_now, onupdate=utc_now
     )
+
+
+class PersonalCase(Base):
+    """Owner-private case opened from a server-computed economic finding."""
+
+    __tablename__ = "personal_cases"
+    __table_args__ = (
+        UniqueConstraint(
+            "owner_user_id", "idempotency_key", name="uq_personal_case_owner_idempotency"
+        ),
+        UniqueConstraint("id", "owner_user_id", name="uq_personal_case_id_owner"),
+        UniqueConstraint(
+            "owner_user_id",
+            "source_engine",
+            "source_finding_id",
+            "period_start",
+            "period_end",
+            "as_of",
+            "currency",
+            name="uq_personal_case_source_identity",
+        ),
+        CheckConstraint("source_engine = 'PERSONAL'", name="ck_personal_case_source_engine"),
+        CheckConstraint(
+            "status IN ('OPEN', 'IN_REVIEW', 'ACTION_READY', 'WAITING_FOR_USER', "
+            "'WAITING_EXTERNAL', 'RESOLVED', 'CLOSED')",
+            name="ck_personal_case_status",
+        ),
+        CheckConstraint("length(currency) = 3", name="ck_personal_case_currency"),
+        CheckConstraint("length(request_sha256) = 64", name="ck_personal_case_request_hash"),
+        CheckConstraint("state_version >= 1", name="ck_personal_case_version"),
+        CheckConstraint(
+            "period_end >= period_start AND as_of >= period_end", name="ck_personal_case_period"
+        ),
+        Index("ix_personal_cases_owner_updated", "owner_user_id", "updated_at"),
+        Index("ix_personal_cases_owner_status", "owner_user_id", "status"),
+    )
+
+    id: Mapped[UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=uuid4)
+    owner_user_id: Mapped[UUID] = mapped_column(
+        Uuid(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
+    source_engine: Mapped[str] = mapped_column(String(32), nullable=False, default="PERSONAL")
+    source_finding_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    idempotency_key: Mapped[str] = mapped_column(String(128), nullable=False)
+    request_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    period_start: Mapped[date] = mapped_column(Date, nullable=False)
+    period_end: Mapped[date] = mapped_column(Date, nullable=False)
+    as_of: Mapped[date] = mapped_column(Date, nullable=False)
+    currency: Mapped[str] = mapped_column(String(3), nullable=False)
+    amount_minor: Mapped[int | None] = mapped_column(BigInteger, nullable=True)
+    title: Mapped[str] = mapped_column(String(256), nullable=False)
+    source_snapshot: Mapped[dict[str, object]] = mapped_column(JSON, nullable=False)
+    status: Mapped[str] = mapped_column(String(24), nullable=False, default="OPEN")
+    state_version: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utc_now, onupdate=utc_now
+    )
+
+
+class PersonalCaseEvent(Base):
+    """Append-only lifecycle event. Updates/deletes are rejected at ORM and DB layers."""
+
+    __tablename__ = "personal_case_events"
+    __table_args__ = (
+        UniqueConstraint("case_id", "event_sequence", name="uq_personal_case_event_sequence"),
+        UniqueConstraint("case_id", "idempotency_key", name="uq_personal_case_event_idempotency"),
+        ForeignKeyConstraint(
+            ["case_id", "actor_user_id"],
+            ["personal_cases.id", "personal_cases.owner_user_id"],
+            ondelete="CASCADE",
+            name="fk_personal_case_event_actor_owner",
+        ),
+        CheckConstraint("event_sequence >= 1", name="ck_personal_case_event_sequence"),
+        CheckConstraint(
+            "event_type IN ('CASE_OPENED', 'STATUS_CHANGED')", name="ck_personal_case_event_type"
+        ),
+        CheckConstraint(
+            "to_status IN ('OPEN', 'IN_REVIEW', 'ACTION_READY', 'WAITING_FOR_USER', "
+            "'WAITING_EXTERNAL', 'RESOLVED', 'CLOSED')",
+            name="ck_personal_case_event_to_status",
+        ),
+        CheckConstraint(
+            "from_status IS NULL OR from_status IN ('OPEN', 'IN_REVIEW', 'ACTION_READY', "
+            "'WAITING_FOR_USER', 'WAITING_EXTERNAL', 'RESOLVED', 'CLOSED')",
+            name="ck_personal_case_event_from_status",
+        ),
+        CheckConstraint("length(request_sha256) = 64", name="ck_personal_case_event_hash"),
+        Index("ix_personal_case_events_case_sequence", "case_id", "event_sequence"),
+    )
+
+    id: Mapped[UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=uuid4)
+    case_id: Mapped[UUID] = mapped_column(Uuid(as_uuid=True), nullable=False)
+    actor_user_id: Mapped[UUID] = mapped_column(Uuid(as_uuid=True), nullable=False)
+    event_sequence: Mapped[int] = mapped_column(Integer, nullable=False)
+    event_type: Mapped[str] = mapped_column(String(32), nullable=False)
+    from_status: Mapped[str | None] = mapped_column(String(24), nullable=True)
+    to_status: Mapped[str] = mapped_column(String(24), nullable=False)
+    note: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    idempotency_key: Mapped[str] = mapped_column(String(128), nullable=False)
+    request_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
+
+
+def _personal_case_events_are_immutable(
+    _mapper: object, _connection: object, _target: object
+) -> None:
+    raise RuntimeError("Personal case events are append-only and cannot be modified or deleted.")
+
+
+event.listen(PersonalCaseEvent, "before_update", _personal_case_events_are_immutable)
+event.listen(PersonalCaseEvent, "before_delete", _personal_case_events_are_immutable)
+
+
+def _personal_case_source_is_immutable(
+    _mapper: object, _connection: object, target: PersonalCase
+) -> None:
+    from sqlalchemy import inspect as sa_inspect
+
+    immutable_fields = (
+        "owner_user_id",
+        "source_engine",
+        "source_finding_id",
+        "idempotency_key",
+        "request_sha256",
+        "period_start",
+        "period_end",
+        "as_of",
+        "currency",
+        "amount_minor",
+        "title",
+        "source_snapshot",
+        "created_at",
+    )
+    state = sa_inspect(target)
+    if any(state.attrs[name].history.has_changes() for name in immutable_fields):
+        raise RuntimeError("Personal case source facts are immutable after case creation.")
+
+
+event.listen(PersonalCase, "before_update", _personal_case_source_is_immutable)
+
+
+def _personal_case_delete_is_forbidden(
+    _mapper: object, _connection: object, _target: PersonalCase
+) -> None:
+    raise RuntimeError("Personal cases cannot be deleted outside an approved retention process.")
+
+
+event.listen(PersonalCase, "before_delete", _personal_case_delete_is_forbidden)

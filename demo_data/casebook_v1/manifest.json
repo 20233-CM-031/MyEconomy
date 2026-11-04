@@ -1,0 +1,29 @@
+{
+  "dataset": "AwnNORA Personal Casebook Synthetic Lifecycle v1",
+  "seed": 20261104,
+  "generated_at": "fixed-seed reproducible corpus; timestamps are synthetic",
+  "case_count": 72,
+  "event_count": 198,
+  "scenario_count": 72,
+  "owners": 24,
+  "engines": [
+    "PERSONAL",
+    "GUARDIAN",
+    "OPPORTUNITY",
+    "ENTITLEMENT",
+    "CRISIS",
+    "ENTERPRISE"
+  ],
+  "status_distribution": {
+    "OPEN": 11,
+    "IN_REVIEW": 9,
+    "ACTION_READY": 11,
+    "WAITING_FOR_USER": 14,
+    "WAITING_EXTERNAL": 5,
+    "RESOLVED": 10,
+    "CLOSED": 12
+  },
+  "backend_scope": "Only PERSONAL lifecycle is implemented by the Iteration 06 casebook API. Other engine labels are scenario fixtures, not implemented backends.",
+  "money_rule": "amount_minor is integer paise; all verified_value_created_minor values are zero because no real settlement evidence exists.",
+  "privacy_rule": "No real people, account numbers, bank identifiers, phone numbers or credentials are present."
+}

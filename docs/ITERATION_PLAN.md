@@ -85,3 +85,7 @@ Known gaps: no real SMTP provider tested, invitation delivery remains manual, no
 6. Migration, rollback, idempotency and deployment sequence documented.
 7. Codebase map, feature catalog, project memory, status and iteration record updated.
 8. Acceptance criteria demonstrated before next iteration starts.
+
+## Iteration 07 — Personal Casebook
+
+Turn Personal Power findings into owner-private, idempotent, versioned workflow cases with immutable event history and a MAKOS case workspace. This is a workflow spine, not external execution or outcome settlement.
