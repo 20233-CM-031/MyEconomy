@@ -10,9 +10,9 @@ The product vision is to make each person stronger from Day One through a privat
 
 ## Current implementation status
 
-This repository is a carefully engineered modular monolith. Iteration 00 provides deterministic cashflow analysis. Iteration 01 adds identity/session management, household boundaries, scoped consent, revocation and append-only audit. Iteration 02 adds owner-scoped financial accounts, bounded transaction imports with provenance/idempotency, a persisted ledger, recurring obligations and posted-only cashflow. Iteration 03 (merged in PR #3) adds deterministic economic-intelligence rules for invoice review, offer net value, Commons aggregation, VIVC and GENIEA tool policy. Iteration 04 (local candidate, not yet pushed) adds authenticated Guardian evidence upload, private local file storage, persisted invoice-review cases, audit, owner-scoped case APIs and explicit draft approval.
+This repository is a modular-monolith foundation. Iterations 00–05 are merged into `main`: deterministic cashflow; identity, household boundaries and consent; owner-scoped financial imports and ledger; economic-intelligence domain primitives; Guardian evidence/case workflow; and Personal Mode Power Report plus first-user journey and Scenario Lab. PR #5 is merged at `7408269421f4c1a166e58ec0310fc9c9da2c2ede`.
 
-Iteration 04 is a real API vertical slice for development/demo, not a claim that all AwnNORA capabilities are production complete. Evidence files remain `STORED_UNSCANNED`; PDF/image parsing, OCR, Meta model extraction, malware scanning, provider delivery, durable GENIEA runtime, KRN graph persistence and MAKOS UI are not implemented in this slice. See `docs/PROJECT_STATUS.md` and `docs/FEATURE_CATALOG.md` for exact status and production gates.
+Iteration 05 adds an owner-private, read-only Personal Power Report, a local first-user journey runner and 46 synthetic scenario templates / 1,150 deterministic scenario runs. The Scenario Lab validates fixture invariants; it is not a runtime simulation engine and does not prove that every engine is implemented. Guardian evidence remains `STORED_UNSCANNED`, so OCR or model extraction from those uploads is not enabled. A MAKOS TypeScript web client and the consent-gated Meta explanation adapter are supplied as a separate local engineering overlay under `docs/transfer/`; apply and test that package before treating those additions as present in the repository. See `docs/PROJECT_STATUS.md`, `docs/FEATURE_CATALOG.md` and the latest transfer notes for exact status and production gates.
 
 ## Engineering memory — read first
 
@@ -128,3 +128,9 @@ Iteration 02 adds owner-scoped account metadata, bounded CSV statement imports, 
 A local additive engineering overlay is supplied in `docs/transfer/`. It adds the first authenticated Personal Power Report endpoint, a first-user journey runner, and a deterministic scenario laboratory. The transfer must be applied and verified by the repository owner; it is not a remote commit. See `docs/transfer/ITERATION-05-PERSONAL-POWER.md`, `docs/transfer/FIRST_USER_RUNBOOK.md` and `docs/transfer/SCENARIO_LAB.md`.
 
 The included scenario workload is synthetic only. It does not represent live users, partner activity, benefit awards, payments or verified economic value.
+
+
+<!-- AWNNORA-TURBO-WEB-META-2026-11-04 -->
+## MAKOS TypeScript web and Meta assistance overlay
+
+The local overlay adds `apps/web` (React + TypeScript + Vite), a purpose-specific AI assistance consent, and an aggregate-only Muse Spark Standard-mode explanation endpoint. Run the instructions in `docs/transfer/TURBO_WEB_META_RUNBOOK.md`. These files are not applied to a checkout until the repository owner runs `apply_overlay.py`; no Git operations are performed by that script.

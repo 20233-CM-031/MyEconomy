@@ -4,9 +4,9 @@
 **Product/project:** AwnNORA
 **Implementation repository:** `20233-CM-031/MyEconomy`
 **Default branch:** `main`
-**Verified remote `main` HEAD:** `5b5cf669773d5c0cd33f5abffb8c46d44cead797` — merge of PR #3, `iteration/03-guardian-evidence-kernel`
-**Latest local engineering candidate:** Iteration 04 — persisted Guardian Evidence & Invoice Review workflow
-**Remote Iteration 04 branch/PR:** Not created; the current GitHub App installation still returns HTTP 403 for branch creation.
+**Verified remote `main` HEAD:** `7408269421f4c1a166e58ec0310fc9c9da2c2ede` — merge of PR #5, `iteration/05-personal-power-scenario-lab`
+**Latest merged engineering iteration:** Iteration 05 — Personal Mode Power Report + first-user journey + Scenario Lab.
+**Next local overlay:** MAKOS TypeScript web application + consent-gated Meta model explanation adapter; this package is not yet applied or pushed.
 
 ## 1. Product identity and architecture
 
@@ -16,16 +16,13 @@ AwnNORA must deliver individual value on Day One through Personal Mode. Commons 
 
 ## 2. Verified remote baseline
 
-Live GitHub inspection on 2026-11-04 confirmed:
+Read-only GitHub inspection on 2026-11-04 confirmed:
 
-- Repository: `20233-CM-031/MyEconomy`.
-- Default branch: `main`.
-- Latest commit: `5b5cf669773d5c0cd33f5abffb8c46d44cead797`, merge of PR #3 (`feat: add AwnNORA economic intelligence kernel`).
-- The `main` branch includes Iterations 00–03. PR #3's context-map/name corrections and `domain/economic_intelligence.py` are present on remote `main`.
-- The GitHub connector returned no commit status records and no workflow runs for this SHA through the available status endpoints; therefore this report does **not** claim PR #3 CI passed.
-- The connected identity is `20233-CM-031`; the GitHub App installation visible to the connector remains under `kareem1207`, whose installation repository list does not include `20233-CM-031/MyEconomy`. Branch creation for Iteration 04 returned HTTP 403 `Resource not accessible by integration`.
-
-No remote Iteration 04 branch, commit or PR has been created by this assistant. Do not put this candidate directly on `main`.
+- Repository: `20233-CM-031/MyEconomy`; default branch `main`.
+- Current `main` HEAD: `7408269421f4c1a166e58ec0310fc9c9da2c2ede`, merge of PR #5 (`feat: add AwnNORA Personal Mode first-user journey and Scenario Lab`).
+- PR #4 (Guardian evidence/case workflow) and PR #5 (Personal Power Report / Scenario Lab) are merged.
+- PR #5 reports 94 passing tests, one warning, and Ruff lint/format checks passing. The available GitHub status/workflow endpoints returned no status records for the merge SHA, so this report does not independently certify a green CI run.
+- No branch, commit, PR or file was written by this assistant. All subsequent implementation is delivered as local downloadable packages for the repository owner to apply.
 
 ## 3. Iteration delivery ledger
 
@@ -116,3 +113,9 @@ The live GitHub code/migrations/tests and remote branch state determine what is 
 The verified remote baseline used to prepare the additive overlay was `60fa93d191fcd6566719db553d4628905a0b64f7`. The overlay adds a local Personal Mode Power Report vertical slice and a first-user runner. These additions are **not merged or pushed** by the assistant; after the repository owner applies them, run the full repository suite and the first-user runbook before treating the slice as accepted. Package-level domain tests and scenario-lab validation are recorded in `docs/transfer/ITERATION-05-PERSONAL-POWER.md`.
 
 The Scenario Lab ships 46 templates × 25 deterministic replicas (1,150 runs) across 12 capability categories. All generated runs are `SYNTHETIC_FIXTURE`; no external side effect occurs and VIVC is zero. This complements—not replaces—the existing 42-table / 17,425-row `synthetic_v1` corpus.
+
+
+<!-- AWNNORA-TURBO-WEB-META-2026-11-04 -->
+## 8. Next overlay — MAKOS web + Meta assistance
+
+A local additive package supplies a TypeScript/React/Vite MAKOS workspace and an API-backed Muse Spark 1.3 Standard-mode explanation path with `AI_ASSISTANCE` consent. It is not included in the verified remote HEAD until applied by the repository owner. The Meta endpoint sends aggregate Personal Power fields and genericized findings only; it does not receive transaction rows, account identifiers, names, payee labels, documents or evidence locators. Run `docs/transfer/TURBO_WEB_META_RUNBOOK.md` and the transfer validation steps before accepting the slice.

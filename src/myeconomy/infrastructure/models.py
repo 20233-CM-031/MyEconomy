@@ -158,7 +158,8 @@ class ConsentGrant(Base):
         CheckConstraint(
             "purpose IN ('household_sharing', 'commons_aggregation', 'opportunity_matching', "
             "'benefits_discovery', 'partner_offer_personalization', 'research_participation', "
-            "'support_case_processing', 'economic_defence', 'enterprise_assistance')",
+            "'support_case_processing', 'economic_defence', 'enterprise_assistance', "
+            "'ai_assistance')",
             name="ck_consent_purpose",
         ),
         Index("ix_consent_grants_subject_user_id", "subject_user_id"),

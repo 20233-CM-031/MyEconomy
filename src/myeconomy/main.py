@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 from myeconomy.api.financial_routes import router as financial_router
 from myeconomy.api.guardian_routes import router as guardian_router
 from myeconomy.api.identity_routes import router as identity_router
+from myeconomy.api.meta_assistance_routes import router as meta_assistance_router
 from myeconomy.api.personal_power_routes import router as personal_power_router
 from myeconomy.api.routes import router as cashflow_router
 from myeconomy.domain.errors import ApplicationError
@@ -31,6 +32,7 @@ def create_app() -> FastAPI:
     app.include_router(financial_router)
     app.include_router(guardian_router)
     app.include_router(personal_power_router)
+    app.include_router(meta_assistance_router)
 
     @app.exception_handler(ApplicationError)
     async def application_error_handler(_request: Request, exc: ApplicationError) -> JSONResponse:

@@ -69,3 +69,9 @@ Local evidence: `PYTHONPATH=src pytest -q` (84 passed), compileall, SQLite migra
 ## Parallel workstream contract
 
 See `docs/transfer/TURBO_PARALLEL_DELIVERY_MODEL.md` for the updated parallel workstream boundaries, integration gates and definition of done. Parallelize bounded subsystem work against agreed typed contracts. Do not create disconnected stubs, duplicate money/consent logic, leak raw private records into Commons, or allow models to mutate external state. Every workstream must land a complete testable vertical slice and update shared project status only after integration evidence exists.
+
+
+<!-- AWNNORA-TURBO-WEB-META-2026-11-04 -->
+## Current remote baseline and web/Meta workstream
+
+The verified remote baseline is `main` at `7408269421f4c1a166e58ec0310fc9c9da2c2ede` (merged PR #5). The next local Turbo overlay creates the MAKOS TypeScript web workspace and a narrow Meta Model API explanation adapter. The new consent purpose is scoped to `financial_summary` plus `household_obligations` and `meta-model-api`. The model is pinned to `muse-spark-1.3` Standard mode; the endpoint is read-only, schema-constrained, stores no prompt, has no tools, and cannot create money/eligibility/settlement facts. See `docs/transfer/TURBO_PARALLEL_SYSTEM.md` and `docs/transfer/HACKATHON_MODEL_STRATEGY.md`.
