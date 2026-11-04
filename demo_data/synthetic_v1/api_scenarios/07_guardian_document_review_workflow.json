@@ -1,0 +1,36 @@
+{
+  "scenario_name": "AwnNORA Guardian: private evidence intake to user-approved action draft",
+  "scenario_version": "1.0.0",
+  "synthetic": true,
+  "environment": "SANDBOX",
+  "fictional_persona": "CUS00002 / Asha Rao",
+  "fictional_provider": "Deccan Fiber Connect (invented demo provider)",
+  "currency": "INR",
+  "source_documents": [
+    "source_documents/guardian/guardian_previous_bill.pdf",
+    "source_documents/guardian/guardian_current_bill_anomaly.pdf",
+    "source_documents/guardian/guardian_arithmetic_mismatch.pdf"
+  ],
+  "journey": [
+    "Upload each PDF to POST /api/v1/guardian/evidence-documents with a unique Idempotency-Key.",
+    "The API validates the file signature, enforces a 5 MiB cap, stores bytes in a private local adapter and records SHA-256 provenance.",
+    "The document remains STORED_UNSCANNED; the demo supplies structured fields as USER_SUBMITTED_STRUCTURED_FIELDS and does not pretend OCR or model extraction occurred.",
+    "Submit the structured invoice to POST /api/v1/guardian/invoice-reviews with a separate Idempotency-Key.",
+    "The deterministic review checks line arithmetic, subtotal/total reconciliation, source-field evidence, confidence, duplicate file digest and comparable historical invoices.",
+    "Review the case through GET /api/v1/guardian/cases and draft a clarification letter through POST /api/v1/guardian/cases/{case_id}/draft.",
+    "The user may explicitly approve the draft via POST /api/v1/guardian/cases/{case_id}/approve-draft. This does not send it; provider delivery is not implemented."
+  ],
+  "expected_outcomes": {
+    "previous_bill": "CONSISTENT (baseline case)",
+    "current_bill": "REVIEW_REQUIRED with UNUSUAL_INCREASE (INR 800.00 to INR 1180.00); a review signal, not proof of wrongdoing",
+    "arithmetic_mismatch": "REVIEW_REQUIRED with LINE_ARITHMETIC_MISMATCH",
+    "action": "Draft only; no external contact, complaint submission, cancellation or payment"
+  },
+  "safety_labels": [
+    "SYNTHETIC_FIXTURE_ONLY",
+    "NO_REAL_PERSON",
+    "NO_REAL_PROVIDER",
+    "NO_REAL_TRANSACTION",
+    "NO_EXTERNAL_ACTION"
+  ]
+}

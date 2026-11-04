@@ -4,76 +4,107 @@
 **Product/project:** AwnNORA
 **Implementation repository:** `20233-CM-031/MyEconomy`
 **Default branch:** `main`
-**Verified remote `main` HEAD:** `a55cb388ef7baf72766e2fcabe89f0dee1c45979` — merge of PR #2, `iteration/02-financial-data-plane`
-**Current local candidate:** Iteration 03 — Economic Intelligence Domain Kernel
-**Remote Iteration 03 branch/PR:** Not created; GitHub branch write is blocked by app-installation ownership mismatch.
+**Verified remote `main` HEAD:** `5b5cf669773d5c0cd33f5abffb8c46d44cead797` — merge of PR #3, `iteration/03-guardian-evidence-kernel`
+**Latest local engineering candidate:** Iteration 04 — persisted Guardian Evidence & Invoice Review workflow
+**Remote Iteration 04 branch/PR:** Not created; the current GitHub App installation still returns HTTP 403 for branch creation.
 
-## 1. Identity and architecture
+## 1. Product identity and architecture
 
-AwnNORA is the confirmed product/project name. `MyEconomy` remains the existing code repository and Python package name, not an alternative brand. **MAKOS** is the operational workspace and workflow surface. **GENIEA** coordinates personal/specialist agents, bounded missions and tool use. **KRN** maintains knowledge, evidence, relationships, provenance and temporal state. These are logical systems; the repository does not yet contain complete MAKOS, GENIEA or KRN runtime packages. Read `AWNNORA_CONTEXT_MAP.md` before further engineering.
+AwnNORA is the confirmed project/product name. `MyEconomy` is the implementation repository and Python package name. **MAKOS** is the operational workspace and workflow surface; **GENIEA** coordinates bounded agent missions and tools; **KRN** structures private knowledge, evidence, provenance and relationships. These are first-class architecture responsibilities, not claims that all three runtime subsystems already exist. Read `docs/AWNNORA_CONTEXT_MAP.md` first.
+
+AwnNORA must deliver individual value on Day One through Personal Mode. Commons multiplies value through explicit, purpose-limited, revocable sharing; it must never be a prerequisite for a person to use the product. The product is not merely a budget tracker, ad platform or chatbot.
 
 ## 2. Verified remote baseline
 
-Live GitHub read confirms `main` at `a55cb388ef7baf72766e2fcabe89f0dee1c45979`, merging PR #2 (`feat: add owner-scoped financial data plane`). The prior Iteration 02 CI run `41801123405` passed the Python 3.12, Python 3.13 and PostgreSQL 16 jobs. Iteration 00, 01 and 02 are therefore the remote baseline. Some earlier status text in the repository was stale and described the pre-PR #2 SHA; this status replaces it.
+Live GitHub inspection on 2026-11-04 confirmed:
 
-The current local worktree was reconstructed from `MyEconomy_Iteration_02_Complete_Project.zip` and reconciled with live repository metadata and memory docs. It is not a remote `git clone` and must be applied to a fresh owner-authenticated checkout by branch/patch before merging.
+- Repository: `20233-CM-031/MyEconomy`.
+- Default branch: `main`.
+- Latest commit: `5b5cf669773d5c0cd33f5abffb8c46d44cead797`, merge of PR #3 (`feat: add AwnNORA economic intelligence kernel`).
+- The `main` branch includes Iterations 00–03. PR #3's context-map/name corrections and `domain/economic_intelligence.py` are present on remote `main`.
+- The GitHub connector returned no commit status records and no workflow runs for this SHA through the available status endpoints; therefore this report does **not** claim PR #3 CI passed.
+- The connected identity is `20233-CM-031`; the GitHub App installation visible to the connector remains under `kareem1207`, whose installation repository list does not include `20233-CM-031/MyEconomy`. Branch creation for Iteration 04 returned HTTP 403 `Resource not accessible by integration`.
 
-## 3. Implemented and merged
+No remote Iteration 04 branch, commit or PR has been created by this assistant. Do not put this candidate directly on `main`.
 
-### Iteration 00 — deterministic cashflow foundation
+## 3. Iteration delivery ledger
 
-- Python 3.12/3.13 FastAPI application, Pydantic API contracts and health/readiness.
-- Framework-independent Decimal money/cashflow analysis over caller-provided inputs.
+### Iteration 00 — deterministic cashflow foundation (merged)
 
-### Iteration 01 — identity, household trust and consent
+- FastAPI/Pydantic application and health/readiness routes.
+- Framework-independent Decimal money/cashflow calculation with currency precision rules.
 
-- Registration, email verification, opaque session lifecycle and password hashing.
-- Household ownership, membership and invitation lifecycle.
-- Purpose/category/recipient-scoped consent and revocation.
-- Append-only audit events protected at ORM/database layers.
+### Iteration 01 — identity, household trust and consent (merged)
 
-### Iteration 02 — owner-scoped Financial Data Plane v1
+- Registration, email verification, opaque sessions, household membership/invitations, consent grants/revocation and append-only audit events.
+- Password hashing, hashed session/verification token storage, verified-email gates and ownership boundaries.
 
-- Financial account metadata, transaction import batches, persisted ledger and recurring obligations.
-- Bounded strict CSV parsing, source SHA-256, sanitized filename, owner-scoped idempotency, provenance and duplicate review signals.
-- Integer minor-unit money and currency/account constraints; no implicit FX.
-- Monotonic provider status transitions and financial-fact immutability enforced in application/database logic.
-- Posted-only cashflow read model with conservative `IGNORE` default for unclassified CSV rows.
-- Synthetic seeder guarded for development/test/demo only.
+### Iteration 02 — financial data plane v1 (merged)
 
-## 4. Iteration 03 — local domain kernel (not remotely pushed)
+- Owner-scoped financial accounts, bounded CSV ingestion, import provenance/idempotency, persisted transactions and recurring obligations.
+- Integer minor-unit amounts with currency, immutable financial facts and monotonic provider status transitions guarded at application/database layers.
+- Persisted posted-only cashflow read model. Unknown transaction classification defaults to `IGNORE`; no inferred income/expense.
+- Existing synthetic relational corpus: 42 entity tables, 17,425 rows, 120 fictional adults, 55 households and multimodal documents.
 
-Added `src/myeconomy/domain/economic_intelligence.py` and `tests/test_economic_intelligence.py`. The module provides:
+### Iteration 03 — economic-intelligence domain kernel (merged in PR #3)
 
-1. Guardian invoice arithmetic/evidence/confidence review, with `CONSISTENT`, `REVIEW_REQUIRED` and `ABSTAIN` outcomes; it does not assert fraud.
-2. Offer evaluation using baseline cost, provider price, sponsor credit, additional spend, fees and switching cost; rejects non-positive value and incompatible/uncertain offers.
-3. Consent-aware Commons aggregation with event-time consent, revocation/expiry checks, freshness and minimum cohort suppression. Cohort size alone is not a formal privacy guarantee.
-4. VIVC accounting that counts only live, verified, evidence-verified and settlement-verified events.
-5. GENIEA bounded mission transition and tool-authorization primitives requiring active permission and, for external mutations, explicit approval plus idempotency.
+- Deterministic invoice arithmetic/evidence review and confidence-based abstention.
+- Full-cost offer optimizer, consent-aware Commons aggregation primitives, strict VIVC accounting and GENIEA mission/tool policy primitives.
+- `domain/economic_intelligence.py` and its focused tests exist on remote `main`.
+- These are domain rules; they do not by themselves implement a persistent Commons marketplace, durable GENIEA runtime, Meta gateway or MAKOS UI.
 
-This is a **domain kernel**, not an end-to-end feature. It has no authenticated HTTP routes, document vault, OCR/model extraction gateway, database persistence, Guardian case lifecycle, durable GENIEA runtime/checkpoints, KRN graph persistence, Commons marketplace, settlement/payout or MAKOS user interface.
+### Iteration 04 — Guardian evidence and invoice-review workflow (local candidate)
 
-## 5. Local verification
+The local source worktree contains a complete first authenticated API vertical slice:
 
-- `python -m pytest -q`: **79 passed** (56 existing + 23 new focused tests).
-- `python -m compileall -q src tests migrations scripts`: passed.
-- `PYTHONPATH=src python -m alembic upgrade head`: passed.
-- `PYTHONPATH=src python -m alembic downgrade base`: passed.
-- `PYTHONPATH=src python -m alembic upgrade head` after downgrade: passed.
-- `python demo_data/synthetic_v1/validate_dataset.py`: passed all independent checks across 42 tables and 17,425 synthetic rows, including cross-table constraints, privacy-safe Commons fixtures, value labels, multimodal file hashes, export parity and SQLite integrity.
-- Ruff is unavailable in the isolated environment; Ruff lint/format are **unverified** and must run in CI.
-- No migration changed in Iteration 03; live PostgreSQL migration service test was not rerun for this pure domain slice.
+- Verified-user-only upload of PDF/PNG/JPEG with bounded 5 MiB streaming body, signature checks, sanitized display filename, SHA-256, owner-scoped idempotency and private local filesystem storage.
+- Persisted evidence metadata and invoice-review cases with owner-scoped composite foreign key, review request hash/idempotency, structured invoice snapshot, findings, source hash and append-only audit events.
+- Deterministic review against exact monetary arithmetic and the same user's prior invoices.
+- Owner-scoped case list/detail and evidence metadata/download routes.
+- Deterministic clarification draft, followed by an explicit user confirmation state. Approval records that the user may send it; **no provider message is sent**.
+- Three fictional Guardian PDF documents plus structured fixture payloads and an API demo runner.
 
-## 6. GitHub write blocker
+**Important boundaries:** files remain `STORED_UNSCANNED`; this iteration does not malware-scan, OCR, parse PDF/image bytes, invoke a Meta model, validate the supplied locators against document text, or contact a provider. The structured invoice fields and confidence are user-submitted demo data. The filesystem adapter is for local/demo only, not production encrypted storage.
 
-Authenticated GitHub login: `20233-CM-031`. The only GitHub App installation currently visible is installation `118719658` under account `kareem1207`; its repository list shows `kareem1207/Aura`, not `20233-CM-031/MyEconomy`. The repository metadata shows the user's admin/push permission, but connector branch creation returned HTTP 403 `Resource not accessible by integration`. No remote branch, commit or PR exists for Iteration 03.
+## 4. Current local verification evidence
 
-Resolution: install/re-authorize the GitHub App on owner account `20233-CM-031` and grant this repository Contents write, Git References write and Pull Requests write. Do not paste personal access tokens into chat. After the connection is fixed, re-read `main` and create `iteration/03-guardian-evidence-kernel` from the current SHA; never write directly to `main`.
+Commands/results for the Iteration 04 candidate as of 2026-11-04:
 
-## 7. Next engineering slice
+- `PYTHONPATH=src pytest -q`: **84 passed**.
+- `python -m compileall -q src tests migrations scripts demo_data/synthetic_v1`: passed.
+- SQLite migration lifecycle: `alembic upgrade head` → `alembic downgrade base` → `alembic upgrade head`: passed; current revision `c1d4e7a9f204`.
+- `PYTHONPATH=src python demo_data/synthetic_v1/validate_dataset.py`: passed all independent relational, export, privacy-fixture and SQLite integrity checks for 42 tables / 17,425 rows.
+- Guardian PDF text was inspected with `pdftotext -layout`; fixture page/line/column locators were aligned to the generated PDFs and their SHA-256 hashes are recorded in `metadata/guardian_workflow_manifest.json`.
+- Python 3.13 local runtime was used. Python 3.12 was not available locally.
+- Ruff was not available locally; lint/format remain unverified.
+- A live PostgreSQL 16 migration/service test for the new Guardian migration has not been run. SQLite migration lifecycle success must not be described as PostgreSQL verification.
+- The HTTP workflow is covered by `tests/test_guardian_workflow.py`; the standalone demo runner is syntax-compiled but has not been run against a separately started server with a real login session in this environment.
 
-Build a real Guardian evidence workflow end-to-end: owner-scoped document intake and validation -> content hash and safe storage -> Meta model extraction into a typed schema with evidence locators/confidence -> deterministic invoice review -> persisted Guardian case/findings -> human-approved draft action -> auditable outcome. Add durable GENIEA mission/checkpoint persistence and KRN evidence/relationship interfaces only as required by this vertical slice. Expose the case timeline and approval state through MAKOS. Keep synthetic/demo and live adapters fenced.
+## 5. Guardian API surface added locally in Iteration 04
 
-## 8. Status rule
+- `POST /api/v1/guardian/evidence-documents` — upload PDF/PNG/JPEG bytes, `Idempotency-Key`, `X-Filename`.
+- `GET /api/v1/guardian/evidence-documents` — list own evidence metadata.
+- `GET /api/v1/guardian/evidence-documents/{document_id}/download` — owner-scoped original file download.
+- `POST /api/v1/guardian/invoice-reviews` — submit structured invoice fields and evidence locators for deterministic review.
+- `GET /api/v1/guardian/cases` and `GET /api/v1/guardian/cases/{case_id}` — owner-scoped cases.
+- `POST /api/v1/guardian/cases/{case_id}/draft` — create deterministic clarification draft.
+- `POST /api/v1/guardian/cases/{case_id}/approve-draft` — explicit approval for the user to send manually; no external side effect.
 
-Current code/tests/migrations and live GitHub state determine what works. Keep `AWNNORA_CONTEXT_MAP.md`, `PROJECT_MEMORY.md`, this file, `CODEBASE_MAP.md`, `FEATURE_CATALOG.md` and each iteration record synchronized. Never describe local work as pushed; never call a design or fixture a live integration.
+All routes require verified authentication. Document and case metadata are scoped to the current user. No household membership shortcut exists.
+
+## 6. Next production-readiness gates
+
+1. Replace local file adapter with encrypted object storage, KMS-managed encryption, virus/malware scanning, quarantine state, safe content inspection, retention and erasure controls.
+2. Add a typed Meta model gateway for OCR/multimodal extraction; output must include model/prompt/schema versions, exact evidence locators and confidence, then pass deterministic checks. Evaluate field exact-match, citation correctness and abstention on synthetic fixtures.
+3. Validate page/region evidence locators against the source document before presenting them as verified evidence.
+4. Add persistent GENIEA missions, step leases, checkpoints, outbox/idempotent tool execution, retry/reconciliation and approval records.
+5. Build MAKOS Personal Mode UI for upload, evidence review, case timeline, draft preview and user approval.
+6. Implement KRN typed private graph partitions, temporal/provenance relationships and explicit sharing edges.
+7. Add persistent Commons demand and offers, anti-differencing controls, privacy risk analysis, fairness and auditable settlement. Cohort threshold alone is not formal differential privacy.
+8. Add concurrency, retention, malware, object-store failure, backup/restore and PostgreSQL 16 integration tests; add observability and operational runbooks.
+9. Add live provider integrations only after contract, credentials, lawful purpose, user authority, idempotency and reconciliation contracts exist. Never imply a fixture adapter is a live partner.
+10. Build remaining Opportunity/Benefits, Resource Exchange, Crisis Shield, Economic Defence and One-Person Enterprise verticals as complete end-to-end slices rather than disconnected stubs.
+
+## 7. Source-of-truth rule
+
+The live GitHub code/migrations/tests and remote branch state determine what is merged. This file records current local candidate facts separately. A local archive, a generated overlay or a passing local test suite is never called pushed/merged. Update this file, the context map, project memory, codebase map, feature catalog and iteration report in the same engineering change.

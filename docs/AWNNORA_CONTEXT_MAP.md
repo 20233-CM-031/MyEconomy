@@ -2,9 +2,9 @@
 
 **Canonical project name:** AwnNORA
 **Implementation repository:** `20233-CM-031/MyEconomy`
-**Context-map version:** 1.0
+**Context-map version:** 1.1
 **Reconciled:** 2026-11-04
-**Status:** Product vision confirmed; Iterations 00–02 merged; Iteration 03 domain kernel implemented locally and tested, not yet pushed.
+**Status:** Product vision confirmed; Iterations 00–03 merged (PR #3); Iteration 04 Guardian API vertical implemented locally and tested, not yet pushed.
 
 > This document resolves older working-name language in historical notes. AwnNORA is the project/product name for the Meta Global AI Hackathon. `MyEconomy` remains the existing repository and Python package name because it is the implementation base. It is not an alternative product brand.
 
@@ -167,32 +167,40 @@ VIVC must count only deduplicated, evidence-backed, settlement-verified, live ou
 9. Legal entitlement, benefit award, employment and provider action are confirmed only by the authoritative party.
 10. Separate SYNTHETIC, SANDBOX and LIVE environments; never let demo data become production truth.
 
-## 10. Repository reality — what exists today
+## 10. Repository reality — merged code and local candidate
 
-Repository: `20233-CM-031/MyEconomy`, default branch `main`. The live repository's latest verified `main` commit is `a55cb388ef7baf72766e2fcabe89f0dee1c45979` (merge of PR #2, Iteration 02 Financial Data Plane).
+Repository: `20233-CM-031/MyEconomy`, default branch `main`. Live GitHub inspection on 2026-11-04 verified `main` at `5b5cf669773d5c0cd33f5abffb8c46d44cead797`, the merge commit for PR #3 (Iteration 03).
 
 | Area | Actual state |
 |---|---|
-| Iteration 00 | Implemented: deterministic Decimal cashflow foundation and API |
-| Iteration 01 | Merged: registration, verification, sessions, households, invitations, consent, append-only audit |
-| Iteration 02 | Merged: owner-scoped financial accounts, bounded CSV ingestion, transaction ledger, obligations, idempotency/provenance, cashflow read model and database guards |
-| Iteration 03 domain kernel | **Local candidate only:** invoice/evidence review, full-cost offer evaluation, consent-aware Commons signal aggregation, verified VIVC accounting, GENIEA mission/tool policy primitives |
-| MAKOS workspace/UI | Not implemented in this repository yet |
-| GENIEA durable runtime/checkpoints | Not implemented; only bounded domain policy primitives exist in the Iteration 03 local candidate |
-| KRN graph/storage/reasoning runtime | Not implemented; architecture/design documents only |
-| RAG/SpiderCrawler/SuperRAG | Not implemented |
-| Meta model gateway | Not implemented |
-| Document vault/OCR/Guardian case APIs | Not implemented |
-| Live bank aggregation, payments, sponsor/merchant integrations, settlement/payouts | Not implemented |
-| Commons live marketplace | Not implemented; Iteration 03 only has in-memory consent-aware aggregation logic |
+| Iteration 00 | Merged: deterministic Decimal cashflow foundation/API |
+| Iteration 01 | Merged: registration, verification, sessions, household boundaries, consent and append-only audit |
+| Iteration 02 | Merged: owner-scoped financial accounts, bounded CSV ledger import, recurring obligations, persisted cashflow and DB guards |
+| Iteration 03 | **Merged in PR #3:** deterministic invoice/evidence review, offer net-value, in-memory consent-aware aggregation, VIVC rules and GENIEA mission/tool policy kernel |
+| Iteration 04 | **Local candidate:** authenticated Guardian evidence upload, private local storage adapter, persisted owner-scoped invoice review cases, evidence/hash metadata, audit, draft and explicit approval-state APIs |
+| MAKOS workspace/UI | Not implemented; APIs and workflow foundations only |
+| GENIEA durable runtime | Not implemented; only domain mission/tool policies exist, no persistent mission/step/checkpoint executor |
+| KRN graph runtime | Not implemented; architecture documents define private/shared graph boundaries and evidence/provenance responsibilities |
+| RAG / SpiderCrawler | Not implemented |
+| Meta model gateway / OCR | Not implemented; Iteration 04 accepts user-submitted structured fields, not extracted model output |
+| Live provider action | Not implemented; draft approval does not send a provider message |
+| Production document store/scanner | Not implemented; Iteration 04 uses local private filesystem with `STORED_UNSCANNED` state |
+| Bank aggregation, payments, partner settlement/payout | Not implemented |
+| Persistent Commons marketplace | Not implemented; only domain-level in-memory aggregate and offer evaluation primitives |
 
-Iteration 03 currently adds 23 tests to the existing 56-test suite: **79 passing tests** in this local worktree. SQLite Alembic upgrade → downgrade → upgrade also passes. This validates the domain kernel in isolation; it does not make the features API-accessible or persistent.
+Iteration 04 local verification: 84 tests pass on Python 3.13; Python compilation, SQLite migration upgrade/downgrade/re-upgrade and the existing synthetic dataset validator pass. Ruff and Python 3.12 were unavailable locally. Live PostgreSQL 16 testing of the new Guardian migration is pending. The three new Guardian PDFs are synthetic-only and have a separate hash/locator manifest.
+
+### Iteration 04 real API path — precise boundary
+
+`verified user -> bounded PDF/PNG/JPEG upload -> signature/size check -> SHA-256 -> owner-scoped metadata + local private blob -> STORED_UNSCANNED -> user-submitted structured invoice + evidence locators -> deterministic domain review -> persisted case/findings + audit -> draft -> explicit user approval state`
+
+This path is API-accessible and covered by tests. It does not yet perform document scanning, OCR, source-locator verification, AI extraction, provider delivery or automated settlement. Evidence locator strings are submitted by the client and are not cryptographically/visually verified against page regions in this iteration. The local filesystem adapter is for a trusted development/demo host only.
 
 ## 11. GitHub and delivery state
 
-The authenticated GitHub login is `20233-CM-031`. The GitHub App installation is under `kareem1207`, and its visible installation repository list does not include `20233-CM-031/MyEconomy`. Read-only repository inspection works, but GitHub rejects branch creation with HTTP 403 `Resource not accessible by integration`. No Iteration 03 remote branch, commit or pull request has been created. The local worktree is reconstructed from the complete Iteration 02 project artifact and reconciled with the live repository documents; it is not a remote clone.
+Live read-only access confirms PR #3 merged to `main` at `5b5cf669773d5c0cd33f5abffb8c46d44cead797`. The connected GitHub identity is `20233-CM-031`, but the available GitHub App installation remains associated with `kareem1207`; its installation repository list excludes `20233-CM-031/MyEconomy`. A feature-branch creation attempt for Iteration 04 returned HTTP 403 `Resource not accessible by integration`. Available commit-status/workflow endpoints returned no CI records for the PR #3 merge SHA, so do not infer CI success from the empty response.
 
-Do not modify `main` directly. Once the GitHub App is installed under the repository owner account with repository Contents write, Git References write and Pull Requests write, create a feature branch from the verified `main` SHA and submit Iteration 03 as a reviewable PR.
+No Iteration 04 branch, commit or PR has been created remotely by this assistant. The Iteration 04 source tree is reconstructed from the complete project artifact and spot-checked against the merged Iteration 03 source; it is not a fresh Git clone. Before applying it, fetch `origin/main`, confirm the base SHA has not advanced, inspect the diff, run the full test/CI matrix, then push a feature branch. Never write directly to `main`.
 
 ## 12. Source hierarchy and handoff rules
 

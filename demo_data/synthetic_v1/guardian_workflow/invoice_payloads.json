@@ -1,0 +1,192 @@
+{
+  "dataset_notice": "All content is fictional. The PDF files are evidence fixtures; these field values are supplied manually to the API. No OCR/LLM extraction is performed by Iteration 04.",
+  "previous_bill": {
+    "invoice_id": "DFC-DEMO-2026-1001",
+    "provider_key": "deccan-fiber-connect-demo",
+    "currency": "INR",
+    "issue_date": "2026-10-01",
+    "due_date": "2026-10-15",
+    "lines": [
+      {
+        "description": "Home Fibre 100 Mbps",
+        "quantity": "1",
+        "unit_price": "800.00",
+        "declared_total": "800.00"
+      }
+    ],
+    "declared_subtotal": "800.00",
+    "tax": "0.00",
+    "fees": "0.00",
+    "credits": "0.00",
+    "declared_total_due": "800.00",
+    "extraction_confidence": "0.99",
+    "evidence": [
+      {
+        "field_name": "invoice_id",
+        "locator": "page=1;line=4",
+        "confidence": "0.99"
+      },
+      {
+        "field_name": "provider",
+        "locator": "page=1;line=2",
+        "confidence": "0.99"
+      },
+      {
+        "field_name": "currency",
+        "locator": "page=1;line=20;column=unit_price",
+        "confidence": "0.99"
+      },
+      {
+        "field_name": "issue_date",
+        "locator": "page=1;line=12",
+        "confidence": "0.99"
+      },
+      {
+        "field_name": "total_due",
+        "locator": "page=1;line=32",
+        "confidence": "0.99"
+      },
+      {
+        "field_name": "line[1].quantity",
+        "locator": "page=1;line=20;column=quantity",
+        "confidence": "0.99"
+      },
+      {
+        "field_name": "line[1].unit_price",
+        "locator": "page=1;line=20;column=unit_price",
+        "confidence": "0.99"
+      },
+      {
+        "field_name": "line[1].total",
+        "locator": "page=1;line=20;column=line_total",
+        "confidence": "0.99"
+      }
+    ]
+  },
+  "current_bill_anomaly": {
+    "invoice_id": "DFC-DEMO-2026-1101",
+    "provider_key": "deccan-fiber-connect-demo",
+    "currency": "INR",
+    "issue_date": "2026-11-01",
+    "due_date": "2026-11-15",
+    "lines": [
+      {
+        "description": "Home Fibre 100 Mbps",
+        "quantity": "1",
+        "unit_price": "1000.00",
+        "declared_total": "1000.00"
+      }
+    ],
+    "declared_subtotal": "1000.00",
+    "tax": "180.00",
+    "fees": "0.00",
+    "credits": "0.00",
+    "declared_total_due": "1180.00",
+    "extraction_confidence": "0.99",
+    "evidence": [
+      {
+        "field_name": "invoice_id",
+        "locator": "page=1;line=4",
+        "confidence": "0.99"
+      },
+      {
+        "field_name": "provider",
+        "locator": "page=1;line=2",
+        "confidence": "0.99"
+      },
+      {
+        "field_name": "currency",
+        "locator": "page=1;line=20;column=unit_price",
+        "confidence": "0.99"
+      },
+      {
+        "field_name": "issue_date",
+        "locator": "page=1;line=12",
+        "confidence": "0.99"
+      },
+      {
+        "field_name": "total_due",
+        "locator": "page=1;line=32",
+        "confidence": "0.99"
+      },
+      {
+        "field_name": "line[1].quantity",
+        "locator": "page=1;line=20;column=quantity",
+        "confidence": "0.99"
+      },
+      {
+        "field_name": "line[1].unit_price",
+        "locator": "page=1;line=20;column=unit_price",
+        "confidence": "0.99"
+      },
+      {
+        "field_name": "line[1].total",
+        "locator": "page=1;line=20;column=line_total",
+        "confidence": "0.99"
+      }
+    ]
+  },
+  "arithmetic_mismatch": {
+    "invoice_id": "DFC-DEMO-ARITH-0003",
+    "provider_key": "deccan-fiber-connect-demo",
+    "currency": "INR",
+    "issue_date": "2026-11-02",
+    "due_date": "2026-11-16",
+    "lines": [
+      {
+        "description": "Router installation",
+        "quantity": "2",
+        "unit_price": "750.00",
+        "declared_total": "1600.00"
+      }
+    ],
+    "declared_subtotal": "1600.00",
+    "tax": "288.00",
+    "fees": "0.00",
+    "credits": "0.00",
+    "declared_total_due": "1888.00",
+    "extraction_confidence": "0.99",
+    "evidence": [
+      {
+        "field_name": "invoice_id",
+        "locator": "page=1;line=4",
+        "confidence": "0.99"
+      },
+      {
+        "field_name": "provider",
+        "locator": "page=1;line=2",
+        "confidence": "0.99"
+      },
+      {
+        "field_name": "currency",
+        "locator": "page=1;line=18;column=unit_price",
+        "confidence": "0.99"
+      },
+      {
+        "field_name": "issue_date",
+        "locator": "page=1;line=10",
+        "confidence": "0.99"
+      },
+      {
+        "field_name": "total_due",
+        "locator": "page=1;line=30",
+        "confidence": "0.99"
+      },
+      {
+        "field_name": "line[1].quantity",
+        "locator": "page=1;line=18;column=quantity",
+        "confidence": "0.99"
+      },
+      {
+        "field_name": "line[1].unit_price",
+        "locator": "page=1;line=18;column=unit_price",
+        "confidence": "0.99"
+      },
+      {
+        "field_name": "line[1].total",
+        "locator": "page=1;line=18;column=line_total",
+        "confidence": "0.99"
+      }
+    ]
+  }
+}

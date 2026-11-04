@@ -23,6 +23,7 @@
 - `source_documents/invoices_png/`: rendered PNG invoice pages for image/multimodal ingestion.
 - `source_documents/offer_terms/`: fictional offer/terms documents for RAG and evidence tests.
 - `api_scenarios/`: coherent demo journeys for day-one value, Guardian, Commons quorum, checkpoint/resume and negative-net-benefit rejection.
+- `source_documents/guardian/` + `guardian_workflow/`: additive Iteration 04 Guardian API scenario, with three fictional bills, manually structured payloads, verified page/line/column locators, a local API runner and SHA-256 file manifest. These supplemental files do not change the 42 relational tables / 17,425-row v1.0.0 core corpus.
 - `metadata/`: schema catalog, relationships, data dictionary, business rules, regulatory-control notes, document hashes and validation reports.
 - `generate_synthetic_dataset.py`: deterministic fixture generator.
 - `apply_demo_scenario_overrides.py`: applies the intentionally designed five-person Commons quorum scenario and honest no-quote states for other campaigns.
@@ -95,3 +96,10 @@ python scripts/seed_synthetic_customer.py --user-email "existing-verified-local-
 ```
 
 The script refuses `APP_ENV=production`, never creates a login identity, and only loads rows explicitly marked `SYNTHETIC_FIXTURE`. It imports accounts, transaction rows and recurring obligations through the application's persistence/domain services. Stable source IDs and idempotency keys make reruns safe. It does not import the rest of the future-feature fixture tables into application runtime yet.
+
+
+## Guardian invoice workflow add-on (Iteration 04)
+
+The separate `source_documents/guardian/` directory contains a prior-period broadband bill (INR 800), a later bill with a higher amount (INR 1,180) and a deliberately inconsistent installation invoice. The legal entity, person and all amounts are invented. `guardian_workflow/invoice_payloads.json` provides manual structured request bodies and source locators for the API workflow. The locators were checked against `pdftotext -layout` output; `metadata/guardian_workflow_manifest.json` stores each PDF's SHA-256 and size.
+
+Run `guardian_workflow/run_demo.py` against a local development instance and a dedicated verified demo user. The uploaded files remain `STORED_UNSCANNED`; no malware scan, OCR, Meta AI model extraction, automated provider contact or actual financial event occurs. The demo script creates review cases and drafts but leaves them awaiting a human decision.

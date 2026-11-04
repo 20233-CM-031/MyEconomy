@@ -1,0 +1,29 @@
+{
+  "dataset_notice": "All documents and values are fictional and marked synthetic. SHA-256 hashes are for fixture integrity, not authenticity. Page/line/column locators refer to pdftotext -layout output for the exact files.",
+  "documents": [
+    {
+      "filename": "guardian_arithmetic_mismatch.pdf",
+      "relative_path": "source_documents/guardian/guardian_arithmetic_mismatch.pdf",
+      "media_type": "application/pdf",
+      "bytes": 2084,
+      "sha256": "857bffa982e59e4a2a92f344fe2803da63017ff2034d2a5092e316eace7ca284",
+      "synthetic_only": true
+    },
+    {
+      "filename": "guardian_current_bill_anomaly.pdf",
+      "relative_path": "source_documents/guardian/guardian_current_bill_anomaly.pdf",
+      "media_type": "application/pdf",
+      "bytes": 2160,
+      "sha256": "d7fefae4a39737113dd67782c27dbdc6779cd48190e041fa324b9ddb8c004221",
+      "synthetic_only": true
+    },
+    {
+      "filename": "guardian_previous_bill.pdf",
+      "relative_path": "source_documents/guardian/guardian_previous_bill.pdf",
+      "media_type": "application/pdf",
+      "bytes": 2047,
+      "sha256": "7a9398a8eff82a0b32d5496da7cd66d62246977f71508cedb55c93e1d22fb545",
+      "synthetic_only": true
+    }
+  ]
+}

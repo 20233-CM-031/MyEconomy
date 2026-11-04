@@ -105,3 +105,17 @@ This scenario proves that the financial data is not merely displayed from a stat
 8. Upload a statement without a treatment column and show the credit is stored as `IGNORE`, not falsely counted as salary. A user-reviewed classification workflow is a later iteration.
 
 The person whose existing verified local account is used is a demo operator identity, while `CUS00001` remains a synthetic fixture persona. No synthetic user login is created. This demonstrates local functional behavior only; no real bank connection or externally verified financial outcome is claimed.
+
+
+## 9. Guardian evidence-to-draft API workflow (Iteration 04 local candidate)
+
+This is the executable Guardian demo add-on. It uses three invented PDFs for one fictional provider/person: a prior INR 800 bill, a current INR 1,180 bill and a deliberate line-arithmetic mismatch. All documents say they are synthetic; no real provider or customer exists.
+
+1. Read `demo_data/synthetic_v1/guardian_workflow/README.md`. Start a local development API with migrations applied and create/verify a dedicated demo user.
+2. Set `AWNNORA_DEMO_BEARER_TOKEN` to that local demo user's token. Never use a real customer's or production bearer token.
+3. Run `python demo_data/synthetic_v1/guardian_workflow/run_demo.py` from the repository root.
+4. The script uploads the three PDFs and posts the explicitly supplied structured invoice payloads. It prints case dispositions and finding codes. The current bill should be flagged for unusual increase; the arithmetic-mismatch invoice should show a line mismatch.
+5. For review findings, the runner creates a clarification draft. It does not approve the draft, send email, contact a provider or perform a payment/cancellation.
+6. Inspect cases through `GET /api/v1/guardian/cases` with the same local bearer.
+
+The binary files are marked `STORED_UNSCANNED`. There is no malware scanner, OCR, PDF/image parsing, Meta model extraction or locator verification in this iteration. `invoice_payloads.json` represents manual structured inputs; it is not machine extraction. The page/line/column locators were compared with `pdftotext -layout` and the file hashes are listed in `metadata/guardian_workflow_manifest.json`.
