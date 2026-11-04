@@ -1,107 +1,79 @@
-# Project Status
+# AwnNORA Project Status
 
 **Last reconciled:** 2026-11-04
-**Repository:** `20233-CM-031/MyEconomy`
-**Remote default branch:** `main`
-**Remote `main` HEAD:** `e25abcffb345fc0a6315114b04c18e8c57a026e6` — merge of PR #1, `iteration/01-trust-and-synthetic-demo-data`
-**Iteration 01 branch HEAD:** `baade0b3c920ad325d011de2e41eefb81d8dda57` (now one commit behind `main` because PR #1 was merged)
-**Current delivery:** Iteration 02 — Financial Data Plane v1 (prepared locally; not yet pushed)
-**Intended next branch:** `iteration/02-financial-data-plane`
-**Product brand:** Not selected. `MyEconomy` remains repository/internal project name.
+**Product/project:** AwnNORA
+**Implementation repository:** `20233-CM-031/MyEconomy`
+**Default branch:** `main`
+**Verified remote `main` HEAD:** `a55cb388ef7baf72766e2fcabe89f0dee1c45979` — merge of PR #2, `iteration/02-financial-data-plane`
+**Current local candidate:** Iteration 03 — Economic Intelligence Domain Kernel
+**Remote Iteration 03 branch/PR:** Not created; GitHub branch write is blocked by app-installation ownership mismatch.
 
-## 1. Live GitHub state (verified 2026-11-04)
+## 1. Identity and architecture
 
-The repository was re-read after the owner updated GitHub. PR #1 merged successfully into `main` at `e25abcffb345fc0a6315114b04c18e8c57a026e6`. `main` is one commit ahead of the old Iteration 01 feature branch, with no code divergence indicated by the merge comparison. The merged main CI run `41701730347` completed successfully:
+AwnNORA is the confirmed product/project name. `MyEconomy` remains the existing code repository and Python package name, not an alternative brand. **MAKOS** is the operational workspace and workflow surface. **GENIEA** coordinates personal/specialist agents, bounded missions and tool use. **KRN** maintains knowledge, evidence, relationships, provenance and temporal state. These are logical systems; the repository does not yet contain complete MAKOS, GENIEA or KRN runtime packages. Read `AWNNORA_CONTEXT_MAP.md` before further engineering.
 
-- `tests (3.12)`: Ruff lint, Ruff format, pytest and SQLite migration upgrade/downgrade all passed.
-- `tests (3.13)`: Ruff lint, Ruff format, pytest and SQLite migration upgrade/downgrade all passed.
-- `postgres-migrations`: PostgreSQL 16 service-backed Alembic upgrade, audit-trigger verification, downgrade and re-upgrade passed.
+## 2. Verified remote baseline
 
-The Iteration 02 working copy was reconciled against the merged Iteration 01 tree. Do not use the old feature branch as the new base; create the next branch from current `main`.
+Live GitHub read confirms `main` at `a55cb388ef7baf72766e2fcabe89f0dee1c45979`, merging PR #2 (`feat: add owner-scoped financial data plane`). The prior Iteration 02 CI run `41801123405` passed the Python 3.12, Python 3.13 and PostgreSQL 16 jobs. Iteration 00, 01 and 02 are therefore the remote baseline. Some earlier status text in the repository was stale and described the pre-PR #2 SHA; this status replaces it.
 
-The connected GitHub integration can read this repository, but its branch-creation request returned HTTP 403 (`Resource not accessible by integration`). Therefore Iteration 02 is not pushed, no remote branch is claimed, and no remote commit exists for this delivery. The archive/overlay and exact Git commands are provided for the owner's authenticated Git client.
+The current local worktree was reconstructed from `MyEconomy_Iteration_02_Complete_Project.zip` and reconciled with live repository metadata and memory docs. It is not a remote `git clone` and must be applied to a fresh owner-authenticated checkout by branch/patch before merging.
 
-## 2. Implemented capabilities
+## 3. Implemented and merged
 
 ### Iteration 00 — deterministic cashflow foundation
 
-- Python 3.12/3.13 FastAPI application with Pydantic contracts, health and readiness.
-- Framework-independent `Decimal` money/cashflow calculation over caller-supplied request entries.
-- Curated currency precision registry; no FX conversion.
+- Python 3.12/3.13 FastAPI application, Pydantic API contracts and health/readiness.
+- Framework-independent Decimal money/cashflow analysis over caller-provided inputs.
 
 ### Iteration 01 — identity, household trust and consent
 
-- SQLAlchemy/Alembic persistence for users, verification challenges, opaque sessions, households, invitations, consent grants and audit events.
-- Argon2id password hashing, digest-only bearer and email-verification tokens, verified-email gates, invitation expiry/revocation and consent lifecycle.
-- Append-only audit events protected at ORM and database-trigger layers.
-- Merged into `main` through PR #1. The merged GitHub Actions run passed Python 3.12/3.13 and PostgreSQL 16 migration/audit verification.
+- Registration, email verification, opaque session lifecycle and password hashing.
+- Household ownership, membership and invitation lifecycle.
+- Purpose/category/recipient-scoped consent and revocation.
+- Append-only audit events protected at ORM/database layers.
 
-### Iteration 02 — financial data plane v1 (local implementation, 2026-11-04)
+### Iteration 02 — owner-scoped Financial Data Plane v1
 
-- Owner-scoped financial account metadata, transaction import batches, persisted transaction ledger and recurring obligations.
-- Money stored as integer minor units (`BIGINT`) with currency code. Transaction and obligation currencies are constrained to their linked account by composite foreign keys; no implicit FX.
-- CSV upload is streamed with a 2 MiB bound; the domain parser caps 10,000 data rows and 32 columns, requires UTF-8, rejects duplicate normalized headers and validates dates, currency, Decimal precision, direction, treatment, status, essential flag and lengths.
-- Import batches store SHA-256, sanitized filename, owner-scoped idempotency key, counts and validation errors. Uploaded CSV bytes are not retained.
-- Import is atomic: invalid rows or changed content behind an existing external reference reject the entire batch and insert zero transaction rows.
-- Exact repeated provider references in the same lifecycle state are skipped. Similar transactions without an external reference are retained and flagged as possible duplicates, not silently discarded.
-- Provider lifecycle changes are reconciled monotonically for the same financial fingerprint: `PENDING -> POSTED|REVERSED|VOID` and `POSTED -> REVERSED|VOID`. Terminal `REVERSED`/`VOID` records cannot be reactivated. Batch `updated_count` and per-transaction audit events distinguish status reconciliation from inserts and duplicates; application checks plus SQLite/PostgreSQL database guards enforce financial-fact immutability and the monotonic transition graph.
-- Cashflow includes only `POSTED`: `INCOME` credit adds income; `EXPENSE` debit adds gross expense; `REFUND` credit offsets expense, not income; `TRANSFER` and `IGNORE` do not affect income/expense. If CSV treatment is missing, default to `IGNORE` rather than assuming credits are income or debits are expenses. `amount_inr` is rejected for non-INR accounts. Pending/reversed/void are excluded. Output names its ratio `net_cashflow_to_income_percent`, not savings.
-- Verified account/transaction/import/obligation APIs return 404 for non-owner lookups. Household membership does not grant transaction access.
-- Local-only synthetic seeder loads one fixture persona into an existing active, verified local user; it refuses production and never creates a fake login identity.
+- Financial account metadata, transaction import batches, persisted ledger and recurring obligations.
+- Bounded strict CSV parsing, source SHA-256, sanitized filename, owner-scoped idempotency, provenance and duplicate review signals.
+- Integer minor-unit money and currency/account constraints; no implicit FX.
+- Monotonic provider status transitions and financial-fact immutability enforced in application/database logic.
+- Posted-only cashflow read model with conservative `IGNORE` default for unclassified CSV rows.
+- Synthetic seeder guarded for development/test/demo only.
 
-## 3. API routes added in Iteration 02
+## 4. Iteration 03 — local domain kernel (not remotely pushed)
 
-- `POST /api/v1/financial/accounts`
-- `GET /api/v1/financial/accounts`
-- `POST /api/v1/financial/accounts/{account_id}/imports/csv` (`Idempotency-Key` required)
-- `GET /api/v1/financial/imports/{batch_id}`
-- `GET /api/v1/financial/accounts/{account_id}/transactions?limit=&offset=`
-- `GET /api/v1/financial/cashflow?period_start=&period_end=&currency=`
-- `POST /api/v1/financial/obligations`
-- `GET /api/v1/financial/obligations`
+Added `src/myeconomy/domain/economic_intelligence.py` and `tests/test_economic_intelligence.py`. The module provides:
 
-Every route requires verified authentication. These are owner-personal endpoints. No household or Commons data-sharing read path is implemented.
+1. Guardian invoice arithmetic/evidence/confidence review, with `CONSISTENT`, `REVIEW_REQUIRED` and `ABSTAIN` outcomes; it does not assert fraud.
+2. Offer evaluation using baseline cost, provider price, sponsor credit, additional spend, fees and switching cost; rejects non-positive value and incompatible/uncertain offers.
+3. Consent-aware Commons aggregation with event-time consent, revocation/expiry checks, freshness and minimum cohort suppression. Cohort size alone is not a formal privacy guarantee.
+4. VIVC accounting that counts only live, verified, evidence-verified and settlement-verified events.
+5. GENIEA bounded mission transition and tool-authorization primitives requiring active permission and, for external mutations, explicit approval plus idempotency.
 
-## 4. Iteration 02 verification record
+This is a **domain kernel**, not an end-to-end feature. It has no authenticated HTTP routes, document vault, OCR/model extraction gateway, database persistence, Guardian case lifecycle, durable GENIEA runtime/checkpoints, KRN graph persistence, Commons marketplace, settlement/payout or MAKOS user interface.
 
-Local checks on the Iteration 02 source tree:
+## 5. Local verification
 
-- `PYTHONPATH=src pytest -q`: **56 passed**.
+- `python -m pytest -q`: **79 passed** (56 existing + 23 new focused tests).
 - `python -m compileall -q src tests migrations scripts`: passed.
-- SQLite Alembic `upgrade head -> downgrade base -> upgrade head`: passed, including the transaction financial-fact immutability and status-transition guard create/drop/recreate path.
-- Direct SQLite database test confirmed a `REVERSED -> POSTED` update is rejected by the migration-equivalent DB trigger. Application test confirmed a provider import also rejects reactivation and leaves the row terminal.
-- PostgreSQL offline SQL generation succeeded and contains the transaction financial-fact immutability/status-transition guard function and trigger. A live PostgreSQL 16 execution of Iteration 02's new trigger is still pending its own CI after push.
-- Synthetic dataset independent validator: passed against committed v1.0.0 corpus.
-- Final re-run on 2026-11-04: `PYTHONPATH=src pytest -q` **56 passed**; Python compileall passed; fresh SQLite migration upgrade/downgrade/re-upgrade passed; PostgreSQL offline SQL contains the new financial transaction guard function/trigger.
-- Final synthetic seeder smoke: first run inserted 91 transactions / created 2 accounts and 5 obligations; second run inserted 0 / updated 0, replayed 2 batches and reused 5 obligations; stable counts remained 2 accounts, 91 transactions, 5 obligations and 2 batches.
-- Synthetic dataset final independent validation: all 42 table PK/FK checks, business-rule validations, export parity, multimodal hashes and SQLite integrity passed across 17,425 rows.
-- Local SQLite integration smoke: seeded `CUS00001` into an existing verified local test user; first run created 2 accounts, inserted 91 transactions and created 5 obligations; second run reused 2 accounts, reported 2 replayed import batches / 91 replayed historical rows (not new inserts), and reused 5 obligations. Final counts remained 2 accounts, 91 transactions, 5 obligations and 2 batches.
-- `git diff --check`: passed on the prepared source tree before final packaging; rerun in the user's Git checkout before commit.
-- Ruff: the isolated execution environment does not have the Ruff executable and package download was unavailable, so the new Iteration 02 Ruff result is **unverified**. Do not infer the merged Iteration 01 CI result covers these new files; the owner must run local Ruff and the new branch CI must pass.
-- PostgreSQL 16 live migration verification was passed for merged Iteration 01 on GitHub main. The new Iteration 02 migration has only been tested on SQLite and compiled to PostgreSQL offline SQL locally; it needs its own PostgreSQL CI run after push.
+- `PYTHONPATH=src python -m alembic upgrade head`: passed.
+- `PYTHONPATH=src python -m alembic downgrade base`: passed.
+- `PYTHONPATH=src python -m alembic upgrade head` after downgrade: passed.
+- `python demo_data/synthetic_v1/validate_dataset.py`: passed all independent checks across 42 tables and 17,425 synthetic rows, including cross-table constraints, privacy-safe Commons fixtures, value labels, multimodal file hashes, export parity and SQLite integrity.
+- Ruff is unavailable in the isolated environment; Ruff lint/format are **unverified** and must run in CI.
+- No migration changed in Iteration 03; live PostgreSQL migration service test was not rerun for this pure domain slice.
 
-## 5. Explicitly not implemented
+## 6. GitHub write blocker
 
-No live bank/Account Aggregator connection, bank credential collection, payment initiation, automatic debit/autopay mandate, opening-balance reconciliation, FX service, budgets/goals/forecast, bill/document vault, Guardian claim submission, official benefits catalogue, opportunity marketplace integration, resource exchange, crisis engine, enterprise commerce integration, Commons aggregation runtime, offer optimizer, VIVC verification, partner commission/payout, RAG, graph runtime, durable agent mission/checkpoint service, Meta model gateway or production deployment exists yet. The synthetic fixture corpus for those capabilities is a test/demo dataset only.
+Authenticated GitHub login: `20233-CM-031`. The only GitHub App installation currently visible is installation `118719658` under account `kareem1207`; its repository list shows `kareem1207/Aura`, not `20233-CM-031/MyEconomy`. The repository metadata shows the user's admin/push permission, but connector branch creation returned HTTP 403 `Resource not accessible by integration`. No remote branch, commit or PR exists for Iteration 03.
 
-## 6. Release/security gaps for the financial data plane
+Resolution: install/re-authorize the GitHub App on owner account `20233-CM-031` and grant this repository Contents write, Git References write and Pull Requests write. Do not paste personal access tokens into chat. After the connection is fixed, re-read `main` and create `iteration/03-guardian-evidence-kernel` from the current SHA; never write directly to `main`.
 
-- Run Iteration 02 CI on Python 3.12/3.13 and PostgreSQL 16; inspect the new composite foreign keys, partial unique index, transaction immutability/status guard and rollback on both databases; CI also revalidates all synthetic dataset exports/documents.
-- Add concurrency tests for two simultaneous uploads with the same idempotency key/provider reference; unique constraints are present but race behavior needs service-backed tests.
-- Add streaming multipart/file integration only if required; current CSV endpoint is raw `text/csv` body.
-- Add a user-reviewed reclassification API for rows imported as `IGNORE`; do not infer income/expense from direction alone.
-- Add explicit correction/compensating-event workflows for changing financial facts; only the narrow provider lifecycle transition is implemented now.
-- Add pagination total/next cursor and filtering/index benchmarks for large histories.
-- Add retention, export/erasure policy, field-level encryption/key management, request/IP rate controls, malware scanning for future documents, privacy/security review and penetration testing before production.
-- Validate ISO 4217 currency registry from an authoritative source before expanding the curated list.
-- Build a bank integration only through a supported provider with the correct user consent and regulatory roles; never collect raw bank passwords.
+## 7. Next engineering slice
 
-## 7. Next iteration direction
+Build a real Guardian evidence workflow end-to-end: owner-scoped document intake and validation -> content hash and safe storage -> Meta model extraction into a typed schema with evidence locators/confidence -> deterministic invoice review -> persisted Guardian case/findings -> human-approved draft action -> auditable outcome. Add durable GENIEA mission/checkpoint persistence and KRN evidence/relationship interfaces only as required by this vertical slice. Expose the case timeline and approval state through MAKOS. Keep synthetic/demo and live adapters fenced.
 
-Iteration 03 should deliver an evidence-grounded **Personal Power / Guardian** vertical slice using the now-persisted user-owned financial data plus synthetic invoice documents. Its workflow should be: user-authorized upload -> document validation/provenance -> model-assisted extraction with evidence spans -> deterministic numeric comparison -> risk/uncertainty explanation -> draft action -> explicit human approval -> auditable outcome state. No complaint, payment, cancellation or provider contact is executed without a real supported integration and user approval. Meta AI should be integrated because it materially performs extraction/reasoning, not decoratively.
+## 8. Status rule
 
-The longer-term eight pillars and Commons killer move remain recorded in `PROJECT_MEMORY.md`, `FEATURE_CATALOG.md` and `docs/DEMO_PLAYBOOK.md`. Do not try to ship all pillars as disconnected stubs in one iteration.
-
-## 8. Status update rule
-
-At each future iteration, re-read live repository metadata, latest `main` HEAD, active feature branch, CI status and the four core memory documents before modifying files. Update this document, `CODEBASE_MAP.md`, `FEATURE_CATALOG.md`, the iteration record and the relevant decisions in the same delivery. Local commits/archives are never described as pushed until GitHub confirms the remote write.
+Current code/tests/migrations and live GitHub state determine what works. Keep `AWNNORA_CONTEXT_MAP.md`, `PROJECT_MEMORY.md`, this file, `CODEBASE_MAP.md`, `FEATURE_CATALOG.md` and each iteration record synchronized. Never describe local work as pushed; never call a design or fixture a live integration.

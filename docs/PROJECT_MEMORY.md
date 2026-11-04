@@ -1,10 +1,12 @@
-# Project Memory — MyEconomy / Future Brand TBD
+# Project Memory — AwnNORA (implementation repository: MyEconomy)
 
 > **Purpose:** Durable project context for future engineering sessions, contributors and AI coding assistants. This is the canonical high-level memory of the product's intent, architecture, constraints and decisions. It must be updated when decisions or capabilities change.
 >
 > **Last reconciled with source tree:** 2026-11-04.
-> **Current code delivery:** Iterations 00–02 — cashflow, identity/consent trust foundation and owner-scoped financial data plane.
-> **Product brand:** Not selected. Repository remains `MyEconomy`.
+> **Current remote code delivery:** Iterations 00–02 merged into `main`.
+> **Current local candidate:** Iteration 03 economic-intelligence domain kernel; 23 new tests pass; not pushed.
+> **Product name:** AwnNORA. `MyEconomy` is the repository/package implementation base.
+> **Canonical system map:** `docs/AWNNORA_CONTEXT_MAP.md`.
 
 ## 1. One-sentence definition
 
@@ -175,9 +177,9 @@ The project is being shaped for a global Meta AI hackathon. The user's rubric as
 
 Technical differentiators to demonstrate: privacy-constrained personal agents, deterministic economic optimization, collective demand intelligence, agent state persistence/checkpoint resume, multimodal evidence processing and a measurable user-value outcome. Do not add Meta tooling decoratively; make it essential to an actual user workflow and compare quality/latency/cost against a baseline.
 
-## 13. Naming and brand decision
+## 13. Product identity and naming
 
-The final product name is **not selected**. `MyEconomy` is the repository and working project name. The user asked for a lively, modern, memorable name and explicitly rejected Sanskrit-derived and Christian/religiously coded naming directions. Do not presume that Arabic-rooted naming is required or that a suggested name is approved. AWNORA was suggested as an option but is **not approved**; do not use it as the current brand. Any future shortlist needs pronunciation, meaning, unwanted associations, search-result collision, domain, app-store and trademark screening before adoption.
+**AwnNORA** is the confirmed project/product name for the Meta Global AI Hackathon. Preserve this exact casing. `MyEconomy` remains the existing repository and Python package name because it is the implementation base; it is not a competing product brand. Do not reopen naming or propose alternatives unless the user explicitly asks. `MAKOS`, `GENIEA` and `KRN` are named architectural systems within AwnNORA, not alternate product brands.
 
 ## 14. What is implemented today (reconcile with PROJECT_STATUS.md)
 
@@ -204,7 +206,12 @@ The final product name is **not selected**. `MyEconomy` is the repository and wo
 - Account, transaction, import-batch and recurring-obligation APIs are owner-scoped. Non-owner access returns 404. Household membership is not used as a financial-data permission.
 - `scripts/seed_synthetic_customer.py` loads one synthetic persona into an existing, active, verified local user only; it refuses production mode, creates no fake login identity and uses deterministic idempotency/source IDs.
 
-The Iteration 02 CSV/API flows are implemented and tested in local SQLite. PostgreSQL migration/runtime behavior has been verified for the merged Iteration 01 schema via the main-branch CI run; Iteration 02's new PostgreSQL migration SQL is generated offline locally but has **not** yet run in a live PostgreSQL 16 service job because this iteration is not yet pushed. Do not mark the new financial data plane as PostgreSQL-runtime-tested until its own CI completes.
+### Iteration 03 — AwnNORA economic-intelligence domain kernel (local candidate)
+- `domain/economic_intelligence.py` adds deterministic invoice/evidence review, offer net-value evaluation, consent-aware Commons demand aggregation, strict VIVC accounting, GENIEA mission transitions and tool-authorization gates.
+- `tests/test_economic_intelligence.py` adds 23 focused tests. The complete local suite passes 79 tests.
+- These are domain primitives only. No Guardian document API/vault/OCR/model extraction, persisted case state, durable GENIEA runtime/checkpoint, KRN graph persistence, live Commons service or MAKOS UI exists yet.
+
+The Iteration 02 CSV/API flows are merged into `main` through PR #2 at `a55cb388ef7baf72766e2fcabe89f0dee1c45979`. Its GitHub Actions run `41801123405` passed Python 3.12, Python 3.13 and PostgreSQL 16 service-backed migration/audit checks. Iteration 03 remains a local-only domain kernel until its own branch/PR is created and CI passes.
 
 ### Still designed / not yet implemented
 No live bank aggregator, official bank-data consent integration, statement provider connectors, encrypted document vault, category-learning service, budgets/goals/forecast engine, benefits rules catalogue, Guardian claims flow, opportunity marketplace, resource exchange, crisis workflows, enterprise operations, Commons aggregation engine/anti-inference controls, offer optimizer, VIVC evidence ledger, partner commission/payout engine, RAG, graph runtime, durable agent/checkpoint engine, Meta model gateway or production deployment exists yet. Synthetic records for these future capabilities remain fixtures only. Use `docs/FEATURE_CATALOG.md` and `docs/PROJECT_STATUS.md` as the status authority.
@@ -219,11 +226,12 @@ The official Meta Global AI Developer Hackathon page currently lists submissions
 
 When sources disagree, use this order:
 
-1. Current code, tests, migrations and live repository state for what is implemented.
-2. `docs/PROJECT_STATUS.md` for dated implementation status, reconciled against code.
-3. Feature specs and ADRs for approved design decisions.
-4. This project memory for overarching product intent and constraints.
-5. Prior chat history for unresolved ideas only; update this repository when the user confirms a decision.
+1. Latest explicit user-confirmed product decisions and `docs/AWNNORA_CONTEXT_MAP.md` for project identity and intended system boundaries.
+2. Current code, tests, migrations and live repository state for what is implemented.
+3. `docs/PROJECT_STATUS.md` for dated implementation status, reconciled against code.
+4. Feature specs and ADRs for approved design decisions.
+5. This project memory for overarching product intent and constraints.
+6. Prior chat history for unresolved ideas only; update this repository when the user confirms a decision.
 
 Never claim persistent model memory just because this file exists. At the beginning of each future engineering session, read the repository's current memory documents and inspect the current branch/HEAD.
 

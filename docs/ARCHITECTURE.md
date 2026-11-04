@@ -1,4 +1,6 @@
-# System Architecture — Current Implementation and Target Design
+# AwnNORA System Architecture — Current Implementation and Target Design
+
+Canonical product/system map: [`AWNNORA_CONTEXT_MAP.md`](AWNNORA_CONTEXT_MAP.md).
 
 This document separates the code that exists from the full product architecture.
 
@@ -8,11 +10,11 @@ The product aims to deliver individual economic agency first, then collective op
 
 - **Personal Mode:** private personal context, cashflow, protection, benefits, opportunity, knowledge-to-income, crisis and enterprise workflows. Must deliver a useful action with one user.
 - **Commons Mode:** purpose-limited aggregation of consented demand/capabilities/resources, with cohort thresholds and anti-inference protections.
-- **MAKOS:** future operational workspace and durable workflow surface.
-- **GENIEA:** future agent orchestration layer for planning, agent delegation, tool execution, recovery and mission coordination.
-- **KRN:** future knowledge/context and Collective Opportunity Graph layer, with private graph partitions and explicitly authorized shared edges.
+- **MAKOS:** intended operational workspace and durable workflow surface.
+- **GENIEA:** intended agent orchestration layer for planning, agent delegation, tool execution, recovery and mission coordination.
+- **KRN:** intended knowledge/context and Collective Opportunity Graph layer, with private graph partitions and explicitly authorized shared edges.
 
-These are product-level architecture names, not currently existing application packages in this repo.
+AwnNORA is the product/system. MAKOS, GENIEA and KRN are first-class architectural systems with the responsibilities described above. They are not yet separate application packages in the repository. Iteration 03 now contains a small framework-independent GENIEA policy/domain kernel; durable agent runtime, MAKOS UI and KRN persistence remain unimplemented. See `AWNNORA_CONTEXT_MAP.md` for the full canonical map.
 
 ## 2. Implementation architecture today
 
@@ -20,7 +22,7 @@ A Python/FastAPI modular monolith, organized around `api -> application -> domai
 
 - **API:** FastAPI routers, Pydantic 2 schemas, auth dependencies and safe error mapping.
 - **Application:** transaction-owning use cases for identity, email verification, sessions, households, invitations, consent, audit and cashflow translation.
-- **Domain:** pure cashflow/money logic, typed consent vocabulary/policy and stable application errors.
+- **Domain:** pure cashflow/money logic, typed consent vocabulary/policy, stable application errors, and the Iteration 03 economic-intelligence kernel (`economic_intelligence.py`).
 - **Infrastructure:** SQLAlchemy models/session, Alembic, Argon2/session primitives, email delivery adapter.
 - **Persistence:** SQLite for local/test; PostgreSQL supported through SQLAlchemy/psycopg and Alembic. Live PostgreSQL integration is still unverified.
 
