@@ -2,9 +2,9 @@
 
 **Canonical project name:** AwnNORA
 **Implementation repository:** `20233-CM-031/MyEconomy`
-**Context-map version:** 1.2
+**Context-map version:** 1.3
 **Reconciled:** 2026-11-04
-**Status:** Product vision confirmed; Iterations 00–04 merged to main (PR #4: 60fa93d191fcd6566719db553d4628905a0b64f7); Iteration 05 Personal Power Report & Scenario Lab v1 implemented and verified.
+**Status:** Product vision confirmed; Iterations 00–05 merged to main (PR #5: 7408269421f4c1a166e58ec0310fc9c9da2c2ede); Iteration 06 MAKOS Web Workspace & Meta Model AI Assistance implemented and verified.
 
 > This document resolves older working-name language in historical notes. AwnNORA is the project/product name for the Meta Global AI Hackathon. `MyEconomy` remains the existing repository and Python package name because it is the implementation base. It is not an alternative product brand.
 
@@ -178,18 +178,18 @@ Repository: `20233-CM-031/MyEconomy`, default branch `main`. Live GitHub inspect
 | Iteration 02 | Merged: owner-scoped financial accounts, bounded CSV ledger import, recurring obligations, persisted cashflow and DB guards |
 | Iteration 03 | **Merged in PR #3:** deterministic invoice/evidence review, offer net-value, in-memory consent-aware aggregation, VIVC rules and GENIEA mission/tool policy kernel |
 | Iteration 04 | **Merged in PR #4:** authenticated Guardian evidence upload, private local storage adapter, persisted owner-scoped invoice review cases, evidence/hash metadata, audit, draft and explicit approval-state APIs |
-| Iteration 05 | **Implemented & Verified (94 tests passing):** Personal Mode Power Report (GET /api/v1/personal/power-report), first-user journey runner, and Scenario Lab v1 (46 templates, 1,150 synthetic runs across 12 capabilities) |
-| Iteration 06 (Roadmap) | **MAKOS Visual Workspace:** Interactive UI connecting Day-One onboarding, Personal Power Report, case inbox, and evidence review center |
+| Iteration 05 | **Merged in PR #5:** Personal Mode Power Report (GET /api/v1/personal/power-report), first-user journey runner, and Scenario Lab v1 (46 templates, 1,150 synthetic runs across 12 capabilities) |
+| Iteration 06 | **Implemented & Verified (108 tests passing, Vite built):** MAKOS Visual Workspace (apps/web: React 19 + TypeScript + Vite) and consent-gated Meta Model AI Assistance (Muse Spark 1.3 Standard mode) |
 | Iteration 07 (Roadmap) | **GENIEA Persistent Mission Runtime:** Durable leases, step checkpoints, resume-from-failure without replay, and tool execution outbox |
 | Iteration 08 (Roadmap) | **Multimodal Document Understanding Gateway:** Llama-Vision/OCR extraction pipeline, document quarantine/malware scan, and visual locator verification |
 | Iteration 09 (Roadmap) | **Opportunity & Entitlement Engines:** Skill capability graph matching against Skill India & public scholarship registries with deterministic eligibility checks |
 | Iteration 10 (Roadmap) | **Commons Demand & Resource Exchange:** Persistent demand aggregation with k-anonymity quorum, anti-differencing governance, and ONDC buyer/seller protocol adapters |
 | Iteration 11 (Roadmap) | **One-Person Enterprise & Value Settlement:** Unit economics engine, storefront catalog, and live VIVC settlement accounting with 50/50 net revenue ledger |
-| MAKOS workspace/UI | Not implemented; APIs and workflow foundations only |
+| MAKOS workspace/UI | **Implemented:** apps/web responsive workspace (React 19 + TypeScript + Vite), Power Report, Guardian cases, Enterprise calculator, and Meta Assistant |
 | GENIEA durable runtime | Not implemented; only domain mission/tool policies exist, no persistent mission/step/checkpoint executor |
 | KRN graph runtime | Not implemented; architecture documents define private/shared graph boundaries and evidence/provenance responsibilities |
 | RAG / SpiderCrawler | Not implemented |
-| Meta model gateway / OCR | Not implemented; Iteration 04 accepts user-submitted structured fields, not extracted model output |
+| Meta model gateway / OCR | **Implemented (Explanation slice):** Consent-gated Muse Spark 1.3 Standard-mode explanation adapter (store=false, aggregate-only, zero prompt storage); OCR/vision extraction pipeline pending |
 | Live provider action | Not implemented; draft approval does not send a provider message |
 | Production document store/scanner | Not implemented; Iteration 04 uses local private filesystem with `STORED_UNSCANNED` state |
 | Bank aggregation, payments, partner settlement/payout | Not implemented |

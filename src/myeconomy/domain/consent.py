@@ -21,6 +21,7 @@ class ConsentPurpose(StrEnum):
     SUPPORT_CASE_PROCESSING = "support_case_processing"
     ECONOMIC_DEFENCE = "economic_defence"
     ENTERPRISE_ASSISTANCE = "enterprise_assistance"
+    AI_ASSISTANCE = "ai_assistance"
 
 
 class DataCategory(StrEnum):
@@ -119,6 +120,9 @@ _ALLOWED_CATEGORIES: dict[ConsentPurpose, frozenset[DataCategory]] = {
             DataCategory.BUSINESS_RECORDS,
         }
     ),
+    ConsentPurpose.AI_ASSISTANCE: frozenset(
+        {DataCategory.FINANCIAL_SUMMARY, DataCategory.HOUSEHOLD_OBLIGATIONS}
+    ),
 }
 
 _REQUIRED_RECIPIENT_TYPES: dict[ConsentPurpose, RecipientType] = {
@@ -131,6 +135,7 @@ _REQUIRED_RECIPIENT_TYPES: dict[ConsentPurpose, RecipientType] = {
     ConsentPurpose.SUPPORT_CASE_PROCESSING: RecipientType.SERVICE,
     ConsentPurpose.ECONOMIC_DEFENCE: RecipientType.SERVICE,
     ConsentPurpose.ENTERPRISE_ASSISTANCE: RecipientType.SERVICE,
+    ConsentPurpose.AI_ASSISTANCE: RecipientType.SERVICE,
 }
 
 
@@ -164,6 +169,8 @@ def validate_consent_scope(
         raise ConsentScopeError("A valid, bounded recipient identifier is required.")
     if purpose == ConsentPurpose.COMMONS_AGGREGATION and normalized_recipient != "commons":
         raise ConsentScopeError("Commons aggregation must target the 'commons' service.")
+    if purpose == ConsentPurpose.AI_ASSISTANCE and normalized_recipient != "meta-model-api":
+        raise ConsentScopeError("AI assistance must target the 'meta-model-api' service.")
 
 
 @dataclass(frozen=True)
@@ -305,6 +312,24 @@ _CONSENT_TERMS: dict[ConsentPurpose, ConsentTerms] = {
         revocation_note=(
             "Revocation blocks future enterprise-service access under this grant; completed "
             "external transactions remain separate."
+        ),
+    ),
+    ConsentPurpose.AI_ASSISTANCE: ConsentTerms(
+        purpose=ConsentPurpose.AI_ASSISTANCE,
+        version="2026-11-04.1",
+        title="Use a minimized report summary for optional Meta AI assistance",
+        summary=(
+            "Authorize AwnNORA to send only aggregate financial totals, essential-obligation "
+            "totals and system-generated finding labels/text from the selected Personal Power "
+            "Report to the Meta Model API "
+            "using Muse Spark Standard mode. The request excludes names, account IDs, transaction "
+            "rows, counterparties, contact details, uploaded documents and raw evidence. "
+            "Contributor mode is not used. Model output is explanatory and cannot change records, "
+            "calculate money, approve actions or contact providers."
+        ),
+        revocation_note=(
+            "Revocation blocks future Meta assistance requests. It cannot recall a request already "
+            "sent to the provider; AwnNORA uses store=false and does not persist the model prompt."
         ),
     ),
 }
