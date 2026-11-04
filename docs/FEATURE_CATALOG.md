@@ -98,3 +98,13 @@ Status: **Implemented and tested**, **Partial**, **Designed**, **Not started**, 
 | Draft/approval | Partial, no external delivery | Deterministic clarification draft; approval means user may send it manually; no email/provider API side effect |
 | Synthetic Guardian workflow | Simulated, local test | Three fictional PDFs, structured payloads, page/line locators and SHA-256 manifest; no real customers/providers |
 | Local verification | Passed except stated gaps | 83 pytest tests, compileall, SQLite migration lifecycle and original 42-table/17,425-row dataset validator passed. Ruff, Python 3.12 and live PostgreSQL 16 migration test are unverified. |
+
+
+<!-- AWNNORA-TRANSFER-ITERATION-05 -->
+## Transfer overlay capability addition
+
+| Area / capability | Intended behavior | Local overlay status | Acceptance remaining |
+|---|---|---|---|
+| Personal Mode Power Report | Owner-private report from persisted posted cashflow, potential duplicates and recurring obligations | Implemented as additive candidate in `src/myeconomy/{domain,application,api}/personal_power*.py`; package-level domain tests passed | Apply to target checkout; run full API/integration suite, migration/readiness and first-user runbook |
+| First-user local journey | Verify user, seed one synthetic persona through existing services, call Personal Power endpoint | Implemented as `scripts/awnnora_first_user_journey.py` | Run against an isolated local DB and dedicated `@example.invalid` account |
+| Scenario Lab | Reproducible product-level scenario workload and invariant validator | Implemented; 46 templates / 1,150 generated default runs validated | Wire fixtures to live subsystem acceptance tests as each engine is built |

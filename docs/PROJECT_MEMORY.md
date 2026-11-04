@@ -247,3 +247,11 @@ A deterministic synthetic fixture corpus now lives at `demo_data/synthetic_v1/`.
 `CAM00001` is a 5/5 Commons quorum fixture with five fictional participants whose purpose-specific demand consent is valid at signal time. It uses a matching simulated Jaipur education offer; no provider quote, fulfilment, sponsorship or payout is real. Other campaign rows without a matching offer remain in gathering state. The dataset is a test fixture and never a real customer base or measured impact. VIVC rows carry `SYNTHETIC_FIXTURE_ONLY`.
 
 The regulatory mapping records India-oriented engineering controls for DPDP staged commencement, RBI Account Aggregator and conditional Digital Lending requirements. It is not legal advice or a compliance claim. Re-check official commencement and applicable regulatory roles before production.
+
+
+<!-- AWNNORA-TRANSFER-ITERATION-05 -->
+## Iteration 05 transfer memory — Personal Mode first useful session
+
+The intended first user experience does not require a bank link or Commons. The local overlay adds a read-only owner-scoped Personal Power Report over the existing persisted financial plane. Deterministic rules surface missing/classification gaps, net cashflow pressure, possible duplicate rows and due obligations. It does not autonomously contact providers, classify unknown money or claim savings/recovery. The report's VIVC is zero by design. `docs/transfer/` contains the full delivery contract, runbook and validation limits.
+
+The companion Scenario Lab provides synthetic negative/edge cases for all major capability families. Treat these as acceptance fixtures, not a claim that every subsystem is implemented.

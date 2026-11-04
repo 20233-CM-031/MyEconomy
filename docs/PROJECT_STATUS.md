@@ -108,3 +108,11 @@ All routes require verified authentication. Document and case metadata are scope
 ## 7. Source-of-truth rule
 
 The live GitHub code/migrations/tests and remote branch state determine what is merged. This file records current local candidate facts separately. A local archive, a generated overlay or a passing local test suite is never called pushed/merged. Update this file, the context map, project memory, codebase map, feature catalog and iteration report in the same engineering change.
+
+
+<!-- AWNNORA-TRANSFER-ITERATION-05 -->
+## Local transfer overlay — 2026-11-04
+
+The verified remote baseline used to prepare the additive overlay was `60fa93d191fcd6566719db553d4628905a0b64f7`. The overlay adds a local Personal Mode Power Report vertical slice and a first-user runner. These additions are **not merged or pushed** by the assistant; after the repository owner applies them, run the full repository suite and the first-user runbook before treating the slice as accepted. Package-level domain tests and scenario-lab validation are recorded in `docs/transfer/ITERATION-05-PERSONAL-POWER.md`.
+
+The Scenario Lab ships 46 templates × 25 deterministic replicas (1,150 runs) across 12 capability categories. All generated runs are `SYNTHETIC_FIXTURE`; no external side effect occurs and VIVC is zero. This complements—not replaces—the existing 42-table / 17,425-row `synthetic_v1` corpus.

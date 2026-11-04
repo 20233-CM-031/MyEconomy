@@ -1,0 +1,21 @@
+{
+  "dataset": "AwnNORA Scenario Lab",
+  "version": "1.0.0",
+  "synthetic_only": true,
+  "seed": 20261104,
+  "scenario_template_count": 46,
+  "run_count": 1150,
+  "data_class": "SYNTHETIC_FIXTURE",
+  "money_unit": "PAISE_INTEGER",
+  "external_side_effects": false,
+  "files": {
+    "scenario_catalog.json": {
+      "bytes": 27689,
+      "sha256": "2bcc1d152259444aff2bb833a467423e38ccc8cdccc652289a0b922db87f42b2"
+    },
+    "runs.jsonl": {
+      "bytes": 3779656,
+      "sha256": "b6526f56cc71b6ce1ec95f11f18735674082c98283ed13961ba3ca030ea282b3"
+    }
+  }
+}

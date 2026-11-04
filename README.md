@@ -120,3 +120,11 @@ Read `docs/SYNTHETIC_DEMO_DATASET.md`, `docs/DEMO_PLAYBOOK.md` and `demo_data/sy
 Iteration 02 adds owner-scoped account metadata, bounded CSV statement imports, an integer-minor-unit transaction ledger, import idempotency/provenance, provider status reconciliation, posted-only cashflow reads and recurring obligations. It uses a conservative `IGNORE` treatment when transaction classification is missing. Provider-status changes are monotonic and audited; financial facts are guarded as immutable in SQLite and PostgreSQL. See `docs/FINANCIAL_DATA_CONTRACT.md` and `docs/iterations/ITERATION-02.md`.
 
 **Limitations:** no live bank/Account Aggregator integration, payment initiation, automated debit, FX conversion, budget/goal engine, Guardian action submission, agent runtime or Meta model gateway is implemented in this iteration. The synthetic data under `demo_data/synthetic_v1/` is for local test/demo use only.
+
+
+<!-- AWNNORA-TRANSFER-ITERATION-05 -->
+## AwnNORA Personal Mode and Scenario Lab transfer
+
+A local additive engineering overlay is supplied in `docs/transfer/`. It adds the first authenticated Personal Power Report endpoint, a first-user journey runner, and a deterministic scenario laboratory. The transfer must be applied and verified by the repository owner; it is not a remote commit. See `docs/transfer/ITERATION-05-PERSONAL-POWER.md`, `docs/transfer/FIRST_USER_RUNBOOK.md` and `docs/transfer/SCENARIO_LAB.md`.
+
+The included scenario workload is synthetic only. It does not represent live users, partner activity, benefit awards, payments or verified economic value.

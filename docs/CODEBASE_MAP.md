@@ -277,3 +277,15 @@ The data plane stores money as signed integer minor units plus currency. Each tr
 ### Tests and fixtures
 
 `tests/test_guardian_workflow.py` covers verified-user upload, signature/size rejection, same-key replay/conflict, owner-only access, persistence, draft/approval, audit, abstention and comparable-price detection. Three PDFs and the API runner live in `demo_data/synthetic_v1/source_documents/guardian/` and `guardian_workflow/`; `metadata/guardian_workflow_manifest.json` contains file hashes and fixture metadata.
+
+
+<!-- AWNNORA-TRANSFER-ITERATION-05 -->
+## Personal Mode Power Report (local transfer overlay)
+
+- `src/myeconomy/domain/personal_power.py`: framework-independent report rules and invariant checks.
+- `src/myeconomy/application/personal_power.py`: composes existing posted-only cashflow, owner-scoped accounts, duplicate candidates and recurring obligations.
+- `src/myeconomy/api/personal_power_schemas.py` and `personal_power_routes.py`: typed response and `GET /api/v1/personal/power-report`.
+- `scripts/awnnora_first_user_journey.py`: local demo orchestration; invokes existing synthetic persona seeder and reads through the API.
+- `tools/awnnora_scenario_lab/`: deterministic scenario generator and independent validator.
+
+The report is read-only; potential duplicates are not confirmed disputes, recurring obligations are not payment mandates and synthetic records do not create VIVC.
