@@ -30,6 +30,7 @@ async function request<T>(path: string, options: RequestInit = {}, token?: strin
 }
 
 export const api = {
+  demoSession: () => request<Session>('/auth/demo-session', { method: 'POST' }),
   login: (email: string, password: string) =>
     request<Session>('/auth/login', {
       method: 'POST',

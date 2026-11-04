@@ -204,3 +204,18 @@ def test_expired_email_verification_challenge_is_rejected(test_environment) -> N
         ).json()["email_verified"]
         is False
     )
+
+
+def test_demo_session_endpoint(test_environment) -> None:
+    client, _ = test_environment
+    response = client.post("/api/v1/auth/demo-session")
+    assert response.status_code == 200
+    data = response.json()
+    assert "access_token" in data
+    assert data["user"]["email"] == "demo@example.com"
+    assert data["user"]["email_verified"] is True
+
+    # Calling it again returns a valid session for the existing demo user
+    second = client.post("/api/v1/auth/demo-session")
+    assert second.status_code == 200
+    assert second.json()["user"]["email"] == "demo@example.com"

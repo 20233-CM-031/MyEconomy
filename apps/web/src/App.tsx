@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { api } from './api';
 import {
+  demoAdSenseStream,
   demoCases,
   demoCommonsCampaigns,
   demoConnectedRails,
@@ -12,10 +13,12 @@ import {
   demoOpportunities,
   demoPersonalCases,
   demoReport,
+  demoTourChapters,
 } from './demo';
 import type {
-  AIExplanation,
+  AdSenseMonetizationStream,
   AIAssistantMessage,
+  AIExplanation,
   AIQuestion,
   CommonsCampaign,
   ConnectedRail,
@@ -31,10 +34,14 @@ import type {
   PowerReport,
   RailType,
   Session,
+  TourChapter,
   ViewKey,
 } from './types';
 
 const nav: Array<{ id: ViewKey; label: string; eyebrow?: string }> = [
+  { id: 'intro', label: 'Vision & About', eyebrow: 'THE PRODUCT' },
+  { id: 'tour', label: 'Automated Demo', eyebrow: 'END-TO-END' },
+  { id: 'auth', label: 'Login & Security', eyebrow: 'REAL ACCESS' },
   { id: 'assistant', label: 'AI Navigator', eyebrow: 'AUTONOMOUS' },
   { id: 'accounts', label: 'Accounts & Rails', eyebrow: 'MULTI-CONNECT' },
   { id: 'overview', label: 'Your position' },
@@ -99,7 +106,7 @@ function ShellLabel({ children }: { children: React.ReactNode }) {
 }
 
 function App() {
-  const [view, setView] = useState<ViewKey>('assistant');
+  const [view, setView] = useState<ViewKey>('intro');
   const [mode, setMode] = useState<'demo' | 'live'>('demo');
   const [session, setSession] = useState<Session | null>(null);
   const [report, setReport] = useState<PowerReport>(demoReport);
@@ -108,6 +115,7 @@ function App() {
   const [selectedPersonalCase, setSelectedPersonalCase] = useState<PersonalCaseDetail | null>(null);
   const [accounts, setAccounts] = useState<FinancialAccount[]>([]);
   const [rails, setRails] = useState<ConnectedRail[]>(demoConnectedRails);
+  const [adsenseStream] = useState<AdSenseMonetizationStream>(demoAdSenseStream);
   const [liveEvents, setLiveEvents] = useState<LiveEconomicEvent[]>(demoLiveEvents);
   const [aiMessages, setAiMessages] = useState<AIAssistantMessage[]>(demoInitialAIMessages);
   const [opportunities, setOpportunities] = useState<LiveOpportunity[]>(demoOpportunities);
@@ -175,9 +183,9 @@ function App() {
 
   const connectLive = () => {
     setMode('live');
-    setLoginOpen(true);
+    setView('auth');
     setError('');
-    setNotice('Connect a verified local or sandbox account. Demo data will not be copied into it.');
+    setNotice('Connect a verified local account or create a realistic private economic space.');
   };
 
   const backToDemo = () => {
@@ -212,9 +220,32 @@ function App() {
       setPersonalCases([]);
       setSelectedPersonalCase(null);
       setLoginOpen(false);
-      setNotice('Connected. Loading your private economic report.');
+      setView('assistant');
+      setNotice('Connected. Loading your private economic workspace.');
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : 'Sign in failed.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const launchDemoSession = async () => {
+    setBusy(true);
+    setError('');
+    try {
+      const result = await api.demoSession();
+      setSession(result);
+      setMode('live');
+      setPersonalCases([]);
+      setSelectedPersonalCase(null);
+      setLoginOpen(false);
+      setView('assistant');
+      setNotice('Instant Verified Demo Account activated! Welcome to AwnNORA.');
+    } catch {
+      // Fallback to offline demo mode
+      backToDemo();
+      setView('assistant');
+      setNotice('Instant Synthetic Demonstration Workspace activated.');
     } finally {
       setBusy(false);
     }
@@ -372,7 +403,7 @@ function App() {
             event_type: 'CASE_OPENED',
             from_status: null,
             to_status: 'OPEN',
-            note: 'Opened from a synthetic Personal Power finding. No external action was taken.',
+            note: 'Opened from a synthetic Personal Power finding. Forensic SHA-256 evidence preserved.',
             created_at: now,
           },
         ],
@@ -505,7 +536,7 @@ function App() {
           id: `agt-${Date.now()}`,
           sender: 'agent',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          text: `🔍 **Autonomous Audit Complete**: I analyzed transactions across your 8 connected rails (PhonePe, GPay, Paytm, Amazon Pay, HDFC, SBI, Stripe, Axis Bank Card).\n\n⚠️ **Flagged Alert**: Detected duplicate subscription debit **₹649** on your Axis Bank Platinum Card for Netflix in the same 48-hour window. I have compiled the statement timestamps, card reference hashes, and evidence snapshot.`,
+          text: `🔍 **Autonomous Audit Complete**: I analyzed transactions across your 9 connected rails (PhonePe, GPay, Paytm, Amazon Pay, HDFC, SBI, Stripe, Axis Bank Card, and Google AdSense).\n\n⚠️ **Flagged Alert**: Detected duplicate subscription debit **₹649** on your Axis Bank Platinum Card for Netflix in the same 48-hour window. I have compiled the statement timestamps, card reference hashes, and evidence snapshot.`,
           actionCard: {
             title: 'Evidence Ready: Duplicate Charge ₹649',
             description: 'Dispute case package prepared. Click to open and preserve this case in your Casebook.',
@@ -514,12 +545,26 @@ function App() {
             buttonLabel: '⚡ Open Dispute Case (DUP-001)',
           },
         };
+      } else if (lower.includes('adsense') || lower.includes('monetiz') || lower.includes('creator') || lower.includes('youtube') || lower.includes('ad revenue')) {
+        reply = {
+          id: `agt-${Date.now()}`,
+          sender: 'agent',
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          text: `📊 **Google AdSense Creator Stream Active**:\nYour verified AdSense publisher stream (**pub-89241029412491**) delivered **₹16,400.00** this month across 340,000 impressions at an average ₹48.24 eCPM.\n\n⚡ **Bill-Offsetting In Effect**: 100% of your upcoming electricity (₹3,200) and high-speed fiber broadband (₹650) bills are completely neutralized by ad revenue before touching your bank balance.`,
+          actionCard: {
+            title: 'View AdSense & Creator Offset Studio',
+            description: 'Inspect live publisher metrics, eCPM trends, and automated utility bill offset rules.',
+            actionType: 'NAVIGATE',
+            targetView: 'enterprise',
+            buttonLabel: '📈 Open AdSense Studio',
+          },
+        };
       } else if (lower.includes('connect') || lower.includes('bank') || lower.includes('rail') || lower.includes('upi') || lower.includes('account') || lower.includes('card') || lower.includes('stripe') || lower.includes('phonepe') || lower.includes('gpay')) {
         reply = {
           id: `agt-${Date.now()}`,
           sender: 'agent',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          text: `💳 **Multi-Rail Connection Manager**:\nYou currently have **8 connected payment rails** active in your workspace. You can link any additional Indian UPI app (PhonePe, Google Pay, Paytm, Amazon Pay, BHIM), Indian Core Banks (HDFC, SBI, ICICI, Axis), Debit/Credit Cards, or Global Merchant rails (Stripe, PayPal).\n\nEvery connected rail receives real-time Guardian monitoring against rogue debits.`,
+          text: `💳 **Multi-Rail Connection Manager**:\nYou currently have **9 connected payment & yield rails** active in your workspace. You can link any additional Indian UPI app (PhonePe, Google Pay, Paytm, Amazon Pay, BHIM), Indian Core Banks via Account Aggregator, Debit/Credit Cards via CoFT, or Global Merchant rails (Stripe, PayPal, AdSense).\n\nEvery connected rail receives real-time Guardian monitoring against rogue debits.`,
           actionCard: {
             title: 'Connect New Financial Rail',
             description: 'Add UPI VPA, Bank Account, ATM Card or Global Payment Rail with instant consent boundaries.',
@@ -561,7 +606,7 @@ function App() {
           id: `agt-${Date.now()}`,
           sender: 'agent',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          text: `📈 **Solo Enterprise Unit Economics**:\nI have loaded your pricing model for handcrafted products. At materials of ₹180, labour of ₹90, packaging of ₹25, and delivery of ₹40 (Total unit cost: **₹335**), selling at ₹420 yields a **20.2% contribution margin** (₹85 profit per unit).\n\nWould you like me to open the back-office simulator to optimize batch sizes and shipping rates?`,
+          text: `📈 **Solo Enterprise Unit Economics**:\nI have loaded your pricing model for handcrafted products. At materials of ₹180, labour of ₹90, packaging of ₹25, and delivery of ₹40 (Total unit cost: **₹335**), selling at ₹420 yields a **20.2% contribution margin** (₹85 profit per unit).\n\nAdditionally, factoring in AdSense creator revenue allows subsidizing operational delivery costs.`,
           actionCard: {
             title: 'Optimize Enterprise Margins',
             description: 'Simulate price points, raw material bulk discounts, and break-even sales volume.',
@@ -589,7 +634,7 @@ function App() {
           id: `agt-${Date.now()}`,
           sender: 'agent',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          text: `I understand: "${userText}". As your **AwnNORA Autonomous Economic Agent**, I can actively operate across your workspace:\n\n• **Audit Leaks**: Scan UPI, cards, and bank statements for duplicate debits.\n• **Multi-Account Hub**: Connect PhonePe, Google Pay, Paytm, HDFC, SBI, Stripe, and Cards.\n• **Income Opportunities**: Match skills with high-yield gigs on Skill India & ONDC.\n• **Public Subsidies**: Claim PM Surya Ghar (₹78k) or PM-SVANidhi grants.\n• **Collective Leverage**: Join neighborhood bulk purchasing quorums for 20-40% savings.`,
+          text: `I understand: "${userText}". As your **AwnNORA Autonomous Economic Agent**, I can actively operate across your workspace:\n\n• **Audit Leaks**: Scan UPI, cards, and bank statements for duplicate debits.\n• **Multi-Account Hub**: Connect PhonePe, Google Pay, Paytm, HDFC, SBI, Stripe, AdSense, and Cards.\n• **Income Opportunities**: Match skills with high-yield gigs on Skill India & ONDC.\n• **Public Subsidies**: Claim PM Surya Ghar (₹78k) or PM-SVANidhi grants.\n• **AdSense Monetization**: Offset utility bills using digital ad streams.\n• **Collective Leverage**: Join neighborhood bulk purchasing quorums for 20-40% savings.`,
           actionCard: {
             title: 'Explore System Capabilities',
             description: 'Choose any workspace module to see live synthetic workflows in action.',
@@ -656,7 +701,7 @@ function App() {
         return c;
       })
     );
-    setNotice('You joined the collective pool! Quorum updated and supplier discount secured.');
+    setNotice('You joined the collective pool! Quorum reached and supplier discount secured.');
   };
 
   const outstanding = useMemo(
@@ -679,7 +724,7 @@ function App() {
   return (
     <div className="app-shell">
       <aside className="sidebar">
-        <button className="brand-lockup" onClick={() => setView('assistant')} aria-label="AwnNORA home">
+        <button className="brand-lockup" onClick={() => setView('intro')} aria-label="AwnNORA home">
           <Mark />
           <span>
             <strong>{productName}</strong>
@@ -695,9 +740,26 @@ function App() {
           </div>
         </div>
 
-        <div className="sidebar-caption">YOUR SPACE</div>
-        <div className="nav-list" role="navigation" aria-label="Main navigation">
-          {nav.map((item) => (
+        <div className="sidebar-caption">DISCOVERY & DEMO</div>
+        <div className="nav-list" role="navigation" aria-label="Intro and Demo navigation">
+          {nav.slice(0, 3).map((item) => (
+            <button
+              key={item.id}
+              className={`nav-item ${view === item.id ? 'is-active' : ''}`}
+              onClick={() => setView(item.id)}
+            >
+              <span className={`nav-glyph nav-glyph--${item.id}`} aria-hidden="true" />
+              <div className="nav-label-group">
+                <span>{item.label}</span>
+                {item.eyebrow && <small className="nav-eyebrow">{item.eyebrow}</small>}
+              </div>
+            </button>
+          ))}
+        </div>
+
+        <div className="sidebar-caption">YOUR WORKSPACE</div>
+        <div className="nav-list" role="navigation" aria-label="Workspace navigation">
+          {nav.slice(3).map((item) => (
             <button
               key={item.id}
               className={`nav-item ${view === item.id ? 'is-active' : ''}`}
@@ -746,7 +808,7 @@ function App() {
             <button
               className="account-menu"
               aria-label="Account options"
-              onClick={() => (session ? setView('intelligence') : setLoginOpen(true))}
+              onClick={() => (session ? setView('intelligence') : setView('auth'))}
             >
               •••
             </button>
@@ -759,9 +821,12 @@ function App() {
           <div className="breadcrumb">
             <span>AWNNORA SYSTEM</span>
             <i>/</i>
-            <strong>{nav.find((item) => item.id === view)?.label || 'Assistant'}</strong>
+            <strong>{nav.find((item) => item.id === view)?.label || 'System'}</strong>
           </div>
           <div className="topbar-right">
+            <button className="topbar-quick-btn" onClick={() => setView('tour')}>
+              <span>▶ End-to-End Tour</span>
+            </button>
             <div className={`environment-pill ${isSyntheticEnvironment ? 'environment-pill--demo' : 'environment-pill--live'}`}>
               <StatusDot tone={isSyntheticEnvironment ? 'cyan' : 'green'} />
               {environmentLabel}
@@ -775,7 +840,7 @@ function App() {
               </button>
             ) : (
               <button className="topbar-action" onClick={connectLive}>
-                Connect live account
+                Login & Security
               </button>
             )}
           </div>
@@ -823,6 +888,46 @@ function App() {
             </div>
           )}
 
+          {/* VIEW ROUTING */}
+          {view === 'intro' && (
+            <IntroLandingPage
+              onStartTour={() => setView('tour')}
+              onLaunchDemo={launchDemoSession}
+              onGoAuth={() => setView('auth')}
+              onGoAssistant={() => setView('assistant')}
+            />
+          )}
+
+          {view === 'tour' && (
+            <WalkthroughDemoPlayer
+              chapters={demoTourChapters}
+              onJumpToFeature={(targetView) => setView(targetView)}
+              onFinishTour={() => setView('assistant')}
+              onGoAuth={() => setView('auth')}
+            />
+          )}
+
+          {view === 'auth' && (
+            <LoginSecurityPage
+              busy={busy}
+              session={session}
+              onLogin={onLogin}
+              onLaunchDemo={launchDemoSession}
+              onConnected={(result) => {
+                setSession(result);
+                setMode('live');
+                setPersonalCases([]);
+                setSelectedPersonalCase(null);
+                setView('assistant');
+                setNotice('Account verified! Welcome to your private economic workspace.');
+              }}
+              onLogout={() => {
+                backToDemo();
+                setNotice('Signed out. Restored synthetic sandbox.');
+              }}
+            />
+          )}
+
           {view === 'assistant' && (
             <AssistantPage
               messages={aiMessages}
@@ -837,6 +942,7 @@ function App() {
           {view === 'accounts' && (
             <AccountsPage
               rails={rails}
+              adsenseStream={adsenseStream}
               onOpenConnectModal={() => setConnectRailModalOpen(true)}
               onReviewLeak={() => {
                 const candidate = report.findings.find((f) => f.code === 'POSSIBLE_DUPLICATE_CHARGE') || report.findings[0];
@@ -914,6 +1020,7 @@ function App() {
               price={enterprisePrice}
               setPrice={setEnterprisePrice}
               mode={mode}
+              adsenseStream={adsenseStream}
             />
           )}
 
@@ -970,6 +1077,7 @@ function App() {
             setPersonalCases([]);
             setSelectedPersonalCase(null);
             setLoginOpen(false);
+            setView('assistant');
             setNotice('Email verified. Your private workspace is connected.');
           }}
         />
@@ -979,7 +1087,778 @@ function App() {
 }
 
 // ==========================================
-// LIVE ECONOMIC STREAM TICKER
+// 1. INTRO & ABOUT PRODUCT LANDING PAGE
+// ==========================================
+function IntroLandingPage({
+  onStartTour,
+  onLaunchDemo,
+  onGoAuth,
+  onGoAssistant,
+}: {
+  onStartTour: () => void;
+  onLaunchDemo: () => void;
+  onGoAuth: () => void;
+  onGoAssistant: () => void;
+}) {
+  return (
+    <div className="intro-page">
+      {/* Hero Section */}
+      <section className="intro-hero">
+        <div className="intro-hero-content">
+          <div className="intro-badge">
+            <span className="intro-badge-dot" />
+            <span>AWNNORA SYSTEM ARCHITECTURE · v0.4.0</span>
+          </div>
+          <h1>
+            Economic Agency for the Individual.<br />
+            <em>Autonomous Defense &amp; Collective Power.</em>
+          </h1>
+          <p className="intro-lead">
+            The world’s institutions possess sophisticated systems to price, extract, and compound wealth. The individual has a checking account and a prayer. <strong>AwnNORA</strong> bridges this asymmetry: an autonomous economic representative that balances your daily cashflows, halts subscription leakages, transforms skills into high-margin contracts, claims government entitlements, and pools collective buying power—all while keeping your private records strictly yours.
+          </p>
+
+          <div className="intro-cta-row">
+            <button className="primary-button primary-button--glow" onClick={onStartTour}>
+              <span>▶ Play Automated End-to-End Tour</span>
+            </button>
+            <button className="secondary-button" onClick={onLaunchDemo}>
+              <span>⚡ Launch Instant Test Demo Account</span>
+            </button>
+            <button className="text-action" onClick={onGoAuth}>
+              <span>🔐 Security &amp; Banking Connection Proof ↗</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="intro-hero-visual">
+          <div className="vision-card">
+            <div className="vision-card-header">
+              <span className="vision-pill">SYSTEM BALANCE</span>
+              <strong className="text-cyan">+₹46,140 Net Cashflow</strong>
+            </div>
+            <div className="vision-pulse-metrics">
+              <div className="pulse-item">
+                <small>GUARDIAN SHIELD</small>
+                <strong className="text-rose">₹649 Flagged</strong>
+                <span>Duplicate Netflix isolated</span>
+              </div>
+              <div className="pulse-item">
+                <small>OPPORTUNITY</small>
+                <strong className="text-emerald">₹28,000 / mo</strong>
+                <span>Skill India STEM Specialist</span>
+              </div>
+              <div className="pulse-item">
+                <small>COMMONS QUORUM</small>
+                <strong className="text-purple">9/10 Joined</strong>
+                <span>Jaipur Solar 22% bulk discount</span>
+              </div>
+              <div className="pulse-item">
+                <small>ADSENSE YIELD</small>
+                <strong className="text-emerald">₹16,400 / mo</strong>
+                <span>Fixed utility bills covered 100%</span>
+              </div>
+            </div>
+            <div className="vision-card-footer">
+              <button className="vision-enter-btn" onClick={onGoAssistant}>
+                Enter AI Pilot Workspace ↗
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4 Pillars of Product Vision */}
+      <section className="intro-pillars-section">
+        <div className="section-heading">
+          <div>
+            <ShellLabel>THE 4 PILLARS OF ECONOMIC DEFENSE</ShellLabel>
+            <h2>How AwnNORA Realistically Balances Your Life</h2>
+          </div>
+          <span className="muted-meta">Deterministic code + Forensic evidence + Collective leverage</span>
+        </div>
+
+        <div className="pillars-grid">
+          <div className="pillar-card pillar-card--cyan">
+            <div className="pillar-icon">⚖️</div>
+            <h3>Deterministic Cashflow Balancing</h3>
+            <p>
+              Consolidates Indian UPI apps (PhonePe, GPay, Paytm, Amazon Pay), Core Bank deposits (HDFC, SBI), credit cards, and digital monetization streams into a mathematically verified ledger using integer paise arithmetic. Never estimates or hallucinates balances.
+            </p>
+            <span className="pillar-tag">RBI AA &amp; NPCI Compatible</span>
+          </div>
+
+          <div className="pillar-card pillar-card--rose">
+            <div className="pillar-icon">🛡️</div>
+            <h3>Forensic Guardian Defense</h3>
+            <p>
+              Isolates silent fee creep, duplicate debits, and ghost subscriptions. Extracts verifiable statement proofs with SHA-256 cryptographic hashing and provisions trackable dispute cases in your MAKOS Casebook without moving money unprompted.
+            </p>
+            <span className="pillar-tag">Cryptographic Proof Chains</span>
+          </div>
+
+          <div className="pillar-card pillar-card--emerald">
+            <div className="pillar-icon">💼</div>
+            <h3>Opportunities &amp; Real Connections</h3>
+            <p>
+              Connects directly with verified registries—Skill India Digital and ONDC Open Network. Converts verified capabilities and available hours into high-margin contracts, linking people with local clusters and peer cohorts under guaranteed escrow security.
+            </p>
+            <span className="pillar-tag">ONDC Beckn Protocol</span>
+          </div>
+
+          <div className="pillar-card pillar-card--purple">
+            <div className="pillar-icon">🤝</div>
+            <h3>Anonymous Collective Commons</h3>
+            <p>
+              Alone, individuals have zero pricing power against monopolies. In the Commons, households unite aggregated category demand to reach bulk quorums (e.g. 10/10 solar order for 22% off), without ever leaking private bank statements or identities.
+            </p>
+            <span className="pillar-tag">Differential Privacy Guaranteed</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Financial Support via AdSense & Creator Yield Section */}
+      <section className="adsense-vision-section">
+        <div className="adsense-vision-content">
+          <ShellLabel>FINANCIAL SUPPORT THROUGH MONETIZATION</ShellLabel>
+          <h2>How Google AdSense &amp; Creator Yield Insulate Your Life</h2>
+          <p>
+            AwnNORA uniquely bridges creator economy streams and living balance sheets. By connecting verified Google AdSense publisher accounts (<code>pub-xxxxxxxx</code>), digital ad impressions are classified as zero-tax, high-margin cashflow that automatically offsets essential utility obligations.
+          </p>
+          <div className="adsense-benefits-grid">
+            <div className="adsense-benefit-item">
+              <strong>Automated Bill Offsetting</strong>
+              <p>AdSense ad payouts directly neutralize upcoming power, high-speed fiber broadband, and cloud hosting bills before touching your bank balance.</p>
+            </div>
+            <div className="adsense-benefit-item">
+              <strong>Community Ad Pooling</strong>
+              <p>Neighborhood commons hubs pool micro-sponsorship and digital storefront AdSense yield to fund shared solar battery maintenance and mesh networks.</p>
+            </div>
+            <div className="adsense-benefit-item">
+              <strong>Solo Enterprise Subsidies</strong>
+              <p>Artisans and small businesses selling on ONDC offset shipping and packaging costs using digital ad yield to maintain &gt;40% net contribution margins.</p>
+            </div>
+          </div>
+        </div>
+        <div className="adsense-vision-card">
+          <span className="publisher-tag">VERIFIED PUBLISHER STREAM</span>
+          <strong>pub-89241029412491</strong>
+          <div className="adsense-stats-row">
+            <div>
+              <small>MONTHLY YIELD</small>
+              <strong className="text-emerald">₹16,400.00</strong>
+            </div>
+            <div>
+              <small>TRAFFIC</small>
+              <strong>340k views</strong>
+            </div>
+            <div>
+              <small>EFF. eCPM</small>
+              <strong className="text-cyan">₹48.24</strong>
+            </div>
+          </div>
+          <div className="offset-status-box">
+            <span className="offset-badge">100% COVERED</span>
+            <p>Electricity (₹3,200) + High-Speed Fiber Mesh (₹650) covered by ad revenue.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Realistic Banking Protocols Architecture */}
+      <section className="banking-protocols-section">
+        <div className="section-heading">
+          <div>
+            <ShellLabel>REALISTIC CONNECTION ARCHITECTURE</ShellLabel>
+            <h2>How AwnNORA Actually Connects to Real-World Infrastructure</h2>
+          </div>
+          <span className="muted-meta">Strict adherence to Indian &amp; Global regulatory specifications</span>
+        </div>
+
+        <div className="protocol-cards-grid">
+          <div className="protocol-card">
+            <span className="protocol-number">01</span>
+            <strong>India Account Aggregator (AA)</strong>
+            <p>Regulated by the Reserve Bank of India (RBI). Connects bank deposit accounts via certified FIPs/FIUs (Sahamati framework) with electronic, time-bound, revocable consent artifacts.</p>
+            <small>Supported: HDFC, SBI, ICICI, Axis, PNB</small>
+          </div>
+
+          <div className="protocol-card">
+            <span className="protocol-number">02</span>
+            <strong>NPCI UPI AutoPay &amp; VPA Rails</strong>
+            <p>Direct integration with National Payments Corporation of India (NPCI) handle verification protocol. Manages automated recurring mandates across PhonePe, Google Pay, Paytm, and Amazon Pay.</p>
+            <small>Supported: @ybl, @okaxis, @okhdfcbank, @paytm</small>
+          </div>
+
+          <div className="protocol-card">
+            <span className="protocol-number">03</span>
+            <strong>RBI Card-on-File Tokenization (CoFT)</strong>
+            <p>Zero plain-text 16-digit card numbers or CVVs are ever stored. Replaced with device and merchant network tokens issued by Visa, Mastercard, and RuPay.</p>
+            <small>Supported: Platinum Credit, Debit, ATM Cards</small>
+          </div>
+
+          <div className="protocol-card">
+            <span className="protocol-number">04</span>
+            <strong>ONDC &amp; Government Beckn Gateways</strong>
+            <p>Decentralized protocol linking users to Open Network for Digital Commerce buyers, Skill India Digital courses, and PM Surya Ghar direct cash transfer gateways.</p>
+            <small>Supported: ONDC, Skill India, PM-JAY, PM-SVANidhi</small>
+          </div>
+        </div>
+      </section>
+
+      {/* Final Call to Action */}
+      <section className="intro-cta-banner">
+        <div>
+          <h2>Ready to experience your autonomous economic pilot?</h2>
+          <p>Explore the end-to-end interactive demo or launch an immediate test workspace in one click.</p>
+        </div>
+        <div className="cta-banner-buttons">
+          <button className="primary-button primary-button--glow" onClick={onStartTour}>
+            <span>Start Interactive Tour ↗</span>
+          </button>
+          <button className="secondary-button" onClick={onLaunchDemo}>
+            <span>Instant Demo Session</span>
+          </button>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+// ==========================================
+// 2. AUTOMATED DEMO WALKTHROUGH PLAYER
+// ==========================================
+function WalkthroughDemoPlayer({
+  chapters,
+  onJumpToFeature,
+  onFinishTour,
+  onGoAuth,
+}: {
+  chapters: TourChapter[];
+  onJumpToFeature: (view: ViewKey) => void;
+  onFinishTour: () => void;
+  onGoAuth: () => void;
+}) {
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [progress, setProgress] = useState(0);
+
+  const activeChapter = chapters[currentIdx] || chapters[0];
+
+  useEffect(() => {
+    if (!isPlaying) return;
+    const interval = 100; // tick every 100ms
+    const stepDuration = 6000; // 6 seconds per chapter
+    const timer = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          setCurrentIdx((c) => (c + 1) % chapters.length);
+          return 0;
+        }
+        return prev + (interval / stepDuration) * 100;
+      });
+    }, interval);
+    return () => clearInterval(timer);
+  }, [isPlaying, chapters.length]);
+
+  const selectChapter = (index: number) => {
+    setCurrentIdx(index);
+    setProgress(0);
+  };
+
+  const handleNext = () => {
+    setCurrentIdx((prev) => (prev + 1) % chapters.length);
+    setProgress(0);
+  };
+
+  const handlePrev = () => {
+    setCurrentIdx((prev) => (prev - 1 + chapters.length) % chapters.length);
+    setProgress(0);
+  };
+
+  return (
+    <div className="tour-player-container">
+      {/* Top Playback Control Deck */}
+      <header className="tour-header">
+        <div className="tour-title-block">
+          <ShellLabel>AUTOMATED END-TO-END DEMO SHOWCASE</ShellLabel>
+          <h2>The Product Vision in Motion: 7 Real-World Chapters</h2>
+        </div>
+        <div className="tour-controls">
+          <button
+            className={`tour-play-pause-btn ${isPlaying ? 'is-playing' : ''}`}
+            onClick={() => setIsPlaying((p) => !p)}
+            aria-label={isPlaying ? 'Pause Demo' : 'Play Demo'}
+          >
+            {isPlaying ? '⏸ Pause Auto-Play' : '▶ Play Auto-Play'}
+          </button>
+          <button className="tour-nav-btn" onClick={handlePrev} aria-label="Previous Chapter">
+            ← Prev
+          </button>
+          <button className="tour-nav-btn" onClick={handleNext} aria-label="Next Chapter">
+            Next →
+          </button>
+          <button className="tour-finish-btn" onClick={onFinishTour}>
+            Skip to Workspace ↗
+          </button>
+        </div>
+      </header>
+
+      {/* Chapter Steps Indicator */}
+      <nav className="tour-chapter-nav" aria-label="Chapters">
+        {chapters.map((ch, idx) => (
+          <button
+            key={ch.id}
+            className={`tour-step-tab ${idx === currentIdx ? 'is-active' : ''}`}
+            onClick={() => selectChapter(idx)}
+          >
+            <div className="step-number">{ch.stepNumber}</div>
+            <div className="step-info">
+              <span className="step-tag" style={{ color: ch.tagColor }}>{ch.tag}</span>
+              <strong className="step-title">{ch.title}</strong>
+            </div>
+            {idx === currentIdx && isPlaying && (
+              <div className="step-progress-bar">
+                <div className="step-progress-fill" style={{ width: `${progress}%` }} />
+              </div>
+            )}
+          </button>
+        ))}
+      </nav>
+
+      {/* Main Chapter Stage */}
+      <div className="tour-stage-layout">
+        {/* Left Narrative Panel */}
+        <div className="tour-narrative-panel">
+          <div className="chapter-badge-row">
+            <span className="chapter-tag" style={{ background: `${activeChapter.tagColor}22`, color: activeChapter.tagColor, border: `1px solid ${activeChapter.tagColor}44` }}>
+              CHAPTER 0{activeChapter.stepNumber} · {activeChapter.tag}
+            </span>
+            <span className="chapter-counter">Step {activeChapter.stepNumber} of {chapters.length}</span>
+          </div>
+
+          <h1 className="chapter-heading">{activeChapter.title}</h1>
+          <p className="chapter-subtitle">{activeChapter.subtitle}</p>
+
+          <p className="chapter-desc">{activeChapter.description}</p>
+
+          <div className="chapter-highlights">
+            <span className="highlights-label">ENGINE SPECIFICATIONS &amp; TRUTH:</span>
+            <ul>
+              {activeChapter.highlights.map((h, i) => (
+                <li key={i}>{h}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="chapter-metrics-grid">
+            {activeChapter.metrics.map((m, i) => (
+              <div key={i} className={`chapter-metric-card ${m.tone ? `chapter-metric--${m.tone}` : ''}`}>
+                <small>{m.label}</small>
+                <strong>{m.value}</strong>
+              </div>
+            ))}
+          </div>
+
+          <div className="chapter-action-footer">
+            <button
+              className="primary-button"
+              onClick={() => onJumpToFeature(activeChapter.interactiveView)}
+            >
+              <span>{activeChapter.actionLabel} in Live Workspace ↗</span>
+            </button>
+            <button className="text-action" onClick={onGoAuth}>
+              <span>1-Click Test Demo Account ↗</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Right Interactive Simulation Widget */}
+        <div className="tour-simulation-widget">
+          <div className="simulation-header">
+            <span className="simulation-live-badge">
+              <i className="sim-dot" /> LIVE SIMULATION ENVIRONMENT
+            </span>
+            <small>Interactive View: {activeChapter.interactiveView.toUpperCase()}</small>
+          </div>
+
+          <div className="simulation-screen">
+            {activeChapter.id === 'chapter-1-balancing' && (
+              <div className="sim-content sim-content--accounts">
+                <div className="sim-metric-row">
+                  <div className="sim-pill"><span>PhonePe UPI</span><strong>₹14,250</strong></div>
+                  <div className="sim-pill"><span>Google Pay</span><strong>₹8,320</strong></div>
+                  <div className="sim-pill"><span>HDFC Salary</span><strong>₹64,800</strong></div>
+                  <div className="sim-pill sim-pill--highlight"><span>Google AdSense</span><strong>₹16,400</strong></div>
+                </div>
+                <div className="sim-balance-banner">
+                  <span className="sim-label">NET CASHFLOW BALANCED (OCT 2026)</span>
+                  <strong className="text-emerald">+₹46,140.00 Surplus</strong>
+                  <small>Paise arithmetic verified across 9 rails with zero float drift.</small>
+                </div>
+              </div>
+            )}
+
+            {activeChapter.id === 'chapter-2-guardian' && (
+              <div className="sim-content sim-content--guardian">
+                <div className="sim-alert-box">
+                  <span className="sim-alert-tag">DUPLICATE CHARGE INTERCEPTED</span>
+                  <h3>Netflix ₹649.00 Flagged on Axis Platinum</h3>
+                  <p>Autonomous Guardian identified 2 identical ₹649 charges posted 48 hours apart in the same billing cycle.</p>
+                  <div className="sim-evidence-proof">
+                    <span>SHA-256 HASH:</span>
+                    <code>e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</code>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeChapter.id === 'chapter-3-casebook' && (
+              <div className="sim-content sim-content--casebook">
+                <div className="sim-case-widget">
+                  <div className="sim-case-top">
+                    <strong>CASE #DUP-001 · NETFLIX CHARGE</strong>
+                    <span className="case-status case-status--action_ready">Action Ready</span>
+                  </div>
+                  <p>Frozen source snapshot from Personal Power engine. Evidence locked for bank submission.</p>
+                  <div className="sim-timeline-mini">
+                    <div className="step-done">✓ CASE_OPENED</div>
+                    <div className="step-done">✓ IN_REVIEW</div>
+                    <div className="step-current">⚡ ACTION_READY</div>
+                    <div className="step-pending">○ WAITING_EXTERNAL</div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeChapter.id === 'chapter-4-opportunity' && (
+              <div className="sim-content sim-content--opportunity">
+                <div className="sim-opp-card">
+                  <div className="opp-header">
+                    <span className="opportunity-tag">Skill India Digital · Education</span>
+                    <span className="opp-match-badge">98% MATCH</span>
+                  </div>
+                  <h3>Weekend STEM Mathematics Specialist</h3>
+                  <div className="sim-opp-stats">
+                    <span>Gross: <strong>₹28,000 / mo</strong></span>
+                    <span>Direct costs: <strong>₹0</strong></span>
+                    <span>Net Margin: <strong>100%</strong></span>
+                  </div>
+                  <span className="verified-chip">✓ Verified Registry &amp; Escrow Guaranteed</span>
+                </div>
+              </div>
+            )}
+
+            {activeChapter.id === 'chapter-5-entitlements' && (
+              <div className="sim-content sim-content--entitlements">
+                <div className="sim-ent-card">
+                  <span className="ent-badge">MNRE GOVT SCHEME</span>
+                  <h3>PM Surya Ghar: Muft Bijli Yojana</h3>
+                  <strong className="text-emerald">₹78,000 Direct Cash Subsidy</strong>
+                  <p>Rooftop solar subsidy pre-assessed. Application pack prepared for state discom approval.</p>
+                  <span className="status-word status-word--green">VERIFIED ELIGIBLE</span>
+                </div>
+              </div>
+            )}
+
+            {activeChapter.id === 'chapter-6-commons' && (
+              <div className="sim-content sim-content--commons">
+                <div className="sim-quorum-card">
+                  <div className="quorum-top">
+                    <span>JAIPUR NORTH SOLAR POOL</span>
+                    <strong className="text-emerald">9 / 10 Joined</strong>
+                  </div>
+                  <div className="quorum-track">
+                    <span style={{ width: '90%' }} />
+                  </div>
+                  <div className="sim-quorum-alert">
+                    <strong>1 Spot Left to Reach Quorum!</strong>
+                    <p>Unlocks 22% bulk equipment discount (~₹4,200 savings per household) with Differential Privacy.</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeChapter.id === 'chapter-7-adsense-enterprise' && (
+              <div className="sim-content sim-content--adsense">
+                <div className="sim-adsense-card">
+                  <span className="adsense-label">GOOGLE ADSENSE YIELD STREAM</span>
+                  <h3>pub-89241029412491</h3>
+                  <div className="adsense-metric-duo">
+                    <div>
+                      <small>OCT 2026 AD EARNINGS</small>
+                      <strong className="text-emerald">+₹16,400.00</strong>
+                    </div>
+                    <div>
+                      <small>UTILITY BILLS COVERED</small>
+                      <strong className="text-cyan">100% Offset</strong>
+                    </div>
+                  </div>
+                  <p className="adsense-offset-note">Electricity (₹3,200) + Mesh Fiber (₹650) paid directly from ad yield.</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ==========================================
+// 3. LOGIN & SECURITY HUB PAGE
+// ==========================================
+function LoginSecurityPage({
+  busy,
+  session,
+  onLogin,
+  onLaunchDemo,
+  onConnected,
+  onLogout,
+}: {
+  busy: boolean;
+  session: Session | null;
+  onLogin: (email: string, password: string) => void;
+  onLaunchDemo: () => void;
+  onConnected: (result: Session) => void;
+  onLogout: () => void;
+}) {
+  const [tab, setTab] = useState<'signin' | 'register' | 'verify'>('signin');
+  const [email, setEmail] = useState('demo@example.com');
+  const [displayName, setDisplayName] = useState('AwnNORA Demo Explorer');
+  const [password, setPassword] = useState('Password12345!');
+  const [verificationToken, setVerificationToken] = useState('');
+  const [pendingSession, setPendingSession] = useState<Session | null>(null);
+  const [localBusy, setLocalBusy] = useState(false);
+  const [localError, setLocalError] = useState('');
+  const [localNotice, setLocalNotice] = useState('');
+
+  const register = async () => {
+    setLocalBusy(true);
+    setLocalError('');
+    setLocalNotice('');
+    try {
+      const result = await api.register(email.trim(), password, displayName.trim());
+      setPendingSession(result);
+      setTab('verify');
+      setLocalNotice('Account created. Enter the one-time email verification token sent by your configured email adapter.');
+    } catch (cause) {
+      setLocalError(cause instanceof Error ? cause.message : 'Account registration failed.');
+    } finally {
+      setLocalBusy(false);
+    }
+  };
+
+  const verify = async () => {
+    if (!pendingSession) return;
+    setLocalBusy(true);
+    setLocalError('');
+    try {
+      await api.verifyEmail(verificationToken.trim());
+      const verifiedUser = await api.me(pendingSession.access_token);
+      onConnected({ ...pendingSession, user: verifiedUser });
+    } catch (cause) {
+      setLocalError(cause instanceof Error ? cause.message : 'Email verification failed.');
+    } finally {
+      setLocalBusy(false);
+    }
+  };
+
+  return (
+    <div className="login-security-page">
+      <section className="page-intro">
+        <div>
+          <ShellLabel>SECURITY &amp; ACCESS GATEWAY</ShellLabel>
+          <h1>
+            Your private economic space,<br />
+            <em>cryptographically fortified.</em>
+          </h1>
+          <p>
+            Choose between instant synthetic demo access for exploratory testing or establish a realistic, Argon2id-encrypted personal workspace.
+          </p>
+        </div>
+      </section>
+
+      <div className="login-security-layout">
+        {/* Left Side: Auth Card */}
+        <section className="auth-card">
+          <div className="demo-instant-box">
+            <span className="demo-badge">QUICK TEST ACCESS</span>
+            <h3>Explore Without Setup</h3>
+            <p>Launch a fully populated, pre-seeded synthetic test workspace with 9 connected payment rails, active dispute cases, and verified ONDC contracts.</p>
+            <button className="primary-button primary-button--glow primary-button--full" disabled={busy} onClick={onLaunchDemo}>
+              <span>⚡ Enter Instant Test Demo Workspace</span>
+            </button>
+          </div>
+
+          <div className="auth-divider">
+            <span>OR ESTABLISH A REALISTIC ACCOUNT</span>
+          </div>
+
+          {session ? (
+            <div className="authenticated-status-box">
+              <div className="auth-user-header">
+                <StatusDot tone="green" />
+                <strong>Signed in as {session.user.display_name}</strong>
+              </div>
+              <small>{session.user.email} · Verified Session Active</small>
+              <div className="auth-status-actions">
+                <button className="primary-button" onClick={() => onConnected(session)}>
+                  Go to AI Pilot Workspace ↗
+                </button>
+                <button className="secondary-button" onClick={onLogout}>
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="credentials-form-box">
+              {localNotice && <div className="dialog-notice">{localNotice}</div>}
+              {localError && <div className="dialog-error">{localError}</div>}
+
+              {tab === 'verify' ? (
+                <form onSubmit={(e) => { e.preventDefault(); void verify(); }} className="auth-form">
+                  <ShellLabel>EMAIL CHALLENGE</ShellLabel>
+                  <label>
+                    <span>VERIFICATION TOKEN</span>
+                    <input
+                      type="text"
+                      required
+                      value={verificationToken}
+                      onChange={(e) => setVerificationToken(e.target.value)}
+                      placeholder="Paste 32+ character verification token..."
+                    />
+                  </label>
+                  <button className="primary-button primary-button--full" disabled={localBusy}>
+                    {localBusy ? 'Verifying…' : 'Verify &amp; Enter Workspace'} <span>↗</span>
+                  </button>
+                  <button type="button" className="text-action" onClick={() => setTab('signin')}>
+                    Back to Sign In
+                  </button>
+                </form>
+              ) : (
+                <>
+                  <div className="dialog-tabs">
+                    <button
+                      type="button"
+                      className={tab === 'signin' ? 'is-active' : ''}
+                      onClick={() => { setTab('signin'); setLocalError(''); }}
+                    >
+                      Sign In
+                    </button>
+                    <button
+                      type="button"
+                      className={tab === 'register' ? 'is-active' : ''}
+                      onClick={() => { setTab('register'); setLocalError(''); }}
+                    >
+                      Create Realistic Account
+                    </button>
+                  </div>
+
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      if (tab === 'signin') onLogin(email.trim(), password);
+                      else void register();
+                    }}
+                    className="auth-form"
+                  >
+                    {tab === 'register' && (
+                      <label>
+                        <span>YOUR NAME</span>
+                        <input
+                          type="text"
+                          required
+                          value={displayName}
+                          onChange={(e) => setDisplayName(e.target.value)}
+                        />
+                      </label>
+                    )}
+                    <label>
+                      <span>EMAIL ADDRESS</span>
+                      <input
+                        type="email"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                    </label>
+                    <label>
+                      <span>PASSWORD (MIN 12 CHARACTERS)</span>
+                      <input
+                        type="password"
+                        required
+                        minLength={12}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </label>
+                    <button className="primary-button primary-button--full" disabled={busy || localBusy}>
+                      {busy || localBusy ? 'Connecting…' : tab === 'signin' ? 'Sign In to Workspace' : 'Create Private Account'} <span>↗</span>
+                    </button>
+                  </form>
+                </>
+              )}
+            </div>
+          )}
+        </section>
+
+        {/* Right Side: Security & Realistic Banking Architecture */}
+        <section className="security-architecture-panel">
+          <div className="section-heading">
+            <div>
+              <ShellLabel>TRUST &amp; CRYPTOGRAPHIC PROOFS</ShellLabel>
+              <h2>Security Architecture &amp; Real Banking Rails</h2>
+            </div>
+          </div>
+
+          <div className="security-specs-list">
+            <div className="security-spec-card">
+              <span className="spec-icon">🏦</span>
+              <div>
+                <strong>RBI Account Aggregator (AA) Integration</strong>
+                <p>Real bank accounts are connected via certified Financial Information Providers (FIPs). Consent is electronic, signed, time-bound, and revocable. AwnNORA never touches banking passwords or OTPs.</p>
+              </div>
+            </div>
+
+            <div className="security-spec-card">
+              <span className="spec-icon">💳</span>
+              <div>
+                <strong>Card-on-File Tokenization (CoFT)</strong>
+                <p>Card numbers are tokenized directly with Visa, Mastercard, and RuPay networks under RBI guidelines. Transaction surveillance tracks posted debits without storing PAN data.</p>
+              </div>
+            </div>
+
+            <div className="security-spec-card">
+              <span className="spec-icon">🔐</span>
+              <div>
+                <strong>Argon2id &amp; Ephemeral Sessions</strong>
+                <p>Passphrases are salted and stretched using Argon2id with memory-hard parameters. Sessions use cryptographically random 256-bit opaque tokens with a strict 12-hour expiration.</p>
+              </div>
+            </div>
+
+            <div className="security-spec-card">
+              <span className="spec-icon">📜</span>
+              <div>
+                <strong>SHA-256 Immutable Evidence Ledger</strong>
+                <p>Every Guardian finding and Casebook state transition is hashed. Evidence snapshots are frozen at case creation so merchants and banks cannot dispute statement timestamps.</p>
+              </div>
+            </div>
+
+            <div className="security-spec-card">
+              <span className="spec-icon">🤝</span>
+              <div>
+                <strong>Zero-Knowledge Differential Privacy</strong>
+                <p>Commons collective campaigns aggregate demand clusters using differential privacy. No individual account names, transaction rows, or balances are shared with suppliers or cohort peers.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+}
+
+// ==========================================
+// 4. LIVE ECONOMIC STREAM TICKER
 // ==========================================
 function LiveEconomicStreamTicker({
   events,
@@ -1038,7 +1917,7 @@ function LiveEconomicStreamTicker({
 }
 
 // ==========================================
-// 1. AI ASSISTANT / AUTONOMOUS REPRESENTATIVE
+// 5. AI ASSISTANT / AUTONOMOUS REPRESENTATIVE
 // ==========================================
 function AssistantPage({
   messages,
@@ -1059,6 +1938,7 @@ function AssistantPage({
 
   const quickPrompts = [
     { label: '⚡ Audit accounts for leaks & duplicate charges', text: 'Audit my accounts for duplicate charges and rogue debits.' },
+    { label: '📊 View Google AdSense utility bill offset', text: 'How is Google AdSense ad revenue offsetting my monthly living expenses?' },
     { label: '💳 Link PhonePe / GPay / Bank / Card', text: 'Help me connect my UPI and bank accounts to the system.' },
     { label: '💼 Find highest paying Skill India / ONDC gigs', text: 'Find the best matched income opportunities on Skill India and ONDC.' },
     { label: '🏛️ Claim PM-Surya & SVANidhi government grants', text: 'Check my eligibility for government subsidies and direct benefit transfers.' },
@@ -1098,7 +1978,7 @@ function AssistantPage({
           <div className="telemetry-card">
             <span className="telemetry-label">CONNECTED RAILS</span>
             <strong className="telemetry-value text-cyan">{railsCount} Rails Active</strong>
-            <small>PhonePe · GPay · HDFC · SBI · Stripe</small>
+            <small>PhonePe · GPay · HDFC · SBI · Stripe · AdSense</small>
           </div>
           <div className="telemetry-card">
             <span className="telemetry-label">GUARDIAN WATCH</span>
@@ -1170,7 +2050,7 @@ function AssistantPage({
           <input
             type="text"
             className="chat-input-field"
-            placeholder="Command your agent: e.g. 'Audit my accounts', 'Connect new UPI', 'Find ONDC projects'..."
+            placeholder="Command your agent: e.g. 'Audit my accounts', 'Show AdSense offset', 'Find ONDC projects'..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
           />
@@ -1193,8 +2073,8 @@ function AssistantPage({
         <div className="jump-tiles-grid">
           <button className="jump-tile jump-tile--cyan" onClick={() => onNavigate('accounts')}>
             <span className="jump-icon">💳</span>
-            <strong>Connected Rails & Banks</strong>
-            <p>Manage UPI, Debit/ATM cards, Stripe, PayPal and HDFC/SBI bank accounts.</p>
+            <strong>Connected Rails &amp; Banks</strong>
+            <p>Manage UPI, Debit/ATM cards, Stripe, AdSense and HDFC/SBI bank accounts.</p>
             <span className="jump-cta">Manage Rails ↗</span>
           </button>
           <button className="jump-tile jump-tile--emerald" onClick={() => onNavigate('opportunity')}>
@@ -1205,7 +2085,7 @@ function AssistantPage({
           </button>
           <button className="jump-tile jump-tile--amber" onClick={() => onNavigate('entitlements')}>
             <span className="jump-icon">🏛️</span>
-            <strong>Entitlements & Grants</strong>
+            <strong>Entitlements &amp; Grants</strong>
             <p>PM Surya Ghar Rooftop Solar, PM-SVANidhi, and Ayushman Bharat claim packs.</p>
             <span className="jump-cta">Claim Subsidies ↗</span>
           </button>
@@ -1222,33 +2102,36 @@ function AssistantPage({
 }
 
 // ==========================================
-// 2. ACCOUNTS & MULTI-RAIL HUB
+// 6. ACCOUNTS & MULTI-RAIL HUB
 // ==========================================
 function AccountsPage({
   rails,
+  adsenseStream,
   onOpenConnectModal,
   onReviewLeak,
 }: {
   rails: ConnectedRail[];
+  adsenseStream: AdSenseMonetizationStream;
   onOpenConnectModal: () => void;
   onReviewLeak: () => void;
 }) {
-  const upiRails = rails.filter((r) => r.type === 'upi' || r.type === 'wallet');
+  const upiRails = rails.filter((r) => r.type === 'upi' || (r.type === 'wallet' && !r.name.includes('AdSense')));
   const bankRails = rails.filter((r) => r.type === 'bank');
   const cardRails = rails.filter((r) => r.type === 'card');
   const globalRails = rails.filter((r) => r.type === 'global');
+  const adsenseRails = rails.filter((r) => r.name.includes('AdSense'));
 
   return (
     <div className="accounts-page">
       <section className="page-intro accounts-intro">
         <div>
-          <ShellLabel>MULTI-RAIL PAYMENT & BANKING HUB</ShellLabel>
+          <ShellLabel>MULTI-RAIL PAYMENT, BANKING &amp; YIELD HUB</ShellLabel>
           <h1>
             All your economic rails,<br />
-            <em>unified & protected.</em>
+            <em>unified &amp; protected.</em>
           </h1>
           <p>
-            Connect any Indian UPI rail, bank account, ATM/debit/credit card, or global merchant rail. Autonomous Guardian continuously watches every rail against fraudulent debits and stealth subscriptions.
+            Connect any Indian UPI rail, bank account, ATM/debit/credit card, global merchant rail, or digital AdSense publisher stream. Autonomous Guardian continuously watches every rail against fraudulent debits and stealth subscriptions.
           </p>
         </div>
         <div className="intro-actions">
@@ -1262,7 +2145,7 @@ function AccountsPage({
       <section className="metric-band accounts-metrics" aria-label="Accounts overview">
         <Metric
           label="TOTAL LIQUID BALANCE"
-          value="₹2,33,920.00"
+          value="₹2,50,320.00"
           sub={`${rails.length} linked rails in active sync`}
           tone="positive"
         />
@@ -1273,16 +2156,16 @@ function AccountsPage({
           tone="normal"
         />
         <Metric
-          label="CORE BANK ACCOUNTS"
+          label="CORE BANK DEPOSITS"
           value={`${bankRails.length} Connected`}
           sub="HDFC Salary · SBI Emergency Savings"
           tone="normal"
         />
         <Metric
-          label="GUARDIAN SURVEILLANCE"
-          value="1 Attention"
-          sub="Axis Card: duplicate ₹649 flagged"
-          tone="negative"
+          label="ADSENSE YIELD BUFFER"
+          value="₹16,400.00 / mo"
+          sub="Offsetting 100% of power & fiber bills"
+          tone="positive"
         />
       </section>
 
@@ -1296,8 +2179,60 @@ function AccountsPage({
           </div>
         </div>
         <button className="primary-button primary-button--small" onClick={onReviewLeak}>
-          Review & Freeze Case ↗
+          Review &amp; Freeze Case ↗
         </button>
+      </div>
+
+      {/* Special Section: Google AdSense & Creator Monetization Streams */}
+      <div className="rail-group-section adsense-section-wrap">
+        <div className="section-heading">
+          <div>
+            <ShellLabel>DIGITAL ASSET MONETIZATION</ShellLabel>
+            <h2>Google AdSense &amp; Creator Yield Streams</h2>
+          </div>
+          <span className="verified-chip">✓ Verified Publisher ID Linked</span>
+        </div>
+
+        <div className="adsense-featured-card">
+          <div className="adsense-card-header">
+            <div className="adsense-logo-monogram">G</div>
+            <div>
+              <strong>{adsenseStream.channel_name}</strong>
+              <small>Publisher ID: {adsenseStream.publisher_id} · Status: Active Yield</small>
+            </div>
+            <span className="adsense-status-tag">EFT Payouts Enabled</span>
+          </div>
+
+          <div className="adsense-metrics-row">
+            <div>
+              <span className="adsense-metric-label">MONTHLY IMPRESSIONS</span>
+              <strong>{adsenseStream.monthly_impressions}</strong>
+            </div>
+            <div>
+              <span className="adsense-metric-label">AVERAGE eCPM</span>
+              <strong>{adsenseStream.average_ecpm}</strong>
+            </div>
+            <div>
+              <span className="adsense-metric-label">NET MONTHLY AD YIELD</span>
+              <strong className="text-emerald">{adsenseStream.net_monthly_yield}</strong>
+            </div>
+            <div>
+              <span className="adsense-metric-label">LAST SETTLEMENT</span>
+              <strong>{adsenseStream.last_payout_date}</strong>
+            </div>
+          </div>
+
+          <div className="adsense-offset-box">
+            <strong>⚡ Automated Living Expense Offset Rule:</strong>
+            <p>{adsenseStream.offset_target_obligation}. Ad revenue automatically neutralizes these costs before they impact your salary deposit.</p>
+          </div>
+        </div>
+
+        <div className="rail-cards-grid" style={{ marginTop: '12px' }}>
+          {adsenseRails.map((rail) => (
+            <RailCard key={rail.id} rail={rail} />
+          ))}
+        </div>
       </div>
 
       {/* Section 1: UPI & Wallets */}
@@ -1305,7 +2240,7 @@ function AccountsPage({
         <div className="section-heading">
           <div>
             <ShellLabel>INSTANT PAYMENT RAILS</ShellLabel>
-            <h2>UPI Apps & Wallets</h2>
+            <h2>UPI Apps &amp; Wallets</h2>
           </div>
           <button className="text-action" onClick={onOpenConnectModal}>+ Link another UPI VPA</button>
         </div>
@@ -1321,7 +2256,7 @@ function AccountsPage({
         <div className="section-heading">
           <div>
             <ShellLabel>DEPOSIT ACCOUNTS</ShellLabel>
-            <h2>Core Banking & Emergency Savings</h2>
+            <h2>Core Banking &amp; Emergency Savings</h2>
           </div>
           <button className="text-action" onClick={onOpenConnectModal}>+ Link Bank Account</button>
         </div>
@@ -1337,7 +2272,7 @@ function AccountsPage({
         <div className="section-heading">
           <div>
             <ShellLabel>CARD RAILS</ShellLabel>
-            <h2>Credit, Debit & ATM Cards</h2>
+            <h2>Credit, Debit &amp; ATM Cards</h2>
           </div>
           <button className="text-action" onClick={onOpenConnectModal}>+ Add Card</button>
         </div>
@@ -1352,7 +2287,7 @@ function AccountsPage({
       <div className="rail-group-section">
         <div className="section-heading">
           <div>
-            <ShellLabel>CROSS-BORDER & MERCHANT</ShellLabel>
+            <ShellLabel>CROSS-BORDER &amp; MERCHANT</ShellLabel>
             <h2>Global Payout Rails</h2>
           </div>
           <button className="text-action" onClick={onOpenConnectModal}>+ Link Stripe / PayPal</button>
@@ -1423,7 +2358,7 @@ function ConnectRailModal({
     upi: ['PhonePe', 'Google Pay', 'Paytm', 'Amazon Pay', 'BHIM UPI'],
     bank: ['HDFC Bank', 'State Bank of India', 'ICICI Bank', 'Axis Bank', 'Kotak Mahindra'],
     card: ['Axis Bank Credit Card', 'HDFC Regalia Debit', 'SBI Global ATM Card', 'RuPay Platinum'],
-    wallet: ['Amazon Pay Wallet', 'Paytm Wallet', 'Mobikwik'],
+    wallet: ['Amazon Pay Wallet', 'Paytm Wallet', 'Google AdSense Stream'],
     global: ['Stripe USD Merchant', 'PayPal International', 'Wise Multi-Currency'],
   };
 
@@ -1434,6 +2369,7 @@ function ConnectRailModal({
     if (newType === 'upi') setIdentifier('user@okaxis');
     else if (newType === 'bank') setIdentifier('A/C •••• 9921');
     else if (newType === 'card') setIdentifier('Card •••• 4410');
+    else if (newType === 'wallet') setIdentifier('pub-89241029412491');
     else setIdentifier('acct_stripe_live_usd');
   };
 
@@ -1451,6 +2387,7 @@ function ConnectRailModal({
         'State Bank of India': { color: '#280071', gradient: 'linear-gradient(135deg, #280071, #0087CF)' },
         'Axis Bank Credit Card': { color: '#97144D', gradient: 'linear-gradient(135deg, #97144D, #670830)' },
         'Stripe USD Merchant': { color: '#635BFF', gradient: 'linear-gradient(135deg, #635BFF, #0A2540)' },
+        'Google AdSense Stream': { color: '#34A853', gradient: 'linear-gradient(135deg, #0F9D58, #4285F4)' },
       };
 
       const branding = colors[provider] || {
@@ -1492,6 +2429,7 @@ function ConnectRailModal({
           <button type="button" className={`rail-type-btn ${type === 'upi' ? 'is-active' : ''}`} onClick={() => handleTypeChange('upi')}>UPI Apps</button>
           <button type="button" className={`rail-type-btn ${type === 'bank' ? 'is-active' : ''}`} onClick={() => handleTypeChange('bank')}>Banks</button>
           <button type="button" className={`rail-type-btn ${type === 'card' ? 'is-active' : ''}`} onClick={() => handleTypeChange('card')}>Cards / ATM</button>
+          <button type="button" className={`rail-type-btn ${type === 'wallet' ? 'is-active' : ''}`} onClick={() => handleTypeChange('wallet')}>AdSense / Wallets</button>
           <button type="button" className={`rail-type-btn ${type === 'global' ? 'is-active' : ''}`} onClick={() => handleTypeChange('global')}>Stripe / PayPal</button>
         </div>
 
@@ -1506,13 +2444,13 @@ function ConnectRailModal({
           </label>
 
           <label>
-            <span>{type === 'upi' ? 'UPI VPA HANDLE' : type === 'bank' ? 'ACCOUNT NUMBER' : type === 'card' ? 'CARD NUMBER' : 'ACCOUNT ID'}</span>
+            <span>{type === 'upi' ? 'UPI VPA HANDLE' : type === 'bank' ? 'ACCOUNT NUMBER' : type === 'card' ? 'CARD NUMBER' : type === 'wallet' ? 'PUBLISHER ID' : 'ACCOUNT ID'}</span>
             <input
               type="text"
               required
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
-              placeholder="e.g. mobile@upi or A/C 99824..."
+              placeholder="e.g. mobile@upi, A/C 99824, pub-8924102..."
             />
           </label>
 
@@ -1532,7 +2470,7 @@ function ConnectRailModal({
           </div>
 
           <button className="primary-button primary-button--full" disabled={syncing}>
-            {syncing ? 'Verifying with Banking Network…' : 'Link Rail & Activate Guardian'} <span>↗</span>
+            {syncing ? 'Verifying with Banking Network…' : 'Link Rail &amp; Activate Guardian'} <span>↗</span>
           </button>
         </form>
       </section>
@@ -1541,7 +2479,7 @@ function ConnectRailModal({
 }
 
 // ==========================================
-// 3. OVERVIEW PAGE (POSITION & POWER)
+// 7. OVERVIEW PAGE (POSITION & POWER)
 // ==========================================
 function OverviewPage({
   report,
@@ -1775,7 +2713,7 @@ function OverviewPage({
           </button>
           <div style={{ marginTop: '8px', textAlign: 'right' }}>
             <button className="text-action" onClick={onIntelligence}>
-              Meta AI & Data Permissions ↗
+              Meta AI &amp; Data Permissions ↗
             </button>
           </div>
         </aside>
@@ -1788,7 +2726,7 @@ function OverviewPage({
         </div>
         <div className="engine-item">
           <strong>Guardian</strong>
-          <small>Protection & evidence</small>
+          <small>Protection &amp; evidence</small>
           <span className="engine-state engine-state--active">Active Shield</span>
         </div>
         <div className="engine-item">
@@ -1798,7 +2736,7 @@ function OverviewPage({
         </div>
         <div className="engine-item">
           <strong>Entitlements</strong>
-          <small>Benefits & claims</small>
+          <small>Benefits &amp; claims</small>
           <span className="engine-state engine-state--amber">4 Eligible</span>
         </div>
         <div className="engine-item">
@@ -1812,7 +2750,7 @@ function OverviewPage({
 }
 
 // ==========================================
-// 4. CASEBOOK PAGE (MAKOS ACTIONS)
+// 8. CASEBOOK PAGE (MAKOS ACTIONS)
 // ==========================================
 function CasebookPage({
   cases,
@@ -2176,7 +3114,7 @@ function StatementImportPanel({
           <ShellLabel>LIVE SYNTHETIC DATA STREAM</ShellLabel>
           <h2>Synthetic Real-World Scenarios Active</h2>
           <p>
-            The workspace is loaded with multi-rail accounts (PhonePe, GPay, HDFC, SBI, Stripe) and live simulated events. Connect an authenticated private account at any time to import real CSV statements.
+            The workspace is loaded with multi-rail accounts (PhonePe, GPay, HDFC, SBI, Stripe, AdSense) and live simulated events. Connect an authenticated private account at any time to import real CSV statements.
           </p>
         </div>
         <div className="import-panel__right">
@@ -2262,7 +3200,7 @@ function StatementImportPanel({
 }
 
 // ==========================================
-// 5. PROTECTION PAGE (GUARDIAN SHIELD)
+// 9. PROTECTION PAGE (GUARDIAN SHIELD)
 // ==========================================
 function ProtectionPage({ cases, mode, onAI }: { cases: GuardianCase[]; mode: 'demo' | 'live'; onAI: () => void }) {
   return (
@@ -2288,7 +3226,7 @@ function ProtectionPage({ cases, mode, onAI }: { cases: GuardianCase[]; mode: 'd
         <div>
           <StatusDot tone="amber" />
           <span>DOCUMENT TRUST PIPELINE</span>
-          <strong>Autonomous Signature & Integrity Verification Active</strong>
+          <strong>Autonomous Signature &amp; Integrity Verification Active</strong>
         </div>
         <p>
           Evidence is cryptographically hashed with SHA-256. Guardian isolates discrepancies and prepares dispute timelines without moving funds.
@@ -2345,7 +3283,7 @@ function ProtectionPage({ cases, mode, onAI }: { cases: GuardianCase[]; mode: 'd
 }
 
 // ==========================================
-// 6. OPPORTUNITY PAGE (REAL SOURCES)
+// 10. OPPORTUNITY PAGE (REAL SOURCES)
 // ==========================================
 function OpportunityPage({
   opportunities,
@@ -2371,7 +3309,7 @@ function OpportunityPage({
         </div>
         <div className="intro-callout">
           <span>VERIFIED SOURCES</span>
-          <strong>Skill India & ONDC Linked</strong>
+          <strong>Skill India &amp; ONDC Linked</strong>
           <small>Escrow protected · Zero hidden commission cuts.</small>
         </div>
       </section>
@@ -2384,8 +3322,8 @@ function OpportunityPage({
 
       <div className="opportunity-layout">
         <div>
-          <ShellLabel>DISCOVERED MATCHES ({opportunities.length})</ShellLabel>
-          <h2>Ranked by Net Value & Match Fit</h2>
+          <ShellLabel>{`DISCOVERED MATCHES (${opportunities.length})`}</ShellLabel>
+          <h2>Ranked by Net Value &amp; Match Fit</h2>
 
           <div className="opportunity-items-stream">
             {opportunities.map((opp) => (
@@ -2451,7 +3389,7 @@ function OpportunityPage({
 }
 
 // ==========================================
-// 7. ENTITLEMENTS PAGE (GOVERNMENT GRANTS)
+// 11. ENTITLEMENTS PAGE (GOVERNMENT GRANTS)
 // ==========================================
 function EntitlementsPage({
   entitlements,
@@ -2491,8 +3429,8 @@ function EntitlementsPage({
 
       <div className="entitlement-table">
         <div className="table-head">
-          <span>PROGRAMME & MINISTRY</span>
-          <span>ANNUAL VALUE & DETAILS</span>
+          <span>PROGRAMME &amp; MINISTRY</span>
+          <span>ANNUAL VALUE &amp; DETAILS</span>
           <span>STATUS</span>
           <span>ACTION</span>
         </div>
@@ -2542,7 +3480,7 @@ function EntitlementsPage({
 }
 
 // ==========================================
-// 8. SOLO ENTERPRISE PAGE
+// 12. SOLO ENTERPRISE PAGE + ADSENSE OFFSET
 // ==========================================
 function EnterprisePage({
   cost,
@@ -2556,6 +3494,7 @@ function EnterprisePage({
   price,
   setPrice,
   mode,
+  adsenseStream,
 }: {
   cost: string;
   setCost: (v: string) => void;
@@ -2568,22 +3507,27 @@ function EnterprisePage({
   price: string;
   setPrice: (v: string) => void;
   mode: 'demo' | 'live';
+  adsenseStream: AdSenseMonetizationStream;
 }) {
+  const [includeAdSenseSubsidy, setIncludeAdSenseSubsidy] = useState(true);
+
   const fullCost = toPaise(cost) + toPaise(time) + toPaise(packaging) + toPaise(delivery);
-  const contribution = toPaise(price) - fullCost;
+  // If AdSense subsidy is enabled, offset 10% of fulfillment costs
+  const effectiveCost = includeAdSenseSubsidy ? (fullCost * 90n) / 100n : fullCost;
+  const contribution = toPaise(price) - effectiveCost;
   const margin = toPaise(price) > 0n ? Number((contribution * 10000n) / toPaise(price)) / 100 : 0;
 
   return (
     <>
       <section className="page-intro">
         <div>
-          <ShellLabel>ONE-PERSON ENTERPRISE</ShellLabel>
+          <ShellLabel>ONE-PERSON ENTERPRISE &amp; MONETIZATION</ShellLabel>
           <h1>
             Your business deserves<br />
             <em>a professional back office.</em>
           </h1>
           <p>
-            Understand the complete unit cost of manufacturing and delivering your goods before quoting prices to customers.
+            Understand the complete unit cost of manufacturing and delivering your goods before quoting prices to customers. Apply creator AdSense revenue to subsidize operational overhead.
           </p>
         </div>
         <div className="intro-callout">
@@ -2593,6 +3537,23 @@ function EnterprisePage({
         </div>
       </section>
 
+      {/* AdSense Yield Integration Banner */}
+      <div className="enterprise-adsense-banner">
+        <div>
+          <span className="adsense-pill">ADSENSE CREATOR SUPPORT</span>
+          <strong>Google AdSense Monthly Stream: {adsenseStream.net_monthly_yield}</strong>
+          <p>Channel: {adsenseStream.channel_name} ({adsenseStream.publisher_id}). Ad earnings automatically cover fulfillment overhead.</p>
+        </div>
+        <label className="adsense-toggle-label">
+          <input
+            type="checkbox"
+            checked={includeAdSenseSubsidy}
+            onChange={(e) => setIncludeAdSenseSubsidy(e.target.checked)}
+          />
+          <span>Apply AdSense Overhead Subsidy (-10% cost)</span>
+        </label>
+      </div>
+
       <div className="enterprise-layout">
         <section className="calculator-panel">
           <ShellLabel>PRODUCT / SERVICE COST BUILDER</ShellLabel>
@@ -2601,10 +3562,10 @@ function EnterprisePage({
             Example: Made-to-order artisanal batch or client service delivery. Adjust the parameters to evaluate economic margins.
           </p>
           <div className="cost-inputs">
-            <MoneyInput label="Materials & Ingredients" value={cost} onChange={setCost} />
-            <MoneyInput label="Your Time & Labour Value" value={time} onChange={setTime} />
-            <MoneyInput label="Packaging & Protective Box" value={packaging} onChange={setPackaging} />
-            <MoneyInput label="Delivery & Platform Fees" value={delivery} onChange={setDelivery} />
+            <MoneyInput label="Materials &amp; Ingredients" value={cost} onChange={setCost} />
+            <MoneyInput label="Your Time &amp; Labour Value" value={time} onChange={setTime} />
+            <MoneyInput label="Packaging &amp; Protective Box" value={packaging} onChange={setPackaging} />
+            <MoneyInput label="Delivery &amp; Platform Fees" value={delivery} onChange={setDelivery} />
             <MoneyInput label="Customer Selling Price" value={price} onChange={setPrice} />
           </div>
           <div className="fixture-label">
@@ -2615,9 +3576,15 @@ function EnterprisePage({
         <aside className="economics-result">
           <ShellLabel>PRICE INTEGRITY CHECK</ShellLabel>
           <div className="economics-total">
-            <span>Full cost per unit</span>
+            <span>Base unit cost</span>
             <strong>{inr(fullCost)}</strong>
           </div>
+          {includeAdSenseSubsidy && (
+            <div className="economics-total text-emerald">
+              <span>AdSense subsidy applied</span>
+              <strong>-{inr(fullCost - effectiveCost)}</strong>
+            </div>
+          )}
           <div className="economics-total economics-total--strong">
             <span>Net contribution per unit</span>
             <strong className={contribution >= 0n ? 'good-text' : 'bad-text'}>
@@ -2673,7 +3640,7 @@ function MoneyInput({
 }
 
 // ==========================================
-// 9. COMMONS PAGE (COLLECTIVE BARGAINING)
+// 13. COMMONS PAGE (COLLECTIVE BARGAINING)
 // ==========================================
 function CommonsPage({
   campaigns,
@@ -2794,7 +3761,7 @@ function CommonsPage({
 }
 
 // ==========================================
-// 10. INTELLIGENCE PAGE (META MUSE MODELS)
+// 14. INTELLIGENCE PAGE (META MUSE MODELS)
 // ==========================================
 function IntelligencePage({
   mode,
@@ -2858,7 +3825,7 @@ function IntelligencePage({
         />
         <ModelRow
           name="Muse Glimmer"
-          role="Local multimodal reasoning for edge & offline processing"
+          role="Local multimodal reasoning for edge &amp; offline processing"
           status="Edge Target"
           detail="Self-hosted open-weight architecture for local on-device verification."
         />
@@ -2980,7 +3947,7 @@ function IntelligencePage({
 
       <div className="intelligence-boundary">
         <strong>Decision boundary</strong>
-        <span>Model proposes language & prioritization.</span>
+        <span>Model proposes language &amp; prioritization.</span>
         <b>→</b>
         <span>Application verifies allowed finding IDs and explicit consent.</span>
         <b>→</b>
@@ -3021,7 +3988,7 @@ function ModelRow({
 }
 
 // ==========================================
-// 11. LOGIN DIALOG
+// 15. LOGIN DIALOG (MODAL FALLBACK)
 // ==========================================
 function LoginDialog({
   busy,
@@ -3036,7 +4003,7 @@ function LoginDialog({
 }) {
   const [step, setStep] = useState<'signin' | 'register' | 'verify'>('signin');
   const [email, setEmail] = useState('demo@example.com');
-  const [displayName, setDisplayName] = useState('AwnNORA Demo User');
+  const [displayName, setDisplayName] = useState('AwnNORA Demo Explorer');
   const [password, setPassword] = useState('Password12345!');
   const [verificationToken, setVerificationToken] = useState('');
   const [pendingSession, setPendingSession] = useState<Session | null>(null);

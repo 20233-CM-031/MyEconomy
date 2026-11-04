@@ -1,4 +1,4 @@
-import type { AIAssistantMessage, CommonsCampaign, ConnectedRail, GuardianCase, LiveEconomicEvent, LiveEntitlement, LiveOpportunity, PersonalCaseDetail, PowerReport } from './types';
+import type { AdSenseMonetizationStream, AIAssistantMessage, CommonsCampaign, ConnectedRail, GuardianCase, LiveEconomicEvent, LiveEntitlement, LiveOpportunity, PersonalCaseDetail, PowerReport, TourChapter } from './types';
 
 export const demoReport: PowerReport = {
   report_version: 'personal-power-v1',
@@ -249,6 +249,22 @@ export const demoConnectedRails: ConnectedRail[] = [
     icon_label: 'Card',
     last_activity: 'Nov 02 · Flagged duplicate streaming debit (₹649)',
   },
+  {
+    id: 'rail-adsense-09',
+    name: 'Google AdSense Creator Stream',
+    type: 'wallet',
+    provider: 'Google AdSense',
+    masked_identifier: 'pub-89241029412491',
+    balance_minor: '1640000',
+    balance_formatted: '₹16,400.00',
+    currency: 'INR',
+    status: 'ACTIVE',
+    color: '#34A853',
+    accent_gradient: 'linear-gradient(135deg, #0F9D58 0%, #4285F4 100%)',
+    icon_label: 'AdSense',
+    last_activity: 'Nov 01 · Monthly AdSense Electronic Payout (+₹16,400)',
+    is_default: false,
+  },
 ];
 
 export const demoLiveEvents: LiveEconomicEvent[] = [
@@ -474,5 +490,167 @@ export const demoInitialAIMessages: AIAssistantMessage[] = [
       targetView: 'casebook',
       buttonLabel: '⚡ Open Dispute Case (DUP-001)',
     },
+  },
+];
+
+
+export const demoAdSenseStream: AdSenseMonetizationStream = {
+  publisher_id: 'pub-89241029412491',
+  channel_name: 'Jaipur Tech Tutorials & Artisan Collective',
+  monthly_impressions: '340,000 views / month',
+  average_ecpm: '₹48.24 eCPM',
+  net_monthly_yield: '₹16,400.00 / month',
+  offset_target_obligation: 'Electricity Bill (₹3,200) + High-Speed Fiber Mesh (₹650) covered 100%',
+  status: 'ACTIVE_YIELD',
+  last_payout_date: 'Nov 01, 2026',
+};
+
+export const demoTourChapters: TourChapter[] = [
+  {
+    id: 'chapter-1-balancing',
+    stepNumber: 1,
+    title: 'Multi-Rail Balancing & Cashflow Ingestion',
+    subtitle: 'Unified Personal Balance Sheet across UPI, Banks, Cards & AdSense',
+    tag: 'BALANCE & INGEST',
+    tagColor: '#06b6d4',
+    description: 'AwnNORA connects all disparate economic rails—PhonePe, Google Pay, HDFC Salary, SBI Emergency, Axis Platinum Card, Stripe USD, and Google AdSense creator yield—into a single mathematically reconciled personal cashflow balance.',
+    highlights: [
+      'Tokenized connection via RBI Account Aggregator (AA) and NPCI UPI AutoPay standards.',
+      'Deterministic BigInt paise precision eliminates float rounding errors.',
+      'Google AdSense monthly yield (₹16,400) automatically earmarked to neutralize fixed living obligations.',
+    ],
+    metrics: [
+      { label: 'CLASSIFIED INFLOW', value: '₹98,400.00', tone: 'positive' },
+      { label: 'NET CASHFLOW', value: '+₹46,140.00', tone: 'positive' },
+      { label: 'ACTIVE RAILS', value: '9 Connected', tone: 'cyan' },
+    ],
+    interactiveView: 'accounts',
+    actionLabel: 'Inspect Multi-Rail Hub',
+  },
+  {
+    id: 'chapter-2-guardian',
+    stepNumber: 2,
+    title: 'Autonomous Guardian Fraud & Leak Detection',
+    subtitle: 'Forensic Isolation of Hidden Subscriptions and Rogue Debits',
+    tag: 'GUARDIAN SHIELD',
+    tagColor: '#f43f5e',
+    description: 'Autonomous Guardian continuously monitors posted debits against merchant signatures. It flags duplicate charges, hidden auto-renewals, and erroneous bank fees, compiling immutable SHA-256 evidence packages ready for dispute.',
+    highlights: [
+      'Intercepted duplicate Netflix charge ₹649 debited twice in 48h on Axis Platinum Card.',
+      'Extracts merchant invoice timestamps, transaction references, and statement hashes.',
+      'Zero external dispute is dispatched without explicit user verification.',
+    ],
+    metrics: [
+      { label: 'FLAGGED LEAK', value: '₹649.00', tone: 'negative' },
+      { label: 'EVIDENCE PROOF', value: 'SHA-256 Hashed', tone: 'cyan' },
+      { label: 'SURVEILLANCE', value: '100% Active', tone: 'positive' },
+    ],
+    interactiveView: 'protection',
+    actionLabel: 'Review Guardian Evidence',
+  },
+  {
+    id: 'chapter-3-casebook',
+    stepNumber: 3,
+    title: 'MAKOS Action Casebook & State Machine',
+    subtitle: 'Turning Findings into Durable, Versioned Workflows',
+    tag: 'MAKOS CASEBOOK',
+    tagColor: '#a855f7',
+    description: 'Rather than leaving leaks as passive notifications, AwnNORA transitions them into structured Personal Cases. Each case preserves an append-only cryptographic event timeline from OPEN through IN_REVIEW, ACTION_READY, and RESOLVED.',
+    highlights: [
+      'Dispute Case DUP-001 opened with frozen source snapshot and reference amount.',
+      'Optimistic state concurrency prevents race conditions and duplicate dispute submissions.',
+      'Explicit separation: Marked Resolved is distinct from Verified Value Created until independently settled.',
+    ],
+    metrics: [
+      { label: 'ACTIVE CASES', value: '3 In Progress', tone: 'purple' },
+      { label: 'STATE MACHINE', value: 'v2 Locked', tone: 'cyan' },
+      { label: 'RESOLUTION TIME', value: '< 24 Hours', tone: 'positive' },
+    ],
+    interactiveView: 'casebook',
+    actionLabel: 'Open Action Casebook',
+  },
+  {
+    id: 'chapter-4-opportunity',
+    stepNumber: 4,
+    title: 'Skill-to-Income Opportunities & Connecting with People',
+    subtitle: 'Matching Verified Capability to High-Margin Demand without Middlemen',
+    tag: 'OPPORTUNITY ENGINE',
+    tagColor: '#10b981',
+    description: 'AwnNORA connects your verified skills, tools, and available hours directly to live demand streams from Skill India Digital, ONDC Open Network, and local exchanges. Work is ranked by net contribution margin, not headline pay.',
+    highlights: [
+      '98% match for Weekend STEM Mathematics Specialist (Skill India Digital, ₹28,000/mo).',
+      '94% match for Handcrafted Heritage Textile Micro-Storefront (ONDC Beckn, 44% net margin).',
+      'Guaranteed escrow payment terms protect work before time is committed.',
+    ],
+    metrics: [
+      { label: 'TOP MATCH', value: '98% Fit', tone: 'positive' },
+      { label: 'ESTIMATED GAIN', value: '₹28,000 / mo', tone: 'positive' },
+      { label: 'VERIFIED REGISTRY', value: 'ONDC & Skill India', tone: 'cyan' },
+    ],
+    interactiveView: 'opportunity',
+    actionLabel: 'Explore Opportunity Hub',
+  },
+  {
+    id: 'chapter-5-entitlements',
+    stepNumber: 5,
+    title: 'Authoritative Government Grants & Subsidies',
+    subtitle: 'Direct Benefit Transfers Claimed without Agents or Middlemen',
+    tag: 'ENTITLEMENTS HUB',
+    tagColor: '#f59e0b',
+    description: 'Millions of rupees in government assistance go unclaimed due to bureaucratic friction. AwnNORA continuously evaluates official ministry criteria and pre-populates digital application packs for immediate claim.',
+    highlights: [
+      'PM Surya Ghar: Muft Bijli Yojana (₹78,000 direct rooftop solar subsidy verified).',
+      'PM-SVANidhi Micro-Business Credit (₹20,000 credit line with 7% interest subsidy).',
+      'Ayushman Bharat PM-JAY (Active ₹5,00,000 annual family health coverage).',
+    ],
+    metrics: [
+      { label: 'CONFIRMED SUBSIDY', value: '₹78,000 Direct', tone: 'amber' },
+      { label: 'HEALTH COVER', value: '₹5,00,000 / yr', tone: 'positive' },
+      { label: 'DIRECT BENEFIT', value: 'Zero Middlemen', tone: 'cyan' },
+    ],
+    interactiveView: 'entitlements',
+    actionLabel: 'Review Eligible Grants',
+  },
+  {
+    id: 'chapter-6-commons',
+    stepNumber: 6,
+    title: 'Uniting with Neighbors via Commons Collective Quorum',
+    subtitle: 'Bargaining Power in Numbers with Zero Data Leakage',
+    tag: 'COLLECTIVE COMMONS',
+    tagColor: '#10b981',
+    description: 'Alone, an individual has zero bargaining leverage against utility monopolies and equipment suppliers. In the Commons, households unite aggregated category demand to unlock institutional wholesale discounts.',
+    highlights: [
+      'Jaipur North Solar Equipment Bulk Order: 9/10 households joined.',
+      'Joining completes the 10/10 quorum and locks in a guaranteed 22% supplier discount (~₹4,200 savings).',
+      'Zero private bank statements, names, or addresses are shared—only anonymized demand clusters.',
+    ],
+    metrics: [
+      { label: 'COHORT STATUS', value: '9/10 Quorum', tone: 'positive' },
+      { label: 'BULK DISCOUNT', value: '22% Guaranteed', tone: 'positive' },
+      { label: 'PRIVACY LEVEL', value: 'Differential Privacy', tone: 'cyan' },
+    ],
+    interactiveView: 'commons',
+    actionLabel: 'Join Commons Quorum',
+  },
+  {
+    id: 'chapter-7-adsense-enterprise',
+    stepNumber: 7,
+    title: 'Creator Monetization & AdSense Financial Support',
+    subtitle: 'Self-Sustaining Personal Economy through Digital Yield Offsetting',
+    tag: 'FINANCIAL SUPPORT & ADSENSE',
+    tagColor: '#34A853',
+    description: 'AwnNORA integrates digital asset monetization, Google AdSense publisher streams, and solo enterprise pricing tools. Real-world ad yield directly offsets monthly electricity, mesh internet, and living costs.',
+    highlights: [
+      'Google AdSense Publisher Stream (pub-89241029412491) streaming ₹16,400 monthly ad yield.',
+      'Automated offset engine covers 100% of household electricity and fiber broadband obligations.',
+      'Solo Enterprise studio calculates unit cost, packaging, and delivery to guarantee >20% contribution margin.',
+    ],
+    metrics: [
+      { label: 'ADSENSE YIELD', value: '₹16,400 / mo', tone: 'positive' },
+      { label: 'BILLS OFFSET', value: '100% Covered', tone: 'positive' },
+      { label: 'UNIT MARGIN', value: '20.2% Net', tone: 'cyan' },
+    ],
+    interactiveView: 'enterprise',
+    actionLabel: 'Inspect Enterprise & AdSense',
   },
 ];

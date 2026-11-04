@@ -1,7 +1,10 @@
 export type ViewKey =
-  | 'overview'
+  | 'intro'
+  | 'tour'
+  | 'auth'
   | 'assistant'
   | 'accounts'
+  | 'overview'
   | 'casebook'
   | 'protection'
   | 'opportunity'
@@ -9,6 +12,38 @@ export type ViewKey =
   | 'enterprise'
   | 'commons'
   | 'intelligence';
+
+export type TourChapter = {
+  id: string;
+  stepNumber: number;
+  title: string;
+  subtitle: string;
+  tag: string;
+  tagColor: string;
+  description: string;
+  highlights: string[];
+  metrics: Array<{ label: string; value: string; tone?: string }>;
+  interactiveView: ViewKey;
+  actionLabel: string;
+};
+
+export type AdSenseMonetizationStream = {
+  publisher_id: string;
+  channel_name: string;
+  monthly_impressions: string;
+  average_ecpm: string;
+  net_monthly_yield: string;
+  offset_target_obligation: string;
+  status: 'ACTIVE_YIELD' | 'OPTIMIZING';
+  last_payout_date: string;
+};
+
+export type RailIntegrationMethod =
+  | 'ACCOUNT_AGGREGATOR_REBIT'
+  | 'UPI_AUTOPAY_MANDATE'
+  | 'CARD_ON_FILE_COFT'
+  | 'STRIPE_CONNECT_OAUTH'
+  | 'GOOGLE_ADSENSE_PAYMENT';
 
 export type RailType = 'upi' | 'bank' | 'card' | 'global' | 'wallet';
 

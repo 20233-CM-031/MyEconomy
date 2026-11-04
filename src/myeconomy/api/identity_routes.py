@@ -179,6 +179,35 @@ def login_endpoint(payload: LoginRequest, db: Session = Depends(get_db)) -> Auth
     return _auth_response(token, auth_session, user)
 
 
+@router.post(
+    "/auth/demo-session",
+    response_model=AuthResponse,
+    summary="Instant 1-click test demo session",
+)
+def demo_session_endpoint(db: Session = Depends(get_db)) -> AuthResponse:
+    from sqlalchemy import select
+
+    demo_email = "demo@example.com"
+    stmt = select(User).where(User.email == demo_email)
+    user = db.execute(stmt).scalar_one_or_none()
+    if not user:
+        user = register_user(
+            db,
+            email=demo_email,
+            password="Password12345!",
+            display_name="AwnNORA Demo Explorer",
+        )
+        user.email_verified = True
+        db.commit()
+        db.refresh(user)
+    elif not user.email_verified:
+        user.email_verified = True
+        db.commit()
+        db.refresh(user)
+    token, auth_session = create_session(db, user=user)
+    return _auth_response(token, auth_session, user)
+
+
 @router.post("/auth/logout", status_code=status.HTTP_204_NO_CONTENT)
 def logout_endpoint(
     auth: AuthContext = Depends(require_authentication),
