@@ -1,12 +1,99 @@
 export type ViewKey =
   | 'overview'
+  | 'assistant'
+  | 'accounts'
+  | 'casebook'
   | 'protection'
   | 'opportunity'
   | 'entitlements'
   | 'enterprise'
   | 'commons'
-  | 'intelligence'
-  | 'casebook';
+  | 'intelligence';
+
+export type RailType = 'upi' | 'bank' | 'card' | 'global' | 'wallet';
+
+export type ConnectedRail = {
+  id: string;
+  name: string;
+  type: RailType;
+  provider: string;
+  masked_identifier: string;
+  balance_minor: string;
+  balance_formatted: string;
+  currency: string;
+  status: 'ACTIVE' | 'SYNCING' | 'ATTENTION_REQUIRED';
+  color: string;
+  accent_gradient: string;
+  icon_label: string;
+  last_activity: string;
+  is_default?: boolean;
+};
+
+export type LiveEconomicEvent = {
+  id: string;
+  timestamp: string;
+  engine: 'GUARDIAN' | 'OPPORTUNITY' | 'ENTITLEMENT' | 'COMMONS' | 'ENTERPRISE' | 'RAILS';
+  title: string;
+  description: string;
+  amount: string | null;
+  tone: 'positive' | 'warning' | 'info' | 'accent';
+  action_label?: string;
+  action_view?: ViewKey;
+};
+
+export type LiveOpportunity = {
+  id: string;
+  title: string;
+  source: 'Skill India Digital' | 'ONDC Open Network' | 'National Benefit Portal' | 'Freelance Escrow' | 'Local Jaipur Exchange';
+  category: 'Tech & Software' | 'Education & Tutoring' | 'Logistics & Delivery' | 'Govt Grant' | 'Artisan & Craft';
+  match_score: number;
+  rate: string;
+  estimated_monthly_value: string;
+  skills_required: string[];
+  location: string;
+  spots_left: number;
+  verified_source: boolean;
+};
+
+export type LiveEntitlement = {
+  id: string;
+  title: string;
+  scheme_code: string;
+  ministry: string;
+  benefit_type: 'Direct Cash Transfer' | 'Health Insurance' | 'Interest Subsidy' | 'Education Grant';
+  value_annual: string;
+  eligibility_status: 'VERIFIED_ELIGIBLE' | 'APPLICATION_READY' | 'ACTIVE_BENEFIT';
+  deadline: string;
+  action_cta: string;
+};
+
+export type CommonsCampaign = {
+  id: string;
+  title: string;
+  category: string;
+  participants_joined: number;
+  target_quorum: number;
+  potential_savings_percent: number;
+  estimated_savings: string;
+  locality: string;
+  expires_in: string;
+  status: 'ACTIVE_GATHERING' | 'QUORUM_REACHED' | 'DISPATCHED';
+};
+
+export type AIAssistantMessage = {
+  id: string;
+  sender: 'user' | 'agent';
+  text: string;
+  timestamp: string;
+  actionCard?: {
+    title: string;
+    description: string;
+    actionType: 'NAVIGATE' | 'OPEN_CASE' | 'CONNECT_RAIL' | 'CLAIM_BENEFIT';
+    targetView?: ViewKey;
+    buttonLabel: string;
+    payload?: Record<string, unknown>;
+  };
+};
 
 export type Finding = {
   finding_id: string;
