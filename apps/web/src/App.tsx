@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { api } from './api';
 import {
+  appleKeynoteScenes,
+  countryConfigs,
   demoAdSenseStream,
   demoCases,
   demoCommonsCampaigns,
@@ -13,7 +15,6 @@ import {
   demoOpportunities,
   demoPersonalCases,
   demoReport,
-  demoTourChapters,
 } from './demo';
 import type {
   AdSenseMonetizationStream,
@@ -22,6 +23,8 @@ import type {
   AIQuestion,
   CommonsCampaign,
   ConnectedRail,
+  CountryCode,
+  CountryConfig,
   FinancialAccount,
   Finding,
   GuardianCase,
@@ -34,7 +37,6 @@ import type {
   PowerReport,
   RailType,
   Session,
-  TourChapter,
   ViewKey,
 } from './types';
 
@@ -106,6 +108,9 @@ function ShellLabel({ children }: { children: React.ReactNode }) {
 }
 
 function App() {
+  const [selectedCountry, setSelectedCountry] = useState<CountryCode>('IN');
+  const [countrySelectorModalOpen, setCountrySelectorModalOpen] = useState(false);
+  const activeCountry = countryConfigs[selectedCountry] || countryConfigs.IN;
   const [view, setView] = useState<ViewKey>('intro');
   const [mode, setMode] = useState<'demo' | 'live'>('demo');
   const [session, setSession] = useState<Session | null>(null);
@@ -824,8 +829,17 @@ function App() {
             <strong>{nav.find((item) => item.id === view)?.label || 'System'}</strong>
           </div>
           <div className="topbar-right">
+            <button
+              className="country-pill-btn"
+              onClick={() => setCountrySelectorModalOpen(true)}
+              title="Change sovereign regional economic engine"
+            >
+              <span style={{ fontSize: 16 }}>{activeCountry.flag}</span>
+              <span>{activeCountry.name} ({activeCountry.currencySymbol})</span>
+              <span style={{ fontSize: 10, opacity: 0.6 }}>▼</span>
+            </button>
             <button className="topbar-quick-btn" onClick={() => setView('tour')}>
-              <span>▶ End-to-End Tour</span>
+              <span>▶ Keynote Demo</span>
             </button>
             <div className={`environment-pill ${isSyntheticEnvironment ? 'environment-pill--demo' : 'environment-pill--live'}`}>
               <StatusDot tone={isSyntheticEnvironment ? 'cyan' : 'green'} />
@@ -891,6 +905,8 @@ function App() {
           {/* VIEW ROUTING */}
           {view === 'intro' && (
             <IntroLandingPage
+              activeCountry={activeCountry}
+              onSelectCountry={() => setCountrySelectorModalOpen(true)}
               onStartTour={() => setView('tour')}
               onLaunchDemo={launchDemoSession}
               onGoAuth={() => setView('auth')}
@@ -899,8 +915,9 @@ function App() {
           )}
 
           {view === 'tour' && (
-            <WalkthroughDemoPlayer
-              chapters={demoTourChapters}
+            <AppleKeynoteProductLaunchDemo
+              activeCountry={activeCountry}
+              onSelectCountry={() => setCountrySelectorModalOpen(true)}
               onJumpToFeature={(targetView) => setView(targetView)}
               onFinishTour={() => setView('assistant')}
               onGoAuth={() => setView('auth')}
@@ -1058,8 +1075,22 @@ function App() {
 
       {connectRailModalOpen && (
         <ConnectRailModal
+          activeCountry={activeCountry}
           onClose={() => setConnectRailModalOpen(false)}
           onAddRail={handleAddRail}
+        />
+      )}
+
+      {countrySelectorModalOpen && (
+        <CountrySelectorModal
+          selectedCountry={selectedCountry}
+          onSelect={(code) => {
+            setSelectedCountry(code);
+            setCountrySelectorModalOpen(false);
+            const cfg = countryConfigs[code];
+            setNotice(`Jurisdiction updated to ${cfg.name} (${cfg.currencySymbol} ${cfg.currencyCode}). Banking rails and subsidy registries re-aligned.`);
+          }}
+          onClose={() => setCountrySelectorModalOpen(false)}
         />
       )}
 
@@ -1090,11 +1121,15 @@ function App() {
 // 1. INTRO & ABOUT PRODUCT LANDING PAGE
 // ==========================================
 function IntroLandingPage({
+  activeCountry,
+  onSelectCountry,
   onStartTour,
   onLaunchDemo,
   onGoAuth,
   onGoAssistant,
 }: {
+  activeCountry: CountryConfig;
+  onSelectCountry: () => void;
   onStartTour: () => void;
   onLaunchDemo: () => void;
   onGoAuth: () => void;
@@ -1105,9 +1140,16 @@ function IntroLandingPage({
       {/* Hero Section */}
       <section className="intro-hero">
         <div className="intro-hero-content">
-          <div className="intro-badge">
-            <span className="intro-badge-dot" />
-            <span>AWNNORA SYSTEM ARCHITECTURE · v0.4.0</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16, flexWrap: 'wrap' }}>
+            <div className="intro-badge">
+              <span className="intro-badge-dot" />
+              <span>AWNNORA SYSTEM ARCHITECTURE · v0.4.0</span>
+            </div>
+            <button className="country-pill-btn" onClick={onSelectCountry} title="Switch Country Engine">
+              <span style={{ fontSize: 16 }}>{activeCountry.flag}</span>
+              <strong>{activeCountry.name} ({activeCountry.currencySymbol} {activeCountry.currencyCode})</strong>
+              <span style={{ fontSize: 11, color: '#4f46e5', fontWeight: 700 }}>Switch Jurisdiction ▾</span>
+            </button>
           </div>
           <h1>
             Economic Agency for the Individual.<br />
@@ -1326,286 +1368,565 @@ function IntroLandingPage({
 // ==========================================
 // 2. AUTOMATED DEMO WALKTHROUGH PLAYER
 // ==========================================
-function WalkthroughDemoPlayer({
-  chapters,
+function AppleKeynoteProductLaunchDemo({
+  activeCountry,
+  onSelectCountry,
   onJumpToFeature,
   onFinishTour,
   onGoAuth,
 }: {
-  chapters: TourChapter[];
+  activeCountry: CountryConfig;
+  onSelectCountry: () => void;
   onJumpToFeature: (view: ViewKey) => void;
   onFinishTour: () => void;
   onGoAuth: () => void;
 }) {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [speed, setSpeed] = useState<1 | 1.5 | 2>(1);
   const [progress, setProgress] = useState(0);
+  const [typedChars, setTypedChars] = useState('');
+  const [isClicking, setIsClicking] = useState(false);
 
-  const activeChapter = chapters[currentIdx] || chapters[0];
+  const activeScene = appleKeynoteScenes[currentIdx] || appleKeynoteScenes[0];
 
   useEffect(() => {
     if (!isPlaying) return;
-    const interval = 100; // tick every 100ms
-    const stepDuration = 6000; // 6 seconds per chapter
+    const intervalMs = 100;
+    const sceneDuration = (7000) / speed;
+
     const timer = setInterval(() => {
       setProgress((prev) => {
-        if (prev >= 100) {
-          setCurrentIdx((c) => (c + 1) % chapters.length);
+        const next = prev + (intervalMs / sceneDuration) * 100;
+        if (next >= 100) {
+          setCurrentIdx((c) => (c + 1) % appleKeynoteScenes.length);
+          setTypedChars('');
+          setIsClicking(false);
           return 0;
         }
-        return prev + (interval / stepDuration) * 100;
-      });
-    }, interval);
-    return () => clearInterval(timer);
-  }, [isPlaying, chapters.length]);
 
-  const selectChapter = (index: number) => {
-    setCurrentIdx(index);
+        // Simulate operator typing or clicking
+        if (activeScene.cursorTarget.action === 'type' && activeScene.cursorTarget.typingInput) {
+          const fullText = activeScene.cursorTarget.typingInput;
+          const typingProgress = Math.max(0, Math.min(1, (next - 20) / 50));
+          const charCount = Math.floor(typingProgress * fullText.length);
+          setTypedChars(fullText.slice(0, charCount));
+        } else if (activeScene.cursorTarget.action === 'click') {
+          if (next >= 40 && next <= 60) {
+            setIsClicking(true);
+          } else {
+            setIsClicking(false);
+          }
+        }
+
+        return next;
+      });
+    }, intervalMs);
+
+    return () => clearInterval(timer);
+  }, [isPlaying, speed, activeScene, currentIdx]);
+
+  const selectScene = (idx: number) => {
+    setCurrentIdx(idx);
     setProgress(0);
+    setTypedChars('');
+    setIsClicking(false);
   };
 
   const handleNext = () => {
-    setCurrentIdx((prev) => (prev + 1) % chapters.length);
+    setCurrentIdx((prev) => (prev + 1) % appleKeynoteScenes.length);
     setProgress(0);
+    setTypedChars('');
+    setIsClicking(false);
   };
 
   const handlePrev = () => {
-    setCurrentIdx((prev) => (prev - 1 + chapters.length) % chapters.length);
+    setCurrentIdx((prev) => (prev - 1 + appleKeynoteScenes.length) % appleKeynoteScenes.length);
     setProgress(0);
+    setTypedChars('');
+    setIsClicking(false);
   };
 
   return (
-    <div className="tour-player-container">
-      {/* Top Playback Control Deck */}
-      <header className="tour-header">
-        <div className="tour-title-block">
-          <ShellLabel>AUTOMATED END-TO-END DEMO SHOWCASE</ShellLabel>
-          <h2>The Product Vision in Motion: 7 Real-World Chapters</h2>
+    <div className="keynote-theater">
+      {/* Top Playback Controller Deck */}
+      <div className="keynote-controls-strip">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+          <div className="keynote-live-pill">
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#10b981', display: 'inline-block' }} />
+            <span>APPLE KEYNOTE PRODUCT LAUNCH SHOWCASE · IN MOTION</span>
+          </div>
+          <button className="country-pill-btn" onClick={onSelectCountry} title="Switch Country/Jurisdiction">
+            <span style={{ fontSize: 16 }}>{activeCountry.flag}</span>
+            <span>{activeCountry.name} ({activeCountry.currencySymbol})</span>
+            <span style={{ fontSize: 10, color: '#4f46e5' }}>Change ▾</span>
+          </button>
         </div>
-        <div className="tour-controls">
+
+        <div className="keynote-playback-buttons">
           <button
-            className={`tour-play-pause-btn ${isPlaying ? 'is-playing' : ''}`}
+            className="keynote-btn"
             onClick={() => setIsPlaying((p) => !p)}
             aria-label={isPlaying ? 'Pause Demo' : 'Play Demo'}
           >
-            {isPlaying ? '⏸ Pause Auto-Play' : '▶ Play Auto-Play'}
+            {isPlaying ? '⏸ Pause' : '▶ Play'}
           </button>
-          <button className="tour-nav-btn" onClick={handlePrev} aria-label="Previous Chapter">
+          <button className="keynote-btn" onClick={handlePrev} aria-label="Previous Act">
             ← Prev
           </button>
-          <button className="tour-nav-btn" onClick={handleNext} aria-label="Next Chapter">
+          <button className="keynote-btn" onClick={handleNext} aria-label="Next Act">
             Next →
           </button>
-          <button className="tour-finish-btn" onClick={onFinishTour}>
-            Skip to Workspace ↗
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginLeft: 8 }}>
+            <span style={{ fontSize: 11, fontWeight: 700, color: '#64748b' }}>Speed:</span>
+            {([1, 1.5, 2] as const).map((s) => (
+              <button
+                key={s}
+                className={`keynote-btn ${speed === s ? 'keynote-btn--primary' : ''}`}
+                style={{ padding: '4px 8px', fontSize: 11 }}
+                onClick={() => setSpeed(s)}
+              >
+                {s}x
+              </button>
+            ))}
+          </div>
+          <button className="keynote-btn keynote-btn--primary" onClick={onFinishTour} style={{ marginLeft: 12 }}>
+            Take Control (Try Workspace) ↗
           </button>
         </div>
-      </header>
+      </div>
 
-      {/* Chapter Steps Indicator */}
-      <nav className="tour-chapter-nav" aria-label="Chapters">
-        {chapters.map((ch, idx) => (
+      {/* Chapter Ribbon / Scrubber */}
+      <nav className="keynote-chapter-ribbon" aria-label="Keynote Acts">
+        {appleKeynoteScenes.map((sc, idx) => (
           <button
-            key={ch.id}
-            className={`tour-step-tab ${idx === currentIdx ? 'is-active' : ''}`}
-            onClick={() => selectChapter(idx)}
+            key={sc.id}
+            className={`keynote-chapter-chip ${idx === currentIdx ? 'is-active' : ''}`}
+            onClick={() => selectScene(idx)}
           >
-            <div className="step-number">{ch.stepNumber}</div>
-            <div className="step-info">
-              <span className="step-tag" style={{ color: ch.tagColor }}>{ch.tag}</span>
-              <strong className="step-title">{ch.title}</strong>
-            </div>
+            <span className="keynote-chapter-chip-num">ACT 0{sc.chapterNumber}</span>
+            <span className="keynote-chapter-chip-title">{sc.actTitle.split('·')[1]?.trim() || sc.actTitle}</span>
             {idx === currentIdx && isPlaying && (
-              <div className="step-progress-bar">
-                <div className="step-progress-fill" style={{ width: `${progress}%` }} />
-              </div>
+              <div className="keynote-chapter-progress" style={{ width: `${progress}%` }} />
             )}
           </button>
         ))}
       </nav>
 
-      {/* Main Chapter Stage */}
-      <div className="tour-stage-layout">
-        {/* Left Narrative Panel */}
-        <div className="tour-narrative-panel">
-          <div className="chapter-badge-row">
-            <span className="chapter-tag" style={{ background: `${activeChapter.tagColor}22`, color: activeChapter.tagColor, border: `1px solid ${activeChapter.tagColor}44` }}>
-              CHAPTER 0{activeChapter.stepNumber} · {activeChapter.tag}
-            </span>
-            <span className="chapter-counter">Step {activeChapter.stepNumber} of {chapters.length}</span>
+      {/* Apple Keynote Presenter Narrative Card */}
+      <div className="keynote-presenter-card">
+        <div className="keynote-presenter-header">
+          <div className="keynote-speaker-info">
+            <div className="keynote-speaker-avatar">
+              {activeScene.presenterName.slice(0, 1)}
+            </div>
+            <div className="keynote-speaker-meta">
+              <span className="keynote-speaker-name">{activeScene.presenterName}</span>
+              <span className="keynote-speaker-role">{activeScene.presenterRole}</span>
+            </div>
           </div>
+          <span className={`keynote-badge keynote-badge--${activeScene.badgeTone}`}>
+            {activeScene.badgeText}
+          </span>
+        </div>
 
-          <h1 className="chapter-heading">{activeChapter.title}</h1>
-          <p className="chapter-subtitle">{activeChapter.subtitle}</p>
+        <div className="keynote-act-title">{activeScene.actTitle}</div>
+        <h2 className="keynote-headline">{activeScene.headline}</h2>
+        <p className="keynote-subheadline">{activeScene.subheadline}</p>
 
-          <p className="chapter-desc">{activeChapter.description}</p>
+        <div className="keynote-speech-bubble">
+          {activeScene.presenterNarration}
+        </div>
 
-          <div className="chapter-highlights">
-            <span className="highlights-label">ENGINE SPECIFICATIONS &amp; TRUTH:</span>
-            <ul>
-              {activeChapter.highlights.map((h, i) => (
+        {/* Specification Points & Live Metrics */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20, marginTop: 16 }}>
+          <div>
+            <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', color: '#64748b', display: 'block', marginBottom: 8 }}>
+              ENGINE SPECIFICATIONS &amp; COLD TRUTH:
+            </span>
+            <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13, color: '#334155', lineHeight: 1.6 }}>
+              {activeScene.highlights.map((h, i) => (
                 <li key={i}>{h}</li>
               ))}
             </ul>
           </div>
 
-          <div className="chapter-metrics-grid">
-            {activeChapter.metrics.map((m, i) => (
-              <div key={i} className={`chapter-metric-card ${m.tone ? `chapter-metric--${m.tone}` : ''}`}>
-                <small>{m.label}</small>
-                <strong>{m.value}</strong>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
+            {activeScene.metrics.map((m, i) => (
+              <div
+                key={i}
+                style={{
+                  background: '#ffffff',
+                  border: '1px solid rgba(99, 102, 241, 0.2)',
+                  borderRadius: 12,
+                  padding: '12px 14px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 4,
+                  boxShadow: '0 2px 8px rgba(15, 23, 42, 0.04)',
+                }}
+              >
+                <small style={{ fontSize: 10, fontWeight: 800, textTransform: 'uppercase', color: '#64748b' }}>{m.label}</small>
+                <strong style={{ fontSize: 14, color: m.tone === 'positive' ? '#059669' : m.tone === 'warning' ? '#d97706' : '#4f46e5' }}>{m.value}</strong>
               </div>
             ))}
           </div>
+        </div>
 
-          <div className="chapter-action-footer">
-            <button
-              className="primary-button"
-              onClick={() => onJumpToFeature(activeChapter.interactiveView)}
-            >
-              <span>{activeChapter.actionLabel} in Live Workspace ↗</span>
-            </button>
-            <button className="text-action" onClick={onGoAuth}>
-              <span>1-Click Test Demo Account ↗</span>
-            </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 20, flexWrap: 'wrap' }}>
+          <button className="primary-button" onClick={() => onJumpToFeature(activeScene.targetView)}>
+            <span>{activeScene.actionCta} in Live Workspace ↗</span>
+          </button>
+          <button className="text-action" onClick={onGoAuth}>
+            <span>1-Click Test Demo Account ↗</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Keynote Device Screen Stage with Animated Virtual Operator Cursor */}
+      <div className="keynote-device-frame">
+        {/* macOS Chrome Header */}
+        <div className="keynote-device-topbar">
+          <div className="keynote-window-dots">
+            <span className="keynote-dot keynote-dot--close" />
+            <span className="keynote-dot keynote-dot--min" />
+            <span className="keynote-dot keynote-dot--zoom" />
+          </div>
+          <div className="keynote-address-bar">
+            <span style={{ color: '#10b981' }}>🔒</span>
+            <span>https://my-economy.network/app/{activeScene.targetView}?region={activeCountry.code}</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span style={{ fontSize: 11, fontWeight: 700, color: '#64748b' }}>Operator: Autonomous Copilot</span>
           </div>
         </div>
 
-        {/* Right Interactive Simulation Widget */}
-        <div className="tour-simulation-widget">
-          <div className="simulation-header">
-            <span className="simulation-live-badge">
-              <i className="sim-dot" /> LIVE SIMULATION ENVIRONMENT
-            </span>
-            <small>Interactive View: {activeChapter.interactiveView.toUpperCase()}</small>
+        {/* Animated Virtual Operator Cursor */}
+        <div
+          className="keynote-operator-cursor"
+          style={{
+            top: `${activeScene.cursorTarget.y}%`,
+            left: `${activeScene.cursorTarget.x}%`,
+          }}
+        >
+          {isClicking && <div className="keynote-click-ripple" />}
+          <svg className="keynote-cursor-pointer" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M3 3L10.07 19.97L12.58 12.58L19.97 10.07L3 3Z"
+              fill="#4f46e5"
+              stroke="#ffffff"
+              strokeWidth="2"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <div className="keynote-cursor-label">
+            {activeScene.operatorActionDescription}
           </div>
+        </div>
 
-          <div className="simulation-screen">
-            {activeChapter.id === 'chapter-1-balancing' && (
-              <div className="sim-content sim-content--accounts">
-                <div className="sim-metric-row">
-                  <div className="sim-pill"><span>PhonePe UPI</span><strong>₹14,250</strong></div>
-                  <div className="sim-pill"><span>Google Pay</span><strong>₹8,320</strong></div>
-                  <div className="sim-pill"><span>HDFC Salary</span><strong>₹64,800</strong></div>
-                  <div className="sim-pill sim-pill--highlight"><span>Google AdSense</span><strong>₹16,400</strong></div>
-                </div>
-                <div className="sim-balance-banner">
-                  <span className="sim-label">NET CASHFLOW BALANCED (OCT 2026)</span>
-                  <strong className="text-emerald">+₹46,140.00 Surplus</strong>
-                  <small>Paise arithmetic verified across 9 rails with zero float drift.</small>
-                </div>
+        {/* Viewport Content based on activeScene */}
+        <div style={{ padding: 28, background: '#f8fafc', flex: 1, display: 'flex', flexDirection: 'column', gap: 20 }}>
+          {activeScene.id === 'keynote-act-1-country' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 13, fontWeight: 800, color: '#4f46e5', textTransform: 'uppercase' }}>
+                  SOVEREIGN ECONOMIC ENGINE DISPATCH · 5 ACTIVE NATIONS
+                </span>
+                <span className="status-word status-word--green">PRECISION VERIFIED</span>
               </div>
-            )}
-
-            {activeChapter.id === 'chapter-2-guardian' && (
-              <div className="sim-content sim-content--guardian">
-                <div className="sim-alert-box">
-                  <span className="sim-alert-tag">DUPLICATE CHARGE INTERCEPTED</span>
-                  <h3>Netflix ₹649.00 Flagged on Axis Platinum</h3>
-                  <p>Autonomous Guardian identified 2 identical ₹649 charges posted 48 hours apart in the same billing cycle.</p>
-                  <div className="sim-evidence-proof">
-                    <span>SHA-256 HASH:</span>
-                    <code>e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</code>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {activeChapter.id === 'chapter-3-casebook' && (
-              <div className="sim-content sim-content--casebook">
-                <div className="sim-case-widget">
-                  <div className="sim-case-top">
-                    <strong>CASE #DUP-001 · NETFLIX CHARGE</strong>
-                    <span className="case-status case-status--action_ready">Action Ready</span>
-                  </div>
-                  <p>Frozen source snapshot from Personal Power engine. Evidence locked for bank submission.</p>
-                  <div className="sim-timeline-mini">
-                    <div className="step-done">✓ CASE_OPENED</div>
-                    <div className="step-done">✓ IN_REVIEW</div>
-                    <div className="step-current">⚡ ACTION_READY</div>
-                    <div className="step-pending">○ WAITING_EXTERNAL</div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {activeChapter.id === 'chapter-4-opportunity' && (
-              <div className="sim-content sim-content--opportunity">
-                <div className="sim-opp-card">
-                  <div className="opp-header">
-                    <span className="opportunity-tag">Skill India Digital · Education</span>
-                    <span className="opp-match-badge">98% MATCH</span>
-                  </div>
-                  <h3>Weekend STEM Mathematics Specialist</h3>
-                  <div className="sim-opp-stats">
-                    <span>Gross: <strong>₹28,000 / mo</strong></span>
-                    <span>Direct costs: <strong>₹0</strong></span>
-                    <span>Net Margin: <strong>100%</strong></span>
-                  </div>
-                  <span className="verified-chip">✓ Verified Registry &amp; Escrow Guaranteed</span>
-                </div>
-              </div>
-            )}
-
-            {activeChapter.id === 'chapter-5-entitlements' && (
-              <div className="sim-content sim-content--entitlements">
-                <div className="sim-ent-card">
-                  <span className="ent-badge">MNRE GOVT SCHEME</span>
-                  <h3>PM Surya Ghar: Muft Bijli Yojana</h3>
-                  <strong className="text-emerald">₹78,000 Direct Cash Subsidy</strong>
-                  <p>Rooftop solar subsidy pre-assessed. Application pack prepared for state discom approval.</p>
-                  <span className="status-word status-word--green">VERIFIED ELIGIBLE</span>
-                </div>
-              </div>
-            )}
-
-            {activeChapter.id === 'chapter-6-commons' && (
-              <div className="sim-content sim-content--commons">
-                <div className="sim-quorum-card">
-                  <div className="quorum-top">
-                    <span>JAIPUR NORTH SOLAR POOL</span>
-                    <strong className="text-emerald">9 / 10 Joined</strong>
-                  </div>
-                  <div className="quorum-track">
-                    <span style={{ width: '90%' }} />
-                  </div>
-                  <div className="sim-quorum-alert">
-                    <strong>1 Spot Left to Reach Quorum!</strong>
-                    <p>Unlocks 22% bulk equipment discount (~₹4,200 savings per household) with Differential Privacy.</p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {activeChapter.id === 'chapter-7-adsense-enterprise' && (
-              <div className="sim-content sim-content--adsense">
-                <div className="sim-adsense-card">
-                  <span className="adsense-label">GOOGLE ADSENSE YIELD STREAM</span>
-                  <h3>pub-89241029412491</h3>
-                  <div className="adsense-metric-duo">
-                    <div>
-                      <small>OCT 2026 AD EARNINGS</small>
-                      <strong className="text-emerald">+₹16,400.00</strong>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12 }}>
+                {(Object.keys(countryConfigs) as CountryCode[]).map((cCode) => {
+                  const c = countryConfigs[cCode];
+                  const isCur = cCode === activeCountry.code;
+                  return (
+                    <div
+                      key={cCode}
+                      style={{
+                        padding: '14px 16px',
+                        background: '#ffffff',
+                        border: isCur ? '2px solid #4f46e5' : '1px solid var(--line)',
+                        borderRadius: 12,
+                        boxShadow: isCur ? '0 8px 24px rgba(79, 70, 229, 0.12)' : 'none',
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
+                        <span style={{ fontSize: 24 }}>{c.flag}</span>
+                        <strong style={{ fontSize: 12, color: isCur ? '#4f46e5' : '#64748b' }}>{c.currencySymbol} {c.currencyCode}</strong>
+                      </div>
+                      <strong style={{ fontSize: 14, color: '#0f172a', display: 'block' }}>{c.name}</strong>
+                      <small style={{ fontSize: 11, color: '#64748b' }}>{c.bankingStandard.split('+')[0]}</small>
                     </div>
-                    <div>
-                      <small>UTILITY BILLS COVERED</small>
-                      <strong className="text-cyan">100% Offset</strong>
+                  );
+                })}
+              </div>
+              <div style={{ padding: 16, background: '#ffffff', borderRadius: 12, border: '1px solid rgba(99, 102, 241, 0.2)' }}>
+                <strong style={{ color: '#059669' }}>Zero Float Drift Guarantee:</strong> All balances calculated in integer minor units (paise / cents / pence) to prevent IEEE-754 loss.
+              </div>
+            </div>
+          )}
+
+          {activeScene.id === 'keynote-act-2-multirail' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 13, fontWeight: 800, color: '#0284c7', textTransform: 'uppercase' }}>
+                  REBIT-AA &amp; OPEN FINANCE LINKED RAILS
+                </span>
+                <span className="status-word status-word--green">CONSENT SIGNED</span>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 12 }}>
+                {activeCountry.sampleAccounts.map((acc, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      padding: '14px 16px',
+                      background: '#ffffff',
+                      borderRadius: 12,
+                      border: '1px solid var(--line)',
+                      boxShadow: '0 4px 14px rgba(15, 23, 42, 0.04)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 4,
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: 11, fontWeight: 800, color: acc.color }}>{acc.provider}</span>
+                      <small style={{ color: '#64748b' }}>{acc.masked}</small>
                     </div>
+                    <strong style={{ fontSize: 18, color: '#0f172a' }}>{acc.balanceFormatted}</strong>
+                    <span style={{ fontSize: 11, color: '#64748b' }}>{acc.name}</span>
                   </div>
-                  <p className="adsense-offset-note">Electricity (₹3,200) + Mesh Fiber (₹650) paid directly from ad yield.</p>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {activeScene.id === 'keynote-act-3-ai-copilot' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 13, fontWeight: 800, color: '#7c3aed', textTransform: 'uppercase' }}>
+                  AUTONOMOUS AI FINANCIAL REPRESENTATIVE
+                </span>
+                <span className="status-word status-word--green">ACTIVE DISPATCH</span>
+              </div>
+              <div style={{ background: '#ffffff', border: '1px solid rgba(124, 58, 237, 0.25)', borderRadius: 12, padding: 18, boxShadow: '0 4px 16px rgba(15, 23, 42, 0.04)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+                  <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#7c3aed', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 12 }}>
+                    AI
+                  </div>
+                  <strong>AwnNORA Copilot (Muse-Spark-1.3)</strong>
+                </div>
+                <p style={{ margin: '0 0 12px', fontSize: 14, color: '#334155', lineHeight: 1.5 }}>
+                  Forensic scan completed across 86 transactions in the selected period. <strong>1 duplicate charge detected:</strong> ₹649 debit on Axis Platinum card repeated 48 hours apart.
+                </p>
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 14px', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 8, color: '#dc2626', fontSize: 12, fontWeight: 700 }}>
+                  <span>Dispute Package Prepared · SHA-256 Checksum Locked</span>
                 </div>
               </div>
-            )}
-          </div>
+              <div style={{ background: '#ffffff', border: '1px solid var(--line)', borderRadius: 10, padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
+                <span style={{ color: '#4f46e5', fontWeight: 700 }}>💬 Operator:</span>
+                <span style={{ fontSize: 13, color: '#0f172a', fontFamily: 'monospace' }}>
+                  {typedChars || 'Audit my statements for duplicate debits and fee anomalies'}<span className="blinking-cursor">|</span>
+                </span>
+              </div>
+            </div>
+          )}
+
+          {activeScene.id === 'keynote-act-4-guardian-dispute' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 13, fontWeight: 800, color: '#e11d48', textTransform: 'uppercase' }}>
+                  GUARDIAN INTERCEPT &amp; ACTION CASEBOOK
+                </span>
+                <span className="status-word status-word--green">EVIDENCE FROZEN</span>
+              </div>
+              <div style={{ background: '#ffffff', border: '1px solid rgba(225, 29, 72, 0.3)', borderRadius: 12, padding: 20, boxShadow: '0 6px 20px rgba(225, 29, 72, 0.08)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                  <strong style={{ fontSize: 16, color: '#0f172a' }}>CASE #DUP-001: Streaming Subscription Rebilling</strong>
+                  <span style={{ padding: '3px 10px', borderRadius: 999, background: '#fef2f2', color: '#e11d48', fontWeight: 800, fontSize: 11 }}>
+                    ACTION READY
+                  </span>
+                </div>
+                <p style={{ margin: '0 0 12px', fontSize: 13, color: '#475569' }}>
+                  Two identical {activeCountry.currencySymbol}649 charges posted 48 hours apart in the same cycle. Cryptographic evidence package created.
+                </p>
+                <div style={{ padding: '8px 12px', background: '#f1f5f9', borderRadius: 6, fontSize: 11, fontFamily: 'monospace', color: '#334155' }}>
+                  EVIDENCE SHA-256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeScene.id === 'keynote-act-5-opportunity' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 13, fontWeight: 800, color: '#059669', textTransform: 'uppercase' }}>
+                  REAL-TIME OPPORTUNITY RADAR
+                </span>
+                <span className="status-word status-word--green">ESCROW VERIFIED</span>
+              </div>
+              <div style={{ background: '#ffffff', border: '1px solid rgba(5, 150, 105, 0.3)', borderRadius: 12, padding: 20, boxShadow: '0 6px 20px rgba(5, 150, 105, 0.08)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                  <span style={{ fontSize: 11, fontWeight: 800, color: '#059669', textTransform: 'uppercase' }}>
+                    {activeCountry.featuredOpportunity.source}
+                  </span>
+                  <span style={{ padding: '2px 8px', borderRadius: 6, background: '#ecfdf5', color: '#059669', fontWeight: 800, fontSize: 11 }}>
+                    98% PROFILE MATCH
+                  </span>
+                </div>
+                <strong style={{ fontSize: 18, color: '#0f172a', display: 'block', marginBottom: 6 }}>
+                  {activeCountry.featuredOpportunity.title}
+                </strong>
+                <div style={{ display: 'flex', gap: 20, fontSize: 14 }}>
+                  <span>Rate: <strong>{activeCountry.featuredOpportunity.rate}</strong></span>
+                  <span>Estimated: <strong style={{ color: '#059669' }}>{activeCountry.featuredOpportunity.estimatedMonthly}</strong></span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeScene.id === 'keynote-act-6-entitlements' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 13, fontWeight: 800, color: '#d97706', textTransform: 'uppercase' }}>
+                  SOVEREIGN GOVERNMENT ENTITLEMENTS ENGINE
+                </span>
+                <span className="status-word status-word--green">PRE-ASSESSED</span>
+              </div>
+              <div style={{ background: '#ffffff', border: '1px solid rgba(217, 119, 6, 0.3)', borderRadius: 12, padding: 20, boxShadow: '0 6px 20px rgba(217, 119, 6, 0.08)' }}>
+                <small style={{ fontSize: 11, fontWeight: 800, color: '#d97706', textTransform: 'uppercase' }}>
+                  {activeCountry.featuredSubsidy.ministry}
+                </small>
+                <strong style={{ fontSize: 18, color: '#0f172a', display: 'block', margin: '4px 0' }}>
+                  {activeCountry.featuredSubsidy.title}
+                </strong>
+                <strong style={{ fontSize: 16, color: '#059669', display: 'block', marginBottom: 8 }}>
+                  {activeCountry.featuredSubsidy.valueAnnual}
+                </strong>
+                <p style={{ margin: 0, fontSize: 13, color: '#475569' }}>
+                  {activeCountry.featuredSubsidy.description}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {activeScene.id === 'keynote-act-7-commons' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 13, fontWeight: 800, color: '#4f46e5', textTransform: 'uppercase' }}>
+                  COLLECTIVE COMMONS &amp; BULK QUORUM
+                </span>
+                <span className="status-word status-word--green">QUORUM UNLOCKED</span>
+              </div>
+              <div style={{ background: '#ffffff', border: '1px solid rgba(79, 70, 229, 0.3)', borderRadius: 12, padding: 20, boxShadow: '0 6px 20px rgba(79, 70, 229, 0.08)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                  <strong>{activeCountry.commonsLocality}</strong>
+                  <strong style={{ color: '#059669' }}>10 / 10 Joined (100%)</strong>
+                </div>
+                <div style={{ height: 8, background: '#e2e8f0', borderRadius: 4, overflow: 'hidden', marginBottom: 12 }}>
+                  <div style={{ height: '100%', width: '100%', background: '#4f46e5' }} />
+                </div>
+                <strong style={{ color: '#059669' }}>{activeCountry.commonsSavings}</strong>
+              </div>
+            </div>
+          )}
+
+          {activeScene.id === 'keynote-act-8-adsense-monetization' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 13, fontWeight: 800, color: '#059669', textTransform: 'uppercase' }}>
+                  GOOGLE ADSENSE MONETIZATION &amp; AUTOMATED BILL OFFSET
+                </span>
+                <span className="status-word status-word--green">100% OFFSET</span>
+              </div>
+              <div style={{ background: '#ffffff', border: '1px solid rgba(5, 150, 105, 0.3)', borderRadius: 12, padding: 20, boxShadow: '0 6px 20px rgba(5, 150, 105, 0.08)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                  <strong style={{ fontSize: 16 }}>Google AdSense Stream (pub-89241029412491)</strong>
+                  <span style={{ fontSize: 14, fontWeight: 800, color: '#059669' }}>{activeCountry.adSenseYield}</span>
+                </div>
+                <div style={{ padding: '12px 14px', background: '#ecfdf5', borderRadius: 8, border: '1px solid #a7f3d0', color: '#065f46', fontSize: 13 }}>
+                  <strong>{activeCountry.utilityOffset}</strong> — Zero cash deducted from your checking account!
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
 }
 
+
 // ==========================================
 // 3. LOGIN & SECURITY HUB PAGE
 // ==========================================
+// ==========================================
+// COUNTRY & REGIONAL JURISDICTION SELECTOR MODAL
+// ==========================================
+function CountrySelectorModal({
+  selectedCountry,
+  onSelect,
+  onClose,
+}: {
+  selectedCountry: CountryCode;
+  onSelect: (code: CountryCode) => void;
+  onClose: () => void;
+}) {
+  return (
+    <div className="dialog-backdrop" role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <section className="login-dialog" style={{ maxWidth: 880 }} role="dialog" aria-modal="true">
+        <button className="dialog-close" onClick={onClose} aria-label="Close">×</button>
+        <ShellLabel>SOVEREIGN REGIONAL ECONOMIC ENGINE</ShellLabel>
+        <h2>Select Your Country &amp; Economic Jurisdiction</h2>
+        <p style={{ margin: '0 0 16px', color: '#475569' }}>
+          AwnNORA dynamically re-aligns currency arithmetic, instant payment rails, government subsidy databases, and opportunity registries to your sovereign nation.
+        </p>
+
+        <div className="country-grid-modal">
+          {(Object.keys(countryConfigs) as CountryCode[]).map((cCode) => {
+            const c = countryConfigs[cCode];
+            const isSelected = cCode === selectedCountry;
+            return (
+              <button
+                key={cCode}
+                className={`country-card-option ${isSelected ? 'is-selected' : ''}`}
+                onClick={() => onSelect(cCode)}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <span style={{ fontSize: 28 }}>{c.flag}</span>
+                  <span
+                    style={{
+                      fontSize: 11,
+                      fontWeight: 800,
+                      padding: '3px 8px',
+                      borderRadius: 6,
+                      background: isSelected ? '#4f46e5' : '#f1f5f9',
+                      color: isSelected ? '#ffffff' : '#475569',
+                    }}
+                  >
+                    {isSelected ? 'ACTIVE ENGINE' : `${c.currencySymbol} ${c.currencyCode}`}
+                  </span>
+                </div>
+                <strong style={{ fontSize: 16, color: '#0f172a' }}>{c.name}</strong>
+                <small style={{ fontSize: 11, color: '#4f46e5', fontWeight: 700 }}>{c.bankingStandard}</small>
+                <span style={{ fontSize: 11, color: '#64748b', lineHeight: 1.4 }}>{c.railsDescriptor}</span>
+                <div style={{ marginTop: 6, padding: '8px 10px', background: '#f8fafc', borderRadius: 8, fontSize: 11, border: '1px solid var(--line)' }}>
+                  <strong style={{ color: '#0f172a' }}>Featured Subsidy:</strong> {c.featuredSubsidy.title} ({c.featuredSubsidy.valueAnnual})
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 16 }}>
+          <button className="secondary-button" onClick={onClose}>
+            Done
+          </button>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 function LoginSecurityPage({
   busy,
   session,
@@ -2342,9 +2663,11 @@ function RailCard({ rail, onAttentionClick }: { rail: ConnectedRail; onAttention
 
 // Modal for Connecting New Payment Rails
 function ConnectRailModal({
+  activeCountry,
   onClose,
   onAddRail,
 }: {
+  activeCountry: CountryConfig;
   onClose: () => void;
   onAddRail: (rail: ConnectedRail) => void;
 }) {
@@ -2355,10 +2678,16 @@ function ConnectRailModal({
   const [syncing, setSyncing] = useState(false);
 
   const providerDefaults: Record<RailType, string[]> = {
-    upi: ['PhonePe', 'Google Pay', 'Paytm', 'Amazon Pay', 'BHIM UPI'],
-    bank: ['HDFC Bank', 'State Bank of India', 'ICICI Bank', 'Axis Bank', 'Kotak Mahindra'],
-    card: ['Axis Bank Credit Card', 'HDFC Regalia Debit', 'SBI Global ATM Card', 'RuPay Platinum'],
-    wallet: ['Amazon Pay Wallet', 'Paytm Wallet', 'Google AdSense Stream'],
+    upi: activeCountry.code === 'IN'
+      ? ['PhonePe', 'Google Pay', 'Paytm', 'Amazon Pay', 'BHIM UPI']
+      : activeCountry.code === 'US'
+        ? ['Apple Cash', 'Venmo Instant', 'Zelle RTP', 'Cash App']
+        : ['Faster Payments', 'Monzo Instant', 'Revolut Pay', 'SEPA Instant'],
+    bank: activeCountry.sampleAccounts.map((a) => a.provider).slice(0, 5),
+    card: activeCountry.code === 'IN'
+      ? ['Axis Bank Credit Card', 'HDFC Regalia Debit', 'SBI Global ATM Card', 'RuPay Platinum']
+      : ['Visa Infinite', 'Mastercard World Elite', 'American Express Platinum'],
+    wallet: ['Google AdSense Stream', 'PayPal Wallet', 'Amazon Pay Balance'],
     global: ['Stripe USD Merchant', 'PayPal International', 'Wise Multi-Currency'],
   };
 
@@ -2403,8 +2732,8 @@ function ConnectRailModal({
         provider,
         masked_identifier: identifier,
         balance_minor: minor,
-        balance_formatted: `₹${Number(initialBalance || 0).toLocaleString('en-IN')}.00`,
-        currency: 'INR',
+        balance_formatted: `${activeCountry.currencySymbol}${Number(initialBalance || 0).toLocaleString(activeCountry.locale)}.00`,
+        currency: activeCountry.currencyCode,
         status: 'ACTIVE',
         color: branding.color,
         accent_gradient: branding.gradient,

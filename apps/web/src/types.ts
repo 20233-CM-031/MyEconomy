@@ -289,3 +289,71 @@ export type PersonalCase = {
 };
 
 export type PersonalCaseDetail = PersonalCase & { events: PersonalCaseEvent[] };
+export type CountryCode = 'IN' | 'US' | 'GB' | 'EU' | 'AE';
+
+export type CountryConfig = {
+  code: CountryCode;
+  name: string;
+  flag: string;
+  currencyCode: string;
+  currencySymbol: string;
+  locale: string;
+  bankingStandard: string;
+  railsDescriptor: string;
+  taxIdLabel: string;
+  instantRailLabel: string;
+  sampleAccounts: Array<{
+    name: string;
+    balanceFormatted: string;
+    balanceMinor: string;
+    provider: string;
+    type: RailType;
+    color: string;
+    masked: string;
+  }>;
+  featuredSubsidy: {
+    title: string;
+    schemeCode: string;
+    ministry: string;
+    valueAnnual: string;
+    description: string;
+  };
+  featuredOpportunity: {
+    title: string;
+    source: string;
+    rate: string;
+    estimatedMonthly: string;
+    category: string;
+  };
+  commonsLocality: string;
+  commonsSavings: string;
+  adSenseYield: string;
+  utilityOffset: string;
+};
+
+export type KeynoteCursorAction = 'move' | 'click' | 'type' | 'select' | 'verify';
+
+export type KeynoteScene = {
+  id: string;
+  chapterNumber: number;
+  actTitle: string;
+  headline: string;
+  subheadline: string;
+  presenterName: string;
+  presenterRole: string;
+  presenterNarration: string;
+  operatorActionDescription: string;
+  targetView: ViewKey;
+  cursorTarget: {
+    x: number;
+    y: number;
+    action: KeynoteCursorAction;
+    targetLabel: string;
+    typingInput?: string;
+  };
+  badgeText: string;
+  badgeTone: 'emerald' | 'cyan' | 'amber' | 'rose' | 'purple' | 'indigo';
+  highlights: string[];
+  metrics: Array<{ label: string; value: string; tone?: string }>;
+  actionCta: string;
+};

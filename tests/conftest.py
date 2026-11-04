@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections.abc import Generator
 from pathlib import Path
 
+import httpx
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, event
@@ -12,6 +13,16 @@ from sqlalchemy.pool import StaticPool
 from myeconomy.infrastructure.database import get_db
 from myeconomy.infrastructure.models import Base
 from myeconomy.main import app
+
+# Compatibility bridge for httpx >= 0.28 with legacy Starlette TestClient
+_orig_httpx_client_init = httpx.Client.__init__
+
+
+def _compat_httpx_client_init(self, *args, app=None, **kwargs):
+    return _orig_httpx_client_init(self, *args, **kwargs)
+
+
+httpx.Client.__init__ = _compat_httpx_client_init
 
 
 @pytest.fixture

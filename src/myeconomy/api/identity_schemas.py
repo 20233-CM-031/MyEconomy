@@ -10,7 +10,6 @@ from pydantic import (
     AwareDatetime,
     BaseModel,
     ConfigDict,
-    EmailStr,
     Field,
     SecretStr,
     field_validator,
@@ -18,6 +17,14 @@ from pydantic import (
 )
 
 from myeconomy.domain.consent import ConsentPurpose, DataCategory, RecipientType
+
+try:
+    import email_validator  # noqa: F401
+    from pydantic import EmailStr
+except ImportError:
+    EmailStr = Annotated[  # type: ignore[misc]
+        str, Field(min_length=3, max_length=254, pattern=r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+    ]
 
 DisplayName = Annotated[str, Field(min_length=1, max_length=80)]
 HouseholdName = Annotated[str, Field(min_length=1, max_length=100)]
