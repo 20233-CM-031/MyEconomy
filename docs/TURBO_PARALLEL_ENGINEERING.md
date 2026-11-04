@@ -2,7 +2,7 @@
 
 **Execution principle:** parallelize bounded workstreams, not incompatible mini-products. Every workstream shares the same domain contracts, identity, tenancy, consent, provenance, money, environment, audit and event semantics.
 
-**Current execution base:** remote `main` at `a55cb388ef7baf72766e2fcabe89f0dee1c45979`. The Iteration 03 economic-intelligence kernel and context-map reconciliation are implemented locally and tested; remote branch creation remains blocked by GitHub App installation mismatch.
+**Current verified remote base:** `main` at `5b5cf669773d5c0cd33f5abffb8c46d44cead797` (PR #3 merged). Iteration 03 domain kernel is merged. Iteration 04 Guardian API vertical is implemented in a local candidate worktree; 84 tests pass, but the candidate is not pushed because GitHub branch creation still returns 403.
 
 ## Workstream map and current state
 
@@ -10,12 +10,12 @@
 |---|---|---|---|
 | A. Platform security | Core platform / MAKOS | Owner isolation, consent enforcement, document storage port, rate limits, retention/export/delete, audit and health | Iterations 01–02 establish identity, scoped consent and audit; encrypted document lifecycle and hardening remain open |
 | B. Financial intelligence | Data + logic planes | Cashflow coverage, budgets/goals, EMI/loan models, deterministic forecast/scenarios | Accounts, transactions, obligations and posted cashflow are merged; forecast and budget engine not started |
-| C. Guardian/document intelligence | GENIEA + MAKOS | Document intake, hash/provenance, extraction, evidence spans, invoice review, case state and draft actions | **Started:** Iteration 03 invoice/evidence domain evaluator and 8 focused checks; document API/vault/OCR/Meta extraction/case persistence still open |
+| C. Guardian/document intelligence | GENIEA + MAKOS | Document intake, hash/provenance, extraction, evidence spans, invoice review, case state and draft actions | **Started / local vertical slice:** Iteration 04 adds authenticated evidence intake, local private blob adapter, persisted invoice cases, owner-scoped review APIs, draft and approval state; storage scanning/OCR/Meta extraction/source-span verification and provider delivery are still open |
 | D. Opportunity/Benefits | GENIEA + KRN | Capability graph, source-versioned rules, eligibility, proof completeness and opportunity ranking | Design only; wait for typed KRN/profile and authoritative source registry contracts |
 | E. Enterprise/resource exchange | MAKOS + KRN | Listing/catalog, capacity windows, quote/order/fulfilment, cancellation/refund and unit economics | Design only; provider/commerce adapters and trust/settlement contracts needed |
-| F. Commons | GENIEA + KRN | Consented demand signals, cohort suppression, anti-inference, offer lifecycle and net-value optimizer | **Started:** Iteration 03 in-memory consent-aware aggregate and offer optimizer; no persistent Commons service, provider bidding or full privacy analysis |
-| G. Durable agent runtime | GENIEA | Persisted mission/step/checkpoint, typed tool registry, retries, idempotency, approvals and resume | **Started at policy layer:** bounded mission state graph and tool approval/environment gate; storage/outbox/checkpoints/runtime still open |
-| H. Product surface | MAKOS | Personal Mode onboarding, Personal Power report, evidence/action timeline, Commons story and synthetic/live banner | Context map updated; user-facing MAKOS application not implemented in repo |
+| F. Commons | GENIEA + KRN | Consented demand signals, cohort suppression, anti-inference, offer lifecycle and net-value optimizer | **Domain kernel merged:** in-memory consent-aware aggregate and offer optimizer; persistent Commons, anti-differencing/privacy analysis, provider bidding and settlement not started |
+| G. Durable agent runtime | GENIEA | Persisted mission/step/checkpoint, typed tool registry, retries, idempotency, approvals and resume | **Policy kernel merged:** bounded mission state graph and tool approval/environment gate; persisted mission store/outbox/checkpoints/runtime still open |
+| H. Product surface | MAKOS | Personal Mode onboarding, Personal Power report, evidence/action timeline, Commons story and synthetic/live banner | API workflow contracts now exist for Guardian; user-facing MAKOS application and Personal Mode/Commons UI are not implemented |
 | I. Meta model/evaluation | GENIEA model gateway | Meta model router, multimodal invoice extraction, tool proposal evaluation and local Glimmer benchmark | Not integrated; gateway contract and model credential/access required. Do not place sensitive information into an unsuitable service tier |
 
 ## Shared engineering interfaces
@@ -32,13 +32,15 @@
 
 1. Keep AwnNORA identity and full MAKOS / GENIEA / KRN responsibilities synchronized in the context map and repository memory. **Local context-map update complete.**
 2. Freeze common document/provenance and environment contracts.
-3. Complete Guardian as the first user-visible vertical slice: authenticated intake -> safe storage/hash -> evidence extraction -> deterministic review -> persisted case -> approval -> audit.
-4. Build persistent GENIEA mission runtime with checkpoint/resume for that Guardian workflow.
-5. Connect Meta Model API behind a provider-neutral gateway; benchmark evidence extraction and abstention on the synthetic invoice corpus.
-6. Build Personal Power report and source-grounded Benefits/Opportunity signals.
-7. Persist Commons signals, run anti-inference/privacy analysis and expose transparent offer comparison.
-8. Add Enterprise/Resource Exchange and real providers only when partner terms and credentials exist.
-9. Deliver MAKOS UX, end-to-end observability and demo instrumentation.
+3. Harden the Iteration 04 Guardian slice: add malware scanning/quarantine, production encrypted storage, retention and validated source locators; run service-backed PostgreSQL tests.
+4. Add a provider-neutral Meta OCR/multimodal extraction gateway, schema/version trace, field-level evidence and benchmark/abstention evaluation on the Guardian synthetic PDFs.
+5. Build durable GENIEA missions/steps/checkpoints, leases, outbox, idempotent execution, approval expiry and resume/reconciliation around Guardian.
+6. Build MAKOS UI for Personal Mode, Personal Power report, document evidence timeline, review findings, draft preview and approval.
+7. Build KRN typed evidence/knowledge/relationship store with private partitions, temporal provenance and explicitly shared edges.
+8. Build source-grounded Benefits/Opportunity and a verified VIVC outcome path.
+9. Persist Commons signals/offers, enforce consent and anti-inference, add privacy/fairness review and offer comparison.
+10. Add Crisis Shield, Economic Defence, Resource Exchange and One-Person Enterprise as integrated vertical slices.
+11. Add live banks, providers, funding/payouts only when lawful authority, contract, credentials, idempotency and reconciliation are in place; never substitute demo mocks.
 
 ## Parallel work rules
 
@@ -54,3 +56,10 @@
 Use Meta models where they create measurable value: invoice PDF/image extraction with page/region evidence, source-grounded explanations, constrained planning and structured tool proposals. Never let model-generated arithmetic, permissions, eligibility, settlements, consent or VIVC become authoritative. Evaluate extraction exact-match, evidence-span precision, confidence calibration/abstention, prompt-injection resistance, tool-call accuracy, latency and cost.
 
 Use the appropriate Meta service tier for personal/confidential information. Benchmark a suitable open-weight local model for sensitive local processing. Verify current model availability, geography, data handling and event eligibility against official documentation immediately before integration/submission.
+
+
+## Iteration 04 integration result (2026-11-04)
+
+The local Guardian vertical currently supports this end-to-end API journey: verified authentication → bounded upload → signature/type/size check → SHA-256 → owner-scoped idempotency → local private blob + metadata → structured invoice submission → deterministic arithmetic/evidence/confidence/prior-bill review → persisted case/findings/audit → draft → explicit approval state. The approval endpoint does not send a message. The document remains `STORED_UNSCANNED`; a PDF's contents are not parsed and no Meta model is called.
+
+Local evidence: `PYTHONPATH=src pytest -q` (84 passed), compileall, SQLite migration lifecycle, dataset validator (42 tables/17,425 rows). Python 3.12, Ruff and live PostgreSQL 16 for the Guardian migration are not verified. The latest GitHub main SHA remains the PR #3 merge; the Iteration 04 branch creation attempt returned 403 and no remote changes were made.

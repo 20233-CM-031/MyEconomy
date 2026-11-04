@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Generator
+from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
@@ -16,6 +17,7 @@ from myeconomy.main import app
 @pytest.fixture
 def test_environment(
     monkeypatch,
+    tmp_path: Path,
 ) -> Generator[tuple[TestClient, sessionmaker[Session]], None, None]:
     engine = create_engine(
         "sqlite+pysqlite://",
@@ -35,7 +37,7 @@ def test_environment(
             "CREATE TABLE alembic_version (version_num VARCHAR(32) NOT NULL PRIMARY KEY)"
         )
         connection.exec_driver_sql(
-            "INSERT INTO alembic_version (version_num) VALUES ('f2e9c7a4d821')"
+            "INSERT INTO alembic_version (version_num) VALUES ('c1d4e7a9f204')"
         )
         connection.exec_driver_sql(
             "CREATE TRIGGER audit_events_no_update BEFORE UPDATE ON audit_events "
@@ -91,6 +93,12 @@ def test_environment(
         "myeconomy.api.identity_routes.send_verification_email", capture_verification_email
     )
     app.dependency_overrides[get_db] = override_get_db
+    from myeconomy.api import guardian_routes
+    from myeconomy.infrastructure.document_storage import LocalPrivateDocumentStore
+
+    monkeypatch.setattr(
+        guardian_routes, "DOCUMENT_STORE", LocalPrivateDocumentStore(tmp_path / "private-documents")
+    )
     try:
         with TestClient(app) as client:
             yield client, session_factory

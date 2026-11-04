@@ -1,8 +1,8 @@
 # Iteration 03 — AwnNORA Economic Intelligence Domain Kernel
 
 **Date:** 2026-11-04
-**Status:** Implemented in local worktree; 23 focused tests pass; not pushed or merged.
-**Base reference:** Live `main` verified at `a55cb388ef7baf72766e2fcabe89f0dee1c45979` (Iteration 02 PR #2 merge).
+**Status:** Merged into remote `main` through PR #3; merge commit `5b5cf669773d5c0cd33f5abffb8c46d44cead797`. The merged commit is verified by live GitHub read; no CI result was returned by the available status endpoints.
+**Base reference:** Iteration 02 merged `main` at `a55cb388ef7baf72766e2fcabe89f0dee1c45979`; merged by PR #3.
 **Implementation package:** `myeconomy.domain.economic_intelligence`.
 
 ## 1. Goal
@@ -94,4 +94,4 @@ Model-extracted values must be supplied by a future adapter with source spans an
 
 ## 7. Remote status
 
-No GitHub change was made. Read access is available, but branch creation fails with GitHub API 403 because the GitHub App installation is associated with `kareem1207`, not the repository owner account `20233-CM-031`. A feature branch and PR must be created only after installation permissions are corrected. Do not copy these changes directly onto `main`.
+This iteration is merged remotely in PR #3. The GitHub App installation still appears under `kareem1207`, not the repository owner account `20233-CM-031`; current Iteration 04 branch creation attempts return 403. Do not copy future candidates directly onto `main`.

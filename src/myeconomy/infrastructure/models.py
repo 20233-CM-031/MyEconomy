@@ -476,3 +476,92 @@ class RecurringObligation(Base):
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=utc_now, onupdate=utc_now
     )
+
+
+class GuardianEvidenceDocument(Base):
+    """Owner-scoped evidence metadata; bytes live in a private storage adapter."""
+
+    __tablename__ = "guardian_evidence_documents"
+    __table_args__ = (
+        UniqueConstraint("id", "owner_user_id", name="uq_guardian_document_id_owner"),
+        UniqueConstraint(
+            "owner_user_id", "idempotency_key", name="uq_guardian_document_idempotency"
+        ),
+        CheckConstraint("length(sha256) = 64", name="ck_guardian_document_sha256"),
+        CheckConstraint("byte_size > 0 AND byte_size <= 5242880", name="ck_guardian_document_size"),
+        CheckConstraint(
+            "status IN ('STORED_UNSCANNED', 'CLEAN', 'REJECTED')",
+            name="ck_guardian_document_status",
+        ),
+        CheckConstraint(
+            "media_type IN ('application/pdf', 'image/png', 'image/jpeg')",
+            name="ck_guardian_document_media_type",
+        ),
+        Index("ix_guardian_documents_owner_created", "owner_user_id", "created_at"),
+    )
+
+    id: Mapped[UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=uuid4)
+    owner_user_id: Mapped[UUID] = mapped_column(
+        Uuid(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
+    idempotency_key: Mapped[str] = mapped_column(String(128), nullable=False)
+    original_filename: Mapped[str] = mapped_column(String(160), nullable=False)
+    media_type: Mapped[str] = mapped_column(String(64), nullable=False)
+    byte_size: Mapped[int] = mapped_column(Integer, nullable=False)
+    sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[str] = mapped_column(String(24), nullable=False, default="STORED_UNSCANNED")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
+
+
+class GuardianCase(Base):
+    """Persisted invoice-review case and its human-readable, evidence-linked result."""
+
+    __tablename__ = "guardian_cases"
+    __table_args__ = (
+        UniqueConstraint("id", "owner_user_id", name="uq_guardian_case_id_owner"),
+        UniqueConstraint(
+            "owner_user_id", "review_idempotency_key", name="uq_guardian_review_idempotency"
+        ),
+        ForeignKeyConstraint(
+            ["evidence_document_id", "owner_user_id"],
+            ["guardian_evidence_documents.id", "guardian_evidence_documents.owner_user_id"],
+            ondelete="RESTRICT",
+            name="fk_guardian_case_evidence_owner",
+        ),
+        CheckConstraint("case_type = 'INVOICE_REVIEW'", name="ck_guardian_case_type"),
+        CheckConstraint(
+            "disposition IN ('CONSISTENT', 'REVIEW_REQUIRED', 'ABSTAIN')",
+            name="ck_guardian_case_disposition",
+        ),
+        CheckConstraint(
+            "status IN ("
+            "'REVIEWED', 'DRAFT_READY', 'APPROVED_FOR_USER_TO_SEND', 'REJECTED', 'CLOSED'"
+            ")",
+            name="ck_guardian_case_status",
+        ),
+        CheckConstraint("length(currency) = 3", name="ck_guardian_case_currency"),
+        Index("ix_guardian_cases_owner_created", "owner_user_id", "created_at"),
+        Index("ix_guardian_cases_owner_provider", "owner_user_id", "provider_key", "issue_date"),
+    )
+
+    id: Mapped[UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=uuid4)
+    owner_user_id: Mapped[UUID] = mapped_column(
+        Uuid(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
+    evidence_document_id: Mapped[UUID] = mapped_column(Uuid(as_uuid=True), nullable=False)
+    review_idempotency_key: Mapped[str] = mapped_column(String(128), nullable=False)
+    request_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    case_type: Mapped[str] = mapped_column(String(32), nullable=False, default="INVOICE_REVIEW")
+    invoice_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    provider_key: Mapped[str] = mapped_column(String(128), nullable=False)
+    currency: Mapped[str] = mapped_column(String(3), nullable=False)
+    issue_date: Mapped[date] = mapped_column(Date, nullable=False)
+    disposition: Mapped[str] = mapped_column(String(24), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="REVIEWED")
+    invoice_snapshot: Mapped[dict[str, object]] = mapped_column(JSON, nullable=False)
+    review_snapshot: Mapped[dict[str, object]] = mapped_column(JSON, nullable=False)
+    action_draft: Mapped[str | None] = mapped_column(String(12000), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utc_now, onupdate=utc_now
+    )

@@ -47,3 +47,7 @@ Thumbs.db
 
 # Keep the versioned synthetic SQLite demo fixture; it is intentional test data.
 !demo_data/synthetic_v1/sqlite/myeconomy_synthetic_demo.sqlite3
+
+# Private uploaded evidence (never commit user documents)
+.data/
+private_documents/

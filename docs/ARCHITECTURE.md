@@ -2,7 +2,7 @@
 
 Canonical product/system map: [`AWNNORA_CONTEXT_MAP.md`](AWNNORA_CONTEXT_MAP.md).
 
-This document separates the code that exists from the full product architecture.
+This document separates the code that exists from the full product architecture. Live `main` includes Iteration 03 (PR #3); Iteration 04 Guardian API details below describe a locally tested candidate that has not been pushed.
 
 ## 1. Product/system boundaries
 
@@ -77,6 +77,18 @@ Pydantic request -> `run_cashflow_analysis` -> pure domain validation and Decima
 - Consent proves a user authorized the specified purpose, data categories and recipient, within the time window.
 - The data-access service must check all of these at the point of actual data access; a UI checkbox or preflight consent check is insufficient.
 - Models never decide authorization or retrieve arbitrary rows. A future model agent receives typed tools that call application services, which enforce access.
+
+### Guardian evidence intake and invoice review — Iteration 04 local candidate
+
+The current API vertical flow is:
+
+`verified user -> bounded upload -> MIME/signature/size check -> SHA-256 -> owner-scoped idempotency -> local private blob + metadata -> STORED_UNSCANNED -> user-submitted structured invoice and evidence locators -> deterministic invoice arithmetic/evidence/confidence/prior-invoice review -> persisted owner-scoped case + audit -> clarification draft -> explicit approval state for manual sending`.
+
+The database stores `GuardianEvidenceDocument` and `GuardianCase`. A composite foreign key ensures a case cannot reference another owner's evidence document. Per-owner idempotency constraints and request/source hashes make identical retries replayable and changed payload reuse conflict. The case write and audit event share a transaction; unique-key races are handled as idempotency conflicts/replays.
+
+The document adapter currently uses a local filesystem path rooted at `AWNNORA_DOCUMENT_ROOT`, generated UUID filenames, restrictive POSIX permissions and atomic rename. That adapter is for trusted local/demo use only. Files remain `STORED_UNSCANNED`; there is no antivirus/malware scan, OCR, PDF parsing, Meta model call, page-region locator verification, retention/deletion lifecycle, encryption-at-rest or KMS integration. The review fields are submitted by the user/client and are not extracted from the uploaded binary.
+
+Draft approval records an internal state only. It does not dispatch email, contact a provider, submit a complaint, make a payment, cancel a service or otherwise perform an external side effect.
 
 ## 6. Target data and intelligence planes
 

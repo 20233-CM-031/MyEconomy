@@ -3,8 +3,8 @@
 > **Purpose:** Durable project context for future engineering sessions, contributors and AI coding assistants. This is the canonical high-level memory of the product's intent, architecture, constraints and decisions. It must be updated when decisions or capabilities change.
 >
 > **Last reconciled with source tree:** 2026-11-04.
-> **Current remote code delivery:** Iterations 00–02 merged into `main`.
-> **Current local candidate:** Iteration 03 economic-intelligence domain kernel; 23 new tests pass; not pushed.
+> **Current remote code delivery:** Iterations 00–03 merged into `main` (PR #3 at `5b5cf669773d5c0cd33f5abffb8c46d44cead797`).
+> **Current local candidate:** Iteration 04 Guardian evidence/invoice review API vertical; 84 tests pass in the local candidate; not yet pushed.
 > **Product name:** AwnNORA. `MyEconomy` is the repository/package implementation base.
 > **Canonical system map:** `docs/AWNNORA_CONTEXT_MAP.md`.
 
@@ -206,15 +206,20 @@ Technical differentiators to demonstrate: privacy-constrained personal agents, d
 - Account, transaction, import-batch and recurring-obligation APIs are owner-scoped. Non-owner access returns 404. Household membership is not used as a financial-data permission.
 - `scripts/seed_synthetic_customer.py` loads one synthetic persona into an existing, active, verified local user only; it refuses production mode, creates no fake login identity and uses deterministic idempotency/source IDs.
 
-### Iteration 03 — AwnNORA economic-intelligence domain kernel (local candidate)
+### Iteration 03 — AwnNORA economic-intelligence domain kernel (merged in PR #3)
 - `domain/economic_intelligence.py` adds deterministic invoice/evidence review, offer net-value evaluation, consent-aware Commons demand aggregation, strict VIVC accounting, GENIEA mission transitions and tool-authorization gates.
-- `tests/test_economic_intelligence.py` adds 23 focused tests. The complete local suite passes 79 tests.
-- These are domain primitives only. No Guardian document API/vault/OCR/model extraction, persisted case state, durable GENIEA runtime/checkpoint, KRN graph persistence, live Commons service or MAKOS UI exists yet.
+- `tests/test_economic_intelligence.py` adds 23 focused tests. Iteration 03 was merged into `main` through PR #3 at `5b5cf669773d5c0cd33f5abffb8c46d44cead797`.
+- These are domain primitives; they do not constitute a persistent Commons marketplace or durable GENIEA runtime. Guardian API and persisted review workflow are added as a local Iteration 04 candidate, described below.
 
-The Iteration 02 CSV/API flows are merged into `main` through PR #2 at `a55cb388ef7baf72766e2fcabe89f0dee1c45979`. Its GitHub Actions run `41801123405` passed Python 3.12, Python 3.13 and PostgreSQL 16 service-backed migration/audit checks. Iteration 03 remains a local-only domain kernel until its own branch/PR is created and CI passes.
+### Iteration 04 — Guardian evidence/API vertical (local candidate)
+- Owner-scoped upload of PDF/PNG/JPEG with 5 MiB streaming cap, MIME/signature check, filename sanitization, SHA-256 and idempotency. Local filesystem adapter uses generated paths and restrictive permissions; files remain `STORED_UNSCANNED`.
+- Persisted `GuardianEvidenceDocument` and `GuardianCase`, structured invoice and findings snapshots, owner composite FK, review request hash/idempotency, same-owner prior-bill comparison and audit.
+- Authenticated case/document APIs, deterministic clarification draft and explicit manual-send approval state. No provider delivery occurs.
+- Three synthetic PDF fixtures, exact structured payloads, verified `pdftotext -layout` locators and SHA-256 manifest under `demo_data/synthetic_v1/guardian_workflow/` and `source_documents/guardian/`.
+- Local candidate: 83 pytest tests, compileall, SQLite migration lifecycle and full core synthetic validator pass. Python 3.12, Ruff and live PostgreSQL 16 Guardian migration remain unverified. No remote Iteration 04 change exists.
 
 ### Still designed / not yet implemented
-No live bank aggregator, official bank-data consent integration, statement provider connectors, encrypted document vault, category-learning service, budgets/goals/forecast engine, benefits rules catalogue, Guardian claims flow, opportunity marketplace, resource exchange, crisis workflows, enterprise operations, Commons aggregation engine/anti-inference controls, offer optimizer, VIVC evidence ledger, partner commission/payout engine, RAG, graph runtime, durable agent/checkpoint engine, Meta model gateway or production deployment exists yet. Synthetic records for these future capabilities remain fixtures only. Use `docs/FEATURE_CATALOG.md` and `docs/PROJECT_STATUS.md` as the status authority.
+No live bank aggregator, official bank-data consent integration, statement provider connectors, production encrypted/scanned document vault, category-learning service, complete budgets/goals/forecast engine, authoritative benefits rules catalogue, provider-connected Guardian claims/delivery, opportunity marketplace, resource exchange, crisis workflows, enterprise commerce operations, persistent Commons engine/anti-inference runtime, persistent VIVC evidence/settlement ledger, partner commission/payout engine, RAG, KRN graph runtime, durable GENIEA agent/checkpoint executor, Meta model gateway or production deployment exists yet. Synthetic records for these future capabilities remain fixtures only. Use `docs/FEATURE_CATALOG.md` and `docs/PROJECT_STATUS.md` as the status authority.
 
 ## 15. Hackathon judging and model policy context
 

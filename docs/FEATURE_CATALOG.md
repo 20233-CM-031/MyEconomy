@@ -7,11 +7,11 @@ Status: **Implemented and tested**, **Partial**, **Designed**, **Not started**, 
 | Area / capability | Intended behavior | Current status | Source / next acceptance |
 |---|---|---|---|
 | AwnNORA product identity | AwnNORA is the confirmed product/project; MyEconomy is the implementation repository/package | Confirmed | `AWNNORA_CONTEXT_MAP.md`; do not rename repository/package without a migration plan |
-| Guardian invoice domain review | Evidence-linked arithmetic, confidence, duplicate and comparable-price signals | **Partial (domain kernel only)** | `domain/economic_intelligence.py`; no document upload, OCR, case persistence or API route yet |
-| Offer net-value optimizer | Compare baseline with all costs/credits and reject unsuitable offers | **Partial (domain kernel only)** | `evaluate_offer(...)`; no live provider catalogues, API or settlement |
+| Guardian invoice domain review | Evidence-linked arithmetic, confidence, duplicate and comparable-price signals | **Partial (Iterations 03–04)** | Domain review kernel is merged; local Iteration 04 adds authenticated structured invoice review, prior-bill comparison and persisted findings. OCR/model extraction/provider delivery remain absent |
+| Offer net-value optimizer | Compare baseline with all costs/credits and reject unsuitable offers | **Partial (domain kernel)** | `evaluate_offer(...)` evaluates complete incremental cost; no persisted offer service, live provider catalogue or settlement |
 | Commons demand aggregation | Aggregate purpose-consented fresh signals above a minimum cohort | **Partial (in-memory domain kernel)** | `aggregate_consented_demand(...)`; no persistent Commons runtime or full anti-differencing/privacy analysis |
 | VIVC evidence accounting | Count only verified live outcomes with unique idempotency and one currency | **Partial (domain kernel only)** | `verified_individual_value_created(...)`; no persistent evidence/settlement ledger |
-| GENIEA mission/tool policy | Bound mission states and require permission/approval/idempotency/environment match | **Partial (policy primitives only)** | `transition_mission(...)`, `authorize_tool_execution(...)`; no durable agent runtime/checkpoints |
+| GENIEA mission/tool policy | Bound mission states and require permission/approval/idempotency/environment match | **Partial (policy primitives only)** | `transition_mission(...)`, `authorize_tool_execution(...)`; no durable agent executor/checkpoints/outbox |
 | Deterministic money/currency | Exact decimal calculation with currency precision | Implemented and tested | `domain/money.py`, `domain/cashflow.py`; currency list remains curated |
 | Cashflow analysis | Income, expenses, net, essential/discretionary, categories | Implemented and tested | `application/cashflow.py`, `/api/v1/cashflow/analyze`; caller-supplied data only |
 | API health/readiness | Process liveness and DB+migration readiness | Implemented and tested | `main.py`; readiness currently probes only DB/schema |
@@ -40,7 +40,7 @@ Status: **Implemented and tested**, **Partial**, **Designed**, **Not started**, 
 | Recurring obligation schedule | Owner-owned expected payments with due dates/frequency/autopay label | **Implemented and tested** | `RecurringObligation`; no payment mandate or scheduler |
 | Budget/goals/forecast | Household allocations, cashflow forecast and scenario | Designed | Build after financial persistence |
 | Personal Power Discovery | Day-one actionable report without network/bank mandatory | Designed | Next product-value slice after financial data base |
-| Personal AI Representative / Guardian | Billing anomaly/refund evidence, claims drafts, follow-up | Designed | No actual provider/claim integration yet |
+| Personal AI Representative / Guardian | Billing anomaly/refund evidence, claims drafts, follow-up | **Partial (invoice-review slice)** | Iteration 04 local API supports evidence intake, structured review, persisted findings and clarification draft; no OCR/model extraction or actual provider/claim delivery |
 | Economic Defence / Shield | Scam/risk indicators and safe next actions | Designed | Never label fraud conclusively without sufficient evidence |
 | Entitlement / Benefits | Official-source-grounded eligibility discovery | Designed | Eligibility possibility != approved entitlement |
 | Opportunity Engine | Skill/time match to jobs, projects, training | Designed | Requires opportunity sources and capability profile |
@@ -49,6 +49,9 @@ Status: **Implemented and tested**, **Partial**, **Designed**, **Not started**, 
 | Resource Exchange | Match capacity, resources and verified demand | Designed | Booking, trust and cancellation logic needed |
 | Crisis Shield | Income shock triage, relief discovery, safe replanning | Designed | Do not default to recommending loans |
 | Collective Economic Intelligence / Commons | Consent-controlled aggregate demand and resource opportunity matching | Designed | Cohort minimums, anti-inference and verified providers needed |
+| Guardian evidence upload | Owner-scoped PDF/PNG/JPEG intake, size/signature validation, hash, idempotency and private blob storage | **Partial (local/demo adapter)** | `api/guardian_routes.py`, `application/guardian.py`, `infrastructure/document_storage.py`; status remains `STORED_UNSCANNED`; production needs encrypted object store, scanner, retention and restore |
+| Guardian case persistence | Store invoice input/review snapshot, evidence reference, findings and owner scope | **Partial (invoice review only)** | `GuardianEvidenceDocument`, `GuardianCase`, migration `c1d4e7a9f204`; not a generalized claims/case-management service |
+| Guardian action draft/approval | Draft user-facing clarification and require explicit approval | **Partial (local API)** | `/guardian/cases/{id}/draft`, `/approve-draft`; records approval to send manually; no provider contact occurs |
 | Offer net-value optimizer | Evaluate all incremental spend/fees/quality/conditions and reject harmful deals | Designed | Deterministic scoring/constraints required |
 | Revenue and reward ledger | Attribute eligible net revenue and 50/50 user/platform share | Designed | Contract/accounting/refund/tax/payout logic needed |
 | VIVC outcome ledger | Evidence-backed realized value after additional cost | Designed | Outcome state machine and evidence provenance required |
@@ -82,3 +85,16 @@ Status: **Implemented and tested**, **Partial**, **Designed**, **Not started**, 
 - Dataset independent validator passed against the committed synthetic corpus.
 - Python compileall passed. Ruff is not installed in the isolated execution runtime; local Ruff result is unverified. The merged Iteration 01 GitHub Actions run passed Ruff/pytest on Python 3.12/3.13 and PostgreSQL 16 migrations, but Iteration 02 changes still require their own CI run.
 - The branch CI PostgreSQL job will now run the extended `verify_postgres_audit.py` script, which also tests the transaction immutability/status guard; until that new branch CI passes, live PostgreSQL immutability/status-guard execution remains unverified. Production SMTP, bank connectors, real financial institutions and production security controls remain unverified.
+
+
+## Iteration 04 evidence — Guardian invoice-review API (local candidate, 2026-11-04)
+
+| Capability | Status | Verification / boundary |
+|---|---|---|
+| PDF/PNG/JPEG evidence intake | Partial, local adapter | Verified authentication, 5 MiB streaming cap, signature check, sanitized display filename, SHA-256, owner-scoped idempotency, `STORED_UNSCANNED`; no malware scanner |
+| Private evidence storage | Partial, local/demo only | Generated object keys and restrictive directory/file permissions; no encryption-at-rest/KMS or production object-store adapter |
+| Invoice review API | Partial, structured input | Deterministic calculation and prior-invoice comparison; values are manually/user supplied, not OCR/Meta extracted |
+| Case/audit state | Partial, persisted | Owner-scoped evidence/case FK, idempotency hashes, snapshots, findings and append-only audit events |
+| Draft/approval | Partial, no external delivery | Deterministic clarification draft; approval means user may send it manually; no email/provider API side effect |
+| Synthetic Guardian workflow | Simulated, local test | Three fictional PDFs, structured payloads, page/line locators and SHA-256 manifest; no real customers/providers |
+| Local verification | Passed except stated gaps | 83 pytest tests, compileall, SQLite migration lifecycle and original 42-table/17,425-row dataset validator passed. Ruff, Python 3.12 and live PostgreSQL 16 migration test are unverified. |

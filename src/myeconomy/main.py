@@ -6,6 +6,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from myeconomy.api.financial_routes import router as financial_router
+from myeconomy.api.guardian_routes import router as guardian_router
 from myeconomy.api.identity_routes import router as identity_router
 from myeconomy.api.routes import router as cashflow_router
 from myeconomy.domain.errors import ApplicationError
@@ -14,11 +15,12 @@ from myeconomy.infrastructure.database import get_db
 
 def create_app() -> FastAPI:
     app = FastAPI(
-        title="MyEconomy API",
-        version="0.3.0",
+        title="AwnNORA API",
+        version="0.4.0",
         description=(
             "Personal economic agency and collective opportunity intelligence. "
-            "Identity, purpose-bound consent and owner-scoped financial data are persisted."
+            "Identity, consent, financial data and the Guardian evidence-review "
+            "workflow are persisted."
         ),
         docs_url="/docs",
         redoc_url="/redoc",
@@ -26,6 +28,7 @@ def create_app() -> FastAPI:
     app.include_router(cashflow_router)
     app.include_router(identity_router)
     app.include_router(financial_router)
+    app.include_router(guardian_router)
 
     @app.exception_handler(ApplicationError)
     async def application_error_handler(_request: Request, exc: ApplicationError) -> JSONResponse:

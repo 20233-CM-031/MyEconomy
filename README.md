@@ -10,9 +10,9 @@ The product vision is to make each person stronger from Day One through a privat
 
 ## Current implementation status
 
-This repository is being built as a carefully engineered modular monolith. Iteration 00 contains deterministic cashflow analysis. Iteration 01 adds persisted identity/session management, household invitations and membership boundaries, scoped consent grants, revocation, and append-only audit events. Iteration 02 adds owner-scoped financial accounts, transaction statement import with provenance/idempotency, persisted transaction ledger, recurring obligations and cashflow analysis over posted records. Provider lifecycle changes (`PENDING` to `POSTED`/`REVERSED`/`VOID`, `POSTED` to `REVERSED`/`VOID`) are audited and database-enforced; unclassified CSV rows default to `IGNORE` rather than guessing from debit/credit direction.
+This repository is a carefully engineered modular monolith. Iteration 00 provides deterministic cashflow analysis. Iteration 01 adds identity/session management, household boundaries, scoped consent, revocation and append-only audit. Iteration 02 adds owner-scoped financial accounts, bounded transaction imports with provenance/idempotency, a persisted ledger, recurring obligations and posted-only cashflow. Iteration 03 (merged in PR #3) adds deterministic economic-intelligence rules for invoice review, offer net value, Commons aggregation, VIVC and GENIEA tool policy. Iteration 04 (local candidate, not yet pushed) adds authenticated Guardian evidence upload, private local file storage, persisted invoice-review cases, audit, owner-scoped case APIs and explicit draft approval.
 
-Implemented functionality is described in `docs/PROJECT_STATUS.md`. The complete AwnNORA vision is not yet implemented. Iteration 03 adds tested domain rules for invoice/evidence review, offer net-value evaluation, consent-aware Commons aggregation, VIVC accounting and GENIEA tool/mission policy. These rules are not yet exposed through authenticated APIs or persistent services. No live bank connection, payment, sponsor/merchant integration, Commons marketplace, durable agent runtime, RAG engine, MAKOS UI, KRN runtime or Meta model gateway is claimed as working yet.
+Iteration 04 is a real API vertical slice for development/demo, not a claim that all AwnNORA capabilities are production complete. Evidence files remain `STORED_UNSCANNED`; PDF/image parsing, OCR, Meta model extraction, malware scanning, provider delivery, durable GENIEA runtime, KRN graph persistence and MAKOS UI are not implemented in this slice. See `docs/PROJECT_STATUS.md` and `docs/FEATURE_CATALOG.md` for exact status and production gates.
 
 ## Engineering memory — read first
 
@@ -67,6 +67,8 @@ For PostgreSQL, set `DATABASE_URL` to a `postgresql+psycopg://...` URL before ru
 - `POST /api/v1/households`, `GET /api/v1/households` — create and list the current user's households after email verification.
 - `POST /api/v1/households/{id}/invitations`, `POST /api/v1/household-invitations/accept`, `POST /api/v1/household-invitations/{id}/revoke`, `GET /api/v1/households/{id}/members` — invitation-acceptance membership flow.
 - `GET /api/v1/consents/terms`, `POST /api/v1/consents`, `GET /api/v1/consents`, `POST /api/v1/consents/{id}/revoke`, `GET /api/v1/consents/check` — versioned purpose/category/recipient-bound consent.
+- `POST /api/v1/guardian/evidence-documents`, `GET /api/v1/guardian/evidence-documents`, `GET /api/v1/guardian/evidence-documents/{id}/download` — verified-user-only, owner-scoped evidence upload/list/download (local adapter; unscanned quarantine state).
+- `POST /api/v1/guardian/invoice-reviews`, `GET /api/v1/guardian/cases`, `GET /api/v1/guardian/cases/{id}`, `POST /api/v1/guardian/cases/{id}/draft`, `POST /api/v1/guardian/cases/{id}/approve-draft` — structured invoice review, persisted findings, draft and explicit approval state; no provider send.
 
 Household membership does not grant access to a member's personal or financial records. Financial account and transaction endpoints are scoped to the authenticated account owner; Commons sharing is not yet implemented. Each person must separately grant the necessary consent. The check endpoint is informational; future data services must call `require_active_consent` inside the same transaction as the data access. See `docs/THREAT_MODEL.md` for residual risks and `docs/HACKATHON_SCORECARD.md` for the judging strategy.
 
@@ -86,6 +88,12 @@ Household membership does not grant access to a member's personal or financial r
 Use `iteration/<number>-<scope>` branches, conventional commits, tests and documentation updates. Every completed iteration must update the project status, codebase map, feature catalog, project memory and iteration evidence. See `AGENTS.md`.
 
 Iteration 01 detailed implementation and file manifest: `docs/iterations/ITERATION-01.md` and `docs/iterations/ITERATION-01-FILE-MANIFEST.md`. Iteration 02 financial data contract and delivery manifest: `docs/FINANCIAL_DATA_CONTRACT.md`, `docs/iterations/ITERATION-02.md` and `docs/iterations/ITERATION-02-FILE-MANIFEST.md`.
+
+## Guardian demo workflow (Iteration 04 local candidate)
+
+After applying the current migrations and creating a verified local/demo account, start the API and set `AWNNORA_DEMO_BEARER_TOKEN`. Run `python demo_data/synthetic_v1/guardian_workflow/run_demo.py` to upload three clearly fictional invoices and exercise a baseline bill, an unusual price increase and an arithmetic mismatch. The runner creates clarification drafts but never approves or sends them. See `demo_data/synthetic_v1/guardian_workflow/README.md`.
+
+The local private document adapter uses `AWNNORA_DOCUMENT_ROOT` (default `.data/private_documents`) and restrictive filesystem permissions. This is not encrypted object storage; do not deploy it for real financial documents without replacing it with the production storage/scanning/retention controls described in the iteration report.
 
 ## Synthetic end-to-end demo data
 
