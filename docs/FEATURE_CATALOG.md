@@ -6,6 +6,12 @@ Status: **Implemented and tested**, **Partial**, **Designed**, **Not started**, 
 
 | Area / capability | Intended behavior | Current status | Source / next acceptance |
 |---|---|---|---|
+| AwnNORA product identity | AwnNORA is the confirmed product/project; MyEconomy is the implementation repository/package | Confirmed | `AWNNORA_CONTEXT_MAP.md`; do not rename repository/package without a migration plan |
+| Guardian invoice domain review | Evidence-linked arithmetic, confidence, duplicate and comparable-price signals | **Partial (domain kernel only)** | `domain/economic_intelligence.py`; no document upload, OCR, case persistence or API route yet |
+| Offer net-value optimizer | Compare baseline with all costs/credits and reject unsuitable offers | **Partial (domain kernel only)** | `evaluate_offer(...)`; no live provider catalogues, API or settlement |
+| Commons demand aggregation | Aggregate purpose-consented fresh signals above a minimum cohort | **Partial (in-memory domain kernel)** | `aggregate_consented_demand(...)`; no persistent Commons runtime or full anti-differencing/privacy analysis |
+| VIVC evidence accounting | Count only verified live outcomes with unique idempotency and one currency | **Partial (domain kernel only)** | `verified_individual_value_created(...)`; no persistent evidence/settlement ledger |
+| GENIEA mission/tool policy | Bound mission states and require permission/approval/idempotency/environment match | **Partial (policy primitives only)** | `transition_mission(...)`, `authorize_tool_execution(...)`; no durable agent runtime/checkpoints |
 | Deterministic money/currency | Exact decimal calculation with currency precision | Implemented and tested | `domain/money.py`, `domain/cashflow.py`; currency list remains curated |
 | Cashflow analysis | Income, expenses, net, essential/discretionary, categories | Implemented and tested | `application/cashflow.py`, `/api/v1/cashflow/analyze`; caller-supplied data only |
 | API health/readiness | Process liveness and DB+migration readiness | Implemented and tested | `main.py`; readiness currently probes only DB/schema |

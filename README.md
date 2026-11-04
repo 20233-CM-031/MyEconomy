@@ -1,6 +1,8 @@
-# MyEconomy — Personal Economic Agency & Collective Opportunity Intelligence
+# AwnNORA — Human Economic Intelligence System
 
-> Product brand name: **not selected**. `MyEconomy` is the repository and internal project name.
+Implementation repository/package: `MyEconomy`
+
+> **AwnNORA** is the project/product name. `MyEconomy` is the existing implementation repository and Python package name; it is not an alternative product brand.
 
 The product vision is to make each person stronger from Day One through a private AI representative that helps protect their interests, recover value, discover opportunities, access benefits, develop income and operate a small enterprise. With explicit, purpose-specific consent, personal agents can participate in a privacy-preserving Collective Economic Intelligence Network that turns shared demand and underused resources into collective opportunity.
 
@@ -10,18 +12,20 @@ The product vision is to make each person stronger from Day One through a privat
 
 This repository is being built as a carefully engineered modular monolith. Iteration 00 contains deterministic cashflow analysis. Iteration 01 adds persisted identity/session management, household invitations and membership boundaries, scoped consent grants, revocation, and append-only audit events. Iteration 02 adds owner-scoped financial accounts, transaction statement import with provenance/idempotency, persisted transaction ledger, recurring obligations and cashflow analysis over posted records. Provider lifecycle changes (`PENDING` to `POSTED`/`REVERSED`/`VOID`, `POSTED` to `REVERSED`/`VOID`) are audited and database-enforced; unclassified CSV rows default to `IGNORE` rather than guessing from debit/credit direction.
 
-Implemented functionality is described in `docs/PROJECT_STATUS.md`. The complete future vision is not yet implemented. No bank connection, payments, sponsor/merchant integrations, live Commons marketplace, production agent, RAG engine or Meta model integration is claimed as working yet.
+Implemented functionality is described in `docs/PROJECT_STATUS.md`. The complete AwnNORA vision is not yet implemented. Iteration 03 adds tested domain rules for invoice/evidence review, offer net-value evaluation, consent-aware Commons aggregation, VIVC accounting and GENIEA tool/mission policy. These rules are not yet exposed through authenticated APIs or persistent services. No live bank connection, payment, sponsor/merchant integration, Commons marketplace, durable agent runtime, RAG engine, MAKOS UI, KRN runtime or Meta model gateway is claimed as working yet.
 
 ## Engineering memory — read first
 
-1. [`AGENTS.md`](AGENTS.md) — mandatory instructions for AI assistants and contributors.
-2. [`docs/PROJECT_MEMORY.md`](docs/PROJECT_MEMORY.md) — durable product and system memory.
-3. [`docs/PROJECT_STATUS.md`](docs/PROJECT_STATUS.md) — factual current state and blockers.
-4. [`docs/CODEBASE_MAP.md`](docs/CODEBASE_MAP.md) — code ownership and runtime flow.
-5. [`docs/FEATURE_CATALOG.md`](docs/FEATURE_CATALOG.md) — capability status ledger.
-6. [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) and [`docs/ENGINEERING_STANDARDS.md`](docs/ENGINEERING_STANDARDS.md) — design and quality rules.
-7. [`docs/HACKATHON_SCORECARD.md`](docs/HACKATHON_SCORECARD.md) — strategy against the judging criteria supplied by the team and current official references.
-8. [`docs/iterations/`](docs/iterations/) and [`docs/decisions/`](docs/decisions/) — iteration evidence and architecture decisions.
+1. [`docs/AWNNORA_CONTEXT_MAP.md`](docs/AWNNORA_CONTEXT_MAP.md) — canonical product, architecture and implementation context map.
+2. [`AGENTS.md`](AGENTS.md) — mandatory instructions for AI assistants and contributors.
+3. [`docs/PROJECT_MEMORY.md`](docs/PROJECT_MEMORY.md) — durable product and system memory.
+4. [`docs/PROJECT_STATUS.md`](docs/PROJECT_STATUS.md) — factual current state and blockers.
+5. [`docs/CODEBASE_MAP.md`](docs/CODEBASE_MAP.md) — code ownership and runtime flow.
+6. [`docs/FEATURE_CATALOG.md`](docs/FEATURE_CATALOG.md) — capability status ledger.
+7. [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) and [`docs/ENGINEERING_STANDARDS.md`](docs/ENGINEERING_STANDARDS.md) — design and quality rules.
+8. [`docs/HACKATHON_SCORECARD.md`](docs/HACKATHON_SCORECARD.md) — strategy against the judging criteria supplied by the team and current official references.
+9. [`docs/TURBO_PARALLEL_ENGINEERING.md`](docs/TURBO_PARALLEL_ENGINEERING.md) — active parallel engineering workstreams and integration gates.
+10. [`docs/iterations/`](docs/iterations/) and [`docs/decisions/`](docs/decisions/) — iteration evidence and architecture decisions.
 
 ## Requirements
 

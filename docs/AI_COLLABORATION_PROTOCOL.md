@@ -6,6 +6,8 @@ This document explains how future ChatGPT/AI engineering sessions must use GitHu
 
 Use `https://github.com/20233-CM-031/MyEconomy` as the shared source of truth. Chat messages explain intent and provide context, but source code, tests, decisions and repository memory documents determine what exists and what was decided.
 
+At the start of every engineering session, read `docs/AWNNORA_CONTEXT_MAP.md` first. The system identity is AwnNORA; preserve the separate roles of MAKOS (operational workspace), GENIEA (agent orchestration) and KRN (knowledge/relationship architecture).
+
 At the start of every engineering session:
 
 1. Read current repository metadata, default branch, branches and latest commits.
@@ -19,7 +21,7 @@ Do not assume the GitHub connector has write permission. If remote writes fail, 
 
 ## 2. Working model and terminology
 
-- Product/repository: MyEconomy (brand TBD).
+- Product: AwnNORA (confirmed). Repository/package implementation base: MyEconomy.
 - Product category: Personal Economic Agency & Collective Opportunity Intelligence.
 - Personal Mode: standalone first-day value, even for one user.
 - Commons Mode: consent-controlled collective demand/resource/opportunity coordination.

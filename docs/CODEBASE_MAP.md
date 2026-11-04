@@ -1,6 +1,7 @@
-# Codebase Map — Actual Source and Runtime Flow
+# AwnNORA Codebase Map — Actual Source and Runtime Flow
 
-**Map version:** 3.0 · **Last reconciled:** 2026-11-04
+**Map version:** 4.0 · **Last reconciled:** 2026-11-04
+**Canonical system map:** [`AWNNORA_CONTEXT_MAP.md`](AWNNORA_CONTEXT_MAP.md)
 This document describes files and symbols that exist in the repository now. Future architecture belongs in `ARCHITECTURE.md` and `PROJECT_MEMORY.md` until implemented.
 
 ## 1. Layer boundaries
@@ -50,8 +51,14 @@ Framework-independent financial ingestion types and rules:
 - `ConsentTerms`, `_CONSENT_TERMS`: user-facing versioned summaries and revocation notes.
 - `get_consent_terms`, `list_consent_terms`, `allowed_categories_for_purpose`, `required_recipient_type`: policy lookups.
 
+### `src/myeconomy/domain/economic_intelligence.py` — Iteration 03 local candidate
+Framework-independent economic/policy rules: `review_invoice(...)`, `evaluate_offer(...)`, `aggregate_consented_demand(...)`, `verified_individual_value_created(...)`, `transition_mission(...)` and `authorize_tool_execution(...)`. This module is unit-tested but not yet called by authenticated routes, application services or persistence adapters.
+
 ### `src/myeconomy/domain/errors.py`
 Stable application error classes and safe public codes/status: conflict (409), authentication (401), not found (404), authorization (403), invalid consent scope (422), consent required (403), invalid verification (400), rate limited (429), service unavailable (503).
+
+### `tests/test_economic_intelligence.py`
+23 focused tests cover invoice arithmetic/evidence/confidence, net offer value, consent/revocation/freshness/quorum, verified-value accounting, mission transitions and approval/environment gates.
 
 ## 4. Application layer
 

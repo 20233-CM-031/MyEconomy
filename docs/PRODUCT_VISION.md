@@ -1,4 +1,6 @@
-# Product Vision — Personal Economic Agency & Collective Opportunity Intelligence
+# AwnNORA Product Vision — Human Economic Intelligence
+
+Canonical architecture/context: [`AWNNORA_CONTEXT_MAP.md`](AWNNORA_CONTEXT_MAP.md)
 
 ## Mission
 Make individual people stronger from Day One. Give each person a private AI representative that helps protect their interests, recover value, discover opportunities, access resources, build income and enterprises. As participation grows, consent-controlled collective intelligence should unlock opportunities no individual could efficiently access alone.
@@ -26,7 +28,7 @@ A person must receive meaningful utility even when they are the only user and no
 4. **Resource Exchange:** match underused human and commercial capacity with verified demand—tutor hours, surplus produce, inventory, equipment, storage, transport, seats, spaces and services.
 5. **Crisis Shield:** identify pressure, prioritize essentials, find legitimate relief, locate new income paths and coordinate voluntary support with permission and human oversight.
 6. **Knowledge-to-Economic-Asset:** create a user-controlled capability graph and turn proven knowledge into paid or reciprocal services, teaching and consulting.
-7. **Economic Defence / MyBudget Shield:** assess suspicious messages, payment instructions, anomalous charges, hidden fees and contract risks. Show the evidence and uncertainty; never claim fraud certainty without proof.
+7. **Economic Defence / Guardian:** assess suspicious messages, payment instructions, anomalous charges, hidden fees and contract risks. Show the evidence and uncertainty; never claim fraud certainty without proof.
 8. **One-Person Enterprise Engine:** help users validate local demand, plan costs, create a catalogue/storefront, acquire customers and operate business workflows through authorized tools.
 
 ## Killer Move — Collective Economic Intelligence Network / Commons
@@ -80,6 +82,6 @@ The demo must explain today's working system and the full final vision without c
 
 Any non-live partners, simulated agents, synthetic users, projected revenue or hypothetical benefits must be labelled in the demo. Never imply a payment, claim, award or merchant offer occurred if it did not.
 
-## Brand Direction
+## Product Identity
 
-The final product name is not selected. `MyEconomy` is the repository and working project name only. The user wants a lively, modern, memorable and globally pronounceable name and has ruled out Sanskrit-derived and Christian/religiously coded naming directions. Do not assume Arabic-rooted naming is mandatory or treat any previously suggested name as approved. Complete collision, pronunciation, domain, app-store and trademark screening before final adoption.
+**AwnNORA** is the confirmed project/product name. `MyEconomy` is the existing implementation repository and Python package name only. `MAKOS` is the operational workspace, `GENIEA` is the agent orchestration system, and `KRN` is the knowledge and relationship architecture.

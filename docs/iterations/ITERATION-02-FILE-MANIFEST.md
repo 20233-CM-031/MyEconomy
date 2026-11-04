@@ -1,6 +1,6 @@
 # Iteration 02 File Manifest
 
-This manifest describes the exact changed files relative to merged Iteration 01 on `main` (`e25abcffb345fc0a6315114b04c18e8c57a026e6`). No existing files are deleted.
+This manifest records Iteration 02 changes relative to its development base (`e25abcffb345fc0a6315114b04c18e8c57a026e6`). Iteration 02 was merged as PR #2 into `main` at `a55cb388ef7baf72766e2fcabe89f0dee1c45979`; merged CI run `41801123405` passed Python 3.12, Python 3.13 and PostgreSQL 16. No existing files were deleted.
 
 | Repository path | Change | Responsibility / notable symbols | Verification |
 |---|---|---|---|
@@ -9,14 +9,14 @@ This manifest describes the exact changed files relative to merged Iteration 01 
 | `src/myeconomy/domain/errors.py` | Modified | Adds safe financial data validation and idempotency conflict application errors. | API status/error tests. |
 | `src/myeconomy/application/financial.py` | Added | Account ownership, active-account enforcement, atomic import, idempotency, provider-status reconciliation state machine, duplicate policy, persisted cashflow, obligation create/list, batch inspection. | `tests/test_financial_data.py`. |
 | `src/myeconomy/infrastructure/models.py` | Modified | Adds `FinancialAccount`, `TransactionImportBatch` (including `updated_count`), `FinancialTransaction`, `RecurringObligation` with owner/account/currency composite constraints. | `Base.metadata.create_all`, Alembic and API tests. |
-| `migrations/versions/f2e9c7a4d821_financial_data_plane.py` | Added | Four financial tables, batch insert/update counters, unique indexes, FK scope, CHECK constraints and transaction financial-fact immutability plus monotonic status-transition guards (SQLite/PostgreSQL). | SQLite upgrade/downgrade/re-upgrade and direct trigger test; PostgreSQL offline SQL generated, live CI pending. |
+| `migrations/versions/f2e9c7a4d821_financial_data_plane.py` | Added | Four financial tables, batch insert/update counters, unique indexes, FK scope, CHECK constraints and transaction financial-fact immutability plus monotonic status-transition guards (SQLite/PostgreSQL). | SQLite upgrade/downgrade/re-upgrade and direct trigger test; PostgreSQL 16 service-backed migration and audit checks passed in merged CI run `41801123405`. |
 | `src/myeconomy/api/financial_schemas.py` | Added | Strict Pydantic request/response DTOs; import response exposes `updated_count`. | Route tests/OpenAPI app startup. |
 | `src/myeconomy/api/financial_routes.py` | Added | Versioned account, import, batch, transaction, cashflow and obligation endpoints; streaming 2 MiB body guard; timestamps normalized to UTC across SQLite/PostgreSQL. | 56-test suite, including live FastAPI TestClient calls. |
 | `src/myeconomy/main.py` | Modified | Registers financial router and updates app version/description. | App/API tests. |
 | `tests/conftest.py` | Modified | Advances test Alembic marker to `f2e9c7a4d821` and installs SQLite test trigger for transaction immutability/status-transition lifecycle. | All tests. |
 | `tests/test_financial_data.py` | Added | Account, import semantics, idempotency, provider-reference conflict, atomic rejection, duplicate heuristic, owner isolation, upload limits, obligations, direct composite FK enforcement, status reconciliation, terminal-state rejection, direct database immutability, conflicting same-file provider states, conservative treatment and currency header guard. | 15 new tests; total suite 56 passed. |
 | `scripts/seed_synthetic_customer.py` | Added | Safe local loader for one synthetic persona into an existing verified user; counts actual inserts separately from idempotent replayed rows. | Two-run SQLite integration smoke with stable final row counts. |
-| `scripts/verify_postgres_audit.py` | Modified | Extends PostgreSQL migration verification to check allowed provider status progression and reject terminal-state reactivation. | Script compiles; live PostgreSQL 16 execution pending this branch's CI. |
+| `scripts/verify_postgres_audit.py` | Modified | Extends PostgreSQL migration verification to check allowed provider status progression and reject terminal-state reactivation. | Script compiles; PostgreSQL 16 checks passed in merged CI run `41801123405`. |
 | `README.md` | Modified | Current Iteration 02 scope and API routes. | Manual documentation review. |
 | `docs/PROJECT_MEMORY.md` | Modified | Durable implemented status updated through Iteration 02; future features remain clearly marked. | Cross-checked against source. |
 | `docs/PROJECT_STATUS.md` | Modified | Live Git state, CI, code state, tests, blockers and next objective reconciled. | GitHub read-only inspection + local tests. |
@@ -25,7 +25,7 @@ This manifest describes the exact changed files relative to merged Iteration 01 
 | `docs/SYNTHETIC_DEMO_DATASET.md` | Modified | Documents guarded one-person loader, conservative CSV classification and remaining fixture-only features. | Manual review. |
 | `docs/DEMO_PLAYBOOK.md` | Modified | Adds a live pending-to-posted reconciliation demonstration and safe unclassified-row behavior. | Matched to API and automated tests. |
 | `docs/HACKATHON_SCORECARD.md` | Modified | Updates technical-depth evidence against the judging rubric, with honest current feature boundaries. | Reconciled to implementation. |
-| `PUSH_TO_GITHUB.md` | Modified | Current main base, overlay application, validation, commit and PR instructions. | Manual command review; actual remote write remains owner-authenticated. |
+| `PUSH_TO_GITHUB.md` | Modified | Current main base, overlay application, validation, commit and PR instructions. | Manual command review; actual remote write was completed by merge PR #2; current Iteration 03 remote writes remain blocked by the app installation mismatch. |
 | `demo_data/synthetic_v1/README.md` | Modified | Adds reproducible loader instructions and replay semantics. | Manual review. |
 | `docs/FINANCIAL_DATA_CONTRACT.md` | Added | Normative monetary, transaction, import, ownership and cashflow rules. | Reconciled with domain/app/tests. |
 | `docs/decisions/ADR-0003-financial-data-plane.md` | Added | Records architectural choices and rejected alternatives. | Architecture review. |

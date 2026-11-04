@@ -4,7 +4,7 @@ This file is the entry point for anyone (including AI coding assistants) working
 
 ## Before making any change
 
-1. Read `README.md` and this file.
+1. Read `README.md`, `docs/AWNNORA_CONTEXT_MAP.md` and this file.
 2. Read `docs/PROJECT_MEMORY.md`, `docs/PROJECT_STATUS.md`, `docs/FEATURE_CATALOG.md`, and `docs/CODEBASE_MAP.md`.
 3. Read `docs/THREAT_MODEL.md` and `docs/HACKATHON_SCORECARD.md`, then the relevant feature specification, latest iteration record, engineering standard, and ADRs.
 4. Inspect the current Git branch, working tree, commit history, and the exact source files to be changed. Never assume a previous chat summary reflects the current repository state.
@@ -12,9 +12,8 @@ This file is the entry point for anyone (including AI coding assistants) working
 
 ## Product and brand constraints
 
-- The product's final brand name is **not selected**. `MyEconomy` is the repository/internal project name only.
-- Do not treat AWNORA or any other prior suggestion as approved. The user has not confirmed a final brand.
-- Any future name must feel lively, modern, memorable and globally pronounceable. Do not propose Sanskrit-derived or Christian/religiously coded names. Do not presume that Arabic-derived naming is automatically desired; present it only as an optional creative direction if relevant.
+- **AwnNORA** is the confirmed project/product name for the Meta Global AI Hackathon. Preserve this exact casing.
+- `MyEconomy` is the existing repository and Python package implementation base; it is not a competing product name. Do not revert the project identity to MyEconomy or suggest replacement names unless the user explicitly reopens naming.
 - The product vision is broader than budgeting or fintech: individual economic agency, protection, opportunity, enterprise enablement and consent-based collective economic intelligence.
 
 ## Engineering rules
@@ -57,7 +56,7 @@ Never claim a file was pushed, a partner was contacted, a payment occurred, or a
 
 ## Long-term project context
 
-Use `docs/PROJECT_MEMORY.md` as the high-level durable product and engineering memory. Use `docs/CODEBASE_MAP.md` for line-of-responsibility and runtime flow. Use `docs/FEATURE_CATALOG.md` as the implementation-status ledger. Use `docs/PROJECT_STATUS.md` for the current factual state. These documents must be kept synchronized with actual code.
+Use `docs/AWNNORA_CONTEXT_MAP.md` as the canonical product/system context map and `docs/PROJECT_MEMORY.md` as the detailed durable product and engineering memory. Use `docs/CODEBASE_MAP.md` for line-of-responsibility and runtime flow. Use `docs/FEATURE_CATALOG.md` as the implementation-status ledger. Use `docs/PROJECT_STATUS.md` for the current factual state. These documents must be kept synchronized with actual code.
 
 ## Synthetic fixtures and demos
 

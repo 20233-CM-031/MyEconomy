@@ -1,24 +1,30 @@
-# Push Iteration 02 — Financial Data Plane v1
+# Apply and Push — AwnNORA Iteration 03
 
 Repository: `https://github.com/20233-CM-031/MyEconomy`
-Confirmed base: `main` at merged Iteration 01 commit `e25abcffb345fc0a6315114b04c18e8c57a026e6` (2026-11-03).
-Suggested branch: `iteration/02-financial-data-plane`.
+Product: **AwnNORA**
+Verified base: `main` at `a55cb388ef7baf72766e2fcabe89f0dee1c45979` (PR #2 merged).
+Suggested branch: `iteration/03-guardian-evidence-kernel`.
 
-## 1. Start from the latest main
+## 1. Start from the current remote base
 
 ```powershell
 git clone https://github.com/20233-CM-031/MyEconomy.git
 cd MyEconomy
-git switch -c iteration/02-financial-data-plane
+git fetch origin
+git switch main
+git pull --ff-only origin main
+git switch -c iteration/03-guardian-evidence-kernel
 ```
 
-Do not branch from the now-merged/stale `iteration/01-trust-and-synthetic-demo-data` branch. PR #1 is already merged into `main`.
+Verify that `git rev-parse HEAD` matches the current remote `main` before applying this overlay. If `main` has advanced, use the latest `origin/main` and rerun the entire test suite.
 
-## 2. Apply the Iteration 02 overlay
+## 2. Apply the overlay
 
-Extract `MyEconomy_Iteration_02_Overlay.zip` into the repository root, preserving directory paths and allowing the listed updated files to be replaced. It contains only Iteration 02 additions/updates, not a replacement copy of the whole repository.
+Extract `AwnNORA_Iteration_03_Overlay.zip` into the repository root, preserving paths and allowing the listed files to be replaced. The overlay contains only Iteration 03 additions/updates; it is not a replacement for the complete project.
 
-## 3. Validate before committing
+Alternatively, copy the individual files from the download package to their exact repository-relative paths. Do not copy local databases, `.env` files, caches or Python bytecode.
+
+## 3. Validate
 
 ```powershell
 python -m venv .venv
@@ -26,29 +32,34 @@ python -m venv .venv
 python -m pip install -e ".[dev]"
 alembic upgrade head
 pytest -q
-ruff check src tests scripts
-ruff format --check src tests scripts
+ruff check src tests migrations scripts
+ruff format --check src tests migrations scripts
 python -m compileall -q src tests migrations scripts
 python demo_data/synthetic_v1/validate_dataset.py
 git diff --check
 git status --short
 ```
 
-The expected local pytest result for this delivery is `56 passed`. Ruff was not installed in the isolated build environment; run it on your machine and rely on the branch CI result before merge. The new migration also needs the PostgreSQL 16 CI job to pass.
+Expected local test total for this source snapshot: **79 passed**. Also run the CI matrix on Python 3.12, Python 3.13 and PostgreSQL 16. Ruff is not installed in the assistant's isolated environment, so do not treat Ruff as passed until you run it. PostgreSQL should be rerun on the feature branch even though Iteration 02's migration passed its merged CI.
 
-## 4. Commit and push
+## 4. Inspect and push
 
 ```powershell
-git add -A
-git commit -m "feat: add owner-scoped financial data plane"
-git push -u origin iteration/02-financial-data-plane
+git add AGENTS.md README.md PUSH_TO_GITHUB.md src/myeconomy/domain/economic_intelligence.py tests/test_economic_intelligence.py docs
+git commit -m "feat: add AwnNORA economic intelligence kernel"
+git push -u origin iteration/03-guardian-evidence-kernel
 ```
 
-Then open a Pull Request into `main`. Review the code diff, migration, tests, Ruff output and PostgreSQL job before merging. Do not force push.
+Open a Pull Request into `main`. Review the domain/API boundary carefully: Iteration 03 is currently a pure domain kernel and its rules are not yet wired to authenticated routes, storage, Meta model extraction or MAKOS UI. Do not merge based on test count alone.
 
-## 5. Safety
+## 5. GitHub connection issue (assistant-side)
 
-- Never include `.env`, credentials, live financial information or local DB files.
-- The dataset is synthetic. Keep `SYNTHETIC_FIXTURE` labels and run the seed script only in `development`, `test` or `demo` environments.
-- The synthetic loader requires an existing verified local account and does not create fake login identities.
-- The GitHub integration used for assistant-side inspection returned HTTP 403 for branch creation, so the owner must push with an authenticated Git client.
+The assistant's GitHub connection currently authenticates as `20233-CM-031`, but the GitHub App installation is attached to `kareem1207` and its visible repository list excludes `20233-CM-031/MyEconomy`. Branch creation returned HTTP 403 `Resource not accessible by integration`. This guide uses the user's own authenticated Git client; no personal access token should be pasted into chat.
+
+## 6. Safety
+
+- Never commit `.env`, credentials, live financial records, local database files or private document contents.
+- Keep all sample users/records labelled synthetic.
+- Personal information is private by default; Commons requires separate purpose-specific consent.
+- An invoice finding is not proof of fraud or legal violation. A proposed action is not submitted until a real integration and explicit approval exist.
+- VIVC excludes synthetic, estimated, attempted and unverified value.

@@ -1,9 +1,9 @@
 # Iteration 02 — Financial Data Plane v1
 
 **Date:** 2026-11-04
-**Status:** Implemented locally; 56 tests pass; remote push pending owner Git client because connector branch creation returned 403.
-**Base:** Current `main` at `e25abcffb345fc0a6315114b04c18e8c57a026e6` (merged Iteration 01 PR #1).
-**Intended branch:** `iteration/02-financial-data-plane`.
+**Status:** Merged into `main` through PR #2 on 2026-11-04; 56 local tests passed and the merged GitHub Actions run passed Python 3.12, Python 3.13 and PostgreSQL 16 jobs.
+**Development base:** `e25abcffb345fc0a6315114b04c18e8c57a026e6` (merged Iteration 01 PR #1).
+**Merged branch:** `iteration/02-financial-data-plane` → PR #2 → `main` at `a55cb388ef7baf72766e2fcabe89f0dee1c45979`.
 
 ## 1. Problem
 
@@ -89,7 +89,7 @@ Local SQLite smoke evidence: first seed created 2 accounts, inserted 91 transact
 - `PYTHONPATH=src pytest -q`: **56 passed** (including provider `PENDING -> POSTED`, prohibited reactivation after reversal, conflicting same-file provider states, safe unclassified-default behavior, INR header/account currency enforcement, timezone normalization and financial-fact immutability).
 - `python -m compileall -q src tests migrations scripts`: passed.
 - SQLite migration: upgrade to head, downgrade to base, upgrade to head: passed, including transaction immutability/status-transition guard lifecycle up/down.
-- PostgreSQL offline migration SQL generation passed and emitted the transaction immutability/status guard function/trigger; live PostgreSQL 16 execution is pending this branch's CI.
+- PostgreSQL offline migration SQL generation passed and emitted the transaction immutability/status guard function/trigger; live PostgreSQL 16 execution subsequently passed in merged main CI run `41801123405`.
 - Dataset independent validator: passed locally and added as a required step to both Python-version CI jobs.
 - Synthetic seed: first run created 2 accounts, 91 transactions and 5 obligations; replay run created 0 new rows, reported 2 idempotent import-batch replays / 91 historical rows and reused 5 obligations. Final counts remained 2 accounts, 91 transactions, 5 obligations and 2 batches.
 - Ruff: unavailable in the isolated local runtime; result is unverified. Must be run in GitHub Actions after push.
@@ -123,7 +123,7 @@ Iteration 03 should turn the durable personal financial substrate into a user-vi
 - Re-ran `PYTHONPATH=src pytest -q`: **56 passed**.
 - Re-ran `PYTHONPATH=src python -m compileall -q src tests migrations scripts`: passed.
 - Re-ran SQLite Alembic `upgrade head -> downgrade base -> upgrade head` against a fresh temporary database: passed, including guard creation/removal/recreation.
-- Re-generated PostgreSQL offline migration SQL and confirmed the financial transaction immutability/status guard function and trigger are present. This is SQL-generation evidence only; live PostgreSQL 16 execution of the Iteration 02 migration remains pending its GitHub Actions branch run.
+- Re-generated PostgreSQL offline migration SQL and confirmed the financial transaction immutability/status guard function and trigger are present. This is SQL-generation evidence only; live PostgreSQL 16 execution subsequently passed in merged main CI run `41801123405` on 2026-11-04.
 - Re-ran the synthetic dataset independent validator: all checks passed across 42 entity tables / 17,425 rows / 12 multimodal documents.
 - Re-ran the one-person synthetic seed against a fresh temporary SQLite database: first run created 2 accounts, inserted 91 transactions and created 5 obligations; second run inserted 0 and updated 0 transactions, replayed 2 batches / 91 historical rows and reused 5 obligations. Final counts remained 2 accounts, 91 transactions, 5 obligations and 2 import batches.
 - Ruff was not available in this isolated runtime; rely on local Ruff and the new branch CI before merge.
