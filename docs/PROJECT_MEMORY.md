@@ -2,8 +2,8 @@
 
 > **Purpose:** Durable project context for future engineering sessions, contributors and AI coding assistants. This is the canonical high-level memory of the product's intent, architecture, constraints and decisions. It must be updated when decisions or capabilities change.
 >
-> **Last reconciled with source tree:** 2026-11-03.
-> **Current code delivery:** Iteration 00 — deterministic cashflow API foundation.
+> **Last reconciled with source tree:** 2026-11-04.
+> **Current code delivery:** Iterations 00–02 — cashflow, identity/consent trust foundation and owner-scoped financial data plane.
 > **Product brand:** Not selected. Repository remains `MyEconomy`.
 
 ## 1. One-sentence definition
@@ -48,7 +48,7 @@ The network must not reveal raw financial transactions, exact personal circumsta
 
 ## 4. Full feature catalogue — the eight opportunity pillars
 
-These are product pillars, not claims that Iteration 00 has implemented them.
+These are product pillars, not claims that the current codebase has implemented all of them.
 
 ### 4.1 Personal AI Representative / Guardian
 
@@ -181,26 +181,33 @@ The final product name is **not selected**. `MyEconomy` is the repository and wo
 
 ## 14. What is implemented today (reconcile with PROJECT_STATUS.md)
 
-The current local source tree contains the following tested foundation:
+### Iteration 00 — deterministic calculation foundation
+- Python 3.12/3.13 FastAPI application with Pydantic contracts and health/readiness.
+- Pure `Decimal` cashflow calculation over caller-supplied entries, using a curated currency precision registry.
 
-### Iteration 00
-- Python 3.12/3.13 package, FastAPI composition root, Pydantic schemas, health/readiness endpoints.
-- Pure `Decimal` money and cashflow calculation over caller-supplied request data; curated currency precision registry.
-- Cashflow income/expense/net/essential/discretionary/category calculation and API validation.
+### Iteration 01 — identity, household trust and consent
+- SQLAlchemy/Alembic persistence for users, email challenges, opaque sessions, households, invitations, consent grants and audit events.
+- Argon2id password hashes, digest-only session/verification tokens, verified-email gates, owner-only invitation controls and revocation.
+- Purpose/category/recipient-specific consent; Commons and research cannot request raw transaction/contact/evidence categories.
+- Append-only audit events protected at ORM and database-trigger layers.
 
-### Iteration 01
-- SQLAlchemy 2 persistence models and Alembic migrations for users, hashed bearer sessions, email verification challenges, households, memberships, invitations, consent grants and audit events.
-- Argon2 password hashing; 12-hour opaque sessions with hash-only storage and logout revocation.
-- Single-use email verification challenge with hash-only storage, 24-hour expiry, prior challenge revocation and 60-second resend cooldown. Development log mail is allowed only under `APP_ENV=development|test`; SMTP adapter exists but has not been tested with a live provider.
-- Household and consent endpoints require verified email ownership. Household invitations are owner-issued, 72-hour, single-use, email-bound and manually delivered (`manual_share_required`).
-- Membership is separate from consent. Member list omits member email. Consent binds subject, purpose, data categories, recipient, terms version and expiry; revocation is immediately reflected in checks.
-- Commons/research purposes do not permit raw transaction, contact or support evidence categories.
-- Audit rows have ORM and SQLite/PostgreSQL database-trigger immutability controls.
-- `require_active_consent` is available for future data readers, but no private financial data reader is implemented yet.
+### Iteration 02 — financial data plane v1
+- Persisted user-owned financial account metadata, import batches, transactions and recurring obligations.
+- Monetary storage as integer minor units (`BIGINT`) plus currency code. No float arithmetic and no cross-currency aggregation or implicit FX.
+- Composite database constraints bind each transaction/import/obligation to the same account owner; transaction and obligation currencies must match the linked account.
+- Bounded 2 MiB / 10,000-row CSV ingestion; strict UTF-8/header/date/Decimal/direction/treatment/status/category checks; 32-column cap; unknown header columns tolerated, duplicate normalized header names rejected.
+- Import provenance: byte-level SHA-256 source hash, sanitized filename, owner-scoped idempotency key, batch state/counters, validation errors and audit events. Original uploaded file bytes are never retained.
+- Provider external references are unique per owner/account. Same reference + same financial fingerprint is skipped only when lifecycle state is unchanged; same reference + changed economic content rejects the batch atomically. Provider state can progress only through audited monotonic transitions (`PENDING -> POSTED|REVERSED|VOID`, `POSTED -> REVERSED|VOID`); terminal states cannot be reactivated. SQLite/PostgreSQL database guards enforce financial-fact immutability and the monotonic provider status state machine in addition to application logic. Only a missing `posted_at` value may be filled; existing transaction facts cannot be rewritten.
+- A missing `cashflow_treatment` is conservatively stored as `IGNORE`, not inferred from CREDIT/DEBIT alone; `amount_inr` cannot be imported into a non-INR account.
+- Similar rows without a provider reference are preserved and linked as possible duplicates rather than silently dropped; they require review.
+- Only `POSTED` records are included in persisted cashflow. `PENDING`, `REVERSED` and `VOID` are excluded. `TRANSFER`/`IGNORE` do not affect income/expense. `REFUND` offsets expenses, not income. The displayed ratio is named `net_cashflow_to_income_percent`, not verified savings.
+- Account, transaction, import-batch and recurring-obligation APIs are owner-scoped. Non-owner access returns 404. Household membership is not used as a financial-data permission.
+- `scripts/seed_synthetic_customer.py` loads one synthetic persona into an existing, active, verified local user only; it refuses production mode, creates no fake login identity and uses deterministic idempotency/source IDs.
 
-At the latest local verification, 41 tests passed, Python compilation passed, `git diff --check` passed, SQLite migrations passed upgrade/downgrade/upgrade, PostgreSQL offline migration SQL generated successfully, and a live local Uvicorn HTTP smoke passed for the complete registration/email-verification/household-invitation/consent-grant/revocation/logout journey using two synthetic accounts and the development-only mail adapter. Ruff is configured but not verified in the current runtime. SMTP and live PostgreSQL remain unverified; a PostgreSQL 16 GitHub Actions migration/trigger job has been added but awaits its first run. See `docs/PROJECT_STATUS.md` for exact boundaries.
+The Iteration 02 CSV/API flows are implemented and tested in local SQLite. PostgreSQL migration/runtime behavior has been verified for the merged Iteration 01 schema via the main-branch CI run; Iteration 02's new PostgreSQL migration SQL is generated offline locally but has **not** yet run in a live PostgreSQL 16 service job because this iteration is not yet pushed. Do not mark the new financial data plane as PostgreSQL-runtime-tested until its own CI completes.
 
-Not implemented yet: personal transaction persistence/import, bank integrations, budget goals/forecast, Power Discovery workflow, Guardian, benefits/opportunity/resource/enterprise workflows, Commons aggregator/anti-inference, offer optimizer, VIVC outcome ledger, sponsor revenue/payout, RAG/knowledge graph runtime, durable agent missions/checkpoints, Meta model gateway, real partner integrations or production deployment. The target architecture and feature catalogue must never be confused with implemented code.
+### Still designed / not yet implemented
+No live bank aggregator, official bank-data consent integration, statement provider connectors, encrypted document vault, category-learning service, budgets/goals/forecast engine, benefits rules catalogue, Guardian claims flow, opportunity marketplace, resource exchange, crisis workflows, enterprise operations, Commons aggregation engine/anti-inference controls, offer optimizer, VIVC evidence ledger, partner commission/payout engine, RAG, graph runtime, durable agent/checkpoint engine, Meta model gateway or production deployment exists yet. Synthetic records for these future capabilities remain fixtures only. Use `docs/FEATURE_CATALOG.md` and `docs/PROJECT_STATUS.md` as the status authority.
 
 ## 15. Hackathon judging and model policy context
 

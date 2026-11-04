@@ -76,10 +76,24 @@ The already included PDFs/PNGs and SQLite database are ready for use; generation
 
 ## Money semantics
 
-Money values in CSV/JSON/JSONL/SQL fixtures are decimal strings. Use `Decimal` or integer minor units; never IEEE-754 binary floating point. Transactions distinguish income, expense, refund, transfer and ignored movements to avoid double-counting. Loan schedules are amortization fixtures. Offer net value is:
+Money values in CSV/JSON/JSONL/SQL fixtures are decimal strings. Use `Decimal` or integer minor units; never IEEE-754 binary floating point. Transactions distinguish income, expense, refund, transfer and ignored movements to avoid double-counting. The runtime CSV importer defaults missing treatment to `IGNORE`; it does not infer income/expense from debit/credit direction alone. Loan schedules are amortization fixtures. Offer net value is:
 
 `discount + sponsor credit - incremental spend - fees - recurring commitment cost`
 
 ## Honest demo rule
 
 Show actual software behavior against deterministic fixtures. Label each fixture and every simulated external response. Do not claim that a refund, scholarship, provider quote, sponsor credit, job, order, loan, payment or payout happened in the real world unless an external authoritative system independently confirms it.
+
+
+## Loading one synthetic persona into the application (Iteration 02)
+
+The dataset remains a fixture corpus. Iteration 02 adds a guarded adapter to load **one** synthetic persona into an already-existing verified local application user, so the real API/database/domain logic can be exercised without inventing fake login identities.
+
+```powershell
+$env:APP_ENV = "demo"
+python scripts/seed_synthetic_customer.py --user-email "your-existing-verified-local-account@example.invalid" --customer-id CUS00001
+```
+
+The user must already exist in the local database and have verified email. The loader rejects production mode, checks fixture labels, creates/reuses source-linked synthetic financial accounts, imports that persona's transaction CSV through the same application use case/API rules, and inserts recurring obligations with stable fixture source IDs. Its second run is idempotent: import-batch replays are reported separately from new inserts, so replayed historical row counts are not misreported as newly inserted. The seeded data remains synthetic and must never reach real banks, payment rails, provider systems, or actual customer-facing analytics.
+
+The seed loader currently covers accounts, transactions and recurring obligations only. Bills, loan schedules, benefits, opportunities, Guardian, Commons, resource-exchange and agent mission fixtures remain in their dataset exports until their corresponding runtime services are implemented.

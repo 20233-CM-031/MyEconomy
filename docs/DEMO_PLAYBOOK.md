@@ -90,3 +90,18 @@ Do not imply that an insurance claim, tax filing, benefit application, business 
 3. Show exact deterministic calculations, access control, event-time consent and checkpointed agent execution (technical depth).
 4. Add five-person Commons quorum and reject an economically bad offer (demo differentiation).
 5. Close by distinguishing the capabilities running today, fixture simulations and the future live integrations.
+
+## Persisted financial data — one-person foundation (Iteration 02)
+
+This scenario proves that the financial data is not merely displayed from a static mock. It is imported through the actual authenticated API/application/domain/database path.
+
+1. Start the app with migrations applied and an existing local user whose email is verified.
+2. Set `APP_ENV=demo` and run `python scripts/seed_synthetic_customer.py --user-email <existing-verified-local-user> --customer-id CUS00001`.
+3. Show the two user-owned synthetic accounts and their persisted transaction records.
+4. Query `/api/v1/financial/cashflow` for a date range and one currency. Explain that only POSTED entries count; refunds offset expenses; transfers/ignore/pending are handled separately.
+5. Run the loader again and demonstrate idempotency: accounts/obligations are reused and the same import batches replay without adding duplicate rows.
+6. Show a rejected statement row and an external-reference conflict in a separate test persona/account; the rejected batch inserts zero transaction rows.
+7. Import a transaction as `PENDING`, then import the same provider reference as `POSTED`; show `updated_count=1`, the audit event and the new cashflow effect. Attempt to reactivate a `REVERSED` transaction and show the application and database trigger reject it.
+8. Upload a statement without a treatment column and show the credit is stored as `IGNORE`, not falsely counted as salary. A user-reviewed classification workflow is a later iteration.
+
+The person whose existing verified local account is used is a demo operator identity, while `CUS00001` remains a synthetic fixture persona. No synthetic user login is created. This demonstrates local functional behavior only; no real bank connection or externally verified financial outcome is claimed.

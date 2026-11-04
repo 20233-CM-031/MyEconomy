@@ -21,6 +21,8 @@ jobs:
       - run: ruff check src tests scripts
       - run: ruff format --check src tests scripts
       - run: PYTHONPATH=src pytest -q
+      - name: Validate synthetic economic demo corpus
+        run: python demo_data/synthetic_v1/validate_dataset.py
       - name: Verify SQLite migration upgrade and rollback
         env:
           DATABASE_URL: sqlite:////tmp/myeconomy-ci.db

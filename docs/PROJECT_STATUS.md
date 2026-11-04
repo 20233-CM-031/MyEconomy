@@ -1,157 +1,107 @@
 # Project Status
 
-**Last reconciled:** 2026-11-03
+**Last reconciled:** 2026-11-04
 **Repository:** `20233-CM-031/MyEconomy`
-**Remote default branch observed:** `main`
-**Local branch:** `iteration/01-trust-foundation`
-**Latest implementation commit:** `8b7523f` (`feat: add identity and consent trust foundation`) — local only, not pushed.
-**Brand:** Not selected (`MyEconomy` remains repository/internal name).
+**Remote default branch:** `main`
+**Remote `main` HEAD:** `e25abcffb345fc0a6315114b04c18e8c57a026e6` — merge of PR #1, `iteration/01-trust-and-synthetic-demo-data`
+**Iteration 01 branch HEAD:** `baade0b3c920ad325d011de2e41eefb81d8dda57` (now one commit behind `main` because PR #1 was merged)
+**Current delivery:** Iteration 02 — Financial Data Plane v1 (prepared locally; not yet pushed)
+**Intended next branch:** `iteration/02-financial-data-plane`
+**Product brand:** Not selected. `MyEconomy` remains repository/internal project name.
 
-## 1. Remote and local repository state
+## 1. Live GitHub state (verified 2026-11-04)
 
-The live GitHub repository was re-read during this iteration. The default branch is `main`; its current head is `6a1b57e66536d54fe4cc96f05924d5baf868593a` (`feat: initialize MyEconomy iteration 00 foundation with memory and cashflow slice`). The remote contains the complete Iteration 00 source tree and memory documents, not merely a README. The inspected cashflow domain and API source contracts match the local Iteration 00 baseline. Two useful remote-baseline details were preserved in this branch: the `pythonpath = ["src"]` pytest setting and the more complete Python `.gitignore` (including `.env.*` handling); this branch also adds `*.sqlite3` and `*.db` exclusions. The remote currently has `main`; `.github/workflows/ci.yml` was not present on remote `main`, so this iteration adds it.
+The repository was re-read after the owner updated GitHub. PR #1 merged successfully into `main` at `e25abcffb345fc0a6315114b04c18e8c57a026e6`. `main` is one commit ahead of the old Iteration 01 feature branch, with no code divergence indicated by the merge comparison. The merged main CI run `41701730347` completed successfully:
 
-The local implementation is on branch `iteration/01-trust-foundation`. Its latest local commits are:
+- `tests (3.12)`: Ruff lint, Ruff format, pytest and SQLite migration upgrade/downgrade all passed.
+- `tests (3.13)`: Ruff lint, Ruff format, pytest and SQLite migration upgrade/downgrade all passed.
+- `postgres-migrations`: PostgreSQL 16 service-backed Alembic upgrade, audit-trigger verification, downgrade and re-upgrade passed.
 
-```text
-a30bed2 docs: finalize iteration 01 delivery and verification
-27dc076 docs: clarify safe archive overlay and Git workflow
-21ec0d7 docs: record remote-specific file reconciliation
-51a37ad docs: record reconciled remote baseline in delivery guide
-061d899 chore: reconcile Iteration 01 with live GitHub baseline
-7708ce8 docs: add safe iteration 01 GitHub push guide
-aba8c0c docs: record iteration 01 delivery state
-8b7523f feat: add identity and consent trust foundation
-f5a1071 docs: add durable project memory and codebase map
-e5a4790 feat: establish engineering foundation and deterministic cashflow API
-6feb028 chore: mirror remote repository baseline
-```
+The Iteration 02 working copy was reconciled against the merged Iteration 01 tree. Do not use the old feature branch as the new base; create the next branch from current `main`.
 
-The local branch was built in an isolated assistant workspace from a mirror of the initial Iteration 00 tree. Its commits are not assumed to be descendants of the live remote `main` commit. The delivery guide therefore uses a safe file overlay onto a fresh clone of the confirmed remote `main`, rather than recommending a blind push of this local history.
+The connected GitHub integration can read this repository, but its branch-creation request returned HTTP 403 (`Resource not accessible by integration`). Therefore Iteration 02 is not pushed, no remote branch is claimed, and no remote commit exists for this delivery. The archive/overlay and exact Git commands are provided for the owner's authenticated Git client.
 
-These commits are **not pushed**. Earlier connector attempts to create a remote branch or write files returned HTTP 403. The current GitHub main head was confirmed read-only using the GitHub connector; write permission remains blocked. The full source archive and push guide are provided for an authenticated local Git client. Never assume a local branch/commit was pushed.
+## 2. Implemented capabilities
 
-## 2. Implemented and tested
+### Iteration 00 — deterministic cashflow foundation
 
-### Iteration 00 — Deterministic cashflow API
+- Python 3.12/3.13 FastAPI application with Pydantic contracts, health and readiness.
+- Framework-independent `Decimal` money/cashflow calculation over caller-supplied request entries.
+- Curated currency precision registry; no FX conversion.
 
-- Python package for Python 3.12/3.13.
-- FastAPI composition root, Pydantic request/response models and health/readiness endpoints.
-- Framework-independent `Decimal` money and cashflow calculation domain.
-- Static, curated currency precision registry; not claimed to be a full current ISO 4217 registry.
-- Period validation, income/expense aggregation, essential/discretionary totals, category totals and net-cashflow-to-income percentage.
-- `POST /api/v1/cashflow/analyze` calculates only over request data; no transaction ingestion or persistence.
+### Iteration 01 — identity, household trust and consent
 
-### Iteration 01 — Identity, email verification, household and consent trust foundation
+- SQLAlchemy/Alembic persistence for users, verification challenges, opaque sessions, households, invitations, consent grants and audit events.
+- Argon2id password hashing, digest-only bearer and email-verification tokens, verified-email gates, invitation expiry/revocation and consent lifecycle.
+- Append-only audit events protected at ORM and database-trigger layers.
+- Merged into `main` through PR #1. The merged GitHub Actions run passed Python 3.12/3.13 and PostgreSQL 16 migration/audit verification.
 
-- SQLAlchemy 2 persistence models with Alembic migrations.
-- SQLite local runtime and PostgreSQL dialect/migration support; PostgreSQL migration SQL was compiled offline but no live PostgreSQL server was available for runtime integration tests.
-- Argon2 password hashing; generic failed-login response and dummy-hash path for unknown users.
-- 256-bit opaque bearer sessions with digest-only storage, 12-hour expiry and immediate logout revocation.
-- Email verification challenges: 256-bit opaque tokens, digest-only storage, one-time consumption, 24-hour expiry, previous-pending-token revocation and 60-second resend cooldown.
-- Development-only log email adapter (only with `APP_ENV=development|test`) and configurable SMTP adapter. SMTP has not yet been exercised with a real provider.
-- Unverified accounts cannot create/list household resources or grant/list/check/revoke consent; `/auth/me` and verification resend remain available.
-- Household owner/member tables, owner-only invitation/revocation, 72-hour expiry, single-use invite acceptance and matching verified account email.
-- Invitation token remains manually delivered in current iteration; API explicitly reports `manual_share_required`.
-- Household member listing omits email address; membership alone never grants access to private/financial data.
-- Purpose/category/recipient-specific consent grants with versioned terms, 90-day default expiry, 365-day maximum and immediate revocation.
-- Commons and research purposes explicitly disallow raw transaction records, contact information and sensitive evidence categories.
-- Audit events are append-only in ORM and SQLite/PostgreSQL trigger layer; audit actor/household UUIDs are pseudonymous references without foreign keys to support future deletion semantics.
-- Stable application error envelope and DB+migration-aware readiness endpoint.
+### Iteration 02 — financial data plane v1 (local implementation, 2026-11-04)
 
-## 3. Live API routes
+- Owner-scoped financial account metadata, transaction import batches, persisted transaction ledger and recurring obligations.
+- Money stored as integer minor units (`BIGINT`) with currency code. Transaction and obligation currencies are constrained to their linked account by composite foreign keys; no implicit FX.
+- CSV upload is streamed with a 2 MiB bound; the domain parser caps 10,000 data rows and 32 columns, requires UTF-8, rejects duplicate normalized headers and validates dates, currency, Decimal precision, direction, treatment, status, essential flag and lengths.
+- Import batches store SHA-256, sanitized filename, owner-scoped idempotency key, counts and validation errors. Uploaded CSV bytes are not retained.
+- Import is atomic: invalid rows or changed content behind an existing external reference reject the entire batch and insert zero transaction rows.
+- Exact repeated provider references in the same lifecycle state are skipped. Similar transactions without an external reference are retained and flagged as possible duplicates, not silently discarded.
+- Provider lifecycle changes are reconciled monotonically for the same financial fingerprint: `PENDING -> POSTED|REVERSED|VOID` and `POSTED -> REVERSED|VOID`. Terminal `REVERSED`/`VOID` records cannot be reactivated. Batch `updated_count` and per-transaction audit events distinguish status reconciliation from inserts and duplicates; application checks plus SQLite/PostgreSQL database guards enforce financial-fact immutability and the monotonic transition graph.
+- Cashflow includes only `POSTED`: `INCOME` credit adds income; `EXPENSE` debit adds gross expense; `REFUND` credit offsets expense, not income; `TRANSFER` and `IGNORE` do not affect income/expense. If CSV treatment is missing, default to `IGNORE` rather than assuming credits are income or debits are expenses. `amount_inr` is rejected for non-INR accounts. Pending/reversed/void are excluded. Output names its ratio `net_cashflow_to_income_percent`, not savings.
+- Verified account/transaction/import/obligation APIs return 404 for non-owner lookups. Household membership does not grant transaction access.
+- Local-only synthetic seeder loads one fixture persona into an existing active, verified local user; it refuses production and never creates a fake login identity.
 
-### Cashflow
-- `POST /api/v1/cashflow/analyze`
+## 3. API routes added in Iteration 02
 
-### Identity
-- `POST /api/v1/auth/register`
-- `POST /api/v1/auth/verify-email`
-- `POST /api/v1/auth/verification/resend`
-- `POST /api/v1/auth/login`
-- `POST /api/v1/auth/logout`
-- `GET /api/v1/auth/me`
+- `POST /api/v1/financial/accounts`
+- `GET /api/v1/financial/accounts`
+- `POST /api/v1/financial/accounts/{account_id}/imports/csv` (`Idempotency-Key` required)
+- `GET /api/v1/financial/imports/{batch_id}`
+- `GET /api/v1/financial/accounts/{account_id}/transactions?limit=&offset=`
+- `GET /api/v1/financial/cashflow?period_start=&period_end=&currency=`
+- `POST /api/v1/financial/obligations`
+- `GET /api/v1/financial/obligations`
 
-### Household
-- `POST /api/v1/households`
-- `GET /api/v1/households`
-- `POST /api/v1/households/{household_id}/invitations`
-- `POST /api/v1/household-invitations/accept`
-- `POST /api/v1/household-invitations/{invitation_id}/revoke`
-- `GET /api/v1/households/{household_id}/members`
+Every route requires verified authentication. These are owner-personal endpoints. No household or Commons data-sharing read path is implemented.
 
-### Consent
-- `GET /api/v1/consents/terms` (public, read-only terms)
-- `POST /api/v1/consents`
-- `GET /api/v1/consents`
-- `POST /api/v1/consents/{consent_id}/revoke`
-- `GET /api/v1/consents/check` (informational only; not a replacement for server-side enforcement)
+## 4. Iteration 02 verification record
 
-### Health
-- `GET /health/live`
-- `GET /health/ready` (database plus applied migration marker)
+Local checks on the Iteration 02 source tree:
 
-## 4. Verification record for current source
-
-Most recent local verification after Iteration 01 updates:
-- `PYTHONPATH=src pytest -q`: **41 passed**.
+- `PYTHONPATH=src pytest -q`: **56 passed**.
 - `python -m compileall -q src tests migrations scripts`: passed.
-- `git diff --check`: passed.
-- CI now defines a PostgreSQL 16 service job to run Alembic upgrade/downgrade/re-upgrade and execute `scripts/verify_postgres_audit.py`; this workflow has been added but has not yet run on GitHub.
-- SQLite Alembic `upgrade head -> downgrade base -> upgrade head`: passed.
-- PostgreSQL Alembic offline `upgrade head --sql`: generated SQL including email challenge table and partial unique indexes successfully. A PostgreSQL 16 service-backed CI job has now been added to execute the migrations and test immutable audit triggers, but its result is pending the first GitHub Actions run.
-- Live local Uvicorn HTTP smoke test after the email-verification enforcement change: passed with two independently registered accounts. Both email challenges were extracted from the development-only mail adapter and verified; owner created a household and issued an invitation; matching verified invitee accepted; household membership alone returned `allowed=false`; member explicitly granted only `financial_summary` to that household; exact-scope check returned `allowed=true`; revocation changed the next check to `allowed=false`; logout invalidated the session (`/auth/me` returned 401).
-- Ruff is configured but not verified in the current execution environment because the `ruff` binary was unavailable and package download was blocked by DNS/network restrictions.
-- SMTP backend not tested against a real SMTP provider. Development mail adapter is exercised through test injection/local log configuration.
+- SQLite Alembic `upgrade head -> downgrade base -> upgrade head`: passed, including the transaction financial-fact immutability and status-transition guard create/drop/recreate path.
+- Direct SQLite database test confirmed a `REVERSED -> POSTED` update is rejected by the migration-equivalent DB trigger. Application test confirmed a provider import also rejects reactivation and leaves the row terminal.
+- PostgreSQL offline SQL generation succeeded and contains the transaction financial-fact immutability/status-transition guard function and trigger. A live PostgreSQL 16 execution of Iteration 02's new trigger is still pending its own CI after push.
+- Synthetic dataset independent validator: passed against committed v1.0.0 corpus.
+- Final re-run on 2026-11-04: `PYTHONPATH=src pytest -q` **56 passed**; Python compileall passed; fresh SQLite migration upgrade/downgrade/re-upgrade passed; PostgreSQL offline SQL contains the new financial transaction guard function/trigger.
+- Final synthetic seeder smoke: first run inserted 91 transactions / created 2 accounts and 5 obligations; second run inserted 0 / updated 0, replayed 2 batches and reused 5 obligations; stable counts remained 2 accounts, 91 transactions, 5 obligations and 2 batches.
+- Synthetic dataset final independent validation: all 42 table PK/FK checks, business-rule validations, export parity, multimodal hashes and SQLite integrity passed across 17,425 rows.
+- Local SQLite integration smoke: seeded `CUS00001` into an existing verified local test user; first run created 2 accounts, inserted 91 transactions and created 5 obligations; second run reused 2 accounts, reported 2 replayed import batches / 91 replayed historical rows (not new inserts), and reused 5 obligations. Final counts remained 2 accounts, 91 transactions, 5 obligations and 2 batches.
+- `git diff --check`: passed on the prepared source tree before final packaging; rerun in the user's Git checkout before commit.
+- Ruff: the isolated execution environment does not have the Ruff executable and package download was unavailable, so the new Iteration 02 Ruff result is **unverified**. Do not infer the merged Iteration 01 CI result covers these new files; the owner must run local Ruff and the new branch CI must pass.
+- PostgreSQL 16 live migration verification was passed for merged Iteration 01 on GitHub main. The new Iteration 02 migration has only been tested on SQLite and compiled to PostgreSQL offline SQL locally; it needs its own PostgreSQL CI run after push.
 
-## 5. Known gaps and release blockers
+## 5. Explicitly not implemented
 
-- Test SMTP with a real provider and configure SPF/DKIM/DMARC; current invitation delivery remains manual.
-- Add distributed IP/device-aware rate limiting for registration, login, verification and other sensitive endpoints; resend only has an account-level cooldown.
-- Add password reset, MFA/passkeys, account recovery, session/device management, account export/deletion and retention workflows.
-- Await first GitHub Actions run of the new PostgreSQL 16 migration/trigger verification job; add service-level transaction/concurrency tests after that baseline.
-- Add data-access services that call `require_active_consent` in the same transaction as protected data reads. The current check route is informational only and no personal financial records are yet stored.
-- Add a true durable transactional email outbox/retry state; current SMTP failure can be recovered by authenticated resend after cooldown.
-- Add fine-grained household membership removal, member self-leave, owner transfer and household deletion.
-- Add secrets manager, encryption-at-rest/key management, production TLS/headers, request limits, security monitoring and independent penetration testing.
-- No bank import, transactions/obligations persistence, budget engine, Guardian, benefits or opportunity integrations, partner/merchant marketplace, payments/payouts, Commons exchange, RAG, graph runtime, agent missions/checkpoints or Meta model integration exists yet.
-- Demo accounts/data must remain synthetic until the relevant privacy/security and provider controls are implemented.
+No live bank/Account Aggregator connection, bank credential collection, payment initiation, automatic debit/autopay mandate, opening-balance reconciliation, FX service, budgets/goals/forecast, bill/document vault, Guardian claim submission, official benefits catalogue, opportunity marketplace integration, resource exchange, crisis engine, enterprise commerce integration, Commons aggregation runtime, offer optimizer, VIVC verification, partner commission/payout, RAG, graph runtime, durable agent mission/checkpoint service, Meta model gateway or production deployment exists yet. The synthetic fixture corpus for those capabilities is a test/demo dataset only.
 
-## 6. Next iteration candidates
+## 6. Release/security gaps for the financial data plane
 
-1. Complete PostgreSQL integration test infrastructure and harden production security (rate limiting, secrets, mail outbox, session controls).
-2. Build Iteration 02 financial data foundation: accounts, transactions, recurring obligations, liabilities, budget and provenance; import CSV/manual records first and deduplicate idempotently.
-3. Prepare the Day-One Personal Power Discovery slice, with one genuinely useful and evidence-grounded user outcome.
-4. In a separate AI integration iteration, integrate a Meta model meaningfully. Do not send personal/confidential user data to Contributor Services. Benchmark a local Muse Glimmer workflow and Standard-tier Muse Spark/Wonder where appropriate.
+- Run Iteration 02 CI on Python 3.12/3.13 and PostgreSQL 16; inspect the new composite foreign keys, partial unique index, transaction immutability/status guard and rollback on both databases; CI also revalidates all synthetic dataset exports/documents.
+- Add concurrency tests for two simultaneous uploads with the same idempotency key/provider reference; unique constraints are present but race behavior needs service-backed tests.
+- Add streaming multipart/file integration only if required; current CSV endpoint is raw `text/csv` body.
+- Add a user-reviewed reclassification API for rows imported as `IGNORE`; do not infer income/expense from direction alone.
+- Add explicit correction/compensating-event workflows for changing financial facts; only the narrow provider lifecycle transition is implemented now.
+- Add pagination total/next cursor and filtering/index benchmarks for large histories.
+- Add retention, export/erasure policy, field-level encryption/key management, request/IP rate controls, malware scanning for future documents, privacy/security review and penetration testing before production.
+- Validate ISO 4217 currency registry from an authoritative source before expanding the curated list.
+- Build a bank integration only through a supported provider with the correct user consent and regulatory roles; never collect raw bank passwords.
 
-## 7. Status vocabulary
+## 7. Next iteration direction
 
-- **Implemented and tested:** source exists and relevant test/runtime checks pass in the stated environment.
-- **Partial:** code exists but one or more acceptance criteria or real integrations remain.
-- **Designed:** documented only; no working implementation.
-- **Simulated:** fixtures/stubs only; must be labelled in demo.
-- **Blocked:** work cannot proceed because of a named permission, provider or dependency.
+Iteration 03 should deliver an evidence-grounded **Personal Power / Guardian** vertical slice using the now-persisted user-owned financial data plus synthetic invoice documents. Its workflow should be: user-authorized upload -> document validation/provenance -> model-assisted extraction with evidence spans -> deterministic numeric comparison -> risk/uncertainty explanation -> draft action -> explicit human approval -> auditable outcome state. No complaint, payment, cancellation or provider contact is executed without a real supported integration and user approval. Meta AI should be integrated because it materially performs extraction/reasoning, not decoratively.
 
-Update this file every iteration after re-reading current code, tests, local Git state and remote branch state. Never claim remote push unless it is confirmed.
+The longer-term eight pillars and Commons killer move remain recorded in `PROJECT_MEMORY.md`, `FEATURE_CATALOG.md` and `docs/DEMO_PLAYBOOK.md`. Do not try to ship all pillars as disconnected stubs in one iteration.
 
+## 8. Status update rule
 
-## 8. Final Iteration 01 delivery verification (2026-11-03)
-
-- Re-ran `pytest -q` without a `PYTHONPATH` override: **41 passed**. The `pythonpath = ["src"]` setting from live remote `main` is preserved.
-- `python -m compileall -q src tests migrations scripts`: passed.
-- `git diff --check`: passed; working tree was clean before final delivery packaging.
-- Earlier in this iteration, SQLite migration upgrade → downgrade → upgrade passed; PostgreSQL migration SQL generated successfully in offline mode; live PostgreSQL was not available.
-- Earlier local Uvicorn integration journey passed for two synthetic users: registration, email verification, household invitation/acceptance, membership without implicit data access, explicit financial-summary consent, revocation and logout invalidation.
-- Ruff remains unverified in this runtime (binary unavailable); real SMTP delivery and live PostgreSQL runtime remain unverified. The GitHub Actions CI workflow is included in the delivery but has not been confirmed running remotely.
-- Confirmed remote `main` head: `6a1b57e66536d54fe4cc96f05924d5baf868593a`. Confirmed branch creation/write attempt still returns GitHub connector HTTP 403; no Iteration 01 commit has been pushed by the assistant.
-- The file-by-file change list and remote-specific additions are recorded in `docs/iterations/ITERATION-01-FILE-MANIFEST.md`. The transfer instructions are in `PUSH_TO_GITHUB.md`.
-
-## 9. Synthetic demo dataset v1 — 2026-11-03
-
-- Added `demo_data/synthetic_v1/` with 42 entity tables and **17,425 synthetic rows** (120 fictional customers, 55 households and 11,538 transaction fixtures).
-- Included CSV, JSON, JSONL, PostgreSQL schema/seed, SQLite, HTML/PDF/PNG invoice documents, five API scenarios, business rules, regulatory mapping and reproducible generation/validation scripts.
-- Built a coherent `CAM00001` Commons scenario with five users, valid event-time `COMMONS_DEMAND_AGGREGATION` consent, Jaipur/North Jaipur cohort, matching fictional education offer `OFF00004` and 5/5 quorum. Other campaigns without corresponding offers remain in demand-gathering state.
-- Independent validation passed for row labels, invalid contact placeholders, PK/FK integrity, cashflow treatment, bill reconciliation, offer net-value math, event-time Commons consent, no raw financial data in Commons, campaign quorum and linked offer consistency, PDF/PNG hashes, export presence and SQLite integrity/FKs.
-- This is a **demo fixture**, not a live customer base. Benefit outcomes, provider bids, partner revenue, orders, claims, applications, settlement and VIVC records are simulated. No real external action occurs.
-- The Excel workbook was built before the final Commons quorum override and is intentionally excluded from this package to avoid shipping a stale view. It remains an unfinished deliverable; the canonical latest data is CSV/JSON/JSONL/SQL/SQLite plus source documents.
-- PostgreSQL seed/schema has been generated but not executed against a live PostgreSQL server. SMTP, external providers and live bank/AA connections are not part of this dataset verification.
+At each future iteration, re-read live repository metadata, latest `main` HEAD, active feature branch, CI status and the four core memory documents before modifying files. Update this document, `CODEBASE_MAP.md`, `FEATURE_CATALOG.md`, the iteration record and the relevant decisions in the same delivery. Local commits/archives are never described as pushed until GitHub confirms the remote write.

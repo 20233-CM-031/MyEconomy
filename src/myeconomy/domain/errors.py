@@ -65,3 +65,14 @@ class ServiceUnavailableError(ApplicationError):
     code = "service_unavailable"
     status_code = 503
     public_message = "A required delivery service is temporarily unavailable."
+
+
+class FinancialDataValidationError(ApplicationError):
+    code = "financial_data_invalid"
+    status_code = 422
+    public_message = "The financial data could not be accepted."
+
+
+class IdempotencyConflictError(ConflictError):
+    code = "idempotency_conflict"
+    public_message = "This idempotency key was already used with different request content."
