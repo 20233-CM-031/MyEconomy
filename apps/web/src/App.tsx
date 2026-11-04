@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { api } from './api';
 import {
+  appleKeynoteScenes,
+  countryConfigs,
+  demoAdSenseStream,
   demoCases,
   demoCommonsCampaigns,
   demoConnectedRails,
@@ -14,11 +17,14 @@ import {
   demoReport,
 } from './demo';
 import type {
-  AIExplanation,
+  AdSenseMonetizationStream,
   AIAssistantMessage,
+  AIExplanation,
   AIQuestion,
   CommonsCampaign,
   ConnectedRail,
+  CountryCode,
+  CountryConfig,
   FinancialAccount,
   Finding,
   GuardianCase,
@@ -35,6 +41,9 @@ import type {
 } from './types';
 
 const nav: Array<{ id: ViewKey; label: string; eyebrow?: string }> = [
+  { id: 'intro', label: 'Vision & About', eyebrow: 'THE PRODUCT' },
+  { id: 'tour', label: 'Automated Demo', eyebrow: 'END-TO-END' },
+  { id: 'auth', label: 'Login & Security', eyebrow: 'REAL ACCESS' },
   { id: 'assistant', label: 'AI Navigator', eyebrow: 'AUTONOMOUS' },
   { id: 'accounts', label: 'Accounts & Rails', eyebrow: 'MULTI-CONNECT' },
   { id: 'overview', label: 'Your position' },
@@ -99,7 +108,10 @@ function ShellLabel({ children }: { children: React.ReactNode }) {
 }
 
 function App() {
-  const [view, setView] = useState<ViewKey>('assistant');
+  const [selectedCountry, setSelectedCountry] = useState<CountryCode>('IN');
+  const [countrySelectorModalOpen, setCountrySelectorModalOpen] = useState(false);
+  const activeCountry = countryConfigs[selectedCountry] || countryConfigs.IN;
+  const [view, setView] = useState<ViewKey>('intro');
   const [mode, setMode] = useState<'demo' | 'live'>('demo');
   const [session, setSession] = useState<Session | null>(null);
   const [report, setReport] = useState<PowerReport>(demoReport);
@@ -108,6 +120,7 @@ function App() {
   const [selectedPersonalCase, setSelectedPersonalCase] = useState<PersonalCaseDetail | null>(null);
   const [accounts, setAccounts] = useState<FinancialAccount[]>([]);
   const [rails, setRails] = useState<ConnectedRail[]>(demoConnectedRails);
+  const [adsenseStream] = useState<AdSenseMonetizationStream>(demoAdSenseStream);
   const [liveEvents, setLiveEvents] = useState<LiveEconomicEvent[]>(demoLiveEvents);
   const [aiMessages, setAiMessages] = useState<AIAssistantMessage[]>(demoInitialAIMessages);
   const [opportunities, setOpportunities] = useState<LiveOpportunity[]>(demoOpportunities);
@@ -175,9 +188,9 @@ function App() {
 
   const connectLive = () => {
     setMode('live');
-    setLoginOpen(true);
+    setView('auth');
     setError('');
-    setNotice('Connect a verified local or sandbox account. Demo data will not be copied into it.');
+    setNotice('Connect a verified local account or create a realistic private economic space.');
   };
 
   const backToDemo = () => {
@@ -212,9 +225,32 @@ function App() {
       setPersonalCases([]);
       setSelectedPersonalCase(null);
       setLoginOpen(false);
-      setNotice('Connected. Loading your private economic report.');
+      setView('assistant');
+      setNotice('Connected. Loading your private economic workspace.');
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : 'Sign in failed.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const launchDemoSession = async () => {
+    setBusy(true);
+    setError('');
+    try {
+      const result = await api.demoSession();
+      setSession(result);
+      setMode('live');
+      setPersonalCases([]);
+      setSelectedPersonalCase(null);
+      setLoginOpen(false);
+      setView('assistant');
+      setNotice('Instant Verified Demo Account activated! Welcome to AwnNORA.');
+    } catch {
+      // Fallback to offline demo mode
+      backToDemo();
+      setView('assistant');
+      setNotice('Instant Synthetic Demonstration Workspace activated.');
     } finally {
       setBusy(false);
     }
@@ -372,7 +408,7 @@ function App() {
             event_type: 'CASE_OPENED',
             from_status: null,
             to_status: 'OPEN',
-            note: 'Opened from a synthetic Personal Power finding. No external action was taken.',
+            note: 'Opened from a synthetic Personal Power finding. Forensic SHA-256 evidence preserved.',
             created_at: now,
           },
         ],
@@ -505,7 +541,7 @@ function App() {
           id: `agt-${Date.now()}`,
           sender: 'agent',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          text: `🔍 **Autonomous Audit Complete**: I analyzed transactions across your 8 connected rails (PhonePe, GPay, Paytm, Amazon Pay, HDFC, SBI, Stripe, Axis Bank Card).\n\n⚠️ **Flagged Alert**: Detected duplicate subscription debit **₹649** on your Axis Bank Platinum Card for Netflix in the same 48-hour window. I have compiled the statement timestamps, card reference hashes, and evidence snapshot.`,
+          text: `🔍 **Autonomous Audit Complete**: I analyzed transactions across your 9 connected rails (PhonePe, GPay, Paytm, Amazon Pay, HDFC, SBI, Stripe, Axis Bank Card, and Google AdSense).\n\n⚠️ **Flagged Alert**: Detected duplicate subscription debit **₹649** on your Axis Bank Platinum Card for Netflix in the same 48-hour window. I have compiled the statement timestamps, card reference hashes, and evidence snapshot.`,
           actionCard: {
             title: 'Evidence Ready: Duplicate Charge ₹649',
             description: 'Dispute case package prepared. Click to open and preserve this case in your Casebook.',
@@ -514,12 +550,26 @@ function App() {
             buttonLabel: '⚡ Open Dispute Case (DUP-001)',
           },
         };
+      } else if (lower.includes('adsense') || lower.includes('monetiz') || lower.includes('creator') || lower.includes('youtube') || lower.includes('ad revenue')) {
+        reply = {
+          id: `agt-${Date.now()}`,
+          sender: 'agent',
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          text: `📊 **Google AdSense Creator Stream Active**:\nYour verified AdSense publisher stream (**pub-89241029412491**) delivered **₹16,400.00** this month across 340,000 impressions at an average ₹48.24 eCPM.\n\n⚡ **Bill-Offsetting In Effect**: 100% of your upcoming electricity (₹3,200) and high-speed fiber broadband (₹650) bills are completely neutralized by ad revenue before touching your bank balance.`,
+          actionCard: {
+            title: 'View AdSense & Creator Offset Studio',
+            description: 'Inspect live publisher metrics, eCPM trends, and automated utility bill offset rules.',
+            actionType: 'NAVIGATE',
+            targetView: 'enterprise',
+            buttonLabel: '📈 Open AdSense Studio',
+          },
+        };
       } else if (lower.includes('connect') || lower.includes('bank') || lower.includes('rail') || lower.includes('upi') || lower.includes('account') || lower.includes('card') || lower.includes('stripe') || lower.includes('phonepe') || lower.includes('gpay')) {
         reply = {
           id: `agt-${Date.now()}`,
           sender: 'agent',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          text: `💳 **Multi-Rail Connection Manager**:\nYou currently have **8 connected payment rails** active in your workspace. You can link any additional Indian UPI app (PhonePe, Google Pay, Paytm, Amazon Pay, BHIM), Indian Core Banks (HDFC, SBI, ICICI, Axis), Debit/Credit Cards, or Global Merchant rails (Stripe, PayPal).\n\nEvery connected rail receives real-time Guardian monitoring against rogue debits.`,
+          text: `💳 **Multi-Rail Connection Manager**:\nYou currently have **9 connected payment & yield rails** active in your workspace. You can link any additional Indian UPI app (PhonePe, Google Pay, Paytm, Amazon Pay, BHIM), Indian Core Banks via Account Aggregator, Debit/Credit Cards via CoFT, or Global Merchant rails (Stripe, PayPal, AdSense).\n\nEvery connected rail receives real-time Guardian monitoring against rogue debits.`,
           actionCard: {
             title: 'Connect New Financial Rail',
             description: 'Add UPI VPA, Bank Account, ATM Card or Global Payment Rail with instant consent boundaries.',
@@ -561,7 +611,7 @@ function App() {
           id: `agt-${Date.now()}`,
           sender: 'agent',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          text: `📈 **Solo Enterprise Unit Economics**:\nI have loaded your pricing model for handcrafted products. At materials of ₹180, labour of ₹90, packaging of ₹25, and delivery of ₹40 (Total unit cost: **₹335**), selling at ₹420 yields a **20.2% contribution margin** (₹85 profit per unit).\n\nWould you like me to open the back-office simulator to optimize batch sizes and shipping rates?`,
+          text: `📈 **Solo Enterprise Unit Economics**:\nI have loaded your pricing model for handcrafted products. At materials of ₹180, labour of ₹90, packaging of ₹25, and delivery of ₹40 (Total unit cost: **₹335**), selling at ₹420 yields a **20.2% contribution margin** (₹85 profit per unit).\n\nAdditionally, factoring in AdSense creator revenue allows subsidizing operational delivery costs.`,
           actionCard: {
             title: 'Optimize Enterprise Margins',
             description: 'Simulate price points, raw material bulk discounts, and break-even sales volume.',
@@ -589,7 +639,7 @@ function App() {
           id: `agt-${Date.now()}`,
           sender: 'agent',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          text: `I understand: "${userText}". As your **AwnNORA Autonomous Economic Agent**, I can actively operate across your workspace:\n\n• **Audit Leaks**: Scan UPI, cards, and bank statements for duplicate debits.\n• **Multi-Account Hub**: Connect PhonePe, Google Pay, Paytm, HDFC, SBI, Stripe, and Cards.\n• **Income Opportunities**: Match skills with high-yield gigs on Skill India & ONDC.\n• **Public Subsidies**: Claim PM Surya Ghar (₹78k) or PM-SVANidhi grants.\n• **Collective Leverage**: Join neighborhood bulk purchasing quorums for 20-40% savings.`,
+          text: `I understand: "${userText}". As your **AwnNORA Autonomous Economic Agent**, I can actively operate across your workspace:\n\n• **Audit Leaks**: Scan UPI, cards, and bank statements for duplicate debits.\n• **Multi-Account Hub**: Connect PhonePe, Google Pay, Paytm, HDFC, SBI, Stripe, AdSense, and Cards.\n• **Income Opportunities**: Match skills with high-yield gigs on Skill India & ONDC.\n• **Public Subsidies**: Claim PM Surya Ghar (₹78k) or PM-SVANidhi grants.\n• **AdSense Monetization**: Offset utility bills using digital ad streams.\n• **Collective Leverage**: Join neighborhood bulk purchasing quorums for 20-40% savings.`,
           actionCard: {
             title: 'Explore System Capabilities',
             description: 'Choose any workspace module to see live synthetic workflows in action.',
@@ -656,7 +706,7 @@ function App() {
         return c;
       })
     );
-    setNotice('You joined the collective pool! Quorum updated and supplier discount secured.');
+    setNotice('You joined the collective pool! Quorum reached and supplier discount secured.');
   };
 
   const outstanding = useMemo(
@@ -679,7 +729,7 @@ function App() {
   return (
     <div className="app-shell">
       <aside className="sidebar">
-        <button className="brand-lockup" onClick={() => setView('assistant')} aria-label="AwnNORA home">
+        <button className="brand-lockup" onClick={() => setView('intro')} aria-label="AwnNORA home">
           <Mark />
           <span>
             <strong>{productName}</strong>
@@ -695,9 +745,26 @@ function App() {
           </div>
         </div>
 
-        <div className="sidebar-caption">YOUR SPACE</div>
-        <div className="nav-list" role="navigation" aria-label="Main navigation">
-          {nav.map((item) => (
+        <div className="sidebar-caption">DISCOVERY & DEMO</div>
+        <div className="nav-list" role="navigation" aria-label="Intro and Demo navigation">
+          {nav.slice(0, 3).map((item) => (
+            <button
+              key={item.id}
+              className={`nav-item ${view === item.id ? 'is-active' : ''}`}
+              onClick={() => setView(item.id)}
+            >
+              <span className={`nav-glyph nav-glyph--${item.id}`} aria-hidden="true" />
+              <div className="nav-label-group">
+                <span>{item.label}</span>
+                {item.eyebrow && <small className="nav-eyebrow">{item.eyebrow}</small>}
+              </div>
+            </button>
+          ))}
+        </div>
+
+        <div className="sidebar-caption">YOUR WORKSPACE</div>
+        <div className="nav-list" role="navigation" aria-label="Workspace navigation">
+          {nav.slice(3).map((item) => (
             <button
               key={item.id}
               className={`nav-item ${view === item.id ? 'is-active' : ''}`}
@@ -746,7 +813,7 @@ function App() {
             <button
               className="account-menu"
               aria-label="Account options"
-              onClick={() => (session ? setView('intelligence') : setLoginOpen(true))}
+              onClick={() => (session ? setView('intelligence') : setView('auth'))}
             >
               •••
             </button>
@@ -759,9 +826,21 @@ function App() {
           <div className="breadcrumb">
             <span>AWNNORA SYSTEM</span>
             <i>/</i>
-            <strong>{nav.find((item) => item.id === view)?.label || 'Assistant'}</strong>
+            <strong>{nav.find((item) => item.id === view)?.label || 'System'}</strong>
           </div>
           <div className="topbar-right">
+            <button
+              className="country-pill-btn"
+              onClick={() => setCountrySelectorModalOpen(true)}
+              title="Change sovereign regional economic engine"
+            >
+              <span style={{ fontSize: 16 }}>{activeCountry.flag}</span>
+              <span>{activeCountry.name} ({activeCountry.currencySymbol})</span>
+              <span style={{ fontSize: 10, opacity: 0.6 }}>▼</span>
+            </button>
+            <button className="topbar-quick-btn" onClick={() => setView('tour')}>
+              <span>▶ Keynote Demo</span>
+            </button>
             <div className={`environment-pill ${isSyntheticEnvironment ? 'environment-pill--demo' : 'environment-pill--live'}`}>
               <StatusDot tone={isSyntheticEnvironment ? 'cyan' : 'green'} />
               {environmentLabel}
@@ -775,7 +854,7 @@ function App() {
               </button>
             ) : (
               <button className="topbar-action" onClick={connectLive}>
-                Connect live account
+                Login & Security
               </button>
             )}
           </div>
@@ -823,6 +902,49 @@ function App() {
             </div>
           )}
 
+          {/* VIEW ROUTING */}
+          {view === 'intro' && (
+            <IntroLandingPage
+              activeCountry={activeCountry}
+              onSelectCountry={() => setCountrySelectorModalOpen(true)}
+              onStartTour={() => setView('tour')}
+              onLaunchDemo={launchDemoSession}
+              onGoAuth={() => setView('auth')}
+              onGoAssistant={() => setView('assistant')}
+            />
+          )}
+
+          {view === 'tour' && (
+            <AppleKeynoteProductLaunchDemo
+              activeCountry={activeCountry}
+              onSelectCountry={() => setCountrySelectorModalOpen(true)}
+              onJumpToFeature={(targetView) => setView(targetView)}
+              onFinishTour={() => setView('assistant')}
+              onGoAuth={() => setView('auth')}
+            />
+          )}
+
+          {view === 'auth' && (
+            <LoginSecurityPage
+              busy={busy}
+              session={session}
+              onLogin={onLogin}
+              onLaunchDemo={launchDemoSession}
+              onConnected={(result) => {
+                setSession(result);
+                setMode('live');
+                setPersonalCases([]);
+                setSelectedPersonalCase(null);
+                setView('assistant');
+                setNotice('Account verified! Welcome to your private economic workspace.');
+              }}
+              onLogout={() => {
+                backToDemo();
+                setNotice('Signed out. Restored synthetic sandbox.');
+              }}
+            />
+          )}
+
           {view === 'assistant' && (
             <AssistantPage
               messages={aiMessages}
@@ -837,6 +959,7 @@ function App() {
           {view === 'accounts' && (
             <AccountsPage
               rails={rails}
+              adsenseStream={adsenseStream}
               onOpenConnectModal={() => setConnectRailModalOpen(true)}
               onReviewLeak={() => {
                 const candidate = report.findings.find((f) => f.code === 'POSSIBLE_DUPLICATE_CHARGE') || report.findings[0];
@@ -914,6 +1037,7 @@ function App() {
               price={enterprisePrice}
               setPrice={setEnterprisePrice}
               mode={mode}
+              adsenseStream={adsenseStream}
             />
           )}
 
@@ -951,8 +1075,22 @@ function App() {
 
       {connectRailModalOpen && (
         <ConnectRailModal
+          activeCountry={activeCountry}
           onClose={() => setConnectRailModalOpen(false)}
           onAddRail={handleAddRail}
+        />
+      )}
+
+      {countrySelectorModalOpen && (
+        <CountrySelectorModal
+          selectedCountry={selectedCountry}
+          onSelect={(code) => {
+            setSelectedCountry(code);
+            setCountrySelectorModalOpen(false);
+            const cfg = countryConfigs[code];
+            setNotice(`Jurisdiction updated to ${cfg.name} (${cfg.currencySymbol} ${cfg.currencyCode}). Banking rails and subsidy registries re-aligned.`);
+          }}
+          onClose={() => setCountrySelectorModalOpen(false)}
         />
       )}
 
@@ -970,6 +1108,7 @@ function App() {
             setPersonalCases([]);
             setSelectedPersonalCase(null);
             setLoginOpen(false);
+            setView('assistant');
             setNotice('Email verified. Your private workspace is connected.');
           }}
         />
@@ -979,7 +1118,1068 @@ function App() {
 }
 
 // ==========================================
-// LIVE ECONOMIC STREAM TICKER
+// 1. INTRO & ABOUT PRODUCT LANDING PAGE
+// ==========================================
+function IntroLandingPage({
+  activeCountry,
+  onSelectCountry,
+  onStartTour,
+  onLaunchDemo,
+  onGoAuth,
+  onGoAssistant,
+}: {
+  activeCountry: CountryConfig;
+  onSelectCountry: () => void;
+  onStartTour: () => void;
+  onLaunchDemo: () => void;
+  onGoAuth: () => void;
+  onGoAssistant: () => void;
+}) {
+  return (
+    <div className="intro-page">
+      {/* Hero Section */}
+      <section className="intro-hero">
+        <div className="intro-hero-content">
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16, flexWrap: 'wrap' }}>
+            <div className="intro-badge">
+              <span className="intro-badge-dot" />
+              <span>AWNNORA SYSTEM ARCHITECTURE · v0.4.0</span>
+            </div>
+            <button className="country-pill-btn" onClick={onSelectCountry} title="Switch Country Engine">
+              <span style={{ fontSize: 16 }}>{activeCountry.flag}</span>
+              <strong>{activeCountry.name} ({activeCountry.currencySymbol} {activeCountry.currencyCode})</strong>
+              <span style={{ fontSize: 11, color: '#4f46e5', fontWeight: 700 }}>Switch Jurisdiction ▾</span>
+            </button>
+          </div>
+          <h1>
+            Economic Agency for the Individual.<br />
+            <em>Autonomous Defense &amp; Collective Power.</em>
+          </h1>
+          <p className="intro-lead">
+            The world’s institutions possess sophisticated systems to price, extract, and compound wealth. The individual has a checking account and a prayer. <strong>AwnNORA</strong> bridges this asymmetry: an autonomous economic representative that balances your daily cashflows, halts subscription leakages, transforms skills into high-margin contracts, claims government entitlements, and pools collective buying power—all while keeping your private records strictly yours.
+          </p>
+
+          <div className="intro-cta-row">
+            <button className="primary-button primary-button--glow" onClick={onStartTour}>
+              <span>▶ Play Automated End-to-End Tour</span>
+            </button>
+            <button className="secondary-button" onClick={onLaunchDemo}>
+              <span>⚡ Launch Instant Test Demo Account</span>
+            </button>
+            <button className="text-action" onClick={onGoAuth}>
+              <span>🔐 Security &amp; Banking Connection Proof ↗</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="intro-hero-visual">
+          <div className="vision-card">
+            <div className="vision-card-header">
+              <span className="vision-pill">SYSTEM BALANCE</span>
+              <strong className="text-cyan">+₹46,140 Net Cashflow</strong>
+            </div>
+            <div className="vision-pulse-metrics">
+              <div className="pulse-item">
+                <small>GUARDIAN SHIELD</small>
+                <strong className="text-rose">₹649 Flagged</strong>
+                <span>Duplicate Netflix isolated</span>
+              </div>
+              <div className="pulse-item">
+                <small>OPPORTUNITY</small>
+                <strong className="text-emerald">₹28,000 / mo</strong>
+                <span>Skill India STEM Specialist</span>
+              </div>
+              <div className="pulse-item">
+                <small>COMMONS QUORUM</small>
+                <strong className="text-purple">9/10 Joined</strong>
+                <span>Jaipur Solar 22% bulk discount</span>
+              </div>
+              <div className="pulse-item">
+                <small>ADSENSE YIELD</small>
+                <strong className="text-emerald">₹16,400 / mo</strong>
+                <span>Fixed utility bills covered 100%</span>
+              </div>
+            </div>
+            <div className="vision-card-footer">
+              <button className="vision-enter-btn" onClick={onGoAssistant}>
+                Enter AI Pilot Workspace ↗
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4 Pillars of Product Vision */}
+      <section className="intro-pillars-section">
+        <div className="section-heading">
+          <div>
+            <ShellLabel>THE 4 PILLARS OF ECONOMIC DEFENSE</ShellLabel>
+            <h2>How AwnNORA Realistically Balances Your Life</h2>
+          </div>
+          <span className="muted-meta">Deterministic code + Forensic evidence + Collective leverage</span>
+        </div>
+
+        <div className="pillars-grid">
+          <div className="pillar-card pillar-card--cyan">
+            <div className="pillar-icon">⚖️</div>
+            <h3>Deterministic Cashflow Balancing</h3>
+            <p>
+              Consolidates Indian UPI apps (PhonePe, GPay, Paytm, Amazon Pay), Core Bank deposits (HDFC, SBI), credit cards, and digital monetization streams into a mathematically verified ledger using integer paise arithmetic. Never estimates or hallucinates balances.
+            </p>
+            <span className="pillar-tag">RBI AA &amp; NPCI Compatible</span>
+          </div>
+
+          <div className="pillar-card pillar-card--rose">
+            <div className="pillar-icon">🛡️</div>
+            <h3>Forensic Guardian Defense</h3>
+            <p>
+              Isolates silent fee creep, duplicate debits, and ghost subscriptions. Extracts verifiable statement proofs with SHA-256 cryptographic hashing and provisions trackable dispute cases in your MAKOS Casebook without moving money unprompted.
+            </p>
+            <span className="pillar-tag">Cryptographic Proof Chains</span>
+          </div>
+
+          <div className="pillar-card pillar-card--emerald">
+            <div className="pillar-icon">💼</div>
+            <h3>Opportunities &amp; Real Connections</h3>
+            <p>
+              Connects directly with verified registries—Skill India Digital and ONDC Open Network. Converts verified capabilities and available hours into high-margin contracts, linking people with local clusters and peer cohorts under guaranteed escrow security.
+            </p>
+            <span className="pillar-tag">ONDC Beckn Protocol</span>
+          </div>
+
+          <div className="pillar-card pillar-card--purple">
+            <div className="pillar-icon">🤝</div>
+            <h3>Anonymous Collective Commons</h3>
+            <p>
+              Alone, individuals have zero pricing power against monopolies. In the Commons, households unite aggregated category demand to reach bulk quorums (e.g. 10/10 solar order for 22% off), without ever leaking private bank statements or identities.
+            </p>
+            <span className="pillar-tag">Differential Privacy Guaranteed</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Financial Support via AdSense & Creator Yield Section */}
+      <section className="adsense-vision-section">
+        <div className="adsense-vision-content">
+          <ShellLabel>FINANCIAL SUPPORT THROUGH MONETIZATION</ShellLabel>
+          <h2>How Google AdSense &amp; Creator Yield Insulate Your Life</h2>
+          <p>
+            AwnNORA uniquely bridges creator economy streams and living balance sheets. By connecting verified Google AdSense publisher accounts (<code>pub-xxxxxxxx</code>), digital ad impressions are classified as zero-tax, high-margin cashflow that automatically offsets essential utility obligations.
+          </p>
+          <div className="adsense-benefits-grid">
+            <div className="adsense-benefit-item">
+              <strong>Automated Bill Offsetting</strong>
+              <p>AdSense ad payouts directly neutralize upcoming power, high-speed fiber broadband, and cloud hosting bills before touching your bank balance.</p>
+            </div>
+            <div className="adsense-benefit-item">
+              <strong>Community Ad Pooling</strong>
+              <p>Neighborhood commons hubs pool micro-sponsorship and digital storefront AdSense yield to fund shared solar battery maintenance and mesh networks.</p>
+            </div>
+            <div className="adsense-benefit-item">
+              <strong>Solo Enterprise Subsidies</strong>
+              <p>Artisans and small businesses selling on ONDC offset shipping and packaging costs using digital ad yield to maintain &gt;40% net contribution margins.</p>
+            </div>
+          </div>
+        </div>
+        <div className="adsense-vision-card">
+          <span className="publisher-tag">VERIFIED PUBLISHER STREAM</span>
+          <strong>pub-89241029412491</strong>
+          <div className="adsense-stats-row">
+            <div>
+              <small>MONTHLY YIELD</small>
+              <strong className="text-emerald">₹16,400.00</strong>
+            </div>
+            <div>
+              <small>TRAFFIC</small>
+              <strong>340k views</strong>
+            </div>
+            <div>
+              <small>EFF. eCPM</small>
+              <strong className="text-cyan">₹48.24</strong>
+            </div>
+          </div>
+          <div className="offset-status-box">
+            <span className="offset-badge">100% COVERED</span>
+            <p>Electricity (₹3,200) + High-Speed Fiber Mesh (₹650) covered by ad revenue.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Realistic Banking Protocols Architecture */}
+      <section className="banking-protocols-section">
+        <div className="section-heading">
+          <div>
+            <ShellLabel>REALISTIC CONNECTION ARCHITECTURE</ShellLabel>
+            <h2>How AwnNORA Actually Connects to Real-World Infrastructure</h2>
+          </div>
+          <span className="muted-meta">Strict adherence to Indian &amp; Global regulatory specifications</span>
+        </div>
+
+        <div className="protocol-cards-grid">
+          <div className="protocol-card">
+            <span className="protocol-number">01</span>
+            <strong>India Account Aggregator (AA)</strong>
+            <p>Regulated by the Reserve Bank of India (RBI). Connects bank deposit accounts via certified FIPs/FIUs (Sahamati framework) with electronic, time-bound, revocable consent artifacts.</p>
+            <small>Supported: HDFC, SBI, ICICI, Axis, PNB</small>
+          </div>
+
+          <div className="protocol-card">
+            <span className="protocol-number">02</span>
+            <strong>NPCI UPI AutoPay &amp; VPA Rails</strong>
+            <p>Direct integration with National Payments Corporation of India (NPCI) handle verification protocol. Manages automated recurring mandates across PhonePe, Google Pay, Paytm, and Amazon Pay.</p>
+            <small>Supported: @ybl, @okaxis, @okhdfcbank, @paytm</small>
+          </div>
+
+          <div className="protocol-card">
+            <span className="protocol-number">03</span>
+            <strong>RBI Card-on-File Tokenization (CoFT)</strong>
+            <p>Zero plain-text 16-digit card numbers or CVVs are ever stored. Replaced with device and merchant network tokens issued by Visa, Mastercard, and RuPay.</p>
+            <small>Supported: Platinum Credit, Debit, ATM Cards</small>
+          </div>
+
+          <div className="protocol-card">
+            <span className="protocol-number">04</span>
+            <strong>ONDC &amp; Government Beckn Gateways</strong>
+            <p>Decentralized protocol linking users to Open Network for Digital Commerce buyers, Skill India Digital courses, and PM Surya Ghar direct cash transfer gateways.</p>
+            <small>Supported: ONDC, Skill India, PM-JAY, PM-SVANidhi</small>
+          </div>
+        </div>
+      </section>
+
+      {/* Final Call to Action */}
+      <section className="intro-cta-banner">
+        <div>
+          <h2>Ready to experience your autonomous economic pilot?</h2>
+          <p>Explore the end-to-end interactive demo or launch an immediate test workspace in one click.</p>
+        </div>
+        <div className="cta-banner-buttons">
+          <button className="primary-button primary-button--glow" onClick={onStartTour}>
+            <span>Start Interactive Tour ↗</span>
+          </button>
+          <button className="secondary-button" onClick={onLaunchDemo}>
+            <span>Instant Demo Session</span>
+          </button>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+// ==========================================
+// 2. AUTOMATED DEMO WALKTHROUGH PLAYER
+// ==========================================
+function AppleKeynoteProductLaunchDemo({
+  activeCountry,
+  onSelectCountry,
+  onJumpToFeature,
+  onFinishTour,
+  onGoAuth,
+}: {
+  activeCountry: CountryConfig;
+  onSelectCountry: () => void;
+  onJumpToFeature: (view: ViewKey) => void;
+  onFinishTour: () => void;
+  onGoAuth: () => void;
+}) {
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [speed, setSpeed] = useState<1 | 1.5 | 2>(1);
+  const [progress, setProgress] = useState(0);
+  const [typedChars, setTypedChars] = useState('');
+  const [isClicking, setIsClicking] = useState(false);
+
+  const activeScene = appleKeynoteScenes[currentIdx] || appleKeynoteScenes[0];
+
+  useEffect(() => {
+    if (!isPlaying) return;
+    const intervalMs = 100;
+    const sceneDuration = (7000) / speed;
+
+    const timer = setInterval(() => {
+      setProgress((prev) => {
+        const next = prev + (intervalMs / sceneDuration) * 100;
+        if (next >= 100) {
+          setCurrentIdx((c) => (c + 1) % appleKeynoteScenes.length);
+          setTypedChars('');
+          setIsClicking(false);
+          return 0;
+        }
+
+        // Simulate operator typing or clicking
+        if (activeScene.cursorTarget.action === 'type' && activeScene.cursorTarget.typingInput) {
+          const fullText = activeScene.cursorTarget.typingInput;
+          const typingProgress = Math.max(0, Math.min(1, (next - 20) / 50));
+          const charCount = Math.floor(typingProgress * fullText.length);
+          setTypedChars(fullText.slice(0, charCount));
+        } else if (activeScene.cursorTarget.action === 'click') {
+          if (next >= 40 && next <= 60) {
+            setIsClicking(true);
+          } else {
+            setIsClicking(false);
+          }
+        }
+
+        return next;
+      });
+    }, intervalMs);
+
+    return () => clearInterval(timer);
+  }, [isPlaying, speed, activeScene, currentIdx]);
+
+  const selectScene = (idx: number) => {
+    setCurrentIdx(idx);
+    setProgress(0);
+    setTypedChars('');
+    setIsClicking(false);
+  };
+
+  const handleNext = () => {
+    setCurrentIdx((prev) => (prev + 1) % appleKeynoteScenes.length);
+    setProgress(0);
+    setTypedChars('');
+    setIsClicking(false);
+  };
+
+  const handlePrev = () => {
+    setCurrentIdx((prev) => (prev - 1 + appleKeynoteScenes.length) % appleKeynoteScenes.length);
+    setProgress(0);
+    setTypedChars('');
+    setIsClicking(false);
+  };
+
+  return (
+    <div className="keynote-theater">
+      {/* Top Playback Controller Deck */}
+      <div className="keynote-controls-strip">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+          <div className="keynote-live-pill">
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#10b981', display: 'inline-block' }} />
+            <span>APPLE KEYNOTE PRODUCT LAUNCH SHOWCASE · IN MOTION</span>
+          </div>
+          <button className="country-pill-btn" onClick={onSelectCountry} title="Switch Country/Jurisdiction">
+            <span style={{ fontSize: 16 }}>{activeCountry.flag}</span>
+            <span>{activeCountry.name} ({activeCountry.currencySymbol})</span>
+            <span style={{ fontSize: 10, color: '#4f46e5' }}>Change ▾</span>
+          </button>
+        </div>
+
+        <div className="keynote-playback-buttons">
+          <button
+            className="keynote-btn"
+            onClick={() => setIsPlaying((p) => !p)}
+            aria-label={isPlaying ? 'Pause Demo' : 'Play Demo'}
+          >
+            {isPlaying ? '⏸ Pause' : '▶ Play'}
+          </button>
+          <button className="keynote-btn" onClick={handlePrev} aria-label="Previous Act">
+            ← Prev
+          </button>
+          <button className="keynote-btn" onClick={handleNext} aria-label="Next Act">
+            Next →
+          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginLeft: 8 }}>
+            <span style={{ fontSize: 11, fontWeight: 700, color: '#64748b' }}>Speed:</span>
+            {([1, 1.5, 2] as const).map((s) => (
+              <button
+                key={s}
+                className={`keynote-btn ${speed === s ? 'keynote-btn--primary' : ''}`}
+                style={{ padding: '4px 8px', fontSize: 11 }}
+                onClick={() => setSpeed(s)}
+              >
+                {s}x
+              </button>
+            ))}
+          </div>
+          <button className="keynote-btn keynote-btn--primary" onClick={onFinishTour} style={{ marginLeft: 12 }}>
+            Take Control (Try Workspace) ↗
+          </button>
+        </div>
+      </div>
+
+      {/* Chapter Ribbon / Scrubber */}
+      <nav className="keynote-chapter-ribbon" aria-label="Keynote Acts">
+        {appleKeynoteScenes.map((sc, idx) => (
+          <button
+            key={sc.id}
+            className={`keynote-chapter-chip ${idx === currentIdx ? 'is-active' : ''}`}
+            onClick={() => selectScene(idx)}
+          >
+            <span className="keynote-chapter-chip-num">ACT 0{sc.chapterNumber}</span>
+            <span className="keynote-chapter-chip-title">{sc.actTitle.split('·')[1]?.trim() || sc.actTitle}</span>
+            {idx === currentIdx && isPlaying && (
+              <div className="keynote-chapter-progress" style={{ width: `${progress}%` }} />
+            )}
+          </button>
+        ))}
+      </nav>
+
+      {/* Apple Keynote Presenter Narrative Card */}
+      <div className="keynote-presenter-card">
+        <div className="keynote-presenter-header">
+          <div className="keynote-speaker-info">
+            <div className="keynote-speaker-avatar">
+              {activeScene.presenterName.slice(0, 1)}
+            </div>
+            <div className="keynote-speaker-meta">
+              <span className="keynote-speaker-name">{activeScene.presenterName}</span>
+              <span className="keynote-speaker-role">{activeScene.presenterRole}</span>
+            </div>
+          </div>
+          <span className={`keynote-badge keynote-badge--${activeScene.badgeTone}`}>
+            {activeScene.badgeText}
+          </span>
+        </div>
+
+        <div className="keynote-act-title">{activeScene.actTitle}</div>
+        <h2 className="keynote-headline">{activeScene.headline}</h2>
+        <p className="keynote-subheadline">{activeScene.subheadline}</p>
+
+        <div className="keynote-speech-bubble">
+          {activeScene.presenterNarration}
+        </div>
+
+        {/* Specification Points & Live Metrics */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20, marginTop: 16 }}>
+          <div>
+            <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', color: '#64748b', display: 'block', marginBottom: 8 }}>
+              ENGINE SPECIFICATIONS &amp; COLD TRUTH:
+            </span>
+            <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13, color: '#334155', lineHeight: 1.6 }}>
+              {activeScene.highlights.map((h, i) => (
+                <li key={i}>{h}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
+            {activeScene.metrics.map((m, i) => (
+              <div
+                key={i}
+                style={{
+                  background: '#ffffff',
+                  border: '1px solid rgba(99, 102, 241, 0.2)',
+                  borderRadius: 12,
+                  padding: '12px 14px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 4,
+                  boxShadow: '0 2px 8px rgba(15, 23, 42, 0.04)',
+                }}
+              >
+                <small style={{ fontSize: 10, fontWeight: 800, textTransform: 'uppercase', color: '#64748b' }}>{m.label}</small>
+                <strong style={{ fontSize: 14, color: m.tone === 'positive' ? '#059669' : m.tone === 'warning' ? '#d97706' : '#4f46e5' }}>{m.value}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 20, flexWrap: 'wrap' }}>
+          <button className="primary-button" onClick={() => onJumpToFeature(activeScene.targetView)}>
+            <span>{activeScene.actionCta} in Live Workspace ↗</span>
+          </button>
+          <button className="text-action" onClick={onGoAuth}>
+            <span>1-Click Test Demo Account ↗</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Keynote Device Screen Stage with Animated Virtual Operator Cursor */}
+      <div className="keynote-device-frame">
+        {/* macOS Chrome Header */}
+        <div className="keynote-device-topbar">
+          <div className="keynote-window-dots">
+            <span className="keynote-dot keynote-dot--close" />
+            <span className="keynote-dot keynote-dot--min" />
+            <span className="keynote-dot keynote-dot--zoom" />
+          </div>
+          <div className="keynote-address-bar">
+            <span style={{ color: '#10b981' }}>🔒</span>
+            <span>https://my-economy.network/app/{activeScene.targetView}?region={activeCountry.code}</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span style={{ fontSize: 11, fontWeight: 700, color: '#64748b' }}>Operator: Autonomous Copilot</span>
+          </div>
+        </div>
+
+        {/* Animated Virtual Operator Cursor */}
+        <div
+          className="keynote-operator-cursor"
+          style={{
+            top: `${activeScene.cursorTarget.y}%`,
+            left: `${activeScene.cursorTarget.x}%`,
+          }}
+        >
+          {isClicking && <div className="keynote-click-ripple" />}
+          <svg className="keynote-cursor-pointer" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M3 3L10.07 19.97L12.58 12.58L19.97 10.07L3 3Z"
+              fill="#4f46e5"
+              stroke="#ffffff"
+              strokeWidth="2"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <div className="keynote-cursor-label">
+            {activeScene.operatorActionDescription}
+          </div>
+        </div>
+
+        {/* Viewport Content based on activeScene */}
+        <div style={{ padding: 28, background: '#f8fafc', flex: 1, display: 'flex', flexDirection: 'column', gap: 20 }}>
+          {activeScene.id === 'keynote-act-1-country' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 13, fontWeight: 800, color: '#4f46e5', textTransform: 'uppercase' }}>
+                  SOVEREIGN ECONOMIC ENGINE DISPATCH · 5 ACTIVE NATIONS
+                </span>
+                <span className="status-word status-word--green">PRECISION VERIFIED</span>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12 }}>
+                {(Object.keys(countryConfigs) as CountryCode[]).map((cCode) => {
+                  const c = countryConfigs[cCode];
+                  const isCur = cCode === activeCountry.code;
+                  return (
+                    <div
+                      key={cCode}
+                      style={{
+                        padding: '14px 16px',
+                        background: '#ffffff',
+                        border: isCur ? '2px solid #4f46e5' : '1px solid var(--line)',
+                        borderRadius: 12,
+                        boxShadow: isCur ? '0 8px 24px rgba(79, 70, 229, 0.12)' : 'none',
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
+                        <span style={{ fontSize: 24 }}>{c.flag}</span>
+                        <strong style={{ fontSize: 12, color: isCur ? '#4f46e5' : '#64748b' }}>{c.currencySymbol} {c.currencyCode}</strong>
+                      </div>
+                      <strong style={{ fontSize: 14, color: '#0f172a', display: 'block' }}>{c.name}</strong>
+                      <small style={{ fontSize: 11, color: '#64748b' }}>{c.bankingStandard.split('+')[0]}</small>
+                    </div>
+                  );
+                })}
+              </div>
+              <div style={{ padding: 16, background: '#ffffff', borderRadius: 12, border: '1px solid rgba(99, 102, 241, 0.2)' }}>
+                <strong style={{ color: '#059669' }}>Zero Float Drift Guarantee:</strong> All balances calculated in integer minor units (paise / cents / pence) to prevent IEEE-754 loss.
+              </div>
+            </div>
+          )}
+
+          {activeScene.id === 'keynote-act-2-multirail' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 13, fontWeight: 800, color: '#0284c7', textTransform: 'uppercase' }}>
+                  REBIT-AA &amp; OPEN FINANCE LINKED RAILS
+                </span>
+                <span className="status-word status-word--green">CONSENT SIGNED</span>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 12 }}>
+                {activeCountry.sampleAccounts.map((acc, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      padding: '14px 16px',
+                      background: '#ffffff',
+                      borderRadius: 12,
+                      border: '1px solid var(--line)',
+                      boxShadow: '0 4px 14px rgba(15, 23, 42, 0.04)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 4,
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: 11, fontWeight: 800, color: acc.color }}>{acc.provider}</span>
+                      <small style={{ color: '#64748b' }}>{acc.masked}</small>
+                    </div>
+                    <strong style={{ fontSize: 18, color: '#0f172a' }}>{acc.balanceFormatted}</strong>
+                    <span style={{ fontSize: 11, color: '#64748b' }}>{acc.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {activeScene.id === 'keynote-act-3-ai-copilot' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 13, fontWeight: 800, color: '#7c3aed', textTransform: 'uppercase' }}>
+                  AUTONOMOUS AI FINANCIAL REPRESENTATIVE
+                </span>
+                <span className="status-word status-word--green">ACTIVE DISPATCH</span>
+              </div>
+              <div style={{ background: '#ffffff', border: '1px solid rgba(124, 58, 237, 0.25)', borderRadius: 12, padding: 18, boxShadow: '0 4px 16px rgba(15, 23, 42, 0.04)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+                  <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#7c3aed', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 12 }}>
+                    AI
+                  </div>
+                  <strong>AwnNORA Copilot (Muse-Spark-1.3)</strong>
+                </div>
+                <p style={{ margin: '0 0 12px', fontSize: 14, color: '#334155', lineHeight: 1.5 }}>
+                  Forensic scan completed across 86 transactions in the selected period. <strong>1 duplicate charge detected:</strong> ₹649 debit on Axis Platinum card repeated 48 hours apart.
+                </p>
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 14px', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 8, color: '#dc2626', fontSize: 12, fontWeight: 700 }}>
+                  <span>Dispute Package Prepared · SHA-256 Checksum Locked</span>
+                </div>
+              </div>
+              <div style={{ background: '#ffffff', border: '1px solid var(--line)', borderRadius: 10, padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
+                <span style={{ color: '#4f46e5', fontWeight: 700 }}>💬 Operator:</span>
+                <span style={{ fontSize: 13, color: '#0f172a', fontFamily: 'monospace' }}>
+                  {typedChars || 'Audit my statements for duplicate debits and fee anomalies'}<span className="blinking-cursor">|</span>
+                </span>
+              </div>
+            </div>
+          )}
+
+          {activeScene.id === 'keynote-act-4-guardian-dispute' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 13, fontWeight: 800, color: '#e11d48', textTransform: 'uppercase' }}>
+                  GUARDIAN INTERCEPT &amp; ACTION CASEBOOK
+                </span>
+                <span className="status-word status-word--green">EVIDENCE FROZEN</span>
+              </div>
+              <div style={{ background: '#ffffff', border: '1px solid rgba(225, 29, 72, 0.3)', borderRadius: 12, padding: 20, boxShadow: '0 6px 20px rgba(225, 29, 72, 0.08)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                  <strong style={{ fontSize: 16, color: '#0f172a' }}>CASE #DUP-001: Streaming Subscription Rebilling</strong>
+                  <span style={{ padding: '3px 10px', borderRadius: 999, background: '#fef2f2', color: '#e11d48', fontWeight: 800, fontSize: 11 }}>
+                    ACTION READY
+                  </span>
+                </div>
+                <p style={{ margin: '0 0 12px', fontSize: 13, color: '#475569' }}>
+                  Two identical {activeCountry.currencySymbol}649 charges posted 48 hours apart in the same cycle. Cryptographic evidence package created.
+                </p>
+                <div style={{ padding: '8px 12px', background: '#f1f5f9', borderRadius: 6, fontSize: 11, fontFamily: 'monospace', color: '#334155' }}>
+                  EVIDENCE SHA-256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeScene.id === 'keynote-act-5-opportunity' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 13, fontWeight: 800, color: '#059669', textTransform: 'uppercase' }}>
+                  REAL-TIME OPPORTUNITY RADAR
+                </span>
+                <span className="status-word status-word--green">ESCROW VERIFIED</span>
+              </div>
+              <div style={{ background: '#ffffff', border: '1px solid rgba(5, 150, 105, 0.3)', borderRadius: 12, padding: 20, boxShadow: '0 6px 20px rgba(5, 150, 105, 0.08)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                  <span style={{ fontSize: 11, fontWeight: 800, color: '#059669', textTransform: 'uppercase' }}>
+                    {activeCountry.featuredOpportunity.source}
+                  </span>
+                  <span style={{ padding: '2px 8px', borderRadius: 6, background: '#ecfdf5', color: '#059669', fontWeight: 800, fontSize: 11 }}>
+                    98% PROFILE MATCH
+                  </span>
+                </div>
+                <strong style={{ fontSize: 18, color: '#0f172a', display: 'block', marginBottom: 6 }}>
+                  {activeCountry.featuredOpportunity.title}
+                </strong>
+                <div style={{ display: 'flex', gap: 20, fontSize: 14 }}>
+                  <span>Rate: <strong>{activeCountry.featuredOpportunity.rate}</strong></span>
+                  <span>Estimated: <strong style={{ color: '#059669' }}>{activeCountry.featuredOpportunity.estimatedMonthly}</strong></span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeScene.id === 'keynote-act-6-entitlements' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 13, fontWeight: 800, color: '#d97706', textTransform: 'uppercase' }}>
+                  SOVEREIGN GOVERNMENT ENTITLEMENTS ENGINE
+                </span>
+                <span className="status-word status-word--green">PRE-ASSESSED</span>
+              </div>
+              <div style={{ background: '#ffffff', border: '1px solid rgba(217, 119, 6, 0.3)', borderRadius: 12, padding: 20, boxShadow: '0 6px 20px rgba(217, 119, 6, 0.08)' }}>
+                <small style={{ fontSize: 11, fontWeight: 800, color: '#d97706', textTransform: 'uppercase' }}>
+                  {activeCountry.featuredSubsidy.ministry}
+                </small>
+                <strong style={{ fontSize: 18, color: '#0f172a', display: 'block', margin: '4px 0' }}>
+                  {activeCountry.featuredSubsidy.title}
+                </strong>
+                <strong style={{ fontSize: 16, color: '#059669', display: 'block', marginBottom: 8 }}>
+                  {activeCountry.featuredSubsidy.valueAnnual}
+                </strong>
+                <p style={{ margin: 0, fontSize: 13, color: '#475569' }}>
+                  {activeCountry.featuredSubsidy.description}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {activeScene.id === 'keynote-act-7-commons' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 13, fontWeight: 800, color: '#4f46e5', textTransform: 'uppercase' }}>
+                  COLLECTIVE COMMONS &amp; BULK QUORUM
+                </span>
+                <span className="status-word status-word--green">QUORUM UNLOCKED</span>
+              </div>
+              <div style={{ background: '#ffffff', border: '1px solid rgba(79, 70, 229, 0.3)', borderRadius: 12, padding: 20, boxShadow: '0 6px 20px rgba(79, 70, 229, 0.08)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                  <strong>{activeCountry.commonsLocality}</strong>
+                  <strong style={{ color: '#059669' }}>10 / 10 Joined (100%)</strong>
+                </div>
+                <div style={{ height: 8, background: '#e2e8f0', borderRadius: 4, overflow: 'hidden', marginBottom: 12 }}>
+                  <div style={{ height: '100%', width: '100%', background: '#4f46e5' }} />
+                </div>
+                <strong style={{ color: '#059669' }}>{activeCountry.commonsSavings}</strong>
+              </div>
+            </div>
+          )}
+
+          {activeScene.id === 'keynote-act-8-adsense-monetization' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 13, fontWeight: 800, color: '#059669', textTransform: 'uppercase' }}>
+                  GOOGLE ADSENSE MONETIZATION &amp; AUTOMATED BILL OFFSET
+                </span>
+                <span className="status-word status-word--green">100% OFFSET</span>
+              </div>
+              <div style={{ background: '#ffffff', border: '1px solid rgba(5, 150, 105, 0.3)', borderRadius: 12, padding: 20, boxShadow: '0 6px 20px rgba(5, 150, 105, 0.08)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                  <strong style={{ fontSize: 16 }}>Google AdSense Stream (pub-89241029412491)</strong>
+                  <span style={{ fontSize: 14, fontWeight: 800, color: '#059669' }}>{activeCountry.adSenseYield}</span>
+                </div>
+                <div style={{ padding: '12px 14px', background: '#ecfdf5', borderRadius: 8, border: '1px solid #a7f3d0', color: '#065f46', fontSize: 13 }}>
+                  <strong>{activeCountry.utilityOffset}</strong> — Zero cash deducted from your checking account!
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+// ==========================================
+// 3. LOGIN & SECURITY HUB PAGE
+// ==========================================
+// ==========================================
+// COUNTRY & REGIONAL JURISDICTION SELECTOR MODAL
+// ==========================================
+function CountrySelectorModal({
+  selectedCountry,
+  onSelect,
+  onClose,
+}: {
+  selectedCountry: CountryCode;
+  onSelect: (code: CountryCode) => void;
+  onClose: () => void;
+}) {
+  return (
+    <div className="dialog-backdrop" role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <section className="login-dialog" style={{ maxWidth: 880 }} role="dialog" aria-modal="true">
+        <button className="dialog-close" onClick={onClose} aria-label="Close">×</button>
+        <ShellLabel>SOVEREIGN REGIONAL ECONOMIC ENGINE</ShellLabel>
+        <h2>Select Your Country &amp; Economic Jurisdiction</h2>
+        <p style={{ margin: '0 0 16px', color: '#475569' }}>
+          AwnNORA dynamically re-aligns currency arithmetic, instant payment rails, government subsidy databases, and opportunity registries to your sovereign nation.
+        </p>
+
+        <div className="country-grid-modal">
+          {(Object.keys(countryConfigs) as CountryCode[]).map((cCode) => {
+            const c = countryConfigs[cCode];
+            const isSelected = cCode === selectedCountry;
+            return (
+              <button
+                key={cCode}
+                className={`country-card-option ${isSelected ? 'is-selected' : ''}`}
+                onClick={() => onSelect(cCode)}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <span style={{ fontSize: 28 }}>{c.flag}</span>
+                  <span
+                    style={{
+                      fontSize: 11,
+                      fontWeight: 800,
+                      padding: '3px 8px',
+                      borderRadius: 6,
+                      background: isSelected ? '#4f46e5' : '#f1f5f9',
+                      color: isSelected ? '#ffffff' : '#475569',
+                    }}
+                  >
+                    {isSelected ? 'ACTIVE ENGINE' : `${c.currencySymbol} ${c.currencyCode}`}
+                  </span>
+                </div>
+                <strong style={{ fontSize: 16, color: '#0f172a' }}>{c.name}</strong>
+                <small style={{ fontSize: 11, color: '#4f46e5', fontWeight: 700 }}>{c.bankingStandard}</small>
+                <span style={{ fontSize: 11, color: '#64748b', lineHeight: 1.4 }}>{c.railsDescriptor}</span>
+                <div style={{ marginTop: 6, padding: '8px 10px', background: '#f8fafc', borderRadius: 8, fontSize: 11, border: '1px solid var(--line)' }}>
+                  <strong style={{ color: '#0f172a' }}>Featured Subsidy:</strong> {c.featuredSubsidy.title} ({c.featuredSubsidy.valueAnnual})
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 16 }}>
+          <button className="secondary-button" onClick={onClose}>
+            Done
+          </button>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function LoginSecurityPage({
+  busy,
+  session,
+  onLogin,
+  onLaunchDemo,
+  onConnected,
+  onLogout,
+}: {
+  busy: boolean;
+  session: Session | null;
+  onLogin: (email: string, password: string) => void;
+  onLaunchDemo: () => void;
+  onConnected: (result: Session) => void;
+  onLogout: () => void;
+}) {
+  const [tab, setTab] = useState<'signin' | 'register' | 'verify'>('signin');
+  const [email, setEmail] = useState('demo@example.com');
+  const [displayName, setDisplayName] = useState('AwnNORA Demo Explorer');
+  const [password, setPassword] = useState('Password12345!');
+  const [verificationToken, setVerificationToken] = useState('');
+  const [pendingSession, setPendingSession] = useState<Session | null>(null);
+  const [localBusy, setLocalBusy] = useState(false);
+  const [localError, setLocalError] = useState('');
+  const [localNotice, setLocalNotice] = useState('');
+
+  const register = async () => {
+    setLocalBusy(true);
+    setLocalError('');
+    setLocalNotice('');
+    try {
+      const result = await api.register(email.trim(), password, displayName.trim());
+      setPendingSession(result);
+      setTab('verify');
+      setLocalNotice('Account created. Enter the one-time email verification token sent by your configured email adapter.');
+    } catch (cause) {
+      setLocalError(cause instanceof Error ? cause.message : 'Account registration failed.');
+    } finally {
+      setLocalBusy(false);
+    }
+  };
+
+  const verify = async () => {
+    if (!pendingSession) return;
+    setLocalBusy(true);
+    setLocalError('');
+    try {
+      await api.verifyEmail(verificationToken.trim());
+      const verifiedUser = await api.me(pendingSession.access_token);
+      onConnected({ ...pendingSession, user: verifiedUser });
+    } catch (cause) {
+      setLocalError(cause instanceof Error ? cause.message : 'Email verification failed.');
+    } finally {
+      setLocalBusy(false);
+    }
+  };
+
+  return (
+    <div className="login-security-page">
+      <section className="page-intro">
+        <div>
+          <ShellLabel>SECURITY &amp; ACCESS GATEWAY</ShellLabel>
+          <h1>
+            Your private economic space,<br />
+            <em>cryptographically fortified.</em>
+          </h1>
+          <p>
+            Choose between instant synthetic demo access for exploratory testing or establish a realistic, Argon2id-encrypted personal workspace.
+          </p>
+        </div>
+      </section>
+
+      <div className="login-security-layout">
+        {/* Left Side: Auth Card */}
+        <section className="auth-card">
+          <div className="demo-instant-box">
+            <span className="demo-badge">QUICK TEST ACCESS</span>
+            <h3>Explore Without Setup</h3>
+            <p>Launch a fully populated, pre-seeded synthetic test workspace with 9 connected payment rails, active dispute cases, and verified ONDC contracts.</p>
+            <button className="primary-button primary-button--glow primary-button--full" disabled={busy} onClick={onLaunchDemo}>
+              <span>⚡ Enter Instant Test Demo Workspace</span>
+            </button>
+          </div>
+
+          <div className="auth-divider">
+            <span>OR ESTABLISH A REALISTIC ACCOUNT</span>
+          </div>
+
+          {session ? (
+            <div className="authenticated-status-box">
+              <div className="auth-user-header">
+                <StatusDot tone="green" />
+                <strong>Signed in as {session.user.display_name}</strong>
+              </div>
+              <small>{session.user.email} · Verified Session Active</small>
+              <div className="auth-status-actions">
+                <button className="primary-button" onClick={() => onConnected(session)}>
+                  Go to AI Pilot Workspace ↗
+                </button>
+                <button className="secondary-button" onClick={onLogout}>
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="credentials-form-box">
+              {localNotice && <div className="dialog-notice">{localNotice}</div>}
+              {localError && <div className="dialog-error">{localError}</div>}
+
+              {tab === 'verify' ? (
+                <form onSubmit={(e) => { e.preventDefault(); void verify(); }} className="auth-form">
+                  <ShellLabel>EMAIL CHALLENGE</ShellLabel>
+                  <label>
+                    <span>VERIFICATION TOKEN</span>
+                    <input
+                      type="text"
+                      required
+                      value={verificationToken}
+                      onChange={(e) => setVerificationToken(e.target.value)}
+                      placeholder="Paste 32+ character verification token..."
+                    />
+                  </label>
+                  <button className="primary-button primary-button--full" disabled={localBusy}>
+                    {localBusy ? 'Verifying…' : 'Verify &amp; Enter Workspace'} <span>↗</span>
+                  </button>
+                  <button type="button" className="text-action" onClick={() => setTab('signin')}>
+                    Back to Sign In
+                  </button>
+                </form>
+              ) : (
+                <>
+                  <div className="dialog-tabs">
+                    <button
+                      type="button"
+                      className={tab === 'signin' ? 'is-active' : ''}
+                      onClick={() => { setTab('signin'); setLocalError(''); }}
+                    >
+                      Sign In
+                    </button>
+                    <button
+                      type="button"
+                      className={tab === 'register' ? 'is-active' : ''}
+                      onClick={() => { setTab('register'); setLocalError(''); }}
+                    >
+                      Create Realistic Account
+                    </button>
+                  </div>
+
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      if (tab === 'signin') onLogin(email.trim(), password);
+                      else void register();
+                    }}
+                    className="auth-form"
+                  >
+                    {tab === 'register' && (
+                      <label>
+                        <span>YOUR NAME</span>
+                        <input
+                          type="text"
+                          required
+                          value={displayName}
+                          onChange={(e) => setDisplayName(e.target.value)}
+                        />
+                      </label>
+                    )}
+                    <label>
+                      <span>EMAIL ADDRESS</span>
+                      <input
+                        type="email"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                    </label>
+                    <label>
+                      <span>PASSWORD (MIN 12 CHARACTERS)</span>
+                      <input
+                        type="password"
+                        required
+                        minLength={12}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </label>
+                    <button className="primary-button primary-button--full" disabled={busy || localBusy}>
+                      {busy || localBusy ? 'Connecting…' : tab === 'signin' ? 'Sign In to Workspace' : 'Create Private Account'} <span>↗</span>
+                    </button>
+                  </form>
+                </>
+              )}
+            </div>
+          )}
+        </section>
+
+        {/* Right Side: Security & Realistic Banking Architecture */}
+        <section className="security-architecture-panel">
+          <div className="section-heading">
+            <div>
+              <ShellLabel>TRUST &amp; CRYPTOGRAPHIC PROOFS</ShellLabel>
+              <h2>Security Architecture &amp; Real Banking Rails</h2>
+            </div>
+          </div>
+
+          <div className="security-specs-list">
+            <div className="security-spec-card">
+              <span className="spec-icon">🏦</span>
+              <div>
+                <strong>RBI Account Aggregator (AA) Integration</strong>
+                <p>Real bank accounts are connected via certified Financial Information Providers (FIPs). Consent is electronic, signed, time-bound, and revocable. AwnNORA never touches banking passwords or OTPs.</p>
+              </div>
+            </div>
+
+            <div className="security-spec-card">
+              <span className="spec-icon">💳</span>
+              <div>
+                <strong>Card-on-File Tokenization (CoFT)</strong>
+                <p>Card numbers are tokenized directly with Visa, Mastercard, and RuPay networks under RBI guidelines. Transaction surveillance tracks posted debits without storing PAN data.</p>
+              </div>
+            </div>
+
+            <div className="security-spec-card">
+              <span className="spec-icon">🔐</span>
+              <div>
+                <strong>Argon2id &amp; Ephemeral Sessions</strong>
+                <p>Passphrases are salted and stretched using Argon2id with memory-hard parameters. Sessions use cryptographically random 256-bit opaque tokens with a strict 12-hour expiration.</p>
+              </div>
+            </div>
+
+            <div className="security-spec-card">
+              <span className="spec-icon">📜</span>
+              <div>
+                <strong>SHA-256 Immutable Evidence Ledger</strong>
+                <p>Every Guardian finding and Casebook state transition is hashed. Evidence snapshots are frozen at case creation so merchants and banks cannot dispute statement timestamps.</p>
+              </div>
+            </div>
+
+            <div className="security-spec-card">
+              <span className="spec-icon">🤝</span>
+              <div>
+                <strong>Zero-Knowledge Differential Privacy</strong>
+                <p>Commons collective campaigns aggregate demand clusters using differential privacy. No individual account names, transaction rows, or balances are shared with suppliers or cohort peers.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+}
+
+// ==========================================
+// 4. LIVE ECONOMIC STREAM TICKER
 // ==========================================
 function LiveEconomicStreamTicker({
   events,
@@ -1038,7 +2238,7 @@ function LiveEconomicStreamTicker({
 }
 
 // ==========================================
-// 1. AI ASSISTANT / AUTONOMOUS REPRESENTATIVE
+// 5. AI ASSISTANT / AUTONOMOUS REPRESENTATIVE
 // ==========================================
 function AssistantPage({
   messages,
@@ -1059,6 +2259,7 @@ function AssistantPage({
 
   const quickPrompts = [
     { label: '⚡ Audit accounts for leaks & duplicate charges', text: 'Audit my accounts for duplicate charges and rogue debits.' },
+    { label: '📊 View Google AdSense utility bill offset', text: 'How is Google AdSense ad revenue offsetting my monthly living expenses?' },
     { label: '💳 Link PhonePe / GPay / Bank / Card', text: 'Help me connect my UPI and bank accounts to the system.' },
     { label: '💼 Find highest paying Skill India / ONDC gigs', text: 'Find the best matched income opportunities on Skill India and ONDC.' },
     { label: '🏛️ Claim PM-Surya & SVANidhi government grants', text: 'Check my eligibility for government subsidies and direct benefit transfers.' },
@@ -1098,7 +2299,7 @@ function AssistantPage({
           <div className="telemetry-card">
             <span className="telemetry-label">CONNECTED RAILS</span>
             <strong className="telemetry-value text-cyan">{railsCount} Rails Active</strong>
-            <small>PhonePe · GPay · HDFC · SBI · Stripe</small>
+            <small>PhonePe · GPay · HDFC · SBI · Stripe · AdSense</small>
           </div>
           <div className="telemetry-card">
             <span className="telemetry-label">GUARDIAN WATCH</span>
@@ -1170,7 +2371,7 @@ function AssistantPage({
           <input
             type="text"
             className="chat-input-field"
-            placeholder="Command your agent: e.g. 'Audit my accounts', 'Connect new UPI', 'Find ONDC projects'..."
+            placeholder="Command your agent: e.g. 'Audit my accounts', 'Show AdSense offset', 'Find ONDC projects'..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
           />
@@ -1193,8 +2394,8 @@ function AssistantPage({
         <div className="jump-tiles-grid">
           <button className="jump-tile jump-tile--cyan" onClick={() => onNavigate('accounts')}>
             <span className="jump-icon">💳</span>
-            <strong>Connected Rails & Banks</strong>
-            <p>Manage UPI, Debit/ATM cards, Stripe, PayPal and HDFC/SBI bank accounts.</p>
+            <strong>Connected Rails &amp; Banks</strong>
+            <p>Manage UPI, Debit/ATM cards, Stripe, AdSense and HDFC/SBI bank accounts.</p>
             <span className="jump-cta">Manage Rails ↗</span>
           </button>
           <button className="jump-tile jump-tile--emerald" onClick={() => onNavigate('opportunity')}>
@@ -1205,7 +2406,7 @@ function AssistantPage({
           </button>
           <button className="jump-tile jump-tile--amber" onClick={() => onNavigate('entitlements')}>
             <span className="jump-icon">🏛️</span>
-            <strong>Entitlements & Grants</strong>
+            <strong>Entitlements &amp; Grants</strong>
             <p>PM Surya Ghar Rooftop Solar, PM-SVANidhi, and Ayushman Bharat claim packs.</p>
             <span className="jump-cta">Claim Subsidies ↗</span>
           </button>
@@ -1222,33 +2423,36 @@ function AssistantPage({
 }
 
 // ==========================================
-// 2. ACCOUNTS & MULTI-RAIL HUB
+// 6. ACCOUNTS & MULTI-RAIL HUB
 // ==========================================
 function AccountsPage({
   rails,
+  adsenseStream,
   onOpenConnectModal,
   onReviewLeak,
 }: {
   rails: ConnectedRail[];
+  adsenseStream: AdSenseMonetizationStream;
   onOpenConnectModal: () => void;
   onReviewLeak: () => void;
 }) {
-  const upiRails = rails.filter((r) => r.type === 'upi' || r.type === 'wallet');
+  const upiRails = rails.filter((r) => r.type === 'upi' || (r.type === 'wallet' && !r.name.includes('AdSense')));
   const bankRails = rails.filter((r) => r.type === 'bank');
   const cardRails = rails.filter((r) => r.type === 'card');
   const globalRails = rails.filter((r) => r.type === 'global');
+  const adsenseRails = rails.filter((r) => r.name.includes('AdSense'));
 
   return (
     <div className="accounts-page">
       <section className="page-intro accounts-intro">
         <div>
-          <ShellLabel>MULTI-RAIL PAYMENT & BANKING HUB</ShellLabel>
+          <ShellLabel>MULTI-RAIL PAYMENT, BANKING &amp; YIELD HUB</ShellLabel>
           <h1>
             All your economic rails,<br />
-            <em>unified & protected.</em>
+            <em>unified &amp; protected.</em>
           </h1>
           <p>
-            Connect any Indian UPI rail, bank account, ATM/debit/credit card, or global merchant rail. Autonomous Guardian continuously watches every rail against fraudulent debits and stealth subscriptions.
+            Connect any Indian UPI rail, bank account, ATM/debit/credit card, global merchant rail, or digital AdSense publisher stream. Autonomous Guardian continuously watches every rail against fraudulent debits and stealth subscriptions.
           </p>
         </div>
         <div className="intro-actions">
@@ -1262,7 +2466,7 @@ function AccountsPage({
       <section className="metric-band accounts-metrics" aria-label="Accounts overview">
         <Metric
           label="TOTAL LIQUID BALANCE"
-          value="₹2,33,920.00"
+          value="₹2,50,320.00"
           sub={`${rails.length} linked rails in active sync`}
           tone="positive"
         />
@@ -1273,16 +2477,16 @@ function AccountsPage({
           tone="normal"
         />
         <Metric
-          label="CORE BANK ACCOUNTS"
+          label="CORE BANK DEPOSITS"
           value={`${bankRails.length} Connected`}
           sub="HDFC Salary · SBI Emergency Savings"
           tone="normal"
         />
         <Metric
-          label="GUARDIAN SURVEILLANCE"
-          value="1 Attention"
-          sub="Axis Card: duplicate ₹649 flagged"
-          tone="negative"
+          label="ADSENSE YIELD BUFFER"
+          value="₹16,400.00 / mo"
+          sub="Offsetting 100% of power & fiber bills"
+          tone="positive"
         />
       </section>
 
@@ -1296,8 +2500,60 @@ function AccountsPage({
           </div>
         </div>
         <button className="primary-button primary-button--small" onClick={onReviewLeak}>
-          Review & Freeze Case ↗
+          Review &amp; Freeze Case ↗
         </button>
+      </div>
+
+      {/* Special Section: Google AdSense & Creator Monetization Streams */}
+      <div className="rail-group-section adsense-section-wrap">
+        <div className="section-heading">
+          <div>
+            <ShellLabel>DIGITAL ASSET MONETIZATION</ShellLabel>
+            <h2>Google AdSense &amp; Creator Yield Streams</h2>
+          </div>
+          <span className="verified-chip">✓ Verified Publisher ID Linked</span>
+        </div>
+
+        <div className="adsense-featured-card">
+          <div className="adsense-card-header">
+            <div className="adsense-logo-monogram">G</div>
+            <div>
+              <strong>{adsenseStream.channel_name}</strong>
+              <small>Publisher ID: {adsenseStream.publisher_id} · Status: Active Yield</small>
+            </div>
+            <span className="adsense-status-tag">EFT Payouts Enabled</span>
+          </div>
+
+          <div className="adsense-metrics-row">
+            <div>
+              <span className="adsense-metric-label">MONTHLY IMPRESSIONS</span>
+              <strong>{adsenseStream.monthly_impressions}</strong>
+            </div>
+            <div>
+              <span className="adsense-metric-label">AVERAGE eCPM</span>
+              <strong>{adsenseStream.average_ecpm}</strong>
+            </div>
+            <div>
+              <span className="adsense-metric-label">NET MONTHLY AD YIELD</span>
+              <strong className="text-emerald">{adsenseStream.net_monthly_yield}</strong>
+            </div>
+            <div>
+              <span className="adsense-metric-label">LAST SETTLEMENT</span>
+              <strong>{adsenseStream.last_payout_date}</strong>
+            </div>
+          </div>
+
+          <div className="adsense-offset-box">
+            <strong>⚡ Automated Living Expense Offset Rule:</strong>
+            <p>{adsenseStream.offset_target_obligation}. Ad revenue automatically neutralizes these costs before they impact your salary deposit.</p>
+          </div>
+        </div>
+
+        <div className="rail-cards-grid" style={{ marginTop: '12px' }}>
+          {adsenseRails.map((rail) => (
+            <RailCard key={rail.id} rail={rail} />
+          ))}
+        </div>
       </div>
 
       {/* Section 1: UPI & Wallets */}
@@ -1305,7 +2561,7 @@ function AccountsPage({
         <div className="section-heading">
           <div>
             <ShellLabel>INSTANT PAYMENT RAILS</ShellLabel>
-            <h2>UPI Apps & Wallets</h2>
+            <h2>UPI Apps &amp; Wallets</h2>
           </div>
           <button className="text-action" onClick={onOpenConnectModal}>+ Link another UPI VPA</button>
         </div>
@@ -1321,7 +2577,7 @@ function AccountsPage({
         <div className="section-heading">
           <div>
             <ShellLabel>DEPOSIT ACCOUNTS</ShellLabel>
-            <h2>Core Banking & Emergency Savings</h2>
+            <h2>Core Banking &amp; Emergency Savings</h2>
           </div>
           <button className="text-action" onClick={onOpenConnectModal}>+ Link Bank Account</button>
         </div>
@@ -1337,7 +2593,7 @@ function AccountsPage({
         <div className="section-heading">
           <div>
             <ShellLabel>CARD RAILS</ShellLabel>
-            <h2>Credit, Debit & ATM Cards</h2>
+            <h2>Credit, Debit &amp; ATM Cards</h2>
           </div>
           <button className="text-action" onClick={onOpenConnectModal}>+ Add Card</button>
         </div>
@@ -1352,7 +2608,7 @@ function AccountsPage({
       <div className="rail-group-section">
         <div className="section-heading">
           <div>
-            <ShellLabel>CROSS-BORDER & MERCHANT</ShellLabel>
+            <ShellLabel>CROSS-BORDER &amp; MERCHANT</ShellLabel>
             <h2>Global Payout Rails</h2>
           </div>
           <button className="text-action" onClick={onOpenConnectModal}>+ Link Stripe / PayPal</button>
@@ -1407,9 +2663,11 @@ function RailCard({ rail, onAttentionClick }: { rail: ConnectedRail; onAttention
 
 // Modal for Connecting New Payment Rails
 function ConnectRailModal({
+  activeCountry,
   onClose,
   onAddRail,
 }: {
+  activeCountry: CountryConfig;
   onClose: () => void;
   onAddRail: (rail: ConnectedRail) => void;
 }) {
@@ -1420,10 +2678,16 @@ function ConnectRailModal({
   const [syncing, setSyncing] = useState(false);
 
   const providerDefaults: Record<RailType, string[]> = {
-    upi: ['PhonePe', 'Google Pay', 'Paytm', 'Amazon Pay', 'BHIM UPI'],
-    bank: ['HDFC Bank', 'State Bank of India', 'ICICI Bank', 'Axis Bank', 'Kotak Mahindra'],
-    card: ['Axis Bank Credit Card', 'HDFC Regalia Debit', 'SBI Global ATM Card', 'RuPay Platinum'],
-    wallet: ['Amazon Pay Wallet', 'Paytm Wallet', 'Mobikwik'],
+    upi: activeCountry.code === 'IN'
+      ? ['PhonePe', 'Google Pay', 'Paytm', 'Amazon Pay', 'BHIM UPI']
+      : activeCountry.code === 'US'
+        ? ['Apple Cash', 'Venmo Instant', 'Zelle RTP', 'Cash App']
+        : ['Faster Payments', 'Monzo Instant', 'Revolut Pay', 'SEPA Instant'],
+    bank: activeCountry.sampleAccounts.map((a) => a.provider).slice(0, 5),
+    card: activeCountry.code === 'IN'
+      ? ['Axis Bank Credit Card', 'HDFC Regalia Debit', 'SBI Global ATM Card', 'RuPay Platinum']
+      : ['Visa Infinite', 'Mastercard World Elite', 'American Express Platinum'],
+    wallet: ['Google AdSense Stream', 'PayPal Wallet', 'Amazon Pay Balance'],
     global: ['Stripe USD Merchant', 'PayPal International', 'Wise Multi-Currency'],
   };
 
@@ -1434,6 +2698,7 @@ function ConnectRailModal({
     if (newType === 'upi') setIdentifier('user@okaxis');
     else if (newType === 'bank') setIdentifier('A/C •••• 9921');
     else if (newType === 'card') setIdentifier('Card •••• 4410');
+    else if (newType === 'wallet') setIdentifier('pub-89241029412491');
     else setIdentifier('acct_stripe_live_usd');
   };
 
@@ -1451,6 +2716,7 @@ function ConnectRailModal({
         'State Bank of India': { color: '#280071', gradient: 'linear-gradient(135deg, #280071, #0087CF)' },
         'Axis Bank Credit Card': { color: '#97144D', gradient: 'linear-gradient(135deg, #97144D, #670830)' },
         'Stripe USD Merchant': { color: '#635BFF', gradient: 'linear-gradient(135deg, #635BFF, #0A2540)' },
+        'Google AdSense Stream': { color: '#34A853', gradient: 'linear-gradient(135deg, #0F9D58, #4285F4)' },
       };
 
       const branding = colors[provider] || {
@@ -1466,8 +2732,8 @@ function ConnectRailModal({
         provider,
         masked_identifier: identifier,
         balance_minor: minor,
-        balance_formatted: `₹${Number(initialBalance || 0).toLocaleString('en-IN')}.00`,
-        currency: 'INR',
+        balance_formatted: `${activeCountry.currencySymbol}${Number(initialBalance || 0).toLocaleString(activeCountry.locale)}.00`,
+        currency: activeCountry.currencyCode,
         status: 'ACTIVE',
         color: branding.color,
         accent_gradient: branding.gradient,
@@ -1492,6 +2758,7 @@ function ConnectRailModal({
           <button type="button" className={`rail-type-btn ${type === 'upi' ? 'is-active' : ''}`} onClick={() => handleTypeChange('upi')}>UPI Apps</button>
           <button type="button" className={`rail-type-btn ${type === 'bank' ? 'is-active' : ''}`} onClick={() => handleTypeChange('bank')}>Banks</button>
           <button type="button" className={`rail-type-btn ${type === 'card' ? 'is-active' : ''}`} onClick={() => handleTypeChange('card')}>Cards / ATM</button>
+          <button type="button" className={`rail-type-btn ${type === 'wallet' ? 'is-active' : ''}`} onClick={() => handleTypeChange('wallet')}>AdSense / Wallets</button>
           <button type="button" className={`rail-type-btn ${type === 'global' ? 'is-active' : ''}`} onClick={() => handleTypeChange('global')}>Stripe / PayPal</button>
         </div>
 
@@ -1506,13 +2773,13 @@ function ConnectRailModal({
           </label>
 
           <label>
-            <span>{type === 'upi' ? 'UPI VPA HANDLE' : type === 'bank' ? 'ACCOUNT NUMBER' : type === 'card' ? 'CARD NUMBER' : 'ACCOUNT ID'}</span>
+            <span>{type === 'upi' ? 'UPI VPA HANDLE' : type === 'bank' ? 'ACCOUNT NUMBER' : type === 'card' ? 'CARD NUMBER' : type === 'wallet' ? 'PUBLISHER ID' : 'ACCOUNT ID'}</span>
             <input
               type="text"
               required
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
-              placeholder="e.g. mobile@upi or A/C 99824..."
+              placeholder="e.g. mobile@upi, A/C 99824, pub-8924102..."
             />
           </label>
 
@@ -1532,7 +2799,7 @@ function ConnectRailModal({
           </div>
 
           <button className="primary-button primary-button--full" disabled={syncing}>
-            {syncing ? 'Verifying with Banking Network…' : 'Link Rail & Activate Guardian'} <span>↗</span>
+            {syncing ? 'Verifying with Banking Network…' : 'Link Rail &amp; Activate Guardian'} <span>↗</span>
           </button>
         </form>
       </section>
@@ -1541,7 +2808,7 @@ function ConnectRailModal({
 }
 
 // ==========================================
-// 3. OVERVIEW PAGE (POSITION & POWER)
+// 7. OVERVIEW PAGE (POSITION & POWER)
 // ==========================================
 function OverviewPage({
   report,
@@ -1775,7 +3042,7 @@ function OverviewPage({
           </button>
           <div style={{ marginTop: '8px', textAlign: 'right' }}>
             <button className="text-action" onClick={onIntelligence}>
-              Meta AI & Data Permissions ↗
+              Meta AI &amp; Data Permissions ↗
             </button>
           </div>
         </aside>
@@ -1788,7 +3055,7 @@ function OverviewPage({
         </div>
         <div className="engine-item">
           <strong>Guardian</strong>
-          <small>Protection & evidence</small>
+          <small>Protection &amp; evidence</small>
           <span className="engine-state engine-state--active">Active Shield</span>
         </div>
         <div className="engine-item">
@@ -1798,7 +3065,7 @@ function OverviewPage({
         </div>
         <div className="engine-item">
           <strong>Entitlements</strong>
-          <small>Benefits & claims</small>
+          <small>Benefits &amp; claims</small>
           <span className="engine-state engine-state--amber">4 Eligible</span>
         </div>
         <div className="engine-item">
@@ -1812,7 +3079,7 @@ function OverviewPage({
 }
 
 // ==========================================
-// 4. CASEBOOK PAGE (MAKOS ACTIONS)
+// 8. CASEBOOK PAGE (MAKOS ACTIONS)
 // ==========================================
 function CasebookPage({
   cases,
@@ -2176,7 +3443,7 @@ function StatementImportPanel({
           <ShellLabel>LIVE SYNTHETIC DATA STREAM</ShellLabel>
           <h2>Synthetic Real-World Scenarios Active</h2>
           <p>
-            The workspace is loaded with multi-rail accounts (PhonePe, GPay, HDFC, SBI, Stripe) and live simulated events. Connect an authenticated private account at any time to import real CSV statements.
+            The workspace is loaded with multi-rail accounts (PhonePe, GPay, HDFC, SBI, Stripe, AdSense) and live simulated events. Connect an authenticated private account at any time to import real CSV statements.
           </p>
         </div>
         <div className="import-panel__right">
@@ -2262,7 +3529,7 @@ function StatementImportPanel({
 }
 
 // ==========================================
-// 5. PROTECTION PAGE (GUARDIAN SHIELD)
+// 9. PROTECTION PAGE (GUARDIAN SHIELD)
 // ==========================================
 function ProtectionPage({ cases, mode, onAI }: { cases: GuardianCase[]; mode: 'demo' | 'live'; onAI: () => void }) {
   return (
@@ -2288,7 +3555,7 @@ function ProtectionPage({ cases, mode, onAI }: { cases: GuardianCase[]; mode: 'd
         <div>
           <StatusDot tone="amber" />
           <span>DOCUMENT TRUST PIPELINE</span>
-          <strong>Autonomous Signature & Integrity Verification Active</strong>
+          <strong>Autonomous Signature &amp; Integrity Verification Active</strong>
         </div>
         <p>
           Evidence is cryptographically hashed with SHA-256. Guardian isolates discrepancies and prepares dispute timelines without moving funds.
@@ -2345,7 +3612,7 @@ function ProtectionPage({ cases, mode, onAI }: { cases: GuardianCase[]; mode: 'd
 }
 
 // ==========================================
-// 6. OPPORTUNITY PAGE (REAL SOURCES)
+// 10. OPPORTUNITY PAGE (REAL SOURCES)
 // ==========================================
 function OpportunityPage({
   opportunities,
@@ -2371,7 +3638,7 @@ function OpportunityPage({
         </div>
         <div className="intro-callout">
           <span>VERIFIED SOURCES</span>
-          <strong>Skill India & ONDC Linked</strong>
+          <strong>Skill India &amp; ONDC Linked</strong>
           <small>Escrow protected · Zero hidden commission cuts.</small>
         </div>
       </section>
@@ -2384,8 +3651,8 @@ function OpportunityPage({
 
       <div className="opportunity-layout">
         <div>
-          <ShellLabel>DISCOVERED MATCHES ({opportunities.length})</ShellLabel>
-          <h2>Ranked by Net Value & Match Fit</h2>
+          <ShellLabel>{`DISCOVERED MATCHES (${opportunities.length})`}</ShellLabel>
+          <h2>Ranked by Net Value &amp; Match Fit</h2>
 
           <div className="opportunity-items-stream">
             {opportunities.map((opp) => (
@@ -2451,7 +3718,7 @@ function OpportunityPage({
 }
 
 // ==========================================
-// 7. ENTITLEMENTS PAGE (GOVERNMENT GRANTS)
+// 11. ENTITLEMENTS PAGE (GOVERNMENT GRANTS)
 // ==========================================
 function EntitlementsPage({
   entitlements,
@@ -2491,8 +3758,8 @@ function EntitlementsPage({
 
       <div className="entitlement-table">
         <div className="table-head">
-          <span>PROGRAMME & MINISTRY</span>
-          <span>ANNUAL VALUE & DETAILS</span>
+          <span>PROGRAMME &amp; MINISTRY</span>
+          <span>ANNUAL VALUE &amp; DETAILS</span>
           <span>STATUS</span>
           <span>ACTION</span>
         </div>
@@ -2542,7 +3809,7 @@ function EntitlementsPage({
 }
 
 // ==========================================
-// 8. SOLO ENTERPRISE PAGE
+// 12. SOLO ENTERPRISE PAGE + ADSENSE OFFSET
 // ==========================================
 function EnterprisePage({
   cost,
@@ -2556,6 +3823,7 @@ function EnterprisePage({
   price,
   setPrice,
   mode,
+  adsenseStream,
 }: {
   cost: string;
   setCost: (v: string) => void;
@@ -2568,22 +3836,27 @@ function EnterprisePage({
   price: string;
   setPrice: (v: string) => void;
   mode: 'demo' | 'live';
+  adsenseStream: AdSenseMonetizationStream;
 }) {
+  const [includeAdSenseSubsidy, setIncludeAdSenseSubsidy] = useState(true);
+
   const fullCost = toPaise(cost) + toPaise(time) + toPaise(packaging) + toPaise(delivery);
-  const contribution = toPaise(price) - fullCost;
+  // If AdSense subsidy is enabled, offset 10% of fulfillment costs
+  const effectiveCost = includeAdSenseSubsidy ? (fullCost * 90n) / 100n : fullCost;
+  const contribution = toPaise(price) - effectiveCost;
   const margin = toPaise(price) > 0n ? Number((contribution * 10000n) / toPaise(price)) / 100 : 0;
 
   return (
     <>
       <section className="page-intro">
         <div>
-          <ShellLabel>ONE-PERSON ENTERPRISE</ShellLabel>
+          <ShellLabel>ONE-PERSON ENTERPRISE &amp; MONETIZATION</ShellLabel>
           <h1>
             Your business deserves<br />
             <em>a professional back office.</em>
           </h1>
           <p>
-            Understand the complete unit cost of manufacturing and delivering your goods before quoting prices to customers.
+            Understand the complete unit cost of manufacturing and delivering your goods before quoting prices to customers. Apply creator AdSense revenue to subsidize operational overhead.
           </p>
         </div>
         <div className="intro-callout">
@@ -2593,6 +3866,23 @@ function EnterprisePage({
         </div>
       </section>
 
+      {/* AdSense Yield Integration Banner */}
+      <div className="enterprise-adsense-banner">
+        <div>
+          <span className="adsense-pill">ADSENSE CREATOR SUPPORT</span>
+          <strong>Google AdSense Monthly Stream: {adsenseStream.net_monthly_yield}</strong>
+          <p>Channel: {adsenseStream.channel_name} ({adsenseStream.publisher_id}). Ad earnings automatically cover fulfillment overhead.</p>
+        </div>
+        <label className="adsense-toggle-label">
+          <input
+            type="checkbox"
+            checked={includeAdSenseSubsidy}
+            onChange={(e) => setIncludeAdSenseSubsidy(e.target.checked)}
+          />
+          <span>Apply AdSense Overhead Subsidy (-10% cost)</span>
+        </label>
+      </div>
+
       <div className="enterprise-layout">
         <section className="calculator-panel">
           <ShellLabel>PRODUCT / SERVICE COST BUILDER</ShellLabel>
@@ -2601,10 +3891,10 @@ function EnterprisePage({
             Example: Made-to-order artisanal batch or client service delivery. Adjust the parameters to evaluate economic margins.
           </p>
           <div className="cost-inputs">
-            <MoneyInput label="Materials & Ingredients" value={cost} onChange={setCost} />
-            <MoneyInput label="Your Time & Labour Value" value={time} onChange={setTime} />
-            <MoneyInput label="Packaging & Protective Box" value={packaging} onChange={setPackaging} />
-            <MoneyInput label="Delivery & Platform Fees" value={delivery} onChange={setDelivery} />
+            <MoneyInput label="Materials &amp; Ingredients" value={cost} onChange={setCost} />
+            <MoneyInput label="Your Time &amp; Labour Value" value={time} onChange={setTime} />
+            <MoneyInput label="Packaging &amp; Protective Box" value={packaging} onChange={setPackaging} />
+            <MoneyInput label="Delivery &amp; Platform Fees" value={delivery} onChange={setDelivery} />
             <MoneyInput label="Customer Selling Price" value={price} onChange={setPrice} />
           </div>
           <div className="fixture-label">
@@ -2615,9 +3905,15 @@ function EnterprisePage({
         <aside className="economics-result">
           <ShellLabel>PRICE INTEGRITY CHECK</ShellLabel>
           <div className="economics-total">
-            <span>Full cost per unit</span>
+            <span>Base unit cost</span>
             <strong>{inr(fullCost)}</strong>
           </div>
+          {includeAdSenseSubsidy && (
+            <div className="economics-total text-emerald">
+              <span>AdSense subsidy applied</span>
+              <strong>-{inr(fullCost - effectiveCost)}</strong>
+            </div>
+          )}
           <div className="economics-total economics-total--strong">
             <span>Net contribution per unit</span>
             <strong className={contribution >= 0n ? 'good-text' : 'bad-text'}>
@@ -2673,7 +3969,7 @@ function MoneyInput({
 }
 
 // ==========================================
-// 9. COMMONS PAGE (COLLECTIVE BARGAINING)
+// 13. COMMONS PAGE (COLLECTIVE BARGAINING)
 // ==========================================
 function CommonsPage({
   campaigns,
@@ -2794,7 +4090,7 @@ function CommonsPage({
 }
 
 // ==========================================
-// 10. INTELLIGENCE PAGE (META MUSE MODELS)
+// 14. INTELLIGENCE PAGE (META MUSE MODELS)
 // ==========================================
 function IntelligencePage({
   mode,
@@ -2858,7 +4154,7 @@ function IntelligencePage({
         />
         <ModelRow
           name="Muse Glimmer"
-          role="Local multimodal reasoning for edge & offline processing"
+          role="Local multimodal reasoning for edge &amp; offline processing"
           status="Edge Target"
           detail="Self-hosted open-weight architecture for local on-device verification."
         />
@@ -2980,7 +4276,7 @@ function IntelligencePage({
 
       <div className="intelligence-boundary">
         <strong>Decision boundary</strong>
-        <span>Model proposes language & prioritization.</span>
+        <span>Model proposes language &amp; prioritization.</span>
         <b>→</b>
         <span>Application verifies allowed finding IDs and explicit consent.</span>
         <b>→</b>
@@ -3021,7 +4317,7 @@ function ModelRow({
 }
 
 // ==========================================
-// 11. LOGIN DIALOG
+// 15. LOGIN DIALOG (MODAL FALLBACK)
 // ==========================================
 function LoginDialog({
   busy,
@@ -3036,7 +4332,7 @@ function LoginDialog({
 }) {
   const [step, setStep] = useState<'signin' | 'register' | 'verify'>('signin');
   const [email, setEmail] = useState('demo@example.com');
-  const [displayName, setDisplayName] = useState('AwnNORA Demo User');
+  const [displayName, setDisplayName] = useState('AwnNORA Demo Explorer');
   const [password, setPassword] = useState('Password12345!');
   const [verificationToken, setVerificationToken] = useState('');
   const [pendingSession, setPendingSession] = useState<Session | null>(null);

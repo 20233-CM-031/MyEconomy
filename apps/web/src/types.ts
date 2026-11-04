@@ -1,7 +1,10 @@
 export type ViewKey =
-  | 'overview'
+  | 'intro'
+  | 'tour'
+  | 'auth'
   | 'assistant'
   | 'accounts'
+  | 'overview'
   | 'casebook'
   | 'protection'
   | 'opportunity'
@@ -9,6 +12,38 @@ export type ViewKey =
   | 'enterprise'
   | 'commons'
   | 'intelligence';
+
+export type TourChapter = {
+  id: string;
+  stepNumber: number;
+  title: string;
+  subtitle: string;
+  tag: string;
+  tagColor: string;
+  description: string;
+  highlights: string[];
+  metrics: Array<{ label: string; value: string; tone?: string }>;
+  interactiveView: ViewKey;
+  actionLabel: string;
+};
+
+export type AdSenseMonetizationStream = {
+  publisher_id: string;
+  channel_name: string;
+  monthly_impressions: string;
+  average_ecpm: string;
+  net_monthly_yield: string;
+  offset_target_obligation: string;
+  status: 'ACTIVE_YIELD' | 'OPTIMIZING';
+  last_payout_date: string;
+};
+
+export type RailIntegrationMethod =
+  | 'ACCOUNT_AGGREGATOR_REBIT'
+  | 'UPI_AUTOPAY_MANDATE'
+  | 'CARD_ON_FILE_COFT'
+  | 'STRIPE_CONNECT_OAUTH'
+  | 'GOOGLE_ADSENSE_PAYMENT';
 
 export type RailType = 'upi' | 'bank' | 'card' | 'global' | 'wallet';
 
@@ -254,3 +289,71 @@ export type PersonalCase = {
 };
 
 export type PersonalCaseDetail = PersonalCase & { events: PersonalCaseEvent[] };
+export type CountryCode = 'IN' | 'US' | 'GB' | 'EU' | 'AE';
+
+export type CountryConfig = {
+  code: CountryCode;
+  name: string;
+  flag: string;
+  currencyCode: string;
+  currencySymbol: string;
+  locale: string;
+  bankingStandard: string;
+  railsDescriptor: string;
+  taxIdLabel: string;
+  instantRailLabel: string;
+  sampleAccounts: Array<{
+    name: string;
+    balanceFormatted: string;
+    balanceMinor: string;
+    provider: string;
+    type: RailType;
+    color: string;
+    masked: string;
+  }>;
+  featuredSubsidy: {
+    title: string;
+    schemeCode: string;
+    ministry: string;
+    valueAnnual: string;
+    description: string;
+  };
+  featuredOpportunity: {
+    title: string;
+    source: string;
+    rate: string;
+    estimatedMonthly: string;
+    category: string;
+  };
+  commonsLocality: string;
+  commonsSavings: string;
+  adSenseYield: string;
+  utilityOffset: string;
+};
+
+export type KeynoteCursorAction = 'move' | 'click' | 'type' | 'select' | 'verify';
+
+export type KeynoteScene = {
+  id: string;
+  chapterNumber: number;
+  actTitle: string;
+  headline: string;
+  subheadline: string;
+  presenterName: string;
+  presenterRole: string;
+  presenterNarration: string;
+  operatorActionDescription: string;
+  targetView: ViewKey;
+  cursorTarget: {
+    x: number;
+    y: number;
+    action: KeynoteCursorAction;
+    targetLabel: string;
+    typingInput?: string;
+  };
+  badgeText: string;
+  badgeTone: 'emerald' | 'cyan' | 'amber' | 'rose' | 'purple' | 'indigo';
+  highlights: string[];
+  metrics: Array<{ label: string; value: string; tone?: string }>;
+  actionCta: string;
+};
