@@ -5,7 +5,8 @@ export type ViewKey =
   | 'entitlements'
   | 'enterprise'
   | 'commons'
-  | 'intelligence';
+  | 'intelligence'
+  | 'casebook';
 
 export type Finding = {
   finding_id: string;
@@ -120,3 +121,49 @@ export type ImportBatch = {
   replayed: boolean;
   validation_errors: Array<{ row_number: number; code: string; message: string }>;
 };
+
+export type PersonalCaseStatus =
+  | 'OPEN' | 'IN_REVIEW' | 'ACTION_READY' | 'WAITING_FOR_USER'
+  | 'WAITING_EXTERNAL' | 'RESOLVED' | 'CLOSED';
+
+export type PersonalCaseFindingSnapshot = {
+  finding_id: string;
+  code: string;
+  priority: string;
+  title: string;
+  explanation: string;
+  recommended_next_step: string;
+  amount: string | null;
+  currency: string | null;
+  source_references: string[];
+  value_status: string;
+  report_period: { period_start: string; period_end: string; as_of: string };
+  origin: 'SERVER_COMPUTED_PERSONAL_POWER_REPORT' | 'SYNTHETIC_DEMO_FIXTURE';
+};
+
+export type PersonalCaseEvent = {
+  id: string;
+  event_sequence: number;
+  event_type: 'CASE_OPENED' | 'STATUS_CHANGED';
+  from_status: PersonalCaseStatus | null;
+  to_status: PersonalCaseStatus;
+  note: string | null;
+  created_at: string;
+};
+
+export type PersonalCase = {
+  id: string;
+  source_engine: string;
+  source_finding_id: string;
+  title: string;
+  source_snapshot: PersonalCaseFindingSnapshot;
+  currency: string;
+  amount_minor: string | null;
+  status: PersonalCaseStatus;
+  state_version: number;
+  created_at: string;
+  updated_at: string;
+  replayed?: boolean;
+};
+
+export type PersonalCaseDetail = PersonalCase & { events: PersonalCaseEvent[] };

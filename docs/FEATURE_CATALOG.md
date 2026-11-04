@@ -108,3 +108,9 @@ Status: **Implemented and tested**, **Partial**, **Designed**, **Not started**, 
 | Personal Mode Power Report | Owner-private report from persisted posted cashflow, potential duplicates and recurring obligations | Implemented as additive candidate in `src/myeconomy/{domain,application,api}/personal_power*.py`; package-level domain tests passed | Apply to target checkout; run full API/integration suite, migration/readiness and first-user runbook |
 | First-user local journey | Verify user, seed one synthetic persona through existing services, call Personal Power endpoint | Implemented as `scripts/awnnora_first_user_journey.py` | Run against an isolated local DB and dedicated `@example.invalid` account |
 | Scenario Lab | Reproducible product-level scenario workload and invariant validator | Implemented; 46 templates / 1,150 generated default runs validated | Wire fixtures to live subsystem acceptance tests as each engine is built |
+
+## Iteration 07 — Personal Economic Casebook
+
+**Partial, implemented in this package:** owner-verified case creation from a server-computed Personal Power finding; owner-scoped list/detail; explicit versioned status transitions; idempotency and append-only timeline; MAKOS Casebook view.
+
+**Not implemented:** provider dispatch, payment, settlement, Guardian OCR/scanning, persistent non-Personal case adapters, or VIVC settlement. See `docs/iterations/ITERATION-06-PERSONAL-CASEBOOK.md`.

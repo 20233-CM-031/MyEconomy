@@ -2,9 +2,9 @@
 
 **Canonical project name:** AwnNORA
 **Implementation repository:** `20233-CM-031/MyEconomy`
-**Context-map version:** 1.3
+**Context-map version:** 1.4
 **Reconciled:** 2026-11-04
-**Status:** Product vision confirmed; Iterations 00–05 merged to main (PR #5: 7408269421f4c1a166e58ec0310fc9c9da2c2ede); Iteration 06 MAKOS Web Workspace & Meta Model AI Assistance implemented and verified.
+**Status:** Product vision confirmed; Iterations 00–06 merged to main (PR #6: f2eee774a6915ccea98e0353494704b81635b183); Iteration 07 Personal Economic Casebook & Workflow Workspace implemented and verified.
 
 > This document resolves older working-name language in historical notes. AwnNORA is the project/product name for the Meta Global AI Hackathon. `MyEconomy` remains the existing repository and Python package name because it is the implementation base. It is not an alternative product brand.
 
@@ -179,8 +179,9 @@ Repository: `20233-CM-031/MyEconomy`, default branch `main`. Live GitHub inspect
 | Iteration 03 | **Merged in PR #3:** deterministic invoice/evidence review, offer net-value, in-memory consent-aware aggregation, VIVC rules and GENIEA mission/tool policy kernel |
 | Iteration 04 | **Merged in PR #4:** authenticated Guardian evidence upload, private local storage adapter, persisted owner-scoped invoice review cases, evidence/hash metadata, audit, draft and explicit approval-state APIs |
 | Iteration 05 | **Merged in PR #5:** Personal Mode Power Report (GET /api/v1/personal/power-report), first-user journey runner, and Scenario Lab v1 (46 templates, 1,150 synthetic runs across 12 capabilities) |
-| Iteration 06 | **Implemented & Verified (108 tests passing, Vite built):** MAKOS Visual Workspace (apps/web: React 19 + TypeScript + Vite) and consent-gated Meta Model AI Assistance (Muse Spark 1.3 Standard mode) |
-| Iteration 07 (Roadmap) | **GENIEA Persistent Mission Runtime:** Durable leases, step checkpoints, resume-from-failure without replay, and tool execution outbox |
+| Iteration 06 | **Merged in PR #6:** MAKOS Visual Workspace (apps/web: React 19 + TypeScript + Vite) and consent-gated Meta Model AI Assistance (Muse Spark 1.3 Standard mode) |
+| Iteration 07 | **Implemented & Verified (120 tests passing, Vite built):** Personal Economic Casebook, owner-verified case creation, versioned transitions, MAKOS My actions workspace |
+| Iteration 08 (Roadmap) | **GENIEA Persistent Mission Runtime:** Durable leases, step checkpoints, resume-from-failure without replay, and tool execution outbox |
 | Iteration 08 (Roadmap) | **Multimodal Document Understanding Gateway:** Llama-Vision/OCR extraction pipeline, document quarantine/malware scan, and visual locator verification |
 | Iteration 09 (Roadmap) | **Opportunity & Entitlement Engines:** Skill capability graph matching against Skill India & public scholarship registries with deterministic eligibility checks |
 | Iteration 10 (Roadmap) | **Commons Demand & Resource Exchange:** Persistent demand aggregation with k-anonymity quorum, anti-differencing governance, and ONDC buyer/seller protocol adapters |
