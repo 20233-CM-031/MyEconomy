@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "run_count": 1150,
+  "template_count": 46,
+  "checks": {
+    "synthetic_label": 1150,
+    "no_external_side_effects": 1150,
+    "vivc_never_claimed": 1150,
+    "integer_paise": 1150,
+    "all_minor_fields_integer": 1150,
+    "run_matches_catalog": 1150,
+    "no_sensitive_identifier_keys": 1150,
+    "specialized_case_invariants": 1150,
+    "no_false_award": 25,
+    "stale_entitlement_abstains": 25,
+    "opportunity_net_economics": 25,
+    "unsafe_opportunity_not_accepted": 25,
+    "no_reflexive_new_debt": 100,
+    "enterprise_below_cost_blocked": 25,
+    "commons_consent_and_privacy": 125,
+    "commons_quorum_policy": 125,
+    "negative_offer_rejected": 25,
+    "agent_has_idempotency": 100,
+    "agent_human_gate": 100,
+    "private_edge_not_shared": 25,
+    "run_count_matches_manifest": true,
+    "template_count_matches_manifest": true,
+    "unique_scenario_slugs": true,
+    "unique_run_ids": true
+  },
+  "errors": []
+}

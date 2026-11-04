@@ -63,3 +63,9 @@ Use the appropriate Meta service tier for personal/confidential information. Ben
 The local Guardian vertical currently supports this end-to-end API journey: verified authentication → bounded upload → signature/type/size check → SHA-256 → owner-scoped idempotency → local private blob + metadata → structured invoice submission → deterministic arithmetic/evidence/confidence/prior-bill review → persisted case/findings/audit → draft → explicit approval state. The approval endpoint does not send a message. The document remains `STORED_UNSCANNED`; a PDF's contents are not parsed and no Meta model is called.
 
 Local evidence: `PYTHONPATH=src pytest -q` (84 passed), compileall, SQLite migration lifecycle, dataset validator (42 tables/17,425 rows). Python 3.12, Ruff and live PostgreSQL 16 for the Guardian migration are not verified. The latest GitHub main SHA remains the PR #3 merge; the Iteration 04 branch creation attempt returned 403 and no remote changes were made.
+
+
+<!-- AWNNORA-TRANSFER-ITERATION-05 -->
+## Parallel workstream contract
+
+See `docs/transfer/TURBO_PARALLEL_DELIVERY_MODEL.md` for the updated parallel workstream boundaries, integration gates and definition of done. Parallelize bounded subsystem work against agreed typed contracts. Do not create disconnected stubs, duplicate money/consent logic, leak raw private records into Commons, or allow models to mutate external state. Every workstream must land a complete testable vertical slice and update shared project status only after integration evidence exists.
